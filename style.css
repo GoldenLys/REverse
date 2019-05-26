@@ -1,0 +1,1240 @@
+:root {
+  --white: rgb(255, 255, 255);
+  --green: rgb(0, 255, 0);
+  --green2: rgb(0, 61, 0);
+  --red: rgb(255, 0, 0);
+  --orange: #ff9800;
+  --yellow: rgb(255, 255, 0);
+  --blue: rgb(0, 120, 255);
+  --pink: rgb(237, 34, 255);
+  --purple: rgb(137, 47, 255);
+  --grey: rgb(128, 128, 128);
+  --darkgrey: rgb(32, 32, 32);
+  --darkgrey5: rgba(14, 14, 14, 0.75);
+  --black: rgb(0, 0, 0);
+  --black8: rgba(0, 0, 0, 0.8);
+  --black6: rgba(0, 0, 0, 0.6);
+  --black4: rgba(0, 0, 0, 0.4);
+  --black2: #21232433;
+  --black1: rgba(0, 0, 0, 0.15);
+  --locked: rgb(64, 64, 64);
+  --normal2: rgba(255, 255, 255, 0.5);
+  --common: #37a915;
+  --common2: #37a91580;
+  --uncommon: #5580f3;
+  --uncommon2: #5580f380;
+  --rare: #a74192;
+  --rare2: #a7419280;
+  --epic: #ffb00f;
+  --epic2: #ffb00f80;
+  --Exotic: #ff6337;
+  --Exotic2: #ff633780;
+  --Divine: #f44336;
+  --Divine2: #f4433680;
+  --Error: rgb(255, 0, 0);
+  --Error2: rgba(255, 0, 0, 0.5);
+  --E1: rgb(164, 164, 164);
+  --E2: rgb(0, 164, 0);
+  --E3: rgb(0, 169, 114);
+  --E4: rgba(0, 164, 182, 1);
+  --E5: rgb(164, 0, 167);
+  --E6: rgba(164, 0, 0, 1);
+  --E7: #ffaaed;
+  --close: rgb(150, 3, 3);
+  --temp1: rgb(0, 0, 0);
+  --temp2: rgb(0, 0, 0);
+  --temp3: rgb(0, 0, 0);
+}
+
+.Ennemy1 {
+  color: var(--E1) !important;
+  text-shadow: 0px 0px 3px var(--E1) !important;
+  border-color: var(--E1) !important;
+}
+
+.Ennemy2 {
+  color: var(--E2) !important;
+  text-shadow: 0px 0px 3px var(--E2) !important;
+  border-color: var(--E2) !important;
+}
+
+.Ennemy3 {
+  color: var(--E3) !important;
+  text-shadow: 0px 0px 3px var(--E3) !important;
+  border-color: var(--E3) !important;
+}
+
+.Ennemy4 {
+  color: var(--E4) !important;
+  text-shadow: 0px 0px 3px var(--E4) !important;
+  border-color: var(--E4) !important;
+}
+
+.Ennemy5 {
+  color: var(--E5) !important;
+  text-shadow: 0px 0px 3px var(--E5) !important;
+  border-color: var(--E5) !important;
+}
+
+.Ennemy6 {
+  color: var(--E6) !important;
+  text-shadow: 0px 0px 3px var(--E6) !important;
+  border-color: var(--E6) !important;
+}
+
+.Ennemy7 {
+  color: var(--E7) !important;
+  text-shadow: 0px 0px 3px var(--E7) !important;
+  border-color: var(--E7) !important;
+}
+
+.Error {
+  color: var(--red) !important;
+  text-shadow: 0px 0px 3px var(--red) !important;
+  border-color: var(--red) !important;
+}
+
+.Normal {
+  color: var(--white) !important;
+  text-shadow: 0px 0px 3px var(--white) !important;
+  border-color: var(--white) !important;
+}
+
+.Common {
+  color: var(--common) !important;
+  text-shadow: 0px 0px 3px var(--common) !important;
+  border-color: var(--common) !important;
+}
+
+.Uncommon {
+  color: var(--uncommon) !important;
+  text-shadow: 0px 0px 3px var(--uncommon) !important;
+  border-color: var(--uncommon) !important;
+}
+
+.Rare {
+  color: var(--rare) !important;
+  text-shadow: 0px 0px 3px var(--rare) !important;
+  border-color: var(--rare) !important;
+}
+
+.Epic {
+  color: var(--epic) !important;
+  text-shadow: 0px 0px 3px var(--epic) !important;
+  border-color: var(--epic) !important;
+}
+
+.Exotic {
+  color: var(--Exotic) !important;
+  text-shadow: 0px 0px 3px var(--Exotic) !important;
+  border-color: var(--Exotic) !important;
+}
+
+.Divine {
+  color: var(--Divine) !important;
+  text-shadow: 0px 0px 3px var(--Divine) !important;
+  border-color: var(--Divine) !important;
+}
+
+.green {
+  color: var(--common);
+}
+
+.bgcolor {
+  color: var(--black);
+}
+
+.bgtextcolor {
+  color: var(--green2);
+}
+
+.menucolor {
+  color: var(--darkgrey);
+}
+
+.bleu {
+  color: var(--blue);
+}
+
+.rose {
+  color: var(--pink);
+}
+
+.violet {
+  color: var(--purple);
+}
+
+.vert {
+  color: var(--green) !important;
+  border-color: var(--vert) !important;
+}
+
+.gris {
+  color: var(--grey);
+}
+
+.locked {
+  color: var(--green) !important;
+}
+
+.rouge {
+  color: var(--red) !important;
+  border-color: var(--red) !important;
+}
+
+.jaune {
+  color: var(--yellow);
+}
+
+.orange {
+  color: var(--orange);
+}
+
+.blanc {
+  color: var(--white);
+}
+
+.noir {
+  color: var(--black);
+}
+
+.noir1 {
+  color: var(--black1);
+}
+
+.ShadowReset {
+  text-shadow: 0px 0px 0px transparent !important;
+}
+
+.classBar0 {
+  position: absolute;
+  width: .5em;
+  top: 0;
+  bottom: 0;
+  float: left;
+  background: var(--white) !important;
+}
+
+.classBar1 {
+  position: absolute;
+  width: .5em;
+  top: 0;
+  bottom: 0;
+  float: left;
+  background: var(--common) !important;
+}
+
+.classBar2 {
+  position: absolute;
+  width: .5em;
+  top: 0;
+  bottom: 0;
+  float: left;
+  background: var(--uncommon) !important;
+}
+
+.classBar3 {
+  position: absolute;
+  width: .5em;
+  top: 0;
+  bottom: 0;
+  float: left;
+  background: var(--rare) !important;
+}
+
+.classBar4 {
+  position: absolute;
+  width: .5em;
+  top: 0;
+  bottom: 0;
+  float: left;
+  background: var(--epic) !important;
+}
+
+.classBar5 {
+  position: absolute;
+  width: .5em;
+  top: 0;
+  bottom: 0;
+  float: left;
+  background: var(--Exotic) !important;
+}
+
+.classBar6 {
+  position: absolute;
+  width: .5em;
+  top: 0;
+  bottom: 0;
+  float: left;
+  background: var(--Divine) !important;
+}
+
+.classBarU {
+  position: absolute;
+  width: .5em;
+  top: 0;
+  bottom: 0;
+  float: left;
+  background: var(--green) !important;
+}
+
+.classBarE {
+  position: absolute;
+  width: .5em;
+  top: 0;
+  bottom: 0;
+  float: left;
+  background: var(--Error) !important;
+}
+
+.CoreClass0 {
+  background: linear-gradient(to right, var(--black) 0%, var(--normal2) 1em, var(--normal2) 25%, transparent 90%) !important;
+}
+
+.CoreClass1 {
+  background: linear-gradient(to right, var(--black) 0%, var(--common) 1em, var(--common2) 25%, transparent 90%) !important;
+}
+
+.CoreClass2 {
+  background: linear-gradient(to right, var(--black) 0%, var(--uncommon) 1em, var(--uncommon2) 25%, transparent 90%) !important;
+}
+
+.CoreClass3 {
+  background: linear-gradient(to right, var(--black) 0%, var(--rare) 1em, var(--rare2) 25%, transparent 90%) !important;
+}
+
+.CoreClass4 {
+  background: linear-gradient(to right, var(--black) 0%, var(--epic) 1em, var(--epic2) 25%, transparent 90%) !important;
+}
+
+.CoreClass5 {
+  background: linear-gradient(to right, var(--black) 0%, var(--Exotic) 1em, var(--Exotic2) 25%, transparent 90%) !important;
+}
+
+.CoreClass6 {
+  background: linear-gradient(to right, var(--black) 0%, var(--Divine) 1em, var(--Divine2) 25%, transparent 90%) !important;
+}
+
+.CoreClassE {
+  background: linear-gradient(to right, var(--black) 0%, var(--Error) 1em, var(--Error2) 25%, transparent 90%) !important;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--white);
+  text-align: center;
+  /* background-image: url(DATA/bg.jpg); */
+  /* background-repeat: round; */
+  /* background-attachment: fixed; */
+  /* background-size: contain; */
+  font-size: 100%;
+  font-family: 'Signika', sans-serif!important;
+  background: -webkit-canvas(q);
+}
+
+.ui.card>.content>.header,
+.ui.cards>.card>.content>.header,
+.ui.message,
+.ui.message .header,
+.ui.button {
+  font-family: 'Signika', sans-serif!important;
+}
+
+.ui.button {
+  margin: 0 0 0 0 !important;
+}
+
+.title {
+  color: var(--white) !important;
+  font-size: 1.5em !important;
+}
+
+.text2 {
+  font-size: 1.1em !important;
+}
+
+.text {
+  color: var(--white);
+  text-align: center;
+  line-height: 1;
+  font-size: 1em !important;
+}
+
+.desc {
+  font-size: 0.7em !important;
+}
+
+.text3 {
+  font-size: 0.9em !important;
+}
+
+.ui.inverted.menu {
+  background: var(--darkgrey);
+  border-radius: initial;
+  border: 0px;
+}
+
+.repeat {
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: contain;
+  height: 0.1vh;
+  width: 100%;
+}
+
+.repeat2 {
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: contain;
+  height: 0.15vh;
+  width: 100%;
+}
+
+.repeat3 {
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: contain;
+  height: 0.2vh;
+  width: 100%;
+}
+
+.ui.menu .item:before {
+  visibility: hidden;
+}
+
+.ui.black.message,
+.ui.inverted.message {
+  background-color: var(--darkgrey5);
+  color: var(--white) !important;
+}
+
+@keyframes rainbow1 {
+  0% {
+    color: hsl(300, 100%, 50%);
+  }
+
+  10% {
+    color: hsl(270, 100%, 50%);
+  }
+
+  20% {
+    color: hsl(240, 100%, 50%);
+  }
+
+  30% {
+    color: hsl(210, 100%, 50%);
+  }
+
+  40% {
+    color: hsl(180, 100%, 50%);
+  }
+
+  50% {
+    color: hsl(150, 100%, 50%);
+  }
+
+  60% {
+    color: hsl(120, 100%, 50%);
+  }
+
+  70% {
+    color: hsl(90, 100%, 50%);
+  }
+
+  80% {
+    color: hsl(60, 100%, 50%);
+  }
+
+  90% {
+    color: hsl(30, 100%, 50%);
+  }
+
+  100% {
+    color: hsl(0, 100%, 50%);
+  }
+}
+
+@keyframes rainbow2 {
+  0% {
+    background-color: var(--green);
+  }
+
+  100% {
+    background-color: var(--black);
+  }
+}
+
+@keyframes matrix {
+  0% {
+    border-color: var(--green);
+  }
+
+  100% {
+    border-color: var(--black);
+  }
+}
+
+@keyframes matrix2 {
+  0% {
+    color: var(--green);
+  }
+
+  100% {
+    color: var(--black4);
+  }
+}
+
+@keyframes matrix3 {
+  0% {
+    border-color: var(--green);
+  }
+
+  100% {
+    border-color: var(--black);
+  }
+}
+
+.matrix2 {
+  -webkit-animation: matrix2 1s infinite alternate !important;
+  animation: matrix2 1s infinite alternate !important;
+}
+
+.ui.menu .active.item>i.icon {
+  -webkit-animation: matrix2 1s infinite alternate !important;
+  animation: matrix2 1s infinite alternate !important;
+}
+
+.rainbow2 {
+  -webkit-animation: rainbow2 1s infinite alternate !important;
+  animation: rainbow2 1s infinite alternate !important;
+}
+
+.rainbow3 {
+  color: var(--green) !important;
+  background: var(--black4) !important;
+  border-style: solid !important;
+  border-width: 0.1vh !important;
+  border-radius: 4px !important;
+  -webkit-animation: matrix 1s infinite alternate !important;
+  animation: matrix 1s infinite alternate !important;
+}
+
+.cu {
+  color: var(--green) !important;
+  background: var(--black4) !important;
+  border-style: solid !important;
+  border-width: 0.1vh !important;
+  border-radius: 4px !important;
+  border-color: var(--green);
+}
+
+.cu2 {
+  color: var(--white) !important;
+  background: var(--black4) !important;
+  border-style: solid !important;
+  border-width: 0.1vh !important;
+  border-radius: 4px !important;
+  border-color: var(--red) !important;
+}
+
+.closing {
+  color: var(--white) !important;
+  background: var(--close) !important;
+  border-style: solid !important;
+  border-width: 0vh !important;
+  border-color: var(--darkgrey) !important;
+}
+
+.closing:hover {
+  color: var(--white) !important;
+  background: var(--Error) !important;
+  border-style: solid !important;
+  border-width: 0vh !important;
+  border-color: var(--darkgrey) !important;
+}
+
+.Cellule {
+  background: var(--black4) !important;
+  color: var(--green) !important;
+}
+
+.Upgrades {
+  background: transparent !important;
+  color: var(--white) !important;
+}
+
+.rainbow4 {
+  color: var(--green) !important;
+  background: var(--black4) !important;
+  border-style: solid !important;
+  border-width: 0.1vh 0.1vh 0vh 0.1vh !important;
+  border-radius: 4px 4px 0px 0px !important;
+  border-color: var(--green);
+}
+
+.rainbow5 {
+  background: var(--darkgrey) !important;
+  color: var(--green) !important;
+}
+
+.ui.rainbow5.button.dis {
+  background-color: var(--black) !important;
+  color: var(--black) !important;
+}
+
+.rainbow5:hover {
+  background: var(--darkgrey5) !important;
+  color: var(--white) !important;
+}
+
+.ui.divider {
+  margin: 0 0 !important;
+}
+
+.rainbow6 {
+  background: transparent !important;
+  color: var(--white) !important;
+}
+
+.rainbow6:hover {
+  background: var(--darkgrey5) !important;
+  color: var(--green) !important;
+}
+
+.rainbow7 {
+  background: var(--darkgrey) !important;
+  color: var(--white) !important;
+}
+
+.rainbow7:hover {
+  background: var(--darkgrey5) !important;
+  color: var(--green) !important;
+}
+
+.ui.attached.segment {
+  border-color: var(--green);
+}
+
+div#C1,
+div#C2,
+div#C3,
+div#C4,
+div#C5 {
+  color: var(--white) !important;
+}
+
+div#C1:hover,
+div#C2:hover,
+div#C3:hover,
+div#C4:hover,
+div#C5:hover {
+  color: var(--green) !important;
+  background: var(--black2) !important;
+}
+
+div#C1.active,
+div#C2.active,
+div#C3.active,
+div#C4.active,
+div#C5.active {
+  color: var(--green) !important;
+  background-color: var(--black4) !important;
+  border-style: solid;
+  border-width: 0vh 0vh 0.1vh 0vh !important;
+  border-radius: 0.5rem !important;
+  border-color: var(--green);
+}
+
+.rainbow-btn {
+  color: var(--white) !important;
+  background: var(--black4) !important;
+  border-style: solid;
+  border-width: 0vh 0vh 0.1vh 0vh !important;
+  border-radius: 0.5rem !important;
+  border-color: var(--green) !important;
+}
+
+.ui.rainbow.button {
+  background: var(--darkgrey);
+  color: var(--white) !important;
+  ;
+}
+
+.ui.rainbow.button:hover {
+  border: 0px solid;
+  -webkit-animation: matrix3 50ms infinite !important;
+  animation: matrix3 50ms infinite !important;
+  background: var(--black2);
+  color: var(--green) !important;
+}
+
+.ui.disabled.button {
+  background: transparent !important;
+  color: var(--white) !important;
+}
+
+.ui.matrixbtn.button {
+  background: var(--black6);
+  color: var(--white) !important;
+  ;
+  border-style: solid;
+  border-width: 0vh 0vh 0.1vh 0vh !important;
+  border-radius: 0px 0px 0px 0px !important;
+  border-color: var(--green);
+}
+
+.ui.matrixbtn.button.active {
+  background: var(--black1);
+  border-width: 0vh 0.1vh 0vh 0.1vh !important
+}
+
+.ui.matrixbtn.button:hover {
+  background: var(--black2);
+}
+
+.ui.black2.message {
+  width: 100%;
+  margin-left: 0%;
+  background-color: var(--black4) !important;
+  color: var(--white) !important;
+  border-style: solid;
+  border-width: 0vh 1px 1px 1px !important;
+  border-radius: 0px 0px 0px 0px !important;
+  border-color: var(--green);
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Chrome and Opera */
+}
+
+.ui.buttons .or:before {
+  background-color: var(--black2);
+  color: var(--green);
+  border: 0.1vh solid var(--green);
+}
+
+.animated {
+  border-color: var(--green) !important;
+  line-height: 8 !important;
+  transition: 1.5s;
+  text-align: center !important;
+  background-size: 125% !important;
+}
+
+.ui.message {
+  background-color: var(--black2);
+  padding: 0em 0em !important;
+  color: var(--white) !important;
+}
+
+#combat {
+  padding: 0.5em 0.5% 0em 0.5%;
+}
+
+#gamemenu {
+  margin: 0 1%;
+}
+
+.ui.message>.icon {
+  margin-right: 0em !important;
+}
+
+.matrix-canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.rainbowbtn {
+  border-width: 0vh 0.1vh 0vh 0.1vh !important;
+  border-radius: 1vh 0vh 1vh 0vh !important;
+  background: var(--black4) !important;
+  color: var(--darkgrey) !important;
+}
+
+.overflowTable {
+  overflow: auto;
+  max-height: 80%;
+}
+
+.ui.segment,
+.ui.horizontal.segments {
+  background: transparent;
+  box-shadow: 0 0px 0px 0 transparent;
+  border: 0px solid transparent;
+}
+
+.ui.attached.segment {
+  border: none;
+}
+
+.ui.form input[type=text] {
+  background: var(--black2);
+  color: var(--white);
+  -webkit-animation: matrix3 1s infinite alternate !important;
+  animation: matrix3 1s infinite alternate !important;
+}
+
+.ui.form input[type=text]:active,
+.ui.form input[type=text]:focus {
+  background: var(--black8);
+  color: var(--green);
+  border-color: var(--green) !important;
+}
+
+.ui.form .field>label {
+  color: var(--white) !important;
+}
+
+.ui.comments .comment .author {
+  color: inherit;
+  font-weight: 500 !important;
+}
+
+.ui.indicating.progress[data-percent^="1"] .label,
+.ui.indicating.progress[data-percent^="2"] .label,
+.ui.indicating.progress[data-percent^="3"] .label,
+.ui.indicating.progress[data-percent^="4"] .label,
+.ui.indicating.progress[data-percent^="5"] .label,
+.ui.indicating.progress[data-percent^="6"] .label,
+.ui.indicating.progress[data-percent^="7"] .label,
+.ui.indicating.progress[data-percent^="8"] .label,
+.ui.indicating.progress[data-percent^="9"] .label {
+  color: var(--white) !important;
+}
+
+.ui.progress.success .bar {
+  background-color: var(--green) !important;
+}
+
+.centrer {
+  text-align: center !important;
+}
+
+.ui.bottom.attached.message {
+  background-color: var(--black2);
+}
+
+#fight-btn {
+  border-right: none;
+}
+
+.ui.basic.label {
+  background-color: transparent !important;
+  font-weight: 600 !important;
+}
+
+.ui.fluid.vertical.buttons,
+.ui.fluid.vertical.buttons>.button {
+  display: block;
+  text-shadow: 0px 0px 2px var(--black) !important;
+}
+
+.ui.card,
+.ui.cards>.card {
+  -webkit-box-shadow: 0 0 0 0 var(--green), 0 0 0 0 var(--green);
+  box-shadow: 0 0 0 0 var(--green), 0 0 0 0 var(--green);
+  background: transparent !important;
+  color: var(--white) !important;
+  width: 200px;
+}
+
+.ui.card>.extra,
+.ui.cards>.card>.extra {
+  color: var(--white);
+}
+
+.ui.card>.image>img,
+.ui.cards>.card>.image>img {
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.ui.comments .comment .metadata {
+  color: var(--white);
+}
+
+.ui.label {
+  vertical-align: middle !important;
+  background: var(--black4) !important;
+  color: var(--white) !important;
+}
+
+.ui.toggle.checkbox .box,
+.ui.toggle.checkbox label {
+  color: var(--white) !important;
+}
+
+.ui.toggle.checkbox input:checked~.box,
+.ui.toggle.checkbox input:checked~label {
+  color: var(--white) !important;
+}
+
+.ui.toggle.checkbox input:focus:checked~.box,
+.ui.toggle.checkbox input:focus:checked~label {
+  color: var(--green) !important;
+}
+
+.fight {
+  -webkit-box-shadow: 0 1px 3px 0 var(--green), 0 0 0 1px var(--green) !important;
+  box-shadow: 0 1px 3px 0 var(--green), 0 0 0 1px var(--green) !important;
+  background: var(--darkgrey5) !important;
+  color: var(--white) !important;
+  border-radius: 0.2rem !important;
+  margin: 1% 1% 0% 0% !important;
+}
+
+.custom {
+  -webkit-box-shadow: 0 1px 3px 0 var(--green), 0 0 0 1px var(--green) !important;
+  box-shadow: 0 1px 3px 0 var(--green), 0 0 0 1px var(--green) !important;
+  background: var(--darkgrey5) !important;
+  color: var(--white) !important;
+  margin: 0% 1% 0% 1% !important
+}
+
+.custom2 {
+  -webkit-box-shadow: 0 1px 3px 0 var(--green), 0 0 0 1px var(--green) !important;
+  box-shadow: 0 1px 3px 0 var(--green), 0 0 0 1px var(--green) !important;
+  background: var(--darkgrey5) !important;
+  color: var(--white) !important;
+  margin: 1% 1% 1% 1% !important
+}
+
+.customA {
+  background: var(--darkgrey5) !important;
+  color: var(--white) !important;
+  margin: 0% 0em 0% 0em !important;
+  clip-path: polygon(95% 0, 100% 5%, 100% 95%, 95% 100%, 0 100%, 0 0);
+}
+
+.customB {
+  background: var(--darkgrey5) !important;
+  color: var(--white) !important;
+  margin: 0% 0em 0% 1em !important;
+  clip-path: polygon(100% 0, 100% 100%, 2% 100%, 0 95%, 0 5%, 2% 0);
+}
+
+.ui.card>.content,
+.ui.cards>.card>.content {
+  padding: 0em 1em;
+}
+
+.ui.inverted.table {
+  color: var(--white) !important;
+}
+
+.ui.inverted.table th {
+  color: var(--white) !important;
+}
+
+.ui.comments .comment .destroy {
+  display: block;
+  width: 2.5em;
+  height: auto;
+  float: right;
+  margin: 2.5% 0 0;
+}
+
+.ui.comments .comment .GS {
+  position: absolute;
+  display: block;
+  height: auto;
+  float: left;
+  margin: 0% 5% 0%;
+}
+
+i.icon {
+  margin: 0 0 0 0;
+}
+
+.ui.button>.icon:not(.button) {
+  margin: 0 0 0 0;
+}
+
+.ui.button:not(.icon)>.icon:not(.button):not(.dropdown) {
+  margin: 0 0 0 0;
+}
+
+.ui.divider,
+.ui.header {
+  color: var(--white);
+}
+
+.ui.progress:first-child {
+  margin: 0 0 0 !important;
+}
+
+.ui.big.progress .bar,
+.ui.big.progress {
+  height: 2.5em !important;
+  font-size: 1em !important;
+}
+
+.ui.inverted.table th {
+  background-color: transparent;
+}
+
+.ui.inverted.table {
+  background-color: var(--black);
+  margin: 0;
+}
+
+.border-wrap {
+  padding: .15% 0.1% .05% 0.15%;
+  border-radius: .2em;
+  position: relative;
+  background: linear-gradient(to bottom, var(--black), var(--green));
+}
+
+.ui.card>.content>.header,
+.ui.cards>.card>.content>.header {
+  color: var(--white);
+}
+
+.ui.card>.content>.description,
+.ui.cards>.card>.content>.description {
+  color: var(--white);
+}
+
+.ui.segment,
+.ui.segments .segment {
+  font-size: 1em;
+}
+
+.ui.comments {
+  max-width: 100%;
+}
+
+.ui.comments .comment:first-child {
+  margin-top: 0.5em !important;
+  padding-top: 0.5em !important;
+}
+
+a {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--green2);
+  text-decoration: none !important;
+}
+
+a.ui.label {
+  text-decoration: none !important;
+}
+
+.ui.table thead th {
+  background: unset !important;
+  color: unset !important;
+}
+
+#btn-CRW,
+#btn-ACT {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  bottom: 0%;
+}
+
+.ui.blue.button,
+.ui.blue.buttons .button {
+  background-color: #00508c;
+  color: #fff;
+  text-shadow: none;
+  background-image: none;
+}
+
+.ui.blue.button:hover {
+  background-color: #004275;
+}
+
+i.blue.icon {
+  color: #00508c !important;
+}
+
+.ui.orange.button,
+.ui.orange.buttons .button {
+  background-color: #ff9800;
+  color: #fff;
+  text-shadow: none;
+  background-image: none;
+}
+
+.ui.orange.button:hover {
+  background-color: #db8400;
+}
+
+.ui.orange.icon,
+i.orange.icon {
+  color: #ff9800 !important;
+}
+
+.ui.buttons:not(.basic):not(.inverted)>.button,
+.ui.buttons>.ui.button:not(.basic):not(.inverted) {
+  text-shadow: none !important;
+}
+
+.ui.segment {
+  margin: 0 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.ui.segments,
+.ui.segments>.ui.segments {
+  border: 0px solid rgba(34, 36, 38, .15) !important;
+  -webkit-box-shadow: 0 0px 0px 0 rgba(34, 36, 38, .15) !important;
+  box-shadow: 0 0px 0px 0 rgba(34, 36, 38, .15) !important;
+}
+
+.ui.segments>.segment {
+  border-top: 0px solid rgba(34, 36, 38, .15) !important;
+}
+
+.wrap {
+  padding: 10px;
+  width: 500px;
+  margin: 0 auto;
+}
+
+/* color display */
+
+#color-display {
+  padding: 2em;
+  border-radius: 1em;
+}
+
+#color-display::before {
+  content: 'Move sliders to change color or enter a number between 0-255 in the number field';
+  color: var(--white);
+  text-shadow: 0 0 4px #333333;
+}
+
+/* labels */
+
+label {
+  text-align: center;
+  color: var(--white);
+}
+
+input[type=number],
+label {
+  display: inline-block;
+}
+
+/* number input */
+
+.sliders input[type=number] {
+  text-align: center;
+  width: 50px;
+  padding: 10px 0 10px 10px;
+  background: var(--black);
+  margin: 0 10px 0 4px;
+  outline: none;
+  color: var(--white);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  transition: border 0.2s ease;
+}
+
+.sliders input[type=number]:focus {
+  border: 2px solid #508cfc;
+  color: var(--green);
+}
+
+/* color sliders */
+
+.sliders {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.sliders div {
+  padding: 4px;
+}
+
+/* range sliders */
+
+.inputR {
+  height: 8px;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+}
+
+.inputR,
+input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* slider thumb */
+
+.inputR::-webkit-slider-thumb {
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 20%;
+  cursor: pointer;
+  background: var(--white);
+  border: 1% solid var(--black);
+}
+
+#red.inputR::-webkit-slider-thumb {
+  background: var(--temp1);
+}
+
+#green.inputR::-webkit-slider-thumb {
+  background: var(--temp2);
+}
+
+#blue.inputR::-webkit-slider-thumb {
+  background: var(--temp3);
+}
+
+.invL {
+  position: absolute;
+  float: left;
+  margin: 1% 5% 0% !important;
+}
+
+.ui.gren.segment:not(.inverted) {
+  border-top: 2px solid var(--green) !important;
+}
+
+.ui.trs.message {
+  background-color: transparent;
+  color: var(--white);
+}
+
+.ui.checkbox label,
+.ui.checkbox+label {
+  color: var(--white);
+}
+
+.ui.form .inline.fields {
+  margin: 0px 1em 1em;
+}
+
+.ui.form .inline.fields>label {
+  color: var(--white);
+}
+
+.ICR {
+  width: 3.5em!important;
+  padding-left: 1%!important;
+}

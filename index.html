@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>AlphaRPG</title>
+    <meta charset="UTF-8" name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" type="text/css" href="DATA/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="DATA/checkbox.min.css" />
+    <link rel="stylesheet" type="text/css" href="DATA/accordion.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="DATA/favicon.ico" />
+    <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css?family=Signika&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.5" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.5" />
+    <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
+    <style>
+        #attack-btn {
+            clip-path: polygon(0 65%, 1.5% 100%, 98.5% 100%, 100% 65%, 100% 0, 0 0);
+        }
+
+        #emp-btn {
+            clip-path: polygon(98.5% 0, 100% 35%, 100% 100%, 0 100%, 0 35%, 1.5% 0);
+        }
+    </style>
+</head>
+
+<body id="body" class="noselect" oncontextmenu="return true;" onresize="UpdateCanvas();">
+    <canvas class="matrix-canvas" id="q" style="display: none;"></canvas>
+    <div id="loading">
+        <div class="ui equal width center aligned padded grid">
+            <div class="row">
+                <div class="spinner">
+                    <p class="loading-text"></p>
+                </div>
+            </div>
+            <div class="ui bottom right attached label" id="vloader"></div>
+        </div>
+    </div>
+    <div id="main" style="overflow: hidden; display: none;">
+        <div id="begin" class="ui message">
+            <h1 id="default-title" class="title">AlphaRPG</h1>
+            <div class="repeat rainbow2"></div><br>
+                <p>
+                    Welcome to AlphaRPG ! <br>
+                    Before entering to the world of AlphaRPG, We need to know your name (3-16 characters with only
+                    numbers and letters).
+                    <br>Type "Neo" to generate a random name.
+                </p>
+                <div class="ui centered grid">
+                    <div class="six wide column">
+                        <form class="ui form fluid segment">
+                            <div class="field">
+                                <label>Username</label>
+                                <input id="PlayerName" placeholder="Neo" type="text" maxlength="16">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="two wide column">
+                        <div class="ui centered card">
+                            <div id="avatar3" class="ui centered image">
+                            </div>
+                            <div id="ChangeAvatarBegin" class="ui rainbow button">Select an avatar
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="fluid ui buttons">
+                    <button id="UpdateName" class="ui rainbow button">Start</button>
+                </div>
+                <span id="namehelp"></span>
+        </div>
+
+        <div id="CATEGORIE-1" style="display: none;">
+            <div class="ui horizontal segments">
+                <div id="gamediv1" class="ui customA message" style="width: 30%;">
+                    <div class="fluid ui centered card" style="margin-top: -3%;">
+                        <div class="content">
+                            <div class="header">
+                                <div class="ui horizontal segments">
+                                    <div class="ui segment">
+                                        <div id="PlayerID"></div>
+                                        <div class="fluid ui label">Mission<div id="MDTL" class="detail"></div>
+                                        </div>
+                                    </div>
+                                    <div class="ui segment">
+                                        <div id="PlayerLevel"></div>
+                                        <div class="desc" id="capacity"></div>
+                                        <div id="PlayerXP" class="ui inverted indicating progress">
+                                            <div class="bar">
+                                                <div class="progress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="vert" id="WTUNLOCK"></div>
+                                <div class="rouge" id="LowScore"></div>
+                            </div>
+                            <div class="description">
+                                <div class="ui comments">
+                                    <div class="comment CoreClass0" id="core1">
+                                        <div id="core1-icon" class="classBar0"></div>
+                                        <span class="destroy">
+                                            <div id="Dcore1" class="ui icon rainbow button">
+                                                <i class="red trash icon"></i></div>
+                                        </span>
+                                        <div class="statistic GS">
+                                            <div class="value" id="GS1T"></div>
+                                            <div class="label" id="GS1C"></div>
+                                        </div>
+                                        <span id="core1-title" class="author desc">Core 1</span>
+                                        <span id="core1-rarity" class="date blanc"></span>
+                                        <div id="core1-text" class="text2"></div>
+                                    </div>
+                                    <div class="comment CoreClass0" id="core2">
+                                        <div id="core2-icon" class="classBar0"></div>
+                                        <span class="destroy">
+                                            <div id="Dcore2" class="ui icon rainbow button">
+                                                <i class="red trash icon"></i>
+                                            </div>
+                                        </span>
+                                        <div class="statistic GS">
+                                            <div class="value" id="GS2T"></div>
+                                            <div class="label" id="GS2C"></div>
+                                        </div>
+                                        <span id="core2-title" class="author desc">Core 2</span>
+                                        <span id="core2-rarity" class="date blanc"></span>
+                                        <div id="core2-text" class="text2"></div>
+                                    </div>
+                                    <div class="comment CoreClass0" id="core3">
+                                        <div id="core3-icon" class="classBar0"></div>
+                                        <span class="destroy">
+                                            <div id="Dcore3" class="ui icon rainbow button">
+                                                <i class="red trash icon"></i>
+                                            </div>
+                                        </span>
+                                        <div class="statistic GS">
+                                            <div class="value" id="GS3T"></div>
+                                            <div class="label" id="GS3C"></div>
+                                        </div>
+                                        <span id="core3-title" class="author desc">Core 2</span>
+                                        <span id="core3-rarity" class="date blanc"></span>
+                                        <div id="core3-text" class="text2"></div>
+                                    </div>
+                                    <div class="comment CoreClass0" id="core4">
+                                        <div id="core4-icon" class="classBar0"></div>
+                                        <span class="destroy">
+                                            <div id="Dcore4" class="ui icon rainbow button">
+                                                <i class="red trash icon"></i>
+                                            </div>
+                                        </span>
+                                        <div class="statistic GS">
+                                            <div class="value" id="GS4T"></div>
+                                            <div class="label" id="GS4C"></div>
+                                        </div>
+                                        <span id="core4-title" class="author desc">Core 4</span>
+                                        <span id="core4-rarity" class="date blanc"></span>
+                                        <div id="core4-text" class="text2"></div>
+                                    </div>
+                                    <div class="comment" id="core5">
+                                        <div id="core5-icon" class="classBar6"></div>
+                                        <div class="content">
+                                            <span id="core5-title" class="author desc"></span>
+                                            <div class="metadata"><span id="core5-rarity" class="date blanc"></span>
+                                            </div>
+                                            <div id="core5-text" class="locked"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div id="gamediv2" class="ui customB message"
+                    style="width: 70%; min-height: 30rem; padding-bottom: 4em !important;">
+                    <div id="gotomenu-btn" class="big ui top attached labeled icon rainbow7 button"><i
+                            class="angle left icon ICR"></i>Menu</div>
+                    <div class="ui inverted divider"></div>
+                    <div id="gamemenu" style="display: none;">
+                        <br>
+                        <div class="fluid ui big vertical rainbow labeled icon buttons">
+                            <div id="missions-btn" class="ui rainbow7 button"><i class="folder icon"></i>Missions <span
+                                    class="desc">(1)</span></div>
+                            <div id="exploration-btn" class="ui rainbow7 button"><i class="compass icon"></i>Exploration
+                                <span class="desc">(2)</span>
+                            </div>
+                            <div id="inventory-btn" class="ui rainbow7 button"><i
+                                    class="clipboard list icon"></i>Inventory <span class="desc">(3)</span></div>
+                            <div id="prestige-btn" class="ui rainbow7 button"><i class="globe icon"></i>Simulation <span
+                                    class="desc">(4)</span></div>
+                            <div id="stats-btn" class="ui rainbow7 button"><i class="clipboard list icon"></i>Statistics
+                                <span class="desc">(5)</span>
+                            </div>
+                            <div id="leaderboard-btn" class="ui rainbow7 button"><i class="trophy icon"></i>Leaderboard
+                                <span class="desc">(6)</span>
+                            </div>
+                            <div id="settings-btn" class="ui rainbow7 button"><i class="cogs icon"></i>Settings <span
+                                    class="desc">(7)</span></div>
+                        </div>
+                        <div class="fluid ui trs message">
+                            <div class="ui grid">
+                                <div class="ten wide column">
+                                    <p>
+                                        <span class="vert">AlphaRPG by Purple Wizard</span><br>
+                                        <i class="large blue discord icon"></i>Purple Wizard#0001 <i
+                                            class="large red reddit icon"></i>u/Aizen45 <i
+                                            class="large blue steam icon"></i>Purple Wizard
+                                        <span class="desc"><br>Special thanks to <span class="vert">Tiwaz</span> for his
+                                            help.</span>
+                                    </p>
+                                </div>
+                                <div class="six wide column">
+                                    <div class="ui labeled icon blue button" id="discord-btn"><i
+                                            class="discord icon"></i>AlphaRPG Discord</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="exploration" style="display: none;"></div>
+
+                    <div id="inventory" style="display: none;">
+                        <div class="ui form">
+                            <div class="inline fields ui center aligned padded grid">
+                                <label>Auto remove :</label>
+                                <div class="field">
+                                    <div class="ui checkbox" id="RM1">
+                                        <input type="checkbox" tabindex="0" class="hidden">
+                                        <label class="Normal">Normal</label></div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox" id="RM2">
+                                        <input type="checkbox" tabindex="0" class="hidden">
+                                        <label class="Common">Common</label></div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox" id="RM3">
+                                        <input type="checkbox" tabindex="0" class="hidden">
+                                        <label class="Uncommon">Uncommon</label></div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox" id="RM4">
+                                        <input type="checkbox" tabindex="0" class="hidden">
+                                        <label class="Rare">Rare</label></div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox" id="RM5">
+                                        <input type="checkbox" tabindex="0" class="hidden">
+                                        <label class="Epic">Epic</label></div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox" id="RM6">
+                                        <input type="checkbox" tabindex="0" class="hidden">
+                                        <label class="Exotic">Exotic</label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui accordion">
+                            <div class="active title">
+                                <i class="dropdown icon"></i>
+                                Cores
+                            </div>
+                            <div id="inv1" class="active content">
+                            </div>
+                        </div>
+
+                        <div class="ui accordion">
+                            <div class="title">
+                                <i class="dropdown icon"></i>
+                                Keys
+                            </div>
+                            <div id="inv2" class="content">
+                            </div>
+                        </div>
+
+                        <div class="ui accordion">
+                            <div class="title">
+                                <i class="dropdown icon"></i>
+                                Relics
+                            </div>
+                            <div id="inv3" class="content">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="missions" style="display: none;">
+                        <p id="mcount"></p>
+                        <div class="ui accordion black">
+                            <div class="title active"><i class="dropdown icon"></i>Missions</div>
+                            <div class="content active">
+                                <div id="MissionsList"></div>
+                            </div>
+                        </div>
+                        <div class="ui accordion black">
+                            <div class="title"><i class="dropdown icon"></i>Fortresses</div>
+                            <div class="content">
+                                <div id="MissionsList2"></div>
+                            </div>
+                        </div>
+
+                        <div class="ui accordion black">
+                            <div class="title"><i class="dropdown icon"></i>Missions Completed</div>
+                            <div class="content">
+                                <div id="MissionsCPL"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="prestige" style="display: none;">
+                        <p>
+                            <div id="CurrWT"></div>
+                            <div id="WTShards"></div><br>
+                        </p>
+                        <div id="WTBTN" class="fluid ui rainbow3 button">Reboot Simulation</div>
+
+                        <div class="ui message">
+                            <h3 class="rouge"><i class="info icon"></i>Simulation informations</h3>
+                            <div class="desc">You will lose your current equipment and bonuses.<br>The story will be
+                                reset and the difficulty will raise by 5%.<br>
+                                <br>For each simulation: +50 max tier score, 3% more EXP, +2 inventory slots
+                            </div>
+                        </div>
+
+                        <br>
+                        <span class="text" id="ShardsNumber"></span>
+                        <table id="Upgrades" class="ui very compact inverted Upgrades table">
+                            <thead>
+                                <tr id="MSDiv1" class="shadow">
+                                    <th class="ui right aligned">Name</th>
+                                    <th class="ui center aligned">Current value</th>
+                                    <th class="ui center aligned">Price</th>
+                                    <th class="ui center aligned">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="right aligned desc">XP Multiplier</td>
+                                    <td id="XPMULTVAL" class="center aligned desc">0</td>
+                                    <td id="XPMULTPRICE" class="center aligned">3<i class="bleu dna icon"></i>
+                                    </td>
+                                    <td class="right aligned">
+                                        <div id="xpm-btn" class="fluid ui rainbow button">
+                                            Upgrade
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="right aligned desc">Power Multiplier</td>
+                                    <td id="POWERMULTVAL" class="center aligned desc">0</td>
+                                    <td id="POWERMULTPRICE" class="center aligned">3<i class="bleu dna icon"></i>
+                                    </td>
+                                    <td class="right aligned">
+                                        <div id="pm-btn" class="fluid ui rainbow button">
+                                            Upgrade
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="right aligned desc">Life Multiplier</td>
+                                    <td id="LIFEMULTVAL" class="center aligned desc">0</td>
+                                    <td id="LIFEMULTPRICE" class="center aligned">3<i class="bleu dna icon"></i>
+                                    </td>
+                                    <td class="right aligned">
+                                        <div id="lpm-btn" class="fluid ui rainbow button">
+                                            Upgrade
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="statistics" style="display: none;">
+                        <div class="ui accordion black">
+                            <div class="title active"><i class="dropdown icon"></i>General</div>
+                            <div class="content active">
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned"> Identification</div>
+                                    <div class="ui segment right aligned" id="namestat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Ranking</div>
+                                    <div class="ui segment right aligned" id="Rankstat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Time Played</div>
+                                    <div class="ui segment right aligned" id="playtimestat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Current Level</div>
+                                    <div class="ui segment right aligned" id="Levelstat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Current Power</div>
+                                    <div class="ui segment right aligned" id="powerstat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Current Base Life</div>
+                                    <div class="ui segment right aligned" id="lifestat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Ratio (K/D)</div>
+                                    <div class="ui segment right aligned" id="Ratiostat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned"><a onclick=" helpScore()">Current Score</a>
+                                    </div>
+                                    <div class="ui segment right aligned" id="Scorestat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Difficulty</div>
+                                    <div class="ui segment right aligned" id="Difficultystat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Fortresses defeated</div>
+                                    <div class="ui segment right aligned" id="fortressstat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Core 1 stats</div>
+                                    <div class="ui segment right aligned" id="core1stat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Core 2 stats</div>
+                                    <div class="ui segment right aligned" id="core2stat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Core 3 stats</div>
+                                    <div class="ui segment right aligned" id="core3stat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Core 4 stats</div>
+                                    <div class="ui segment right aligned" id="core4stat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Game Version</div>
+                                    <div class="ui segment right aligned" id="Versionstat"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui accordion black">
+                            <div class="title"><i class="dropdown icon"></i>Locations</div>
+                            <div class="content">
+                                <div id="defeatloc0"></div>
+                                <div id="defeatloc1"></div>
+                                <div id="defeatloc2"></div>
+                                <div id="defeatloc3"></div>
+                                <div id="defeatloc4"></div>
+                                <div id="defeatloc5"></div>
+                                <div id="defeatloc6"></div>
+                                <div id="defeatloc7"></div>
+                                <div id="defeatloc8"></div>
+                                <div id="defeatloc9"></div>
+                                <div id="defeatloc10"></div>
+                                <div id="defeatloc11"></div>
+                            </div>
+                        </div>
+
+                        <div class="ui accordion black">
+                            <div class="title"><i class="dropdown icon"></i>Kills</div>
+                            <div class="content">
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">
+                                        <div class=" ui Ennemy1 basic label"><span class="Ennemy1">NORMAL</span>
+                                        </div>
+                                        Killed
+                                    </div>
+                                    <div class="ui segment right aligned" id="Defeat1"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">
+                                        <div class=" ui Ennemy2 basic label"><span class="Ennemy2">ADVANCED</span>
+                                        </div>
+                                        Killed
+                                    </div>
+                                    <div class="ui segment right aligned" id="Defeat2"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">
+                                        <div class=" ui Ennemy3 basic label"><span class="Ennemy3">SUPERIOR</span>
+                                        </div>
+                                        Killed
+                                    </div>
+                                    <div class="ui segment right aligned" id="Defeat3"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">
+                                        <div class=" ui Ennemy4 basic label"><span class="Ennemy4">VETERAN</span>
+                                        </div>
+                                        Killed
+                                    </div>
+                                    <div class="ui segment right aligned" id="Defeat4"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">
+                                        <div class=" ui Ennemy5 basic label"><span class="Ennemy5">ELITE</span>
+                                        </div>
+                                        Killed
+                                    </div>
+                                    <div class="ui segment right aligned" id="Defeat5"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">
+                                        <div class=" ui Ennemy6 basic label"><span class="Ennemy6">BOSS</span></div>
+                                        Killed
+                                    </div>
+                                    <div class="ui segment right aligned" id="Defeat6"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">
+                                        <div class=" ui Ennemy7 basic label"><span class="Ennemy7">GOD</span></div>
+                                        Killed
+                                    </div>
+                                    <div class="ui segment right aligned" id="Defeat7"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Total Kills</div>
+                                    <div class="ui segment right aligned" id="Killstat">0</div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Total Deaths</div>
+                                    <div class="ui segment right aligned" id="Deathstat">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="leaderboard1" style="display: none;">
+                        <span class="desc" id="CloudTimer"></span>
+                        <div class="border-wrap">
+                            <div id="Reload" class="fluid ui rainbow5 button">Refresh</div>
+                            <table id="LEADERBOARD" class="ui very compact striped inverted table"></table>
+                            <div class="fluid ui buttons" style="margin: 1px 0px 0px 0px;">
+                                <div id="TOPPREVIOUS" class="ui rainbow5 button"></div>
+                                <div id="TOPNEXT" class="ui rainbow5 button"></div>
+                            </div>
+                            <div id="TOP10" class="fluid ui rainbow5 button">Top 10 </div>
+                        </div>
+                        <p>
+                            <div class="ui Common basic label"><span class="green"><i class="info icon"></i> INFO
+                                </span></div>
+                            You
+                            can choose a custom color for your name,
+                            just change the <span class="vert">theme color</span> in the settings.
+                        </p>
+                    </div>
+
+
+                    <div id="settings" class="ui segments" style="display: none;">
+                        <div class="ui horizontal segments">
+                            <div class="ui segment">
+                                <h1 class="title"><i class="cogs icon"></i> Settings</h1>
+                                <div class="ui segment">
+                                    <div class="ui horizontal segments">
+                                        <div class="ui segment">
+                                            <div class="ui centered card">
+                                                <div id="avatar2" class="ui centered image">
+                                                </div>
+                                                <div id="ChangeAvatar" class="ui bottom attached rainbow button">
+                                                    Change
+                                                    avatar
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui center aligned segment">
+                                            <div class="ui toggle checkbox" id="AlertToggle">
+                                                <input type="checkbox" tabindex="0" class="hidden">
+                                                <label class="text">Confirm change core</label>
+                                            </div><br><br>
+                                            <div class="ui toggle checkbox" id="AlertToggle2">
+                                                <input type="checkbox" tabindex="0" class="hidden">
+                                                <label class="text">Confirm change Relic</label>
+                                            </div><br><br>
+                                            <div class="ui toggle checkbox" id="SkipRewards">
+                                                <input type="checkbox" tabindex="0" class="hidden">
+                                                <label class="text">Skip Rewards</label>
+                                            </div><br><br>
+                                            <div class="ui toggle checkbox" id="AutoMissions">
+                                                <input type="checkbox" tabindex="0" class="hidden">
+                                                <label class="text">Auto-Start Missions</label>
+                                            </div><br><br>
+                                            <div class="fluid ui vertical rainbow buttons">
+                                                <div id="reset-btn" class="ui rainbow button">Delete the save</div>
+                                                <div id="export-btn" class="ui rainbow button">Export save</div>
+                                                <div id="import-btn" class="ui rainbow button">Import save</div>
+                                            </div>
+                                            <div class="fluid ui rainbow buttons">
+                                                <div id="exportt-btn" class="ui rainbow button">Export theme</div>
+                                                <div id="importt-btn" class="ui rainbow button">Import theme</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui horizontal segments">
+                                    <div class="ui segment">
+                                        <h1 class="title"><i class="magic icon"></i> Promotional Codes</h1>
+                                        <p>If you have a promotional code, write it here.</p>
+                                        <form class="ui form attached fluid">
+                                            <div class="field">
+                                                <label>Code</label>
+                                                <input id="promocode" placeholder="Abc123" type="text" maxlength="6">
+                                            </div>
+                                        </form>
+                                        <div class="fluid ui buttons">
+                                            <button id="CheckCode" class="ui rainbow button">Check code</button>
+                                        </div><br><br>
+                                        <span id="codereturn"></span>
+                                    </div>
+                                    <div class="ui segment">
+                                        <div class="ui center aligned segment">
+                                            <h1 class="title"><i class="paint brush icon"></i> Theme</h1>
+                                            <div class="ui horizontal segments">
+                                                <div class="ui segment">
+                                                    <div class="ui form">
+                                                        <div class="fluid ui labeled input">
+                                                            <div class="ui label">Red</div>
+                                                            <input type="number" id="redNum">
+                                                        </div>
+                                                        <input class="inputR" value="0" type="range" min="0" max="255"
+                                                            id="red"><br><br>
+                                                        <div class="fluid ui labeled input">
+                                                            <div class="ui label">Green</div>
+                                                            <input type="number" id="greenNum">
+                                                        </div>
+                                                        <input class="inputR" value="0" type="range" min="0" max="255"
+                                                            id="green"><br><br>
+                                                        <div class="fluid ui labeled input">
+                                                            <div class="ui label">Blue</div>
+                                                            <input type="number" id="blueNum">
+                                                        </div>
+                                                        <input class="inputR" value="0" type="range" min="0" max="255"
+                                                            id="blue"><br><br>
+                                                        <div class="color-slider-wrap">
+                                                            <div class="color-wrap">
+                                                                <div id="color-display"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <div class="fluid ui labeled icon vertical rainbow buttons">
+                                                        <div id="themeBTN1" onclick="ThemeDefine(1);"
+                                                            class="ui rainbow button">
+                                                            <i class="large vert square icon"></i>Set theme</div>
+                                                        <div id="themeBTN2" onclick="ThemeDefine(2);"
+                                                            class="ui rainbow button">
+                                                            <i class="large bgcolor square icon"></i>Set background
+                                                        </div>
+                                                        <div id="themeBTN3" onclick="ThemeDefine(3);"
+                                                            class="ui rainbow button">
+                                                            <i class="large bgtextcolor square icon"></i>Set falling
+                                                            text</div>
+                                                        <div id="themeBTN4" onclick="ThemeDefine(4);"
+                                                            class="ui rainbow button">
+                                                            <i class="large Normal square icon"></i>Set text</div>
+                                                        <div id="themeBTN5" onclick="ThemeDefine(5);"
+                                                            class="ui rainbow button">
+                                                            <i class="large menucolor square icon"></i>Set menus
+                                                        </div>
+                                                        <div id="themeBTNR" class="ui rainbow button"><i
+                                                                class="large red times icon"></i>Reset
+                                                            Theme
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="combat">
+                        <div id="PlayerHP" class="ui big inverted indicating progress">
+                            <div class="bar">
+                                <div class="progress"></div>
+                            </div>
+                        </div>
+                        <div class="ui horizontal segments" style="margin: 0 0;">
+                            <div class="ui segment" style="margin: -1rem 0rem 0rem;">
+                                <div id="PlayerText"></div>
+                            </div>
+                            <div class="ui segment">
+                                <font id="EnnemyDesc"><br><br></font>
+                            </div>
+                            <div class="ui segment" style="margin: 4rem 0rem -1rem;">
+                                <div id="EnnemyText"></div>
+                            </div>
+                        </div>
+
+                        <div id="EnnemyHP" class="ui big inverted indicating progress" style="margin: 0 0 0;">
+                            <div class="bar">
+                                <div class="progress"></div>
+                            </div>
+                        </div>
+                        <div class="fluid vertical ui labeled icon rainbow buttons">
+                            <div id="attack-btn" class="ui huge blue button">
+                            </div>
+                            <div id="emp-btn" class="ui huge rainbow button"></div>
+                        </div>
+                        <p>
+                            <span class="rouge" id="MaxPOSLVL"></span><br>
+                            <span class="jaune" id="NextRetreat"></span>
+                        </p>
+                        <br><br>
+                        <div id="btn-ACT" class="fluid vertical big ui labeled icon rainbow buttons">
+                            <div id="cover-btn" class="ui button">
+                            </div>
+
+                            <div id="run-btn" class="ui grey button"></div>
+                        </div>
+                    </div>
+                    <div id="rewards" style="display: none;">
+                        <p id="rewards-title" class="title"></p>
+                        <span id="rewards-desc"></span>
+                        <p id="rewards-text"></p>
+                        <div id="rewards-loot" class="ui segment"></div>
+                        <div id="btn-CRW">
+                            <div onclick="hideRewards();" class="ui bottom attached labeled icon closing button"><i
+                                    class="times icon"></i>Close (F)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <span id="exportBody"></span>
+        <!--GAME MESSAGE-->
+        <div class="ui basic modal" id="modal-1">
+            <div class="ui icon header">
+                <i class="info circle icon"></i>
+                <font id="message-title" class="title">Message</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui trs message">
+                    <div class="content">
+                        <p id="message-text">
+                        </p>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div id="closeMSG" class="ui cu button">
+                        <i class="remove icon"></i>Close </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--DESTROYCORE-->
+    <div class="ui basic modal" id="modal-2">
+        <div class="ui icon header">
+            <i class="big microchip icon"></i>
+            <font id="confirm-title" class="title">Destroy core confirmation</font>
+        </div>
+        <div class="centrer content">
+            <div class="ui icon message">
+                <div class="content">
+                    <h3 class="title">You will lose this item.</h3>
+                    <p id="Destroy-text"></p>
+
+                    <div id="DBTN" class="fluid ui rainbow buttons"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--NEWCORE-->
+    <div class="ui basic modal" id="modal-4">
+        <div class="ui icon header">
+            <i class="big microchip icon"></i>
+            <font id="confirm3-title" class="title">New core confirmation</font>
+        </div>
+        <div class="centrer content">
+            <div class="ui icon message">
+                <div class="content">
+                    <div class="ui equal width centered grid">
+                        <div class="equal width row">
+                            <div class="column">
+                                <p id="OldCore-text" style="text-align: right;"></p>
+                            </div>
+                            <div class="centered column">
+                                <center><br><br>Old <i class="arrow right icon"></i> New</center>
+                            </div>
+                            <div class="column">
+                                <p id="NewCore-text" style="text-align: left;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div id="confirm-btn" class="fluid ui cu buttons">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--NEW Relic-->
+    <div class="ui basic modal" id="modal-3">
+        <div class="ui icon header">
+            <i class="big microchip icon"></i>
+            <font id="confirm4-title" class="title">New Relic confirmation</font>
+        </div>
+        <div class="centrer content">
+            <div class="ui icon message">
+                <div class="content">
+                    <div class="ui equal width centered grid">
+                        <div class="equal width row">
+                            <div class="column">
+                                <p id="OldRelic-text" style="text-align: right;"></p>
+                            </div>
+                            <div class="centered column">
+                                <center><br><br>Old <i class="arrow right icon"></i> New</center>
+                            </div>
+                            <div class="column">
+                                <p id="NewRelic-text" style="text-align: left;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div id="confirm2-btn" class="fluid ui cu buttons">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--RESET-->
+    <div class="ui basic modal" id="modal-6">
+        <div class="ui icon header">
+            <font id="confirm2-title" class="title">Confirm reset</font>
+        </div>
+        <div class="centrer content">
+            <div class="ui icon message">
+                <div class="content">
+                    <p id="resetconfirm-text">Do you really want to reset all your stats ?</p>
+                </div>
+            </div>
+            <div class="fluid ui buttons">
+                <div id="confirmsell-btn" onclick="confirmReset();" class="ui cu button">
+                    <span class="blanc"><i class="check icon"></i> Yes </span></div>
+                <div onclick="hideModals();" class="ui cu2 button">
+                    <span class="blanc"><i class="remove icon"></i> No </span></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-database.js"></script>
+<script type="text/javascript">
+    if (screen.width <= 1280) {
+        location.href = "./mobile.html";
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+<script src="DATA/semantic.min.js"></script>
+<script src="DATA/checkbox.min.js"></script>
+<script src="DATA/accordion.min.js"></script>
+<script src="DATA/numeral.min.js"></script>
+<script src="DATA/progress.min.js"></script>
+<script src="utils.js?v=1.5"></script>
+<script src="core.js?v=1.5"></script>
+
+</html>

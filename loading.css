@@ -1,0 +1,85 @@
+.loading-text {
+    margin-top: 60%!important;
+    font-size: 1.5em;
+    transform-origin: 50% 100%;
+    transform: perspective(20em) rotateX(-25deg);
+}
+
+.loading-text:after {
+    white-space: pre;
+    content: "Loading AlphaRPG";
+    animation: lds-text 1.5s linear infinite;
+}
+
+@keyframes lds-text {
+    25% {
+        content: "Loading AlphaRPG. \A";
+    }
+
+    50% {
+        content: "Loading AlphaRPG.. \A";
+    }
+
+    75% {
+        content: "Loading AlphaRPG... \A";
+    }
+}
+
+.spinner {
+    position: relative;
+    margin: auto;
+    box-sizing: border-box;
+    background-clip: padding-box;
+    width: 22em;
+    height: 22em;
+    border-radius: 15em;
+    border: 0.2em solid var(--darkgrey);
+    transform-origin: 50% 60%;
+    transform: perspective(20em) rotateX(50deg);
+    animation: spinner-wiggle 1.5s infinite;
+}
+
+.spinner:before,
+.spinner:after {
+    content: "";
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    box-sizing: inherit;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    opacity: .05;
+    border: inherit;
+    border-color: transparent;
+    animation: spinner-spin 1.5s cubic-bezier(0.6, 0.2, 0, 0.8) infinite, spinner-fade 1.5s linear infinite;
+}
+
+.spinner:before {
+    border-top-color: var(--green);
+}
+
+.spinner:after {
+    border-top-color: var(--green);
+    animation-delay: 0.5s;
+}
+
+@keyframes spinner-spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner-fade {
+    20% {
+        opacity: .1;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: .1;
+    }
+}
