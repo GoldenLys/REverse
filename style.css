@@ -328,7 +328,7 @@ body {
   /* background-attachment: fixed; */
   /* background-size: contain; */
   font-size: 100%;
-  font-family: 'Signika', sans-serif!important;
+  font-family: 'Noto Sans HK', sans-serif;
   background: -webkit-canvas(q);
 }
 
@@ -337,7 +337,7 @@ body {
 .ui.message,
 .ui.message .header,
 .ui.button {
-  font-family: 'Signika', sans-serif!important;
+  font-family: 'Noto Sans HK', sans-serif;
 }
 
 .ui.button {
@@ -750,13 +750,27 @@ div#C5.active {
   margin-right: 0em !important;
 }
 
-.matrix-canvas {
-  display: block;
+.overlay {
+  pointer-events: none;
   position: absolute;
-  top: 0;
-  bottom: 0;
+  height: 100%;
+  width: 100%;
   left: 0;
-  right: 0;
+  top: 0;
+}
+
+.container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+
+.controls {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  
 }
 
 .rainbowbtn {

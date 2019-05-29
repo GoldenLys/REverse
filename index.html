@@ -10,9 +10,9 @@
     <link rel="stylesheet" type="text/css" href="DATA/accordion.min.css" />
     <link rel="shortcut icon" type="image/x-icon" href="DATA/favicon.ico" />
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com/css?family=Signika&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.5" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.5" />
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.51" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.51" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <style>
         #attack-btn {
@@ -25,8 +25,9 @@
     </style>
 </head>
 
-<body id="body" class="noselect" oncontextmenu="return true;" onresize="UpdateCanvas();">
-    <canvas class="matrix-canvas" id="q" style="display: none;"></canvas>
+<body id="body" class="noselect" oncontextmenu="return true;"> 
+<div id="container" class="container">
+  <div id="output" class="container"></div></div><div style="display: none;" id="controls" class="controls"></div>
     <div id="loading">
         <div class="ui equal width center aligned padded grid">
             <div class="row">
@@ -64,12 +65,11 @@
                             </div>
                         </div>
                     </div>
-                    <br>
-                </div>
+                
                 <div class="fluid ui buttons">
                     <button id="UpdateName" class="ui rainbow button">Start</button>
-                </div>
-                <span id="namehelp"></span>
+                </div><span id="namehelp"></span></div>
+                
         </div>
 
         <div id="CATEGORIE-1" style="display: none;">
@@ -671,8 +671,7 @@
                                                         </div>
                                                         <div id="themeBTN3" onclick="ThemeDefine(3);"
                                                             class="ui rainbow button">
-                                                            <i class="large bgtextcolor square icon"></i>Set falling
-                                                            text</div>
+                                                            <i class="large bgtextcolor square icon"></i>Set secondary background</div>
                                                         <div id="themeBTN4" onclick="ThemeDefine(4);"
                                                             class="ui rainbow button">
                                                             <i class="large Normal square icon"></i>Set text</div>
@@ -884,7 +883,7 @@
 <script src="DATA/accordion.min.js"></script>
 <script src="DATA/numeral.min.js"></script>
 <script src="DATA/progress.min.js"></script>
-<script src="utils.js?v=1.5"></script>
-<script src="core.js?v=1.5"></script>
-
+<script src="utils.js?v=1.51"></script>
+<script src="core.js?v=1.51"></script>
+<script src="js/index.js"></script>
 </html>

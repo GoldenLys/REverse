@@ -175,52 +175,6 @@ function toHHMMSS(id) {
   return time;
 }
 
-//MATRIX BACKGROUND
-
-var font_size = 20;
-document.getElementById("q").height = window.innerHeight;
-document.getElementById("q").width = window.innerWidth;
-var drops = [];
-for (var x = 0; x < $("#q").get(0).width / font_size; x++)
-  drops[x] = 1;
-
-function draw() {
-  var c = $("#q").get(0);
-  var ctx = $("#q").get(0).getContext("2d");
-  ctx.fillStyle = $("*").css("--black2");
-  ctx.fillRect(0, 0, c.width, c.height);
-  ctx.fillStyle = $("*").css("--green2");
-  ctx.font = font_size + "px Ubuntu";
-  for (var i = 0; i < drops.length; i++) {
-    var TRX = ['▢'];
-    var text = TRX[Math.floor(Math.random() * TRX.length)];
-    ctx.fillText(text, i * font_size, drops[i] * font_size);
-    if (drops[i] * font_size > c.height && Math.random() > 0.95) drops[i] = 0;
-    drops[i]++;
-  }
-}
-
-function UpdateCanvas() {
-  var c = $("#q").get(0);
-  var ctx = $("#q").get(0).getContext("2d");
-  document.getElementById("q").height = window.innerHeight;
-  document.getElementById("q").width = window.innerWidth;
-  ctx.fillStyle = $("*").css("--black1");
-  ctx.fillRect(0, 0, c.width, c.height);
-  for (var x = 0; x < $("#q").get(0).width / font_size; x++) drops[x] = 1;
-  if (window.innerWidth < 1000) {
-    $("#evomobile").show();
-    $("#evomobile2").show();
-    $("#container").removeClass("grid");
-    $("#EvolutionsTables").removeClass("overflowTable");
-  } else {
-    $("#evomobile").hide();
-    $("#evomobile2").hide();
-    $("#container").addClass("grid");
-    $("#EvolutionsTables").addClass("overflowTable");
-  }
-}
-
 var config = {
   apiKey: "AIzaSyAsKlY89gHACvQHywLv04xtxPBvhRGoNYo",
   authDomain: "matrix-731a7.firebaseapp.com",
@@ -268,7 +222,7 @@ function writeUserData(userId) {
 }
 
 function NewUserData(old) {
-  if (location.href.match(/(goldenlys.github.io).*/) && old != "Default" && old == Game.username) {
+  if (old != "Default" && old == Game.username) {
     firebase.database().ref('users/' + old).set(null);
     Game.username = "Default";
     Backup = "Default";
@@ -796,7 +750,7 @@ function GetEXPPercent() {
 
 function ResetTheme(code) {
   if (code != 0) {
-    Game.Theme = ["#00ff0d", "#0d0d0d73", "#005204", "#FFFFFF", "#26262680", "#262626", "#0d0d0d"];
+    Game.Theme = ["#00ff0d", "#0d0d0d73", "#005204", "#FFFFFF", "#262626cc", "#262626", "#0d0d0d"];
   }
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
   document.documentElement.style.setProperty('--black2', Game.Theme[1]);
@@ -805,6 +759,7 @@ function ResetTheme(code) {
   document.documentElement.style.setProperty('--darkgrey5', Game.Theme[4]);
   document.documentElement.style.setProperty('--darkgrey', Game.Theme[5]);
   document.documentElement.style.setProperty('--black', Game.Theme[6]);
+
   if (code != 1) {
     save();
   }
@@ -816,7 +771,7 @@ function ThemeDefine(id) {
     document.documentElement.style.setProperty('--green', Game.Theme[0]);
   }
   if (id == 2) {
-    Game.Theme[1] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val()) + "73";
+    Game.Theme[1] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
     Game.Theme[6] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
     document.documentElement.style.setProperty('--black2', Game.Theme[1]);
     document.documentElement.style.setProperty('--black', Game.Theme[6]);
@@ -824,13 +779,15 @@ function ThemeDefine(id) {
   if (id == 3) {
     Game.Theme[2] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
     document.documentElement.style.setProperty('--green2', Game.Theme[2]);
+    save();
+    location.reload();
   }
   if (id == 4) {
     Game.Theme[3] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
     document.documentElement.style.setProperty('--white', Game.Theme[3]);
   }
   if (id == 5) {
-    Game.Theme[4] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val()) + "80";
+    Game.Theme[4] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val()) + "cc";
     Game.Theme[5] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
     document.documentElement.style.setProperty('--darkgrey5', Game.Theme[4]);
     document.documentElement.style.setProperty('--darkgrey', Game.Theme[5]);
