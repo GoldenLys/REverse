@@ -1778,7 +1778,7 @@ dat.GUI = dat.gui.GUI = function (e, a, c, d, f, b, n, h, j, m, l, o, y, g, i) {
     count: 1,
     xPos: 0,
     yPos: 200,
-    zOffset: 120,
+    zOffset: 100,
     diffuse: $("*").css("--green2"),
     ambient: $("*").css("--black"),
     pickedup: true,

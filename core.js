@@ -103,6 +103,11 @@ var Missions = {
   18: ["Vampire\'s Manor", 'One of the vampires to confess the location of a vampire hideout, you will surely find informations there.', 32, 1, 10, 1000, 0, 9500, 14, 17],
   19: ["Funeral Chamber of the Manor", 'It seems to be the right place, it\'s full of vampires and one of them emits a strong power.', 32, 1, 10, 1000, 0, 9500, 14, 18],
   20: ["The New World", 'The city is now in peace, you follow the Red River to continue the exploration of this new world.', 33, 1, 10, 1000, 0, 9500, 15, 19],
+  21: ["####", "####", 34, 1, 10, 1000, 0, 9500, 16, 20],
+  22: ["####", "####", 34, 1, 10, 1000, 0, 9500, 16, 21],
+  23: ["Vampire\'s Castle", '####', 35, 2, 10, 5, 0, 9500, 11, 22],
+  24: ["Vampire\'s Castle - Tower", '####', 35, 2, 25, 10, 0, 9850, 11, 23],
+  25: ["Vampire\'s Castle - Core", '####', 35, 2, 50, 25, 0, 9850, 11, 24],
   //NAME, DESC, LEVEL, TYPE, REQ KILLS, EXP, REWARD TYPE, QUALITY, LOCATION, REQ MISSION
 };
 var Ennemies = {
@@ -122,11 +127,11 @@ var Ennemies = {
   13: ["Lesser Vampire", "Thirsty Lesser Vampire", "Angry Lesser Vampire", "Bloody Lesser Vampire"],
   14: ["Higher Vampire", "Noble Vampire", "Angry Noble Vampire", "Bloody Higher Vampire"],
   15: ["Squirrel", "Boar", "Deer", "Salmon", "Carp"],
-  16: ["TEST MOB"],
-  17: ["TEST MOB"],
+  16: ["####"],
+  17: ["Pure Blood Vampire", "Noble Vampire", "Vampire Knight", "Vampire Count"],
 };
 
-var BossNames = ['Pure Spirit', 'Fairy Queen', 'Ancestral Bear', 'Wanted Criminal', 'Yeti', 'Rat Snake', 'Cerberus', 'Demon Lord', 'Ghoul', 'Dragon', 'Ifrit', 'Demon Lord', 'Devil', 'Captain of the Elysian Guard', 'Higher Vampire', "Pure Blood Vampire", "Crocodile", "", "Dhampir"];
+var BossNames = ['Pure Spirit', 'Fairy Queen', 'Ancestral Bear', 'Wanted Criminal', 'Yeti', 'Rat Snake', 'Cerberus', 'Demon Lord', 'Ghoul', 'Dragon', 'Ifrit', 'Demon Lord', 'Devil', 'Captain of the Elysian Guard', 'Higher Vampire', "Pure Blood Vampire", "Crocodile", "####", "Dhampir King"];
 
 var POS = {
   0: ["The White Light", 1, 4, 0, 0], //NAME, MINLEVEL, MAXLEVEL, MAX DROP QUALITY, MISSION COMPLETE
@@ -397,41 +402,14 @@ function UpdateGame() {
     GenEnnemy();
   }
   if (Game.Level < Game.MaxLevel && Game.FNMission <= Game.TotalMissions) {
-    if (Game.Level < 30) {
-      Game.xp[1] = (25 * Game.Level) + (500 * (Game.Level / 10));
-    } else {
-      Game.xp[1] = (25 * Game.Level) + (500 * (Game.Level / 10));
-    }
-    var exp2 = 0; //ADD EXP REQUIRED FOR EACH LEVEL
-    for (T = 0; T < (Game.Level + 1); T++) {
-      if (T < 30) {
-        exp2 += (25 * (T)) + (500 * ((T) / 10));
-      } else {
-        exp2 += (25 * (T)) + (500 * ((T) / 10));
-      }
-      Game.xp[1] += exp2;
-    }
 
-    var exp = 0; //BASE PLAYER EXP
-    if ((Game.Level) < 30) {
-      exp = (25 * (Game.Level)) + (500 * ((Game.Level) / 10));
-    } else {
-      exp = (25 * (Game.Level)) + (500 * ((Game.Level) / 10));
-    }
+Game.xp[1] = CalcEXP(Game.Level);
 
-
-    for (T = 0; T < (Game.Level); T++) {
-      if (T < 30) {
-        exp += (25 * (T)) + (500 * ((T) / 10));
-      } else {
-        exp += (25 * (T)) + (500 * ((T) / 10));
-      }
-    }
     if (Game.xp[0] > Game.xp[1] && Game.Level == POS[Game.Location][2]) {
-      Game.xp[0] = exp;
+      Game.xp[0] = CalcEXP(Game.Level-1);
     }
-    if (Game.xp[0] < exp) {
-      Game.xp[0] = exp;
+    if (Game.xp[0] < CalcEXP(Game.Level-1) && Game.Level > 1) {
+      Game.xp[0] = CalcEXP(Game.Level-1);
     }
     if (Game.core1[4] > Game.Level) {
       Game.core1[4] = 1;
@@ -638,7 +616,6 @@ function UpdateUI() {
   }
   $("#LIFEMULTVAL").html(LPM);
   $("#ShardsNumber").html(fix(Game.Shards, 7) + "<i class='bleu dna icon'></i></span> Fragments");
-  $("#HUDShards").html(fix(Game.Shards, 7) + "<i class='bleu dna icon'></i></span>Fragments");
   if (url.match(/mobile/gi)) {
     BR = " ";
   } else {
@@ -658,6 +635,7 @@ function UpdateUI() {
   } else {
     WTText = "";
   }
+  if (Game.Shards > 1) { $("#SHARDSRW").html("<span class='bleu'>" + fix(Game.Shards, 7) + "</span><i class='bleu dna icon'></i> Fragments available."); } else { $("#SHARDSRW").html(""); }
   if (Game.MaxLevel > Game.Level || Game.FNMission < Game.TotalMissions) {
     $("#PlayerLevel").html(WTText + "Level " + fix(Game.Level, 4));
     $("#PlayerXP").show();
@@ -1280,7 +1258,7 @@ function GenEnnemy() {
 
   TIER = Game.Ranking;
   EChance = random(0, 700);
-  if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+  if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
     EChance = random(300, 700);
   }
   if (Missions[Game.MissionStarted[1]][3] == 2) {
@@ -1301,7 +1279,7 @@ function GenEnnemy() {
       if (Game.Ranking > 0) {
         EnnemyLevel = random((Game.Ranking * 0.85), Game.Ranking);
       }
-      if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+      if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
         EnnemyLevel = random(TIER - 5, TIER);
       }
     }
@@ -1318,7 +1296,7 @@ function GenEnnemy() {
       if (Game.Ranking > 1) {
         EnnemyLevel = random((Game.Ranking * 0.95), Game.Ranking);
       }
-      if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+      if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
         EnnemyLevel = random(TIER - 2, TIER + 5);
       }
     }
@@ -1335,7 +1313,7 @@ function GenEnnemy() {
       if (Game.Ranking > 1) {
         EnnemyLevel = random(Game.Ranking, Game.Ranking + 1);
       }
-      if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+      if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
         EnnemyLevel = random(TIER - 1, TIER + 10);
       }
     }
@@ -1352,7 +1330,7 @@ function GenEnnemy() {
       if (Game.Ranking > 1) {
         EnnemyLevel = random(Game.Ranking + 1, Game.Ranking + 2);
       }
-      if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+      if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
         EnnemyLevel = random(TIER + 5, TIER + 15);
       }
       if (Game.Level < 10) {
@@ -1372,7 +1350,7 @@ function GenEnnemy() {
       if (Game.Ranking > 1) {
         EnnemyLevel = random(Game.Ranking + 2, Game.Ranking + 4);
       }
-      if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+      if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
         EnnemyLevel = random(TIER + 15, TIER + 30);
       }
       if (Game.Level < 10) {
@@ -1400,7 +1378,7 @@ function GenEnnemy() {
         if (Game.Level < 10) {
           EnnemyPowerMult = PowerMult[2];
         }
-        if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+        if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
           EnnemyLevel = random(TIER + 20, TIER + 40);
           randomluck = random(1, 5);
           if (randomluck >= 4) {
@@ -1417,7 +1395,7 @@ function GenEnnemy() {
       EnnemyLevel = 1;
     }
 
-    if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+    if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       EnnemyLevel = EnnemyLevel / 10;
       if (EnnemyLevel > Game.Level + 20) {
         EnnemyLevel = Game.Level + 20;
@@ -1493,6 +1471,9 @@ function WinFight() {
   Game.CoreLife = Game.CoreBaseLife;
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 1) {
     Game.MissionStarted[2]++;
+    CORELOOT = 101;
+    RELICLOOT = 101;
+    KEYLOOT = 101;
   }
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
     Game.MissionStarted[2]++;
@@ -2011,7 +1992,7 @@ function NewRelic(luck) {
     }
   }
 
-  if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+  if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
     if (Game.Ennemy[1] <= 4 && luck < 7001) {
       luck = 7001;
     }
@@ -2128,7 +2109,7 @@ function NewRelic(luck) {
   if (Game.Level > 10) {
     RandomT = random(1, 3);
   }
-  if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+  if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
     RandomT = random(1, 4);
   }
 
@@ -2194,7 +2175,7 @@ function newItem(type, level, luck) {
     }
   }
 
-  if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+  if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
     if (Game.Ennemy[1] <= 4 && luck < 7001) {
       luck = 7001;
     }
@@ -2317,7 +2298,7 @@ function newItem(type, level, luck) {
   if (level < 1) {
     level = 1;
   }
-  if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+  if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
     level += random(0, item.type);
     level = level / 10;
     if (level > Game.MaxScore) {
@@ -2338,7 +2319,7 @@ function newItem(type, level, luck) {
     item.level = level;
     item.object = 0;
     item.ups = GetMaxLevel(item.class);
-    if (Game.MaxLevel >= Game.Level && Game.FNMission >= 11) {
+    if (Game.MaxLevel >= Game.Level && Game.FNMission >= Game.TotalMissions) {
       item.life = Math.floor(random((level * 10) * (Mult[item.type] * 0.75) + 100, (level * 10) * Mult[item.type] + 100));
       item.power = Math.floor(random((level * 5) * (Mult[item.type] * 0.75), (level * 5) * Mult[item.type] + 5));
     } else {
@@ -2380,7 +2361,7 @@ function newItem(type, level, luck) {
       }
     }
 
-    if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+    if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       if (Game.Ennemy[1] <= 4 && luck < 15001) {
         luck = 15001;
       }
@@ -2956,7 +2937,7 @@ function UPCore(core, type, nb) {
     }
     id[5]++;
 
-    if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+    if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       if (Game.inventory[nb].type == 1) {
         if ((id[4] + 0.1) <= Game.MaxScore) {
           id[4] += 0.1;
@@ -2965,7 +2946,7 @@ function UPCore(core, type, nb) {
         }
       }
     }
-    if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+    if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       if (Game.inventory[nb].type == 2) {
         if ((id[4] + 0.2) <= Game.MaxScore) {
           id[4] += 0.2;
@@ -2974,7 +2955,7 @@ function UPCore(core, type, nb) {
         }
       }
     }
-    if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+    if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       if (Game.inventory[nb].type == 3) {
         if ((id[4] + 0.3) <= Game.MaxScore) {
           id[4] += 0.3;
@@ -2983,7 +2964,7 @@ function UPCore(core, type, nb) {
         }
       }
     }
-    if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+    if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       if (Game.inventory[nb].type == 4) {
         if ((id[4] + 0.4) <= Game.MaxScore) {
           id[4] += 0.4;
@@ -2992,7 +2973,7 @@ function UPCore(core, type, nb) {
         }
       }
     }
-    if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+    if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       if (Game.inventory[nb].type == 5) {
         if ((id[4] + 0.5) <= Game.MaxScore) {
           id[4] += 0.5;
@@ -3001,7 +2982,7 @@ function UPCore(core, type, nb) {
         }
       }
     }
-    if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+    if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       if (Game.inventory[nb].type == 6) {
         if ((id[4] + 0.6) <= Game.MaxScore) {
           id[4] += 0.6;
@@ -3010,7 +2991,7 @@ function UPCore(core, type, nb) {
         }
       }
     }
-    if (Game.Level >= Game.MaxLevel && Game.FNMission >= 11) {
+    if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       if (Game.inventory[nb].type == 7) {
         if ((id[4] + 0.7) <= Game.MaxScore) {
           id[4] += 0.7;
@@ -3137,7 +3118,7 @@ function BuyLifeMult() {
 //WORLD TIER FUNCTIONS
 
 function ChangeWT() {
-  if (Game.Level >= Game.MaxLevel && Game.Ranking >= (((25 + (Game.Simulation * 5)) * 10) - 5) && Game.FNMission >= 11) {
+  if (Game.Level >= Game.MaxLevel && Game.Ranking >= (((25 + (Game.Simulation * 5)) * 10) - 5) && Game.FNMission >= Game.TotalMissions) {
     Game.Simulation++;
     //RESET STATS FOR CLEAN WT
     Game.xp = [0, 0, 0];
@@ -3165,6 +3146,18 @@ function ChangeWT() {
     Game.MissionsCompleted = [];
     Game.Location = 0;
     Game.MissionStarted = [false, 0, 0];
+    Game.ATR[0] = 0;
+    Game.ATR[1] = 0;
+    Game.ATR[2] = 0;
+    Game.ATR[3] = 0;
+    Game.ATR[4] = 0;
+    Game.ATR[5] = 0;
+    $("#RM1").checkbox("uncheck");
+    $("#RM2").checkbox("uncheck");
+    $("#RM3").checkbox("uncheck");
+    $("#RM4").checkbox("uncheck");
+    $("#RM5").checkbox("uncheck");
+    $("#RM6").checkbox("uncheck");
     hideRewards();
     hideMenus();
     hideModals();

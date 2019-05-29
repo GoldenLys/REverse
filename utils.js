@@ -238,7 +238,7 @@ function NewUserData(old) {
 function ReadDB() {
   var ref = firebase.database().ref("users");
   var CXD = firebase.database().ref("codes");
-  CXD.on("child_added", function () {});
+  CXD.on("child_added", function () { });
   Game.Leader = 0;
   id = 0;
   ResetLeaderBoard();
@@ -736,13 +736,14 @@ function GetPlayerHPPercent() {
 }
 
 function GetEXPPercent() {
-  value = (100 / Game.xp[1]) * Game.xp[0];
+  value = (100 * (Game.xp[0] - CalcEXP(Game.Level-1))) / (CalcEXP(Game.Level) - CalcEXP(Game.Level-1));
   if (value < 1) {
     value = 1;
   }
   if (value > 100) {
     value = 100;
   }
+  if (value > 99 && Game.xp[0] < Game.xp[1]) { value = 99; }
   return value;
 }
 
@@ -1124,7 +1125,7 @@ function GenExplorationMenu() {
       BTN = "";
     }
 
-    if (POS[E][1] < Game.Level + 2 && E != 11) {
+    if (POS[E][1] < Game.Level + 2 && E != 11 && E != 17) {
       $("#exploration").append(
         "<div class='ui segment'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + POS[E][0] + "</h3>" +
         "<div class='ui clearing divider'></div><div class='ui horizontal segments'><div class='ui segment'>" +
@@ -1364,4 +1365,24 @@ function fullColorHex(r, g, b) {
   var green = rgbToHex(g);
   var blue = rgbToHex(b);
   return red + green + blue;
+}
+
+function CalcEXP(level) {
+  var exp = 0;
+  if (level < 30) {
+    exp = (level * 25) + (500 * (level / 10));
+  } else {
+    exp = (level * 25) + (1000 * (level / 10));
+  }
+
+  for (T = 0; T < (level + 1); T++) {
+    if (T < 30) {
+      exp += exp * (15 / 100);
+    } else {
+      exp += exp * (25 / 100);
+    }
+  }
+  if (level == 0) { exp = 0; }
+  if (level == 1) { exp = 100; }
+  return Math.round(exp);
 }
