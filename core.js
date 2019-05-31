@@ -1462,8 +1462,8 @@ function WinFight() {
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 1) {
     Game.MissionStarted[2]++;
     CORELOOT = 101;
-    RELICLOOT = 101;
-    KEYLOOT = 101;
+    RELICLOOT = 10;
+    KEYLOOT = 10;
   }
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
     Game.MissionStarted[2]++;
@@ -1492,9 +1492,7 @@ function WinFight() {
   }
 
   if (Game.MissionStarted[0] == false || Missions[Game.MissionStarted[1]][3] == 2) {
-    if (Game.Ennemy[1] >= 6) {
-      CORELOOT = 1;
-    }
+    if (Game.Ennemy[1] >= 6 && Game.MissionStarted[0] == false) { CORELOOT = 1; }
     //CORE LOOT CHANCE
     var LOOTCHANCE1 = random(1, 100);
     if (LOOTCHANCE1 > 0 && LOOTCHANCE1 <= CORELOOT && Game.isInFight != 2) {
