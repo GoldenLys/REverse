@@ -1370,9 +1370,9 @@ function fullColorHex(r, g, b) {
 function CalcEXP(level) {
   var exp = 0;
   if (level < 30) {
-    exp = (level * 25) + (500 * (level / 10));
+    exp = (level * 25) + (500 * (level / 3.5));
   } else {
-    exp = (level * 25) + (1000 * (level / 10));
+    exp = (level * 25) + (1000 * (level / 2.5));
   }
 
   for (T = 0; T < (level + 1); T++) {
