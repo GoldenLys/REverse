@@ -198,7 +198,7 @@ function filter(f) {
 }
 
 function ResetLeaderBoard() {
-  $("#LEADERBOARD").html("<thead><tr class='shadow'><th class='ui center aligned'></th><th class='ui center aligned'>Name</th><th class='ui center aligned'><a onclick='filter(1);'>Ranking</a></th><th class='ui center aligned'><a onclick='filter(0);'>Simulation</a></th><th class='ui center aligned'>Power</th><th class='ui center aligned'>Life</th><th class='ui center aligned'>Ratio (K/D)</th>");
+  $("#LEADERBOARD").html("<thead><tr class='shadow'><th class='ui center aligned'></th><th class='ui center aligned'>Name</th><th class='ui center aligned'><a onclick='filter(1);'>Ranking</a></th><th class='ui center aligned'><a onclick='filter(0);'>Dimension</a></th><th class='ui center aligned'>Power</th><th class='ui center aligned'>Life</th><th class='ui center aligned'>Ratio (K/D)</th>");
 }
 
 function writeUserData(userId) {
@@ -820,7 +820,7 @@ function CheckCode(debug) {
         NewUserData(Game.username);
       }
       if (code === codes[2]) {
-        $("#codereturn").html("Code Accepted, raising all core slots by 1.");
+        $("#codereturn").html("Code Accepted, raising all Armor slots by 1.");
         for (var UPC = 0; UPC < 4; UPC++) {
           Game.MaxUPC[UPC]++;
         }
@@ -913,7 +913,7 @@ function TOPNEXT() {
 }
 
 function helpScore() {
-  showmessage("Score Tutorial", "1) It's worked out from the cores you have, so try to pick the cores that gets you the highest score possible. That way you'll progress through the Simulations much faster, even if you take a slight hit on your stats. <br><br>2) Your cores dictates the score for the loot that drops.<br><br>3) Your score is limited by your actual Simulation and the maximum score can be seen in the statistics.");
+  showmessage("Score Tutorial", "1) It's worked out from the Armors you have, so try to pick the Armors that gets you the highest score possible. That way you'll progress through the Dimensions much faster, even if you take a slight hit on your stats. <br><br>2) Your total armor dictates the score for the loot that drops.<br><br>3) Your score is limited by your actual dimension and the maximum score can be seen in the statistics.");
 }
 
 function GotoMenu() {
@@ -995,7 +995,7 @@ function ShowScoreMenu() {
   } else {
     MTEXT = " <span class='desc'>(Escape)</span>";
   }
-  $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Simulation" + MTEXT);
+  $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Dimension" + MTEXT);
   Game.isInFight = 10;
   $("#gamemenu").hide();
   $("#prestige").show();
@@ -1125,7 +1125,7 @@ function GenExplorationMenu() {
       BTN = "";
     }
 
-    if (POS[E][1] < Game.Level + 2 && E != 11 && E != 17) {
+    if (POS[E][1] < Game.Level + 1 && E != 11 && E != 17) {
       $("#exploration").append(
         "<div class='ui segment'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + POS[E][0] + "</h3>" +
         "<div class='ui clearing divider'></div><div class='ui horizontal segments'><div class='ui segment'>" +
@@ -1155,7 +1155,7 @@ function GenMissions() {
       LEVEL = "";
     }
     if (Missions[M][6] == 2) {
-      TYPE = "OS";
+      TYPE = "Relic";
     }
 
     if (Missions[M][7] == 1) {

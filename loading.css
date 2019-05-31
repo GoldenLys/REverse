@@ -39,12 +39,11 @@
     animation: spinner-wiggle 1.5s infinite;
 }
 
-.spinner:before,
-.spinner:after {
+.spinner:before, .spinner:after {
     content: "";
     position: absolute;
-    left: -4px;
-    top: -4px;
+    left: -3px;
+    top: -3px;
     box-sizing: inherit;
     width: inherit;
     height: inherit;
@@ -52,7 +51,7 @@
     opacity: .05;
     border: inherit;
     border-color: transparent;
-    animation: spinner-spin 1.5s cubic-bezier(0.6, 0.2, 0, 0.8) infinite, spinner-fade 1.5s linear infinite;
+    animation: spinner-spin 1.5s cubic-bezier(0.8, 0.6, 0, 0.5) infinite, spinner-fade 1.5s linear infinite;
 }
 
 .spinner:before {

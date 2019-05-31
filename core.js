@@ -1,10 +1,11 @@
-// TUTORIAL TEXTS
+// TUTORIAL TEXTS - WHEN THE GAME WILL BE NEARLY FINISHED
 // ADDING STORY & MOBS
-// MONEY SYSTEM WITH SHOPS ?
-// NEW TYPE OF MISSIONS : GUILD PROMOTIONS, 2 ELITES & 1 BOSS TO PROMOTE TO F-A OR S Rank which will increase your rewards. (money/exp)
+// MONEY LOOTED ALONG WITH A SHOP SYSTEM ?
+// NEW MISSIONS - GUILD PROMOTIONS : 2 ELITES & 1 BOSS TO PROMOTE TO F-A OR S Rank which will increase your rewards. (money/exp)
+// SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
 
 var url = window.location.href;
-var version = "1.5";
+var version = "1.52";
 var loadState = 0;
 var codes = {};
 var REWARDSW8 = 0;
@@ -24,10 +25,10 @@ var Game = {
   username: "Default",
   lastCloudSave: 0,
   cores: [false, true, false, false, false],
-  core1: ["Basic Core", "Normal", 100, 10, 1, 0], //NAME, CLASS, LIFE, POWER, LEVEL, UPC
-  core2: ["Basic Core", "Normal", 100, 10, 1, 0],
-  core3: ["Basic Core", "Normal", 100, 10, 1, 0],
-  core4: ["Basic Core", "Normal", 100, 10, 1, 0],
+  core1: ["Basic Armor", "Normal", 100, 10, 1, 0], //NAME, CLASS, LIFE, POWER, LEVEL, UPC
+  core2: ["Basic Armor", "Normal", 100, 10, 1, 0],
+  core3: ["Basic Armor", "Normal", 100, 10, 1, 0],
+  core4: ["Basic Armor", "Normal", 100, 10, 1, 0],
   RLS: {//RELIC NAME, CLASS, TYPE, VALUE
     1: ["Alpha Relic", "Normal", 0, 0],
     2: ["Alpha Relic", "Normal", 0, 0],
@@ -85,29 +86,30 @@ var Missions = {
   0: ["White Light", 'You woke up in an unknown world where a white light dazzles you..<br> this place seems weird, you want to leave it as quick as possible.', 1, 1, 10, 200, 0, 1, 0, -1],
   1: ["Lost Path", 'You discovered a little path hidden in the shadows<br> and decided to explore it in the hope of finding informations to return in your world.', 4, 1, 10, 500, 0, 2000, 1, 0],
   2: ["Shadow Forest", 'You arrive at the end of the path and now enter a dark forest..<br>There seems to be light in the distance.', 7, 1, 10, 750, 0, 2000, 2, 1],
-  3: ["Galarius City", 'You reach a city where different races seem to live.<br> you can see humans, elves and even dwarves.<br>Maybe you will find help here.', 9, 1, 10, 1000, 0, 5000, 3, 2],
-  4: ["Endless mountain", 'One of the locals advises you to go north and reach the capital through the mountains..<br> So here you are in the so called endless mountain.', 12, 1, 10, 1250, 0, 5000, 4, 3],
-  5: ["Dark Cave", 'You arrive at the entrance of a cave,<br> it seems narrow but it is much faster and less dangerous than the mountain.', 15, 1, 10, 1500, 0, 7000, 5, 4],
+  3: ["Galarius City", 'You reach a city with a lot of different races.<br>You can see humans, elves and even dwarves.<br>Maybe you will find help here or just someone that can explain you how to get back to your world.', 9, 1, 10, 1000, 0, 5000, 3, 2],
+  4: ["Endless mountain", 'One of the locals advises you to go north and reach the royal capital through the mountains..<br> So here you are in the so called endless mountain.', 12, 1, 10, 1250, 0, 5000, 4, 3],
+  5: ["Dark Cave", 'You arrive at the entrance of a dark cave,<br> it seems narrow but it is much faster and less dangerous than the mountain.', 15, 1, 10, 1500, 0, 7000, 5, 4],
   6: ["Empire Road", 'You finally reached the end of this cave, tired but in one piece,<br> you can already see a big city at the end of the road..', 19, 1, 10, 2000, 0, 7000, 6, 5],
   7: ["Imperium City", 'You\'re now in the Capital, the king heard about your story and asked for an immediate hearing.', 22, 1, 10, 2500, 0, 7000, 7, 6],
   8: ["Central V", 'You discuss with the king to find a way to return to your world..<br>He tells you that the only way is the Red Portal but suddenly..<br> The city is attacked by the demon army, you need to get out of here quick.', 25, 1, 10, 3000, 0, 8500, 8, 7],
   9: ["The Red Portal", 'The red portal is near and it seems that the portal is really hot.. Burning like the hells gate. But you do not really have any other choice.', 27, 1, 10, 3250, 0, 8500, 9, 8],
-  10: ["Corrupted Dimension", 'You have successfully passed the portal.. but where are you now ?', 29, 1, 10, 3500, 0, 8500, 10, 9],
-  11: ["Corrupted Fortress", 'You see a huge fortress with nothing good inside, you must clean this place.', 30, 2, 10, 5, 0, 9500, 11, 10],
-  12: ["Corrupted Fortress - Basement", 'There is a door in the fortress which leads to another level, clean this place too.', 30, 2, 25, 10, 0, 9850, 11, 11],
-  13: ["Corrupted Fortress - Core", 'This is the last floor, the Core of the Fortress, where the corruption started.. Destroy it.', 30, 2, 50, 25, 0, 9850, 11, 12],
+  10: ["Corrupted World", 'You have successfully passed the portal.. but where are you now ?', 29, 1, 10, 3500, 0, 8500, 10, 9],
+  11: ["Corrupted Fortress", 'You see a huge fortress with nothing good inside, you must clean this place.', 30, 2, 10, 1, 0, 9500, 11, 10],
+  12: ["Corrupted Fortress - Basement", 'There is a door in the fortress which leads to another level, clean this place too.', 30, 2, 25, 3, 2, 9500, 11, 11],
+  13: ["Corrupted Fortress - Core", 'This is the last floor, the Core of the Fortress, where the corruption started.. Destroy it.', 30, 2, 50, 6, 0, 9500, 11, 12],
   14: ["The Black Portal", 'Just after you destroyed the fortress core, another portal appeared..<br><br> A new story begins.', 30, 1, 10, 2500, 0, 9500, 12, 10],
   15: ["The Black Portal 2", 'The passage becomes darker and darker, you keep moving forward and perceive a light in the distance..', 30, 1, 10, 1000, 0, 9500, 12, 14],
   16: ["Light of Hope City", 'You\'ve just landed in a new world, in the city of Elysia. This world seems normal, and so you decide to explore it.', 31, 1, 10, 1000, 0, 9500, 13, 15],
-  17: ["Red Moon in Hope City", 'The city is quite nice, there are only humans and so far peace reigns, you decide to visit a bit the city this night, after all .. This city is really big. Suddenly you hear a cry, you go to that shout, in the shadow of an alley you see a man sucking the blood of a woman .. a vampire is right there ..', 31, 1, 10, 1000, 0, 9500, 13, 16],
-  18: ["Vampire\'s Manor", 'One of the vampires to confess the location of a vampire hideout, you will surely find informations there.', 32, 1, 10, 1000, 0, 9500, 14, 17],
+  17: ["Red Moon in Hope City", 'The city is quite nice, there are only humans and so far peace reigns, you decide to visit a bit the city this night, after all ..<br> This city is really big. Suddenly you hear a cry, you go to that shout and in the shadow of an alley you see a man sucking the blood of a woman.. a vampire is right there.', 31, 1, 10, 1000, 0, 9500, 13, 16],
+  18: ["Vampire Manor", 'One of the vampires to confess the location of a vampire hideout, you will surely find informations there.', 32, 1, 10, 1000, 0, 9500, 14, 17],
   19: ["Funeral Chamber of the Manor", 'It seems to be the right place, it\'s full of vampires and one of them emits a strong power.', 32, 1, 10, 1000, 0, 9500, 14, 18],
   20: ["The New World", 'The city is now in peace, you follow the Red River to continue the exploration of this new world.', 33, 1, 10, 1000, 0, 9500, 15, 19],
-  21: ["####", "####", 34, 1, 10, 1000, 0, 9500, 16, 20],
-  22: ["####", "####", 34, 1, 10, 1000, 0, 9500, 16, 21],
-  23: ["Vampire\'s Castle", '####', 35, 2, 10, 5, 0, 9500, 11, 22],
-  24: ["Vampire\'s Castle - Tower", '####', 35, 2, 25, 10, 0, 9850, 11, 23],
-  25: ["Vampire\'s Castle - Core", '####', 35, 2, 50, 25, 0, 9850, 11, 24],
+  21: ["The Red River", 'During your daily hunt you find a merchant who keeps saying that the vampire attack in the city was only the beginning.<br> He also tells you that a rumor says that the castle is hidden in the mountains.<br> You will investigate on the spot to finally lead a quiet life', 33, 1, 10, 1000, 0, 9500, 15, 19],
+  22: ["The mountains", "After searching for 5 days in the mountains, you find a bridge filled with corpses ..<br>Without any hesitation you enter the territory of vampires.", 34, 1, 10, 1000, 0, 9500, 16, 20],
+  23: ["The Immortal Bridge", "These vampires seems a more difficult to kill than the ones in the city but you keep fighting and see a huge castle at the end of the bridge.", 34, 1, 10, 1000, 0, 9500, 16, 22],
+  24: ["Vampire Castle", 'This is it, the Vampire Castle.<br>Now that you have arrived here you take the opportunity to clean the castle.', 35, 2, 10, 2, 0, 9500, 11, 23],
+  25: ["Vampire Castle - Tower", 'You discover that one of the tower of the castle held prisoners, you must go and save them all.', 35, 2, 25, 5, 2, 9850, 11, 24],
+  26: ["Vampire Castle - Core", 'You have reached the heart of the castle, by destroying the heart, the world will finally be at peace.<br> But before this happy end, you will need to kill the remaining vampires.', 35, 2, 50, 10, 0, 9850, 11, 25],
   //NAME, DESC, LEVEL, TYPE, REQ KILLS, EXP, REWARD TYPE, QUALITY, LOCATION, REQ MISSION
 };
 var Ennemies = {
@@ -127,11 +129,11 @@ var Ennemies = {
   13: ["Lesser Vampire", "Thirsty Lesser Vampire", "Angry Lesser Vampire", "Bloody Lesser Vampire"],
   14: ["Higher Vampire", "Noble Vampire", "Angry Noble Vampire", "Bloody Higher Vampire"],
   15: ["Squirrel", "Boar", "Deer", "Salmon", "Carp"],
-  16: ["####"],
+  16: ["Vampire Guard", "Vampire Knight", "Higher Vampire", "Noble Vampire"],
   17: ["Pure Blood Vampire", "Noble Vampire", "Vampire Knight", "Vampire Count"],
 };
 
-var BossNames = ['Pure Spirit', 'Fairy Queen', 'Ancestral Bear', 'Wanted Criminal', 'Yeti', 'Rat Snake', 'Cerberus', 'Demon Lord', 'Ghoul', 'Dragon', 'Ifrit', 'Demon Lord', 'Devil', 'Captain of the Elysian Guard', 'Higher Vampire', "Pure Blood Vampire", "Crocodile", "####", "Dhampir King"];
+var BossNames = ['Pure Spirit', 'Fairy Queen', 'Ancestral Bear', 'Wanted Criminal', 'Yeti', 'Rat Snake', 'Cerberus', 'Demon Lord', 'Ghoul', 'Dragon', 'Ifrit', 'Demon Lord', 'Devil', 'Captain of the Elysian Guard', 'Higher Vampire', "Pure Blood Vampire", "Crocodile", "Commander of the Vampire Knights", "Dhampir King"];
 
 var POS = {
   0: ["The White Light", 1, 4, 0, 0], //NAME, MINLEVEL, MAXLEVEL, MAX DROP QUALITY, MISSION COMPLETE
@@ -144,13 +146,13 @@ var POS = {
   7: ["Imperium City", 22, 25, 3, 7],
   8: ["Central V", 25, 27, 4, 8],
   9: ["The Red Portal", 27, 29, 4, 9],
-  10: ["The Corrupted Dimension", 29, 30, 4, 10],
+  10: ["The Corrupted World", 29, 30, 4, 10],
   11: ["The Corrupted Fortress", 29, 30, 5, 10],
   12: ["The Black Portal", 30, 31, 5, 14],
   13: ["Hope City", 31, 32, 5, 14],
   14: ["Vampire\'s Manor", 32, 33, 5, 20],
   15: ["The Red River", 33, 34, 5, 20],
-  16: ["#####", 34, 35, 5, 20],
+  16: ["The Immortal Bridge", 34, 35, 5, 20],
   17: ["Vampire\'s Castle", 35, 35, 5, 20],
 };
 
@@ -403,13 +405,13 @@ function UpdateGame() {
   }
   if (Game.Level < Game.MaxLevel && Game.FNMission <= Game.TotalMissions) {
 
-Game.xp[1] = CalcEXP(Game.Level);
+    Game.xp[1] = CalcEXP(Game.Level);
 
     if (Game.xp[0] > Game.xp[1] && Game.Level == POS[Game.Location][2]) {
-      Game.xp[0] = CalcEXP(Game.Level-1);
+      Game.xp[0] = CalcEXP(Game.Level - 1);
     }
-    if (Game.xp[0] < CalcEXP(Game.Level-1) && Game.Level > 1) {
-      Game.xp[0] = CalcEXP(Game.Level-1);
+    if (Game.xp[0] < CalcEXP(Game.Level - 1) && Game.Level > 1) {
+      Game.xp[0] = CalcEXP(Game.Level - 1);
     }
     if (Game.core1[4] > Game.Level) {
       Game.core1[4] = 1;
@@ -598,44 +600,32 @@ Game.xp[1] = CalcEXP(Game.Level);
 function UpdateUI() {
   document.title = "AlphaRPG";
   if (((Game.xp[2] + Game.WTMult[2]) - Math.floor(Game.xp[2] + Game.WTMult[2])) < 1) {
-    XPM = fix(Game.xp[2] + Game.WTMult[2], 9);
+    $("#XPMULTVAL").html(fix(Game.xp[2] + Game.WTMult[2], 9));
   } else {
-    XPM = fix(Game.xp[2] + Game.WTMult[2], 10);
+    $("#XPMULTVAL").html(fix(Game.xp[2] + Game.WTMult[2], 10));
   }
-  $("#XPMULTVAL").html(XPM);
   if (((Game.PowerMult + Game.WTMult[0]) - Math.floor(Game.PowerMult + Game.WTMult[0])) < 1) {
-    PM = fix(Game.PowerMult + Game.WTMult[0], 9);
+    $("#POWERMULTVAL").html(fix(Game.PowerMult + Game.WTMult[0], 9));
   } else {
-    PM = fix(Game.PowerMult + Game.WTMult[0], 10);
+    $("#POWERMULTVAL").html(fix(Game.PowerMult + Game.WTMult[0], 10));
   }
-  $("#POWERMULTVAL").html(PM);
   if (((Game.LifeMult + Game.WTMult[1]) - Math.floor(Game.LifeMult + Game.WTMult[1])) < 1) {
-    LPM = fix(Game.LifeMult + Game.WTMult[1], 9);
+    $("#LIFEMULTVAL").html(fix(Game.LifeMult + Game.WTMult[1], 9));
   } else {
-    LPM = fix(Game.LifeMult + Game.WTMult[1], 10);
+    $("#LIFEMULTVAL").html(fix(Game.LifeMult + Game.WTMult[1], 10));
   }
-  $("#LIFEMULTVAL").html(LPM);
   $("#ShardsNumber").html(fix(Game.Shards, 7) + "<i class='bleu dna icon'></i></span> Fragments");
-  if (url.match(/mobile/gi)) {
-    BR = " ";
-  } else {
-    BR = "<br>";
-  }
   if (Game.username == "Default") {
     $("#menu").hide();
     $("#CATEGORIE-1").hide();
     $("#begin").show();
     Game.isInFight = 3;
   }
-  $("#PlayerXP").progress({
-    percent: GetEXPPercent()
-  });
+  $("#PlayerXP").progress({ percent: GetEXPPercent() });
   if (Game.Simulation > 1) {
     WTText = "<i class='globe icon'></i> " + Game.Simulation + "<br>";
-  } else {
-    WTText = "";
-  }
-  if (Game.Shards > 1) { $("#SHARDSRW").html("<span class='bleu'>" + fix(Game.Shards, 7) + "</span><i class='bleu dna icon'></i> Fragments available."); } else { $("#SHARDSRW").html(""); }
+  } else { WTText = ""; }
+  if (Game.Shards >= 3) { $("#SHARDSRW").html("<span class='bleu'>" + fix(Game.Shards, 7) + "</span><i class='bleu dna icon'></i> dimensional fragments available."); } else { $("#SHARDSRW").html(""); }
   if (Game.MaxLevel > Game.Level || Game.FNMission < Game.TotalMissions) {
     $("#PlayerLevel").html(WTText + "Level " + fix(Game.Level, 4));
     $("#PlayerXP").show();
@@ -647,7 +637,7 @@ function UpdateUI() {
   }
   if (Game.Level >= Game.MaxLevel && Game.Ranking >= (((25 + (Game.Simulation * 5)) * 10) - 5) && Game.FNMission >= Game.TotalMissions) {
     $("#WTBTN").show();
-    $("#WTUNLOCK").html("<span class='ShadowReset vert'>Simulation <i class='globe icon'></i>" + (Game.Simulation + 1) + " available.");
+    $("#WTUNLOCK").html("<span class='ShadowReset vert'>Dimension <i class='globe icon'></i>" + (Game.Simulation + 1) + " available.");
   } else {
     $("#WTBTN").hide();
     $("#WTUNLOCK").html("");
@@ -660,7 +650,7 @@ function UpdateUI() {
   $("#LIFEMULTPRICE").html("<span class='" + LIFEMCOL + "'>" + GetMultPrice(2) + "<i class='dna icon'></i></span>");
   var shards = Game.Level < Game.MaxLevel ? "0" : Math.round(((Game.Ranking - 100) * 750) / 3500);
   $("#WTShards").html("Score Required : <span class='vert'><i class='gem icon'></i>" + (((25 + (Game.Simulation * 5)) * 10) - 5) + "</span><br>Fragments reward : <span class='vert'>" + shards + "<i class='dna icon'></i></span>");
-  $("#CurrWT").html("Current Simulation : <span class='vert'><i class='globe icon'></i>" + Game.Simulation + "</span>");
+  $("#CurrWT").html("Current Dimension : <span class='vert'><i class='globe icon'></i>" + Game.Simulation + "</span>");
   $("#Defeat1").html(fix(Game.Defeated[1], 5));
   $("#Defeat2").html(fix(Game.Defeated[2], 5));
   $("#Defeat3").html(fix(Game.Defeated[3], 5));
@@ -715,7 +705,7 @@ function UpdateUI() {
     $("#core4stat").html("" + (Game.core4[2] - Game.core4K[1]) + "(+" + Game.core4K[1] + ")<i class='red heart icon'></i> " + (Game.core4[3] - Game.core4K[0]) + "(+" + Game.core4K[0] + ")<i class='blue crosshairs icon'></i>");
   }
   if (((Game.Level - 5) * 10) >= Game.Ranking) {
-    $("#LowScore").html("Using low level core, upgrade your cores.");
+    $("#LowScore").html("Using low level armor, upgrade your equipment.");
   } else {
     $("#LowScore").html("");
   }
@@ -762,7 +752,7 @@ function UpdateUI() {
     $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Inventory " + (Game.inventory.length) + "/" + Game.MaxInv + MTEXT);
   }
   $("#mcount").html(CompletedMissions + "/" + Game.TotalMissions + " Missions completed.");
-  if (Game.Level >= POS[Game.Location][2] && Game.MaxLevel > Game.Level && Game.FNMission <= Game.TotalMissions) {
+  if (Game.Level >= POS[Game.Location][2] && Game.MaxLevel > Game.Level && Game.FNMission <= Game.TotalMissions && Game.MissionStarted[0] == false) {
     $("#MaxPOSLVL").html("You\'ve reached the maximum level in this area, check the available missions.");
   } else {
     $("#MaxPOSLVL").html("");
@@ -849,31 +839,31 @@ function GenInventory() {
 
 function EquipItem(id, type) {
   if (type == 1) {
-    var CoreButton1 = Game.cores[1] == true ? "<div onClick='NewCore(1, " + id + ");' class='ui rainbow button'>Install core 1</div>" : "";
-    var CoreButton2 = Game.cores[2] == true ? "<div onClick='NewCore(2, " + id + ");' class='ui rainbow button'>Install core 2</div>" : "";
-    var CoreButton3 = Game.cores[3] == true ? "<div onClick='NewCore(3, " + id + ");' class='ui rainbow button'>Install core 3</div>" : "";
-    var CoreButton4 = Game.cores[4] == true ? "<div onClick='NewCore(4, " + id + ");' class='ui rainbow button'>Install core 4</div>" : "";
-    showmessage("Select a core", "<div class='fluid vertical ui buttons'>" + CoreButton1 + CoreButton2 + CoreButton3 + CoreButton4 + "</div>");
+    var CoreButton1 = Game.cores[1] == true ? "<div onClick='NewCore(1, " + id + ");' class='ui rainbow button'>Install Armor 1</div>" : "";
+    var CoreButton2 = Game.cores[2] == true ? "<div onClick='NewCore(2, " + id + ");' class='ui rainbow button'>Install Armor 2</div>" : "";
+    var CoreButton3 = Game.cores[3] == true ? "<div onClick='NewCore(3, " + id + ");' class='ui rainbow button'>Install Armor 3</div>" : "";
+    var CoreButton4 = Game.cores[4] == true ? "<div onClick='NewCore(4, " + id + ");' class='ui rainbow button'>Install Armor 4</div>" : "";
+    showmessage("Select an Armor Slot", "<div class='fluid vertical ui buttons'>" + CoreButton1 + CoreButton2 + CoreButton3 + CoreButton4 + "</div>");
   }
 
   if (type == 2) {
-    var CB1B = Game.cores[1] == true ? "<div onClick='UPCore(1, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade core 1</div>" : "";
-    var CB2B = Game.cores[2] == true ? "<div onClick='UPCore(2, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade core 2</div>" : "";
-    var CB3B = Game.cores[3] == true ? "<div onClick='UPCore(3, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade core 3</div>" : "";
-    var CB4B = Game.cores[4] == true ? "<div onClick='UPCore(4, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade core 4</div>" : "";
+    var CB1B = Game.cores[1] == true ? "<div onClick='UPCore(1, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Armor 1</div>" : "";
+    var CB2B = Game.cores[2] == true ? "<div onClick='UPCore(2, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Armor 2</div>" : "";
+    var CB3B = Game.cores[3] == true ? "<div onClick='UPCore(3, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Armor 3</div>" : "";
+    var CB4B = Game.cores[4] == true ? "<div onClick='UPCore(4, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Armor 4</div>" : "";
     if (Game.core1[5] >= Game.MaxUPC[0] && Game.cores[1] == true) {
-      CB1B = "<div class='ui disabled button'>Core 1 keys full.</div>";
+      CB1B = "<div class='ui disabled button'>Armor 1 keys full.</div>";
     }
     if (Game.core2[5] >= Game.MaxUPC[1] && Game.cores[2] == true) {
-      CB2B = "<div class='ui disabled button'>Core 2 keys full.</div>";
+      CB2B = "<div class='ui disabled button'>Armor 2 keys full.</div>";
     }
     if (Game.core3[5] >= Game.MaxUPC[2] && Game.cores[3] == true) {
-      CB3B = "<div class='ui disabled button'>Core 3 keys full.</div>";
+      CB3B = "<div class='ui disabled button'>Armor 3 keys full.</div>";
     }
     if (Game.core4[5] >= Game.MaxUPC[3] && Game.cores[4] == true) {
-      CB4B = "<div class='ui disabled button'>Core 4 keys full.</div>";
+      CB4B = "<div class='ui disabled button'>Armor 4 keys full.</div>";
     }
-    showmessage("Select a core", "<div class='fluid vertical ui buttons'>" + CB1B + CB2B + CB3B + CB4B + "</div>");
+    showmessage("Select an  Armor Slot", "<div class='fluid vertical ui buttons'>" + CB1B + CB2B + CB3B + CB4B + "</div>");
   }
 
   if (type == 3) {
@@ -1048,7 +1038,7 @@ function GenCores() {
     for (var L = 1; L < 5; L++) {
       if (Game.cores[L] == false) {
         $("#core5-title").attr("class", "author text locked");
-        $("#core5-title").html("Next Core at Lv. " + GetLevelRequired());
+        $("#core5-title").html("Next Armor unlocked at Lv. " + GetLevelRequired());
         $("#core5-text").html("");
         $("#core5-icon").attr("class", "classBarU");
       }
@@ -2315,7 +2305,7 @@ function newItem(type, level, luck) {
   }
 
   if (type == 0) { //GENERATE A CORE
-    item.name = CoreNames[[item.class]][Math.floor(Math.random() * CoreNames[item.class].length)] + " Core";
+    item.name = CoreNames[[item.class]][Math.floor(Math.random() * CoreNames[item.class].length)] + " Armor";
     item.level = level;
     item.object = 0;
     item.ups = GetMaxLevel(item.class);
@@ -2582,9 +2572,9 @@ function NewCore(id, n) {
       "<span class='" + powercolor + "'>" + Game.inventory[n].power + "</span> <i class='blue crosshairs icon'></i>");
 
     if (screen.width >= 1280) {
-      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace core " + id + " <span class='vert'>(Y)</span></div>");
+      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace Armor " + id + " <span class='vert'>(Y)</span></div>");
     } else {
-      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'> Cancel</div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'> Replace core " + id + "</div>");
+      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'> Cancel</div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'> Replace Armor " + id + "</div>");
     }
     $("#modal-4").modal("show");
   } else {
@@ -2790,16 +2780,16 @@ function ConfirmDestroy(core) {
 
 function DestroyCore(core) {
   if (core == 1) {
-    Game.core1 = ["Basic Core", "Normal", 100 + (Game.Simulation * 5), 10 + (Game.Simulation * 1), 1];
+    Game.core1 = ["Basic Armor", "Normal", 100 + (Game.Simulation * 5), 10 + (Game.Simulation * 1), 1];
   }
   if (core == 2) {
-    Game.core2 = ["Basic Core", "Normal", 100 + (Game.Simulation * 5), 10 + (Game.Simulation * 1), 1];
+    Game.core2 = ["Basic Armor", "Normal", 100 + (Game.Simulation * 5), 10 + (Game.Simulation * 1), 1];
   }
   if (core == 3) {
-    Game.core3 = ["Basic Core", "Normal", 100 + (Game.Simulation * 5), 10 + (Game.Simulation * 1), 1];
+    Game.core3 = ["Basic Armor", "Normal", 100 + (Game.Simulation * 5), 10 + (Game.Simulation * 1), 1];
   }
   if (core == 4) {
-    Game.core4 = ["Basic Core", "Normal", 100 + (Game.Simulation * 5), 10 + (Game.Simulation * 1), 1];
+    Game.core4 = ["Basic Armor", "Normal", 100 + (Game.Simulation * 5), 10 + (Game.Simulation * 1), 1];
   }
   Game.MaxUPC[core - 1] = 0;
   if (core == 1) {
@@ -3130,10 +3120,10 @@ function ChangeWT() {
     Game.inventory = [];
     Game.Upgrades = [0, 0, 0];
     Game.MaxUPC = [0, 0, 0, 0];
-    Game.core1 = ["Basic Core", "Normal", 100, 10, 1];
-    Game.core2 = ["Basic Core", "Normal", 100, 10, 1];
-    Game.core3 = ["Basic Core", "Normal", 100, 10, 1];
-    Game.core4 = ["Basic Core", "Normal", 100, 10, 1];
+    Game.core1 = ["Basic Armor", "Normal", 100, 10, 1];
+    Game.core2 = ["Basic Armor", "Normal", 100, 10, 1];
+    Game.core3 = ["Basic Armor", "Normal", 100, 10, 1];
+    Game.core4 = ["Basic Armor", "Normal", 100, 10, 1];
     Game.core1K = [0, 0];
     Game.core2K = [0, 0];
     Game.core3K = [0, 0];

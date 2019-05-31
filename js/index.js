@@ -1793,7 +1793,7 @@ dat.GUI = dat.gui.GUI = function (e, a, c, d, f, b, n, h, j, m, l, o, y, g, i) {
   var CANVAS = 'canvas';
   var SVG = 'svg';
   var RENDER = {
-    renderer: SVG
+    renderer: CANVAS
   };
 
   //------------------------------
