@@ -1486,7 +1486,7 @@ function WinFight() {
   //EMP LOOT CHANCE
   var ELOOTCHANCE = random(1, 100);
   EMPCount = random(1, 3);
-  if (ELOOTCHANCE <= 25) {
+  if (ELOOTCHANCE <= 25 && Game.Emp < 50) {
     Game.Emp += EMPCount;
     EMP = "<br>+<span class='orange'>" + EMPCount + "</span><i class='orange bolt icon'></i>EMP";
   }
