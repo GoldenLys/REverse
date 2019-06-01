@@ -149,11 +149,11 @@ var POS = {
   10: ["The Corrupted World", 29, 30, 4, 10],
   11: ["The Corrupted Fortress", 29, 30, 5, 10],
   12: ["The Black Portal", 30, 31, 5, 14],
-  13: ["Hope City", 31, 32, 5, 14],
-  14: ["Vampire\'s Manor", 32, 33, 5, 20],
+  13: ["Elysia City", 31, 32, 5, 14],
+  14: ["Vampire Manor", 32, 33, 5, 20],
   15: ["The Red River", 33, 34, 5, 20],
   16: ["The Immortal Bridge", 34, 35, 5, 20],
-  17: ["Vampire\'s Castle", 35, 35, 5, 20],
+  17: ["Vampire Castle", 35, 35, 5, 20],
 };
 
 (function () {
