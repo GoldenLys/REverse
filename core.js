@@ -281,12 +281,8 @@ function UpdateEngine() {
     Game.username = Backup;
   }
   else { Game.username = Game.username.replace(/[^a-zA-Z0-9]/g, '_'); }
-  if (Backup != "Default" && canSave == 1 && Backup != Game.username) {
-    Game.username = Backup;
-  }
-  if (Game.xp[2] == undefined) {
-    Game.xp[2] = 1;
-  }
+  if (Backup != "Default" && canSave == 1 && Backup != Game.username) { Game.username = Backup;}
+  if (Game.xp[2] == undefined) {Game.xp[2] = 1;}
   if (url.match(/mobile/gi)) {
     $("#PlayerID").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
     $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
@@ -688,16 +684,16 @@ function UpdateUI() {
       $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Mission : " + Missions[Game.MissionStarted[1]][0] + MTEXT);
     }
     if (Missions[Game.MissionStarted[1]][3] == 1) {
-      $("#MDTL").html("Defeat <span class='rouge'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> enemies in " + POS[Missions[Game.MissionStarted[1]][8]][0] + ".");
+      $("#MDTL").html("Mission<div class='detail'>Defeat <span class='rouge'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> enemies in <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span>.</div>");
     }
     if (Missions[Game.MissionStarted[1]][3] == 2) {
-      $("#MDTL").html("Clear " + POS[Missions[Game.MissionStarted[1]][8]][0] + " (<span class='rouge'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> left).");
+      $("#MDTL").html("Fortress<div class='detail'>Clear <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span> (<span class='rouge'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> left).</div>");
     }
   } else {
     if (Game.isInFight == 1) {
       $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>" + POS[Game.Location][0] + MTEXT);
     }
-    $("#MDTL").html("Exploration of " + POS[Game.Location][0] + ".");
+    $("#MDTL").html("Exploration<div class='detail'> <span class='vert'>" + POS[Game.Location][0] + "</span></div>");
   }
   if ($('#combat').is(":visible")) {
     $("#rewards").hide();
@@ -1009,7 +1005,7 @@ function GenCores() {
 function UpdateName() {
   NICKNAME = $("#PlayerName").val();
   if (NICKNAME != null) {
-    if (NICKNAME == null || NICKNAME == "" || NICKNAME == " " || NICKNAME == "_" || NICKNAME.length < 3) {
+    if (NICKNAME == null || NICKNAME == "" || NICKNAME == " " || NICKNAME == "_" || NICKNAME.length < 3 || NICKNAME != "null") {
       ErrorName();
     } else {
       NICKNAME = NICKNAME.replace(/[^a-zA-Z0-9]/g, '_');
@@ -2355,7 +2351,7 @@ function NewCore(id, n) {
       OLDTIERRANK = Math.floor(OldCore[4] * 10);
     }
 
-    if (screen.width >= 1280) {
+    if (url.match(/mobile/gi)) {
       BR = " ";
     } else {
       BR = "<br>";
@@ -2371,7 +2367,7 @@ function NewCore(id, n) {
       "<span class='" + lifecolor + "'>" + Game.inventory[n].life + "</span> <i class='red heart icon'></i><br>" +
       "<span class='" + powercolor + "'>" + Game.inventory[n].power + "</span> <i class='blue crosshairs icon'></i>");
 
-    if (screen.width >= 1280) {
+    if (url.match(/mobile/gi)) {
       $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace Armor " + id + " <span class='vert'>(Y)</span></div>");
     } else {
       $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'> Cancel</div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'> Replace Armor " + id + "</div>");
@@ -2486,7 +2482,7 @@ function ConfirmRelic(R, id) {
   }
 
   if (Game.conf2 == 1) {
-    if (screen.width >= 1280) {
+    if (url.match(/mobile/gi)) {
       BR = " ";
     } else {
       BR = "<br>";
@@ -2496,7 +2492,7 @@ function ConfirmRelic(R, id) {
 
     $("#NewRelic-text").html(Game.inventory[id].name + "<br><span class='" + Game.inventory[id].class + "'>" + Game.inventory[id].class + "</span><br>" + CDESC2);
 
-    if (screen.width >= 1280) {
+    if (url.match(/mobile/gi)) {
       $("#confirm2-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div id='replace-btn' onclick='InstallRelic(" + R + ", " + id + ");' class='ui rainbow button'><i class='green check icon'></i> Replace Relic <span class='vert'>(Y)</span></div>");
     } else {
       $("#confirm2-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'> Cancel</div><div id='replace-btn' onclick='InstallRelic(" + R + ", " + id + ");' class='ui rainbow button'> Replace Relic </div>");
@@ -2570,7 +2566,7 @@ function ConfirmDestroy(core) {
     "<span class='desc'>Available slots : " + "" + (Game.MaxUPC[core - 1] - DCore[5]) + "<i class='key icon'></i></span><br>" +
     "" + DCore[2] + " <i class='red heart icon'></i><br>" +
     "" + DCore[3] + "  <i class='blue crosshairs icon'></i>");
-  if (screen.width <= 1280) {
+  if (url.match(/mobile/gi)) {
     $("#DBTN").html("<div class='ui icon cu2 button' onclick='DestroyCore(" + core + ");'><i class='rouge trash icon'></i></div><div onclick='DCancel();' class='ui icon cu button'><i class='green times icon'></i></div>");
   } else {
     $("#DBTN").html("<div class='ui cu2 button' onclick='DestroyCore(" + core + ");'><i class='rouge trash icon'></i> Confirm</div><div onclick='DCancel();' class='ui cu button'><i class='green times icon'></i> Cancel</div>");

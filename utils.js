@@ -202,7 +202,7 @@ function ResetLeaderBoard() {
 }
 
 function writeUserData(userId) {
-  if (location.href.match(/(goldenlys.github.io).*/) && userId == Game.username && Game.Level > 1 && userId != "Default") {
+  if (location.href.match(/(goldenlys.github.io).*/) && userId == Game.username && Game.Level > 1 && userId != "Default" && userId != "null") {
     firebase.database().ref('users/' + userId).set({
       Order: (-1 * Game.Ranking) - (100000 * Game.Simulation),
       Order2: -1 * Game.Ranking,
@@ -269,6 +269,7 @@ function ReadDB() {
 
 function UpdateDB(snapshot) {
   id++;
+  var isPlayer = "";
   if (snapshot.key === Game.username + " " || snapshot.key === Game.username) {
     Game.Leader = id;
   }
@@ -284,7 +285,8 @@ function UpdateDB(snapshot) {
       } else {
         Theme = snapshot.val().Theme;
       }
-      $("#LEADERBOARD").append("<tr id='leader-" + id + "' class=''>" +
+      if (id == Game.Leader) { isPlayer="fight"; }
+      $("#LEADERBOARD").append("<tr id='leader-" + id + "' class='" + isPlayer + "'>" +
         "<td class='center aligned'>#" + id + "</td>" +
         "<td class='center aligned' style='color:" + Theme + ";'><img class='ui mini avatar image' src='DATA/avatars/avatar" + Avatar + ".jpg'>" + snapshot.key + "</td>" +
         "<td class='center aligned'><i class='small gem icon'></i>" + fix(snapshot.val().Ranking, 4) + " (" + fix(snapshot.val().Level, 4) + ") " + "</td>" +
@@ -1209,16 +1211,16 @@ function GenMissions() {
         BTN = "";
       }
     } else {
-      BTN = "<br><div class='ui icon rainbow button' onclick='mission(" + M + ");' >Launch <i class='" + UNLOCKED + " right arrow icon'></i></div>";
+      BTN = "<br><div class='fluid ui icon rainbow button' onclick='mission(" + M + ");' >Launch <i class='" + UNLOCKED + " right arrow icon'></i></div>";
     }
 
     var Status = Game.MissionsCompleted[M] == 1 ? "<span class='green'>Complete</span>" : "<span class='rouge'>Incomplete</span>";
     if (Game.MissionStarted[1] == M && Game.MissionsCompleted[M] == 0) {
       Status = "<span class='jaune'>In Progress</span>";
-      BTN = "<br><div class='ui icon rainbow button' onclick='ResetMission();' >Cancel mission <i class='green right arrow icon'></i></div>";
+      BTN = "<br><div class='fluid ui icon rainbow button' onclick='ResetMission();' >Cancel mission <i class='green right arrow icon'></i></div>";
     }
     if (Game.MissionsCompleted[M] == 1 && Missions[M][3] != 2) {
-      BTN = "<br><div class='ui icon rainbow button' onclick='MissionStory(" + M + ");' >Story <i class='green right arrow icon'></i></div>";
+      BTN = "<br><div class='fluid ui icon rainbow button' onclick='MissionStory(" + M + ");' >Story <i class='green right arrow icon'></i></div>";
     }
 
     var REQLEVEL = Game.Level >= Missions[M][2] ? "<span class='green'>" + Missions[M][2] + "</span>" : "<span class='rouge'>" + Missions[M][2] + "</span>";
