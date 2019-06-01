@@ -1,5 +1,5 @@
 // TUTORIAL TEXTS - WHEN THE GAME WILL BE NEARLY FINISHED
-// ADDING STORY & MOBS
+// FIX MISSIONS EXP REWARDS (not fortresses)
 // MONEY LOOTED ALONG WITH A SHOP SYSTEM ?
 // NEW MISSIONS - GUILD PROMOTIONS : 2 ELITES & 1 BOSS TO PROMOTE TO F-A OR S Rank which will increase your rewards. (money/exp)
 // SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
@@ -639,7 +639,7 @@ function UpdateUI() {
     $("#PlayerXP").hide();
     $("#capacity").html("");
   }
-  if (Game.Level >= Game.MaxLevel && Game.Ranking >= (((25 + (Game.Simulation * 5)) * 10) - 5) && Game.FNMission >= Game.TotalMissions) {
+  if (Game.Level >= Game.MaxLevel && Game.Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && Game.FNMission >= Game.TotalMissions) {
     $("#WTBTN").show();
     $("#WTUNLOCK").html("<span class='ShadowReset vert'>Dimension <i class='globe icon'></i>" + (Game.Simulation + 1) + " available.");
   } else {
@@ -653,7 +653,8 @@ function UpdateUI() {
   $("#POWERMULTPRICE").html("<span class='" + POWMCOL + "'>" + GetMultPrice(1) + "<i class='dna icon'></i></span>");
   $("#LIFEMULTPRICE").html("<span class='" + LIFEMCOL + "'>" + GetMultPrice(2) + "<i class='dna icon'></i></span>");
   var shards = Game.Level < Game.MaxLevel ? "0" : Math.round(((Game.Ranking - 100) * 750) / 3500);
-  $("#WTShards").html("Score Required : <span class='vert'><i class='gem icon'></i>" + (((25 + (Game.Simulation * 5)) * 10) - 5) + "</span><br>Fragments reward : <span class='vert'>" + shards + "<i class='dna icon'></i></span>");
+  var completedstory = Game.FNMission == Game.TotalMissions ? "<span class='vert'>Yes</span>" : "<span class='rouge'>No</span>"; 
+  $("#WTShards").html("Score Required : <span class='vert'><i class='gem icon'></i>" + (((30 + (Game.Simulation * 5)) * 10) - 5) + "</span><br>Story completed : " + completedstory + "<br>Fragments reward : <span class='vert'>" + shards + "<i class='dna icon'></i></span>");
   $("#CurrWT").html("Current Dimension : <span class='vert'><i class='globe icon'></i>" + Game.Simulation + "</span>");
   $("#Defeat1").html(fix(Game.Defeated[1], 5));
   $("#Defeat2").html(fix(Game.Defeated[2], 5));
@@ -2823,15 +2824,6 @@ function Cancelconfirm() {
 }
 
 function DefineCore(core, iden) {
-  if (TSK == 1) {
-    if (Missions[Game.MissionStarted[1]][3] == 2) {
-      Game.FP++;
-      Game.Shards += Missions[Game.MissionStarted[1]][5];
-    }
-    Game.MissionsCompleted[Game.MissionStarted[1]] = 1;
-    Game.MissionStarted = [false, 0, 0];
-    TSK = 0;
-  }
   if (core == 1) {
     id = Game.core1;
   }
@@ -3116,7 +3108,7 @@ function BuyLifeMult() {
 //WORLD TIER FUNCTIONS
 
 function ChangeWT() {
-  if (Game.Level >= Game.MaxLevel && Game.Ranking >= (((25 + (Game.Simulation * 5)) * 10) - 5) && Game.FNMission >= Game.TotalMissions) {
+  if (Game.Level >= Game.MaxLevel && Game.Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && Game.FNMission >= Game.TotalMissions) {
     Game.Simulation++;
     //RESET STATS FOR CLEAN WT
     Game.xp = [0, 0, 0];

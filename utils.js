@@ -1328,7 +1328,7 @@ function hideMissionRewards() {
   }
   if (TSK == 1) {
     Game.MissionsCompleted[Game.MissionStarted[1]] = 1;
-    if (Missions[Game.MissionStarted[1]][3] == 2) { Game.Shards += Missions[Game.MissionStarted[1]][5]; }
+    if (Missions[Game.MissionStarted[1]][3] == 2) { Game.FP++; Game.Shards += Missions[Game.MissionStarted[1]][5]; }
     Game.MissionStarted = [false, 0, 0];
     TSK = 0;
   }
