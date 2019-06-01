@@ -773,7 +773,7 @@ function GetEXPPercent() {
 
 function ResetTheme(code) {
   if (code != 0) {
-    Game.Theme = ["#00ff0d", "#0d0d0d73", "#005204", "#FFFFFF", "#262626cc", "#262626", "#0d0d0d"];
+    Game.Theme = ["#00dca0", "#282b3473", "#006450", "#FFFFFF", "#282b34a6", "#282b34", "#282b34"];
   }
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
   document.documentElement.style.setProperty('--black2', Game.Theme[1]);
@@ -794,7 +794,7 @@ function ThemeDefine(id) {
     document.documentElement.style.setProperty('--green', Game.Theme[0]);
   }
   if (id == 2) {
-    Game.Theme[1] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
+    Game.Theme[1] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val()) + "73";
     Game.Theme[6] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
     document.documentElement.style.setProperty('--black2', Game.Theme[1]);
     document.documentElement.style.setProperty('--black', Game.Theme[6]);
@@ -810,7 +810,7 @@ function ThemeDefine(id) {
     document.documentElement.style.setProperty('--white', Game.Theme[3]);
   }
   if (id == 5) {
-    Game.Theme[4] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val()) + "cc";
+    Game.Theme[4] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val()) + "a6";
     Game.Theme[5] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
     document.documentElement.style.setProperty('--darkgrey5', Game.Theme[4]);
     document.documentElement.style.setProperty('--darkgrey', Game.Theme[5]);
@@ -821,7 +821,7 @@ function ThemeDefine(id) {
 //GAME FUNCTIONS
 
 function ChangeAvatar() {
-  if (Game.Avatar < 33) {
+  if (Game.Avatar < 34) {
     Game.Avatar++;
   } else {
     Game.Avatar = 1;
@@ -1331,7 +1331,7 @@ function CompleteMission() {
         } else {
           $("#rewards-title").html("<span class='vert'>Fortress cleared !</span>");
         }
-        var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Finish" : "<i class='times icon ICR'></i>Finish (F)";
+        var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Finish" : "<i class='times icon ICR'></i>Finish <span class='desc'>(F)</span>";
         $("#btn-CRW").html("<div onclick='hideMissionRewards();' class='big ui bottom attached labeled icon closing button'>" + btncntnt + "</div>");
         $("#rewards-desc").html("");
         if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP + "+<span class='bleu bold'>" + fix(Missions[Game.MissionStarted[1]][5], 3) + "</span><i class='bleu dna icon'></i> Fragments "); } else {

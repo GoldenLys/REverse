@@ -5,7 +5,7 @@
 // SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
 
 var url = window.location.href;
-var version = "1.5"; //!\_ONLY 1.X_/!\\
+var version = "1.5"; //!\ ONLY 1.X /!\\
 var loadState = 0;
 var codes = {};
 var REWARDSW8 = 0;
@@ -62,7 +62,7 @@ var Game = {
   Upgrades: [0, 0, 0],
   Simulation: 1,
   WTMult: [0, 0, 0, 1], //POWER, LIFE, XP, DIFFICULTY
-  Avatar: random(1, 33),
+  Avatar: random(1, 34),
   confirmations: 1,
   conf2: 1,
   conf3: 0,
@@ -97,15 +97,15 @@ var Missions = {
   11: ["Corrupted Fortress", 'You see a huge fortress with nothing good inside, you must clean this place.', 30, 2, 10, 1, 0, 9500, 11, 10],
   12: ["Corrupted Fortress - Basement", 'There is a door in the fortress which leads to another level, clean this place too.', 30, 2, 25, 3, 2, 9500, 11, 11],
   13: ["Corrupted Fortress - Core", 'This is the last floor, the Core of the Fortress, where the corruption started.. Destroy it.', 30, 2, 50, 6, 0, 9500, 11, 12],
-  14: ["The Black Portal", 'Just after you destroyed the fortress core, another portal appeared..<br><br> A new story begins.', 30, 1, 10, 2500, 0, 9500, 12, 10],
+  14: ["The Black Portal", 'Just after you destroyed the fortress core, another portal appeared..<br><br> A new story begins.', 30, 1, 10, 2500, 0, 9500, 12, 11],
   15: ["The Black Portal 2", 'The passage becomes darker and darker, you keep moving forward and perceive a light in the distance..', 30, 1, 10, 1000, 0, 9500, 12, 14],
   16: ["Light of Elysia", 'You\'ve just landed in a new world, in the city of Elysia. This world seems really beautiful, and so you decide to explore it.', 31, 1, 10, 1000, 0, 9500, 13, 15],
   17: ["Red Moon at Elysia", 'The city really is lively and in this world there are only humans and so far peace reigns, you decide to visit a bit the city this night, after all ..<br> This city is really big. Suddenly you hear a cry, you go to that shout and in the shadow of an alley you see a man sucking the blood of a woman.. a vampire is right there.', 31, 1, 10, 1000, 0, 9500, 13, 16],
   18: ["Vampire Manor", 'One of the vampires to confess the location of a vampire hideout, you will surely find informations there.', 32, 1, 10, 1000, 0, 9500, 14, 17],
   19: ["Funeral Chamber of the Manor", 'It seems to be the right place, it\'s full of vampires and one of them emits a strong power.', 32, 1, 10, 1000, 0, 9500, 14, 18],
   20: ["The New World", 'The city is now in peace, you follow the Red River to continue the exploration of this new world.', 33, 1, 10, 1000, 0, 9500, 15, 19],
-  21: ["The Red River", 'During your daily hunt you find a merchant who keeps saying that the vampire attack in the city was only the beginning.<br> He also tells you that a rumor says that the castle is hidden in the mountains.<br> You will investigate on the spot to finally lead a quiet life', 33, 1, 10, 1000, 0, 9500, 15, 19],
-  22: ["The mountains", "After searching for 5 days in the mountains, you find a bridge filled with corpses ..<br>Without any hesitation you enter the territory of vampires.", 34, 1, 10, 1000, 0, 9500, 16, 20],
+  21: ["The Red River", 'During your daily hunt you find a merchant who keeps saying that the vampire attack in the city was only the beginning.<br> He also tells you that a rumor says that the castle is hidden in the mountains.<br> You will investigate on the spot to finally lead a quiet life', 33, 1, 10, 1000, 0, 9500, 15, 20],
+  22: ["The mountains", "After searching for 5 days in the mountains, you find a bridge filled with corpses ..<br>Without any hesitation you enter the territory of vampires.", 34, 1, 10, 1000, 0, 9500, 16, 21],
   23: ["The Immortal Bridge", "These vampires seems a more difficult to kill than the ones in the city but you keep fighting and see a huge castle at the end of the bridge.", 34, 1, 10, 1000, 0, 9500, 16, 22],
   24: ["Vampire Castle", 'This is it, the Vampire Castle.<br>Now that you have arrived here you take the opportunity to clean the castle.', 35, 2, 10, 2, 0, 9500, 11, 23],
   25: ["Vampire Castle - Tower", 'You discover that one of the tower of the castle held prisoners, you must go and save them all.', 35, 2, 25, 5, 2, 9850, 11, 24],
@@ -1585,7 +1585,7 @@ function WinFight() {
   if (Game.Ennemy[1] == 6) { Class = "Ennemy6"; ThreatLevel = "BOSS"; }
   if (Game.Ennemy[1] == 7) { Class = "Ennemy7"; ThreatLevel = "GOD"; }
   $("#EnnemyDesc").html("<br><br>");
-  var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Close" : "<i class='times icon ICR'></i>Close (F)";
+  var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Close" : "<i class='times icon ICR'></i>Close <span class='desc'>(F)</span>";
   $("#btn-CRW").html("<div onclick='hideRewards();' class='big ui bottom attached labeled icon closing button'>" + btncntnt + "</div>");
   $("#rewards-title").html("<span class='vert'> " + Game.Ennemy[0] + " defeated !</span>");
   $("#rewards-desc").html("<br>You have defeated " + fix(Game.Defeated[Game.Ennemy[1]], 3) + " <div class='ui small " + Class + " basic label'><span class='" + Class + "'>" + ThreatLevel + "</span></div><br> " + LEVELUP);
@@ -1637,7 +1637,7 @@ function LoseFight() {
   }
   $("#rewards-title").html("<span class='rouge'>" + Game.Ennemy[0] + " killed you !</span>");
   $("#rewards-desc").html("");
-  var MOBILETEXT5 = url.match(/mobile/gi) ? "" : "<span class='vert'>(F)</span>";
+  var MOBILETEXT5 = url.match(/mobile/gi) ? "" : "<span class='desc vert'>(F)</span>";
   if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
     $("#rewards-text").html("You lose all your EXP.<br>Current Ratio <span class='rouge'>" + fix(Game.Wins / Game.Loses, 7));
     $("#btn-CRW").html("<div onclick='hideRewards();' id='btn-hide' class='fluid ui rainbow button'><i class='green recycle icon'></i> Respawn " + MOBILETEXT5 + "</div>");
@@ -1732,9 +1732,9 @@ function UpdateCombat() {
   }
   var MOBILETEXT2 = url.match(/mobile/gi) ? "Attack" : "Attack <span class='desc'>(SPACE)</span>";
   $("#attack-btn").html("<i class='crosshairs icon'></i> " + MOBILETEXT2);
-  var MOBILETEXT3 = url.match(/mobile/gi) ? "Take cover" : "Take cover (R)";
+  var MOBILETEXT3 = url.match(/mobile/gi) ? "Take cover" : "Take cover <span class='desc'>(R)</span>";
   $("#cover-btn").html("<i class='shield alternate icon'></i> " + MOBILETEXT3);
-  var MOBILETEXT4 = url.match(/mobile/gi) ? "<i class='eye slash outline icon'></i> Run Away" : "<i class='eye slash outline icon ICR'></i> Run Away (F)";
+  var MOBILETEXT4 = url.match(/mobile/gi) ? "<i class='eye slash outline icon'></i> Run Away" : "<i class='eye slash outline icon ICR'></i> Run Away <span class='desc'>(F)</span>";
   $("#run-btn").html("" + MOBILETEXT4);
   $("#EnnemyHP").progress({
     percent: GetEnnemyHPPercent()

@@ -1,7 +1,7 @@
 :root {
   --white: rgb(255, 255, 255);
-  --green: rgb(0, 255, 0);
-  --green2: rgb(0, 61, 0);
+  --green: rgb(0, 220, 160);
+  --green2: rgb(0, 100, 80);
   --red: rgb(255, 0, 0);
   --orange: #ff9800;
   --yellow: rgb(255, 255, 0);
@@ -11,12 +11,12 @@
   --grey: rgb(128, 128, 128);
   --darkgrey: rgb(32, 32, 32);
   --darkgrey5: rgba(14, 14, 14, 0.75);
-  --black: rgb(0, 0, 0);
-  --black8: rgba(0, 0, 0, 0.8);
-  --black6: rgba(0, 0, 0, 0.6);
-  --black4: rgba(0, 0, 0, 0.4);
-  --black2: #21232433;
-  --black1: rgba(0, 0, 0, 0.15);
+  --black: rgb(40, 43, 52);
+  --black8: rgba(40, 43, 52, 0.8);
+  --black6: rgba(40, 43, 52, 0.6);
+  --black4: rgba(40, 43, 52, 0.4);
+  --black2: rgb(40, 43, 52);;
+  --black1: rgba(40, 43, 52, 0.15);
   --locked: rgb(64, 64, 64);
   --normal2: rgba(255, 255, 255, 0.5);
   --common: #37a915;
@@ -602,12 +602,12 @@ body {
 }
 
 .rainbow7 {
-  background: var(--darkgrey) !important;
+  background: var(--darkgrey5) !important;
   color: var(--white) !important;
 }
 
 .rainbow7:hover {
-  background: var(--darkgrey5) !important;
+  background: var(--darkgrey) !important;
   color: var(--green) !important;
 }
 
@@ -884,7 +884,7 @@ div#C5.active {
 
 .ui.label {
   vertical-align: middle !important;
-  background: var(--black4) !important;
+  background: var(--black2) !important;
   color: var(--white) !important;
 }
 
@@ -1251,4 +1251,19 @@ input[type=range]::-webkit-slider-thumb {
 .ICR {
   width: 3.5em!important;
   padding-left: 1%!important;
+}
+
+.WS {
+  text-shadow: 0px 0px 3px var(--white) !important;
+}
+
+.ui.alpha.button, .ui.alpha.buttons .button {
+  background-color: var(--green);
+  color: #fff;
+  text-shadow: none;
+  background-image: none;
+}
+
+.ui.alpha.button:hover {
+  background-color: var(--green2);
 }
