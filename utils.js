@@ -1362,7 +1362,7 @@ function hideRewards() {
   if (Game.confirmations == 1) {
     $("#modal-4").modal("hide");
   }
-  Game.Ennemy[5] = Game.Ennemy[4];
+  GenEnnemy();
   Game.isInFight = 0;
   $("#rewards").hide();
   $("#combat").show();

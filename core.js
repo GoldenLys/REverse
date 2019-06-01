@@ -67,7 +67,7 @@ var Game = {
   conf2: 1,
   conf3: 0,
   conf4: 1,
-conf5: 1,
+  conf5: 1,
   NCore: 0,
   Leader: 0,
   LastEscape: 0,
@@ -307,7 +307,7 @@ function UpdateEngine() {
       Game.Level++;
     }
   }
-  if ($('#combat').is(":visible")) {
+  if ($('#combat').is(":visible") && Game.isInFight != 0) {
     Game.isInFight = 1;
   }
   if (Game.isInFight == 1 && Game.CoreLife <= 0) {
@@ -1189,9 +1189,15 @@ function GenEnnemy() {
   var EnnemyPowerMult = 1;
   var BasePower = Game.CorePower / (Game.PowerMult + Game.WTMult[0]);
   if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
-    LifeMult = [1, 1.5, 2, 3, 4, 5, 6];
-    PowerMult = [0.5, 0.85, 1, 1.05, 1.10, 1.15, 1.20];
-    MaxPowerMult = [0.75, 0.95, 1, 1.10, 1.15, 1.20, 1.25];
+    if (Game.Level < 30) {
+      LifeMult = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
+      PowerMult = [0.75, 0.85, 1, 1, 1, 1, 1];
+      MaxPowerMult = [0.85, 1, 1, 1.10, 1.15, 1.20, 1.25];
+    } else {
+      LifeMult = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
+      PowerMult = [0.95, 1, 1, 1, 1, 1, 1];
+      MaxPowerMult = [1.1, 1.25, 1.35, 1.5, 1.75, 2, 2.5];
+    }
   } else {
     LifeMult = [2, 2.75, 3.5, 4, 6, 10, 15];
     PowerMult = [1, 1, 1, 1, 1, 1, 1];
@@ -1342,42 +1348,41 @@ function GenEnnemy() {
     if (Game.Level >= Game.MaxLevel && Game.FNMission >= Game.TotalMissions) {
       EnnemyLevel = EnnemyLevel / 10;
       if (EnnemyLevel > Game.Level + 20) { EnnemyLevel = Game.Level + 20; }
-      else {
-        EnnemyLevel = EnnemyLevel / 10;
-        if (EnnemyLevel < POS[Game.Location][1]) {
-          EnnemyLevel = POS[Game.Location][1];
-        }
-        if (EnnemyLevel > POS[Game.Location][2]) {
-          EnnemyLevel = POS[Game.Location][2];
-        }
+    } else {
+      EnnemyLevel = EnnemyLevel / 10;
+      if (EnnemyLevel < POS[Game.Location][1]) {
+        EnnemyLevel = POS[Game.Location][1];
       }
-
-      Game.Ennemy[2] = EnnemyLevel;
-      Game.isInFight = 1;
-      Game.Ennemy[3] = 0;
-      Game.Ennemy[4] = 0;
-      if (Game.cores[1] == 1) {
-        Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
+      if (EnnemyLevel > POS[Game.Location][2]) {
+        EnnemyLevel = POS[Game.Location][2];
       }
-      if (Game.cores[2] == 1 && EnnemyLevel > 9) {
-        Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
-      }
-      if (Game.cores[3] == 1 && EnnemyLevel > 19) {
-        Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
-      }
-      if (Game.cores[4] == 1 && EnnemyLevel > 29) {
-        Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
-      }
-      Game.Ennemy[3] = random(BasePower * EnnemyPowerMult, BasePower * EnnemyPowerMultMax);
-      Game.Ennemy[4] *= Game.WTMult[3];
-      Game.Ennemy[5] = Game.Ennemy[4];
-      if (Game.Ennemy[1] >= 6) {
-        Game.Ennemy[0] = BossNames[Game.Location];
-      } else {
-        Game.Ennemy[0] = Ennemies[Game.Location][Math.floor(Math.random() * Ennemies[Game.Location].length)];
-      }
-      UpdateGame();
     }
+
+    Game.Ennemy[2] = EnnemyLevel;
+    Game.isInFight = 1;
+    Game.Ennemy[3] = 0;
+    Game.Ennemy[4] = 0;
+    if (Game.cores[1] == 1) {
+      Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
+    }
+    if (Game.cores[2] == 1 && EnnemyLevel > 9) {
+      Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
+    }
+    if (Game.cores[3] == 1 && EnnemyLevel > 19) {
+      Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
+    }
+    if (Game.cores[4] == 1 && EnnemyLevel > 29) {
+      Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
+    }
+    Game.Ennemy[3] = random(BasePower * EnnemyPowerMult, BasePower * EnnemyPowerMultMax);
+    Game.Ennemy[4] *= Game.WTMult[3];
+    Game.Ennemy[5] = Game.Ennemy[4];
+    if (Game.Ennemy[1] >= 6) {
+      Game.Ennemy[0] = BossNames[Game.Location];
+    } else {
+      Game.Ennemy[0] = Ennemies[Game.Location][Math.floor(Math.random() * Ennemies[Game.Location].length)];
+    }
+    UpdateGame();
   }
 }
 //WIN OR LOSE FIGHT
@@ -2106,10 +2111,10 @@ function newItem(type, level, luck) {
     item.ups = GetMaxLevel(item.class);
     if (Game.MaxLevel >= Game.Level && Game.FNMission >= Game.TotalMissions) {
       item.life = Math.floor(random((level * 10) * (Mult[item.type] * 0.75) + 100, (level * 10) * Mult[item.type] + 100));
-      item.power = Math.floor(random((level * 5) * (Mult[item.type] * 0.75), (level * 5) * Mult[item.type] + 5));
+      item.power = Math.floor(random((level * 3) * (Mult[item.type] * 0.75), (level * 3) * Mult[item.type] + 5));
     } else {
       item.life = Math.floor(random((level * 10) * (Mult[item.type] * 0.9) + 100, (level * 10) * Mult[item.type] + 100));
-      item.power = Math.floor(random((level * 5) * (Mult[item.type] * 0.9), (level * 5) * Mult[item.type] + 5));
+      item.power = Math.floor(random((level * 3) * (Mult[item.type] * 0.9), (level * 3) * Mult[item.type] + 5));
     }
     item.id = 1; //CORE
     if ((Game.inventory.length - 1) < Game.MaxInv && item != Game.inventory[Game.inventory.length - 1]) {
@@ -2667,6 +2672,7 @@ function DefineCore(core, iden) {
   } else {
     hideRewards();
   }
+  Game.isInFight = 0;
   UpdateGame();
 }
 
