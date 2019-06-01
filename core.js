@@ -5,7 +5,7 @@
 // SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
 
 var url = window.location.href;
-var version = "1.52";
+var version = "1.53";
 var loadState = 0;
 var codes = {};
 var REWARDSW8 = 0;
@@ -338,6 +338,7 @@ function UpdateEngine() {
   }
   Game.PlayTime++;
   for (var I in Game.inventory) {
+    if (Game.inventory[I].level > Game.Level) { Game.inventory.splice(I, 1); }
     if (I > Game.MaxInv) {
       Game.inventory.splice(I, 1);
     }
@@ -593,6 +594,9 @@ function UpdateGame() {
       }
     }
   }
+  if (Game.MissionStarted[0] == false) {
+    if (Game.Location == 11 || Game.Location == 17) { Game.Location--; }
+  }
   UpdateUI();
   save();
 }
@@ -762,6 +766,10 @@ function UpdateUI() {
   }
   for (var L in POS) {
     $("#defeatloc" + L).html("<div class='ui " + hori + "segments'><div class='ui segment left aligned'>" + POS[L][0] + "</div><div class='ui segment right aligned'>" + fix(Game.DefeatedByLocation[L], 3) + " Defeated</div></div><div class='ui fitted inverted divider'></div>");
+  }
+  if ($('#inventory').is(":visible")) {
+    $("#rewards").hide();
+    $("#combat").hide();
   }
   UpdateCombat();
   Shortcuts();
@@ -1038,7 +1046,7 @@ function GenCores() {
     for (var L = 1; L < 5; L++) {
       if (Game.cores[L] == false) {
         $("#core5-title").attr("class", "author text locked");
-        $("#core5-title").html("Next Armor unlocked at Lv. " + GetLevelRequired());
+        $("#core5-title").html("Next armor unlocked at Lv. " + GetLevelRequired());
         $("#core5-text").html("");
         $("#core5-icon").attr("class", "classBarU");
       }
@@ -1446,7 +1454,9 @@ function WinFight() {
     expGain = random(expGain * 0.85, expGain);
   } else {
     expGain = Game.Ennemy[2] + Game.Level * 15 * Game.xp[2];
-    expGain = random(expGain * 0.9, expGain);
+    if (Missions[Game.MissionStarted[1]][3] == 2) { expGain = random(expGain * 0.9, expGain * 1.2); } else {
+      expGain = random(expGain * 0.9, expGain);
+    }
   }
   if (expGain < 1 || ((Game.Level - 5) * 10) >= Game.Ranking || Game.Level >= POS[Game.Location][2]) {
     expGain = 0;

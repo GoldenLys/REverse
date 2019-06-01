@@ -1113,7 +1113,7 @@ function GenExplorationMenu() {
     var UNLOCKTEXT = Game.MissionsCompleted[POS[E][4]] == 1 ? "<span class='green'>" + Missions[POS[E][4]][0] + " - Finished</span>" : "<span class='rouge'>" + Missions[POS[E][4]][0] + " - Unfinished</span>";
 
 
-    if (Game.Level < Game.MaxLevel || Game.FNMission < 15) {
+    if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
       LEVEL = MINLEVEL + "-" + MAXLEVEL;
     } else {
       LEVEL = "<span class='green'>" + 30 + "</span>";
@@ -1124,6 +1124,8 @@ function GenExplorationMenu() {
     } else {
       BTN = "";
     }
+
+    if(Game.Location == E) { BTN = ""; }
 
     if (POS[E][1] < Game.Level + 1 && E != 11 && E != 17) {
       $("#exploration").append(
@@ -1291,7 +1293,7 @@ function CompleteMission() {
           } else {
             newItem(0, Game.Level, Missions[Game.MissionStarted[1]][7]);
           }
-          if (Game.Level < Game.MaxLevel || Game.FNMission < 15) {
+          if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
             TIER = "Level";
             TIERRANK = Game.inventory[Game.inventory.length - 1].level;
           } else {
@@ -1310,7 +1312,8 @@ function CompleteMission() {
         var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Finish" : "<i class='times icon ICR'></i>Finish (F)";
         $("#btn-CRW").html("<div onclick='hideMissionRewards();' class='big ui bottom attached labeled icon closing button'>" + btncntnt + "</div>");
         $("#rewards-desc").html("");
-        $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP ");
+        if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP + "+<span class='bleu bold'>" + fix(Missions[Game.MissionStarted[1]][5], 3) + "</span><i class='bleu dna icon'></i> Fragments "); } else {
+        $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP "); }  
         $("#combat").hide();
         $("#rewards").show();
         //KEYS & Relic MISSING
@@ -1325,6 +1328,7 @@ function hideMissionRewards() {
   }
   if (TSK == 1) {
     Game.MissionsCompleted[Game.MissionStarted[1]] = 1;
+    if (Missions[Game.MissionStarted[1]][3] == 2) { Game.Shards += Missions[Game.MissionStarted[1]][5]; }
     Game.MissionStarted = [false, 0, 0];
     TSK = 0;
   }
@@ -1372,7 +1376,7 @@ function CalcEXP(level) {
   if (level < 30) {
     exp = (level * 25) + (500 * (level / 3.5));
   } else {
-    exp = (level * 25) + (1000 * (level / 2.5));
+    exp = (level * 25) + (600 * (level / 2.5));
   }
 
   for (T = 0; T < (level + 1); T++) {
