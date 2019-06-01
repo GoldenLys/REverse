@@ -244,12 +244,24 @@ function ReadDB() {
   ResetLeaderBoard();
   if (LeaderFilter == 0) {
     ref.orderByChild("Order").limitToLast(100000).on("child_added", function (snapshot) {
-      UpdateDB(snapshot);
+      if (Game.conf5 == 0) {
+        UpdateDB(snapshot);
+      } else {
+        if (snapshot.val().Version >= version) {
+          UpdateDB(snapshot);
+        }
+      }
     });
   } else {
     ref.orderByChild("Order2").limitToLast(100000).on("child_added", function (snapshot) {
       if (snapshot.val().Version > 1.15) {
-        UpdateDB(snapshot);
+        if (Game.conf5 == 0) {
+          UpdateDB(snapshot);
+        } else {
+          if (snapshot.val().Version >= version) {
+            UpdateDB(snapshot);
+          }
+        }
       }
     });
   }
@@ -292,7 +304,6 @@ function UpdateDB(snapshot) {
 }
 
 //UI FUNCTIONS
-
 function hideMenuTabs() {
   for (var id = 0; id < 10; id++) {
     $("#CATEGORIE-" + id).hide();
@@ -462,6 +473,14 @@ function ClickEvents() {
       Game.conf4 = 1;
     } else {
       Game.conf4 = 0;
+    }
+    UpdateGame();
+  });
+  $("#OnlyMyVersion").on("click", function () {
+    if (Game.conf5 == 0) {
+      Game.conf5 = 1;
+    } else {
+      Game.conf5 = 0;
     }
     UpdateGame();
   });
@@ -736,7 +755,7 @@ function GetPlayerHPPercent() {
 }
 
 function GetEXPPercent() {
-  value = (100 * (Game.xp[0] - CalcEXP(Game.Level-1))) / (CalcEXP(Game.Level) - CalcEXP(Game.Level-1));
+  value = (100 * (Game.xp[0] - CalcEXP(Game.Level - 1))) / (CalcEXP(Game.Level) - CalcEXP(Game.Level - 1));
   if (value < 1) {
     value = 1;
   }
@@ -1125,7 +1144,7 @@ function GenExplorationMenu() {
       BTN = "";
     }
 
-    if(Game.Location == E) { BTN = ""; }
+    if (Game.Location == E) { BTN = ""; }
 
     if (POS[E][1] < Game.Level + 1 && E != 11 && E != 17) {
       $("#exploration").append(
@@ -1313,7 +1332,8 @@ function CompleteMission() {
         $("#btn-CRW").html("<div onclick='hideMissionRewards();' class='big ui bottom attached labeled icon closing button'>" + btncntnt + "</div>");
         $("#rewards-desc").html("");
         if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP + "+<span class='bleu bold'>" + fix(Missions[Game.MissionStarted[1]][5], 3) + "</span><i class='bleu dna icon'></i> Fragments "); } else {
-        $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP "); }  
+          $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP ");
+        }
         $("#combat").hide();
         $("#rewards").show();
         //KEYS & Relic MISSING
@@ -1342,6 +1362,7 @@ function hideRewards() {
   if (Game.confirmations == 1) {
     $("#modal-4").modal("hide");
   }
+  Game.Ennemy[5] = Game.Ennemy[4];
   Game.isInFight = 0;
   $("#rewards").hide();
   $("#combat").show();
@@ -1389,4 +1410,19 @@ function CalcEXP(level) {
   if (level == 0) { exp = 0; }
   if (level == 1) { exp = 100; }
   return Math.round(exp);
+}
+
+function ErrorArmor(ARM) {
+  var NewARM = [];
+  NewARM[0] = "Error";
+  NewARM[1] = "Error";
+  NewARM[2] = 100;
+  NewARM[3] = 10;
+  NewARM[4] = 1;
+  NewARM[5] = 0;
+
+  if (ARM == 1) { Game.core1 = NewARM; Game.core1K = [0, 0]; Game.MaxUPC[0] = 0; }
+  if (ARM == 2) { Game.core2 = NewARM; Game.core2K = [0, 0]; Game.MaxUPC[1] = 0; }
+  if (ARM == 3) { Game.core3 = NewARM; Game.core3K = [0, 0]; Game.MaxUPC[2] = 0; }
+  if (ARM == 4) { Game.core4 = NewARM; Game.core4K = [0, 0]; Game.MaxUPC[3] = 0; }
 }
