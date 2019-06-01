@@ -25,9 +25,11 @@
     </style>
 </head>
 
-<body id="body" class="noselect" oncontextmenu="return true;"> 
-<div id="container" class="container">
-  <div id="output" class="container"></div></div><div style="display: none;" id="controls" class="controls"></div>
+<body id="body" class="noselect" oncontextmenu="return true;">
+    <div id="container" class="container">
+        <div id="output" class="container"></div>
+    </div>
+    <div style="display: none;" id="controls" class="controls"></div>
     <div id="loading">
         <div class="ui equal width center aligned padded grid">
             <div class="row">
@@ -35,41 +37,42 @@
                     <p class="loading-text"></p>
                 </div>
             </div>
-            <div class="ui bottom right attached label" id="vloader"></div>
         </div>
     </div>
+    <div class="ui bottom right attached label" id="vloader"></div>
     <div id="main" style="overflow: hidden; display: none;">
         <div id="begin" class="ui message">
             <h1 id="default-title" class="title">AlphaRPG</h1>
             <div class="repeat rainbow2"></div><br>
-                <p>
-                    Welcome to AlphaRPG ! <br>
-                    Before entering to the world of AlphaRPG, We need to know your name (3-16 characters with only
-                    numbers and letters).
-                    <br>Type "Neo" to generate a random name.
-                </p>
-                <div class="ui centered grid">
-                    <div class="six wide column">
-                        <form class="ui form fluid segment">
-                            <div class="field">
-                                <label>Username</label>
-                                <input id="PlayerName" placeholder="Neo" type="text" maxlength="16">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="two wide column">
-                        <div class="ui centered card">
-                            <div id="avatar3" class="ui centered image">
-                            </div>
-                            <div id="ChangeAvatarBegin" class="ui rainbow button">Select an avatar
-                            </div>
+            <p>
+                Welcome to AlphaRPG ! <br>
+                Before entering to the world of AlphaRPG, We need to know your name (3-16 characters with only
+                numbers and letters).
+                <br>Type "Neo" to generate a random name.
+            </p>
+            <div class="ui centered grid">
+                <div class="six wide column">
+                    <form class="ui form fluid segment">
+                        <div class="field">
+                            <label>Username</label>
+                            <input id="PlayerName" placeholder="Neo" type="text" maxlength="16">
+                        </div>
+                    </form>
+                </div>
+                <div class="two wide column">
+                    <div class="ui centered card">
+                        <div id="avatar3" class="ui centered image">
+                        </div>
+                        <div id="ChangeAvatarBegin" class="ui rainbow button">Select an avatar
                         </div>
                     </div>
-                
+                </div>
+
                 <div class="fluid ui buttons">
                     <button id="UpdateName" class="ui rainbow button">Start</button>
-                </div><span id="namehelp"></span></div>
-                
+                </div><span id="namehelp"></span>
+            </div>
+
         </div>
 
         <div id="CATEGORIE-1" style="display: none;">
@@ -308,18 +311,24 @@
                     </div>
 
                     <div id="prestige" style="display: none;">
-                        <p>
-                            <div id="CurrWT"></div>
-                            <div id="WTShards"></div><br>
-                        </p>
-                        <div id="WTBTN" class="fluid ui rainbow3 button">Dimensional Rift</div>
-
-                        <div class="ui message">
-                            <h3 class="rouge"><i class="info icon"></i>Dimension informations</h3>
-                            <div class="desc">You will lose your current equipment and bonuses.<br>The story will be
-                                reset and the difficulty will raise by 5%.<br>
-                                <br>For each dimension: +50 max tier score, 3% more EXP, +2 inventory slots
+                        <div class="ui horizontal segments">
+                            <div class="ui segment">
+                                <p>
+                                    <div id="CurrWT"></div>
+                                    <div id="WTShards"></div><br>
+                                </p>
                             </div>
+                            <div class="ui segment">
+                                <div class="ui black message">
+                                    <h3 class="rouge"><i class="exclamation circle icon"></i>Informations</h3>
+                                    <div class="desc">By passing through the dimensional rift you will lose your current equipment and bonuses.<br>The story
+                                        will be
+                                        reset and the difficulty will raise by 5%.<br>
+                                        <br>For each dimension: +50 max tier score, 3% more EXP, +2 inventory slots
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="WTBTN" class="fluid ui rainbow3 button">Dimensional Rift</div>
                         </div>
 
                         <br>
@@ -681,7 +690,8 @@
                                                         </div>
                                                         <div id="themeBTN3" onclick="ThemeDefine(3);"
                                                             class="ui rainbow button">
-                                                            <i class="large bgtextcolor square icon"></i>Set secondary background</div>
+                                                            <i class="large bgtextcolor square icon"></i>Set secondary
+                                                            background</div>
                                                         <div id="themeBTN4" onclick="ThemeDefine(4);"
                                                             class="ui rainbow button">
                                                             <i class="large Normal square icon"></i>Set text</div>
@@ -893,7 +903,8 @@
 <script src="DATA/accordion.min.js"></script>
 <script src="DATA/numeral.min.js"></script>
 <script src="DATA/progress.min.js"></script>
-<script src="utils.js?v=1.541"></script>
-<script src="core.js?v=1.541"></script>
+<script src="utils.js?v=1.542"></script>
+<script src="core.js?v=1.542"></script>
 <script src="js/index.js"></script>
+
 </html>

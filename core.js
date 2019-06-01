@@ -5,7 +5,7 @@
 // SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
 
 var url = window.location.href;
-var version = "1.54";
+var version = "1.5"; //!\_ONLY 1.X_/!\\
 var loadState = 0;
 var codes = {};
 var REWARDSW8 = 0;

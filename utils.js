@@ -482,6 +482,7 @@ function ClickEvents() {
     } else {
       Game.conf5 = 0;
     }
+    ReadDB();
     UpdateGame();
   });
   $("#RM1").on("click", function () {
