@@ -793,18 +793,18 @@ function GenInventory() {
 
 function EquipItem(id, type) {
   if (type == 1) {
-    var CoreButton1 = Game.cores[1] == true ? "<div onClick='NewCore(1, " + id + ");' class='ui rainbow button'>Install Armor 1</div>" : "";
-    var CoreButton2 = Game.cores[2] == true ? "<div onClick='NewCore(2, " + id + ");' class='ui rainbow button'>Install Armor 2</div>" : "";
-    var CoreButton3 = Game.cores[3] == true ? "<div onClick='NewCore(3, " + id + ");' class='ui rainbow button'>Install Armor 3</div>" : "";
-    var CoreButton4 = Game.cores[4] == true ? "<div onClick='NewCore(4, " + id + ");' class='ui rainbow button'>Install Armor 4</div>" : "";
+    var CoreButton1 = Game.cores[1] == true ? "<div onClick='NewCore(1, " + id + ");' class='ui rainbow button'>Install armor 1</div>" : "";
+    var CoreButton2 = Game.cores[2] == true ? "<div onClick='NewCore(2, " + id + ");' class='ui rainbow button'>Install armor 2</div>" : "";
+    var CoreButton3 = Game.cores[3] == true ? "<div onClick='NewCore(3, " + id + ");' class='ui rainbow button'>Install armor 3</div>" : "";
+    var CoreButton4 = Game.cores[4] == true ? "<div onClick='NewCore(4, " + id + ");' class='ui rainbow button'>Install armor 4</div>" : "";
     showmessage("Select an Armor Slot", "<div class='fluid vertical ui buttons'>" + CoreButton1 + CoreButton2 + CoreButton3 + CoreButton4 + "</div>");
   }
 
   if (type == 2) {
-    var CB1B = Game.cores[1] == true ? "<div onClick='UPCore(1, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Armor 1</div>" : "";
-    var CB2B = Game.cores[2] == true ? "<div onClick='UPCore(2, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Armor 2</div>" : "";
-    var CB3B = Game.cores[3] == true ? "<div onClick='UPCore(3, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Armor 3</div>" : "";
-    var CB4B = Game.cores[4] == true ? "<div onClick='UPCore(4, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Armor 4</div>" : "";
+    var CB1B = Game.cores[1] == true ? "<div onClick='UPCore(1, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade armor 1</div>" : "";
+    var CB2B = Game.cores[2] == true ? "<div onClick='UPCore(2, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade armor 2</div>" : "";
+    var CB3B = Game.cores[3] == true ? "<div onClick='UPCore(3, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade armor 3</div>" : "";
+    var CB4B = Game.cores[4] == true ? "<div onClick='UPCore(4, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade armor 4</div>" : "";
     if (Game.core1[5] >= Game.MaxUPC[0] && Game.cores[1] == true) {
       CB1B = "<div class='ui disabled button'>Armor 1 keys full.</div>";
     }
@@ -822,10 +822,10 @@ function EquipItem(id, type) {
 
   if (type == 3) {
     os = Game.inventory[id];
-    var RLCB1 = Game.cores[1] == true ? "<div onClick='ConfirmRelic(1, " + id + ");' class='ui rainbow button'>Core 1</div>" : "";
-    var RLCB2 = Game.cores[2] == true ? "<div onClick='ConfirmRelic(2, " + id + ");' class='ui rainbow button'>Core 2</div>" : "";
-    var RLCB3 = Game.cores[3] == true ? "<div onClick='ConfirmRelic(3, " + id + ");' class='ui rainbow button'>Core 3</div>" : "";
-    var RLCB4 = Game.cores[4] == true ? "<div onClick='ConfirmRelic(4, " + id + ");' class='ui rainbow button'>Core 4</div>" : "";
+    var RLCB1 = Game.cores[1] == true ? "<div onClick='ConfirmRelic(1, " + id + ");' class='ui rainbow button'>Armor 1</div>" : "";
+    var RLCB2 = Game.cores[2] == true ? "<div onClick='ConfirmRelic(2, " + id + ");' class='ui rainbow button'>Armor 2</div>" : "";
+    var RLCB3 = Game.cores[3] == true ? "<div onClick='ConfirmRelic(3, " + id + ");' class='ui rainbow button'>Armor 3</div>" : "";
+    var RLCB4 = Game.cores[4] == true ? "<div onClick='ConfirmRelic(4, " + id + ");' class='ui rainbow button'>Armor 4</div>" : "";
     showmessage("Select a relic slot", "<div class='fluid vertical ui buttons'>" + RLCB1 + RLCB2 + RLCB3 + RLCB4 + "</div>");
   }
   Game.isInFight = 0;
@@ -1406,7 +1406,7 @@ function WinFight() {
   Game.DefeatedByLocation[Game.Location]++;
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 1) {
     Game.MissionStarted[2]++;
-    CORELOOT = 101; RELICLOOT = 10; KEYLOOT = 10;
+    CORELOOT = 0; RELICLOOT = 10; KEYLOOT = 10;
   }
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
     Game.MissionStarted[2]++;
@@ -1419,8 +1419,8 @@ function WinFight() {
       Game.Level++;
       LEVELUP = "<br><font class='bleu'>LEVEL UP ! (<span class='blanc'>" + Game.Level + "</span>)</font>";
     }
+    UpdateGame();
   }
-  UpdateGame();
   var REWARDTEXT = Game.MissionStarted[0] == true ? "" : "Nothing was dropped.";
   //EMP LOOT CHANCE
   var ELOOTCHANCE = random(1, 100);
@@ -1551,16 +1551,16 @@ function WinFight() {
     }
     var IF3 = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
     if (Game.core1[5] >= Game.MaxUPC[0] && Game.cores[1] == true) {
-      CoreButton1B = "<div class='ui disabled button'>Core 1 keys full.</div>";
+      CoreButton1B = "<div class='ui disabled button'>Armor 1 keys full.</div>";
     }
     if (Game.core2[5] >= Game.MaxUPC[1] && Game.cores[2] == true) {
-      CoreButton2B = "<div class='ui disabled button'>Core 2 keys full.</div>";
+      CoreButton2B = "<div class='ui disabled button'>Armor 2 keys full.</div>";
     }
     if (Game.core3[5] >= Game.MaxUPC[2] && Game.cores[3] == true) {
-      CoreButton3B = "<div class='ui disabled button'>Core 3 keys full.</div>";
+      CoreButton3B = "<div class='ui disabled button'>Armor 3 keys full.</div>";
     }
     if (Game.core4[5] >= Game.MaxUPC[3] && Game.cores[4] == true) {
-      CoreButton4B = "<div class='ui disabled button'>Core 4 keys full.</div>";
+      CoreButton4B = "<div class='ui disabled button'>Armor 4 keys full.</div>";
     }
     if (Game.inventory[IF3].object > 0 && Game.inventory[IF3].object < 3) {
       if (Game.inventory[IF3].object == 1) {
