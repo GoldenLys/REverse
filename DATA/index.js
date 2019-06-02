@@ -1744,7 +1744,7 @@ dat.GUI = dat.gui.GUI = function (e, a, c, d, f, b, n, h, j, m, l, o, y, g, i) {
       }, rgb_to_hex: function (a, c, d) { a = this.hex_with_component(0, 2, a); a = this.hex_with_component(a, 1, c); return a = this.hex_with_component(a, 0, d) }, component_from_hex: function (a, c) { return a >> c * 8 & 255 }, hex_with_component: function (a, c, d) { return d << (e = c * 8) | a & ~(255 << e) }
     }
   }(), dat.color.toString, dat.utils.common), dat.color.interpret, dat.utils.common), dat.utils.requestAnimationFrame = function () {
-    return window.webkitRequestAnimationFrame ||
+    return window.requestAnimationFrame ||
       window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (e) { window.setTimeout(e, 1E3 / 60) }
   }(), dat.dom.CenteredDiv = function (e, a) {
     var c = function () {

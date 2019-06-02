@@ -1005,7 +1005,7 @@ function GenCores() {
 function UpdateName() {
   NICKNAME = $("#PlayerName").val();
   if (NICKNAME != null) {
-    if (NICKNAME == null || NICKNAME == "" || NICKNAME == " " || NICKNAME == "_" || NICKNAME.length < 3 || NICKNAME != "null") {
+    if (NICKNAME == null || NICKNAME == "" || NICKNAME == " " || NICKNAME == "_" || NICKNAME.length < 3 || NICKNAME == "null") {
       ErrorName();
     } else {
       NICKNAME = NICKNAME.replace(/[^a-zA-Z0-9]/g, '_');
