@@ -59,7 +59,7 @@ var Game = {
   inventory: [],
   MaxInv: 20,
   Theme: [],
-  Upgrades: [0, 0, 0],
+  Upgrades: [0, 0, 0, 0],
   Simulation: 1,
   WTMult: [0, 0, 0, 1], //POWER, LIFE, XP, DIFFICULTY
   Avatar: random(1, 34),
@@ -75,7 +75,7 @@ var Game = {
   MissionsCompleted: [],
   Location: 0,
   PlayTime: 0,
-  MissionStarted: [false, 0, 0], //TOGGLE, MISSION ID, PROGRESSION
+  MissionStarted: [false, 0, 0, 0], //TOGGLE, MISSION ID, PROGRESSION, OBTAINED REWARD
   FNMission: 0,
   DefeatedByLocation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   FP: 0,
@@ -94,9 +94,9 @@ var Missions = {
   8: ["Central V", 'You discuss with the king to find a way to return to your world..<br>He tells you that the only way is the Red Portal but suddenly..<br> The city is attacked by the demon army, you need to get out of here quick.', 25, 1, 10, 5000, 0, 8500, 8, 7],
   9: ["The Red Portal", 'The red portal is near and it seems that the portal is really hot.. Burning like the hells gate. But you do not really have any other choice.', 27, 1, 10, 7500, 0, 8500, 9, 8],
   10: ["Corrupted World", 'You have successfully passed the portal.. but where are you now ?', 29, 1, 10, 10000, 0, 8500, 10, 9],
-  11: ["Corrupted Fortress", 'You see a huge fortress with nothing good inside, you must clean this place.', 30, 2, 10, 1, 0, 9500, 11, 10],
-  12: ["Corrupted Fortress - Basement", 'There is a door in the fortress which leads to another level, clean this place too.', 30, 2, 25, 3, 2, 9500, 11, 11],
-  13: ["Corrupted Fortress - Core", 'This is the last floor, the Core of the Fortress, where the corruption started.. Destroy it.', 30, 2, 50, 6, 0, 9500, 11, 12],
+  11: ["Corrupted Fortress", 'You see a huge fortress with nothing good inside, you must clean this place.', 30, 2, 10, 0, 0, 9500, 11, 10],
+  12: ["Corrupted Fortress - Basement", 'There is a door in the fortress which leads to another level, clean this place too.', 30, 2, 25, 0, 2, 9500, 11, 11],
+  13: ["Corrupted Fortress - Core", 'This is the last floor, the Core of the Fortress, where the corruption started.. Destroy it.', 30, 2, 50, 1, 0, 9500, 11, 12],
   14: ["The Black Portal", 'Just after you destroyed the fortress core, another portal appeared..<br><br> A new story begins.', 30, 1, 10, 15000, 0, 9500, 12, 11],
   15: ["The Black Portal 2", 'The passage becomes darker and darker, you keep moving forward and perceive a light in the distance..', 30, 1, 10, 20000, 0, 9500, 12, 14],
   16: ["Light of Elysia", 'You\'ve just landed in a new world, in the city of Elysia. This world seems really beautiful, and so you decide to explore it.', 31, 1, 10, 25000, 0, 9500, 13, 15],
@@ -107,9 +107,9 @@ var Missions = {
   21: ["The Red River", 'During your daily hunt you find a merchant who keeps saying that the vampire attack in the city was only the beginning.<br> He also tells you that a rumor says that the castle is hidden in the mountains.<br> You will investigate on the spot to finally lead a quiet life', 33, 1, 10, 150000, 0, 9500, 15, 20],
   22: ["The mountains", "After searching for 5 days in the mountains, you find a bridge filled with corpses ..<br>Without any hesitation you enter the territory of vampires.", 34, 1, 10, 175000, 0, 9500, 16, 21],
   23: ["The Immortal Bridge", "These vampires seems a more difficult to kill than the ones in the city but you keep fighting and see a huge castle at the end of the bridge.", 34, 1, 10, 175000, 0, 9500, 16, 22],
-  24: ["Vampire Castle", 'This is it, the Vampire Castle.<br>Now that you have arrived here you take the opportunity to clean the castle.', 35, 2, 10, 2, 0, 9500, 11, 23],
-  25: ["Vampire Castle - Tower", 'You discover that one of the tower of the castle held prisoners, you must go and save them all.', 35, 2, 25, 5, 2, 9850, 11, 24],
-  26: ["Vampire Castle - Core", 'You have reached the heart of the castle, by destroying the heart, the world will finally be at peace.<br> But before this happy end, you will need to kill the remaining vampires.', 35, 2, 50, 10, 0, 9850, 11, 25],
+  24: ["Vampire Castle", 'This is it, the Vampire Castle.<br>Now that you have arrived here you take the opportunity to clean the castle.', 35, 2, 10, 0, 0, 9500, 11, 23],
+  25: ["Vampire Castle - Tower", 'You discover that one of the tower of the castle held prisoners, you must go and save them all.', 35, 2, 25, 1, 2, 9850, 11, 24],
+  26: ["Vampire Castle - Core", 'You have reached the heart of the castle, by destroying the heart, the world will finally be at peace.<br> But before this happy end, you will need to kill the remaining vampires.', 35, 2, 50, 2, 0, 9850, 11, 25],
   //NAME, DESC, LEVEL, TYPE, REQ KILLS, EXP, REWARD TYPE, QUALITY, LOCATION, REQ MISSION
 };
 var Ennemies = {
@@ -272,7 +272,7 @@ function UpdateEngine() {
   else { $("#NextRetreat").html(""); }
   $("#CloudTimer").html("Last cloud save " + toHHMMSS(Game.lastCloudSave) + " ago, as <span class='vert'>" + Game.username + "</span>.");
   if (Game.xp[0] < 0) { Game.xp[0] = 0; }
-  for (var UPC = 0; UPC < 4; UPC++) {
+  for (UPC = 0; UPC < 4; UPC++) {
     if (Game.MaxUPC[UPC] == undefined) { Game.MaxUPC[UPC] = 0; }
   }
   if (Game.username == null || Game.username == "" || Game.username == " " || Game.username == "_" || Game.username.length < 3) {
@@ -281,15 +281,15 @@ function UpdateEngine() {
     Game.username = Backup;
   }
   else { Game.username = Game.username.replace(/[^a-zA-Z0-9]/g, '_'); }
-  if (Backup != "Default" && canSave == 1 && Backup != Game.username) { Game.username = Backup;}
-  if (Game.xp[2] == undefined) {Game.xp[2] = 1;}
+  if (Backup != "Default" && canSave == 1 && Backup != Game.username) { Game.username = Backup; }
+  if (Game.xp[2] == undefined) { Game.xp[2] = 1; }
   if (url.match(/mobile/gi)) {
-    $("#PlayerID").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
+    $("#PlayerID").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span class='text2' style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
     $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#market-btn").attr('style', '');
   } else {
-    $("#PlayerID").html("<img class='ui massive avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
+    $("#PlayerID").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span class='text2' style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
     $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#market-btn").attr('style', 'border-right:none;');
@@ -303,6 +303,7 @@ function UpdateEngine() {
       Game.Level++;
     }
   }
+
   if ($('#combat').is(":visible") && Game.isInFight != 0) {
     Game.isInFight = 1;
   }
@@ -367,13 +368,10 @@ function UpdateGame() {
   Game.WTMult[2] = (Game.Simulation * 0.03) - 0.03; //EXPMULT
   Game.WTMult[3] = (Game.Simulation * 0.05) + 0.95; //DIFFICULTYMULT
   Backup = Game.username;
-  Game.xp[2] = Game.Upgrades[0] * 0.05 + 1;
+  Game.xp[2] = Game.Upgrades[0] * 0.01 + 1;
   Game.PowerMult = Game.Upgrades[1] * 0.01 + 1;
   Game.LifeMult = Game.Upgrades[2] * 0.01 + 1;
-  Game.MaxInv = (Game.Simulation * 2) + 18;
-  if (Game.MaxInv > 50) {
-    Game.MaxInv = 50;
-  }
+  Game.MaxInv = (Game.Simulation * 2) + 18 + (Game.Upgrades[3] * 1);
   if (Game.isInFight == 0) {
     Game.CoreLife = Game.CoreBaseLife;
     GenEnnemy();
@@ -549,21 +547,22 @@ function UpdateGame() {
 function UpdateUI() {
   document.title = "AlphaRPG";
   if (((Game.xp[2] + Game.WTMult[2]) - Math.floor(Game.xp[2] + Game.WTMult[2])) < 1) {
-    $("#XPMULTVAL").html(fix(Game.xp[2] + Game.WTMult[2], 9));
+    $("#XPMULTVAL").html("+" + Game.Upgrades[0] + "%");
   } else {
-    $("#XPMULTVAL").html(fix(Game.xp[2] + Game.WTMult[2], 10));
+    $("#XPMULTVAL").html("+" + Game.Upgrades[0] + "%");
   }
   if (((Game.PowerMult + Game.WTMult[0]) - Math.floor(Game.PowerMult + Game.WTMult[0])) < 1) {
-    $("#POWERMULTVAL").html(fix(Game.PowerMult + Game.WTMult[0], 9));
+    $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%");
   } else {
-    $("#POWERMULTVAL").html(fix(Game.PowerMult + Game.WTMult[0], 10));
+    $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%");
   }
   if (((Game.LifeMult + Game.WTMult[1]) - Math.floor(Game.LifeMult + Game.WTMult[1])) < 1) {
-    $("#LIFEMULTVAL").html(fix(Game.LifeMult + Game.WTMult[1], 9));
+    $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%");
   } else {
-    $("#LIFEMULTVAL").html(fix(Game.LifeMult + Game.WTMult[1], 10));
+    $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%");
   }
-  $("#ShardsNumber").html(fix(Game.Shards, 7) + "<i class='bleu dna icon'></i></span> Fragments");
+  $("#INVUPGVAL").html(Game.MaxInv);
+  $("#ShardsNumber").html("<i class='bleu dna icon'></i>" + fix(Game.Shards, 7) + "</span> Fragments");
   if (Game.username == "Default") {
     $("#menu").hide();
     $("#CATEGORIE-1").hide();
@@ -571,16 +570,21 @@ function UpdateUI() {
     Game.isInFight = 3;
   }
   $("#PlayerXP").progress({ percent: GetEXPPercent() });
-  if (Game.Simulation > 1) {
-    WTText = "<i class='globe icon'></i> " + Game.Simulation + "<br>";
+  $("#EXPProgress").html(fix(GetEXPPercent(), 7) + "%");
+    if (Game.Simulation > 1) {
+    WTText = "Dimension <i class='globe icon'></i> " + Game.Simulation + "<br>";
   } else { WTText = ""; }
-  if (Game.Shards >= 3) { $("#SHARDSRW").html("<span class='bleu'>" + fix(Game.Shards, 7) + "</span><i class='bleu dna icon'></i> dimensional fragments available."); } else { $("#SHARDSRW").html(""); }
+  if (Game.Shards >= 3) { $("#SHARDSRW").html("<i class='bleu dna icon'></i><span class='bleu'>" + fix(Game.Shards, 7) + "</span> dimensional fragments available."); } else { $("#SHARDSRW").html(""); }
   if (Game.MaxLevel > Game.Level || Game.FNMission < Game.TotalMissions) {
-    $("#PlayerLevel").html(WTText + "Level " + fix(Game.Level, 4));
+    $("#DimensionID").html(WTText);
+    $("#PlayerLevel").html("Level " + fix(Game.Level, 4));
     $("#PlayerXP").show();
     $("#capacity").html("<span class='vert bold'>" + fix(Game.xp[0], 3) + "</span>/" + fix(Game.xp[1], 3) + " EXP");
   } else {
-    $("#PlayerLevel").html(WTText + "Score <i class='gem icon'></i> " + fix(Game.Ranking, 4));
+    $("#DimensionID").html(WTText);
+    $("#PlayerLevel").html("Score <i class='gem icon'></i> " + fix(Game.Ranking, 4));
+  }
+  if (Game.Level >= Game.MaxLevel) {
     $("#PlayerXP").hide();
     $("#capacity").html("");
   }
@@ -594,10 +598,12 @@ function UpdateUI() {
   var XPMCOL = GetMultPrice(0) > Game.Shards ? "rouge" : "green";
   var POWMCOL = GetMultPrice(1) > Game.Shards ? "rouge" : "green";
   var LIFEMCOL = GetMultPrice(2) > Game.Shards ? "rouge" : "green";
+  var INVCOL = GetMultPrice(3) > Game.Shards ? "rouge" : "green";
   $("#XPMULTPRICE").html("<span class='" + XPMCOL + "'>" + GetMultPrice(0) + "<i class='dna icon'></i></span>");
   $("#POWERMULTPRICE").html("<span class='" + POWMCOL + "'>" + GetMultPrice(1) + "<i class='dna icon'></i></span>");
   $("#LIFEMULTPRICE").html("<span class='" + LIFEMCOL + "'>" + GetMultPrice(2) + "<i class='dna icon'></i></span>");
-  var shards = Game.Level < Game.MaxLevel ? "0" : Math.round(((Game.Ranking - 100) * 750) / 3500);
+  $("#INVUPGPRICE").html("<span class='" + INVCOL + "'>" + GetMultPrice(3) + "<i class='dna icon'></i></span>");
+  var shards = Game.Level < Game.MaxLevel ? "0" : Math.round(Game.Ranking / 10 / 5 - 6);
   var completedstory = Game.FNMission == Game.TotalMissions ? "<span class='vert'>Yes</span>" : "<span class='rouge'>No</span>";
   $("#WTShards").html("Score Required : <span class='vert'><i class='gem icon'></i>" + (((30 + (Game.Simulation * 5)) * 10) - 5) + "</span><br>Story completed : " + completedstory + "<br>Fragments reward : <span class='vert'>" + shards + "<i class='dna icon'></i></span>");
   $("#CurrWT").html("Current Dimension : <span class='vert'><i class='globe icon'></i>" + Game.Simulation + "</span>");
@@ -681,17 +687,21 @@ function UpdateUI() {
   }
   if (Game.MissionStarted[0] == true) {
     if (Game.isInFight == 1) {
-      $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Mission : " + Missions[Game.MissionStarted[1]][0] + MTEXT);
+      $("#btn-CRW").hide();
+      $("#btn-ACT").show();
+      $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Menu" + MTEXT);
     }
     if (Missions[Game.MissionStarted[1]][3] == 1) {
-      $("#MDTL").html("Mission<div class='detail'>Defeat <span class='rouge'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> enemies in <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span>.</div>");
+      $("#MDTL").html("Mission<div class='detail'>Defeat <span class='vert'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> enemies in <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span>.</div>");
     }
     if (Missions[Game.MissionStarted[1]][3] == 2) {
-      $("#MDTL").html("Fortress<div class='detail'>Clear <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span> (<span class='rouge'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> left).</div>");
+      $("#MDTL").html("Fortress<div class='detail'>Clear <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span> (" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + " left).</div>");
     }
   } else {
     if (Game.isInFight == 1) {
-      $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>" + POS[Game.Location][0] + MTEXT);
+      $("#btn-CRW").hide();
+      $("#btn-ACT").show();
+      $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Menu" + MTEXT);
     }
     $("#MDTL").html("Exploration<div class='detail'> <span class='vert'>" + POS[Game.Location][0] + "</span></div>");
   }
@@ -711,7 +721,7 @@ function UpdateUI() {
     $("#cores").show();
   }
   for (var L in POS) {
-    $("#defeatloc" + L).html("<div class='ui " + hori + "segments'><div class='ui segment left aligned'>" + POS[L][0] + "</div><div class='ui segment right aligned'>" + fix(Game.DefeatedByLocation[L], 3) + " Defeated</div></div><div class='ui fitted inverted divider'></div>");
+    $("#defeatloc" + L).html("<div class='ui " + hori + " segments'><div class='ui segment left aligned'>" + POS[L][0] + "</div><div class='ui segment right aligned'>" + fix(Game.DefeatedByLocation[L], 3) + " Defeated</div></div><div class='ui fitted inverted divider'></div>");
   }
   if ($('#inventory').is(":visible")) {
     $("#rewards").hide();
@@ -971,16 +981,16 @@ function GenCores() {
     } else {
       LEVELTEXT = "<i class='gem icon'></i>" + fix(Math.floor(coreId[4] * 10), 4);
     }
-    $("#GS" + UPC + "T").html(LEVELICON);
-    $("#GS" + UPC + "C").html(LEVELTEXT);
+    $("#GS" + UPC + "T").html(LEVELICON + " " + LEVELTEXT);
     var COREUPC = coreId[5] == Game.MaxUPC[UPC - 1] ? "" : "green";
     var UPCTEXT = Game.MaxUPC[UPC - 1] > 0 ? "<span class='" + COREUPC + "'>" + coreId[5] + "</span>/" + Game.MaxUPC[UPC - 1] + "<i class='key icon'></i>" : "";
     $("#" + core + "-upc").html("");
-    $("#" + core + "-text").html("<span class='" + coreId[1] + "'>" + coreId[1] + "</span><br>" + fix(coreId[2], 3) + "<i class='red heart icon'></i> " + fix(coreId[3], 5) + "<i class='blue crosshairs icon'></i><br>" + RLSTXT);
+    $("#" + core + "-text").html(fix(coreId[2], 3) + "<i class='red heart icon'></i> " + fix(coreId[3], 5) + "<i class='blue crosshairs icon'></i>");
+    $("#" + core + "-rarity").html(RLSTXT);
     if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
-      $("#" + core + "-title").html(coreId[0] + " " + UPCTEXT);
+      $("#" + core + "-title").html(coreId[0] + " " + UPCTEXT + "<br><span class='" + coreId[1] + "'>" + coreId[1] + "</span>");
     } else {
-      $("#" + core + "-title").html(coreId[0] + " " + UPCTEXT);
+      $("#" + core + "-title").html(coreId[0] + " " + UPCTEXT + "<br><span class='" + coreId[1] + "'>" + coreId[1] + "</span>");
     }
     if (Game.cores[UPC] == false) {
       $("#" + core).hide();
@@ -1425,7 +1435,7 @@ function WinFight() {
   //EMP LOOT CHANCE
   var ELOOTCHANCE = random(1, 100);
   EMPCount = random(1, 3);
-  if (ELOOTCHANCE <= 25 && Game.Emp < 50) { Game.Emp += EMPCount; EMP = "<br>+<span class='orange'>" + EMPCount + "</span><i class='orange bolt icon'></i>EMP"; }
+  if (ELOOTCHANCE <= 25 && Game.Emp < 50) { Game.Emp += EMPCount; EMP = "<br>+<span class='orange'>" + EMPCount + "</span><i class='orange bolt icon'></i>Special Attack"; }
 
   if (Game.Ennemy[1] >= 6 && Game.MissionStarted[0] == false) { CORELOOT = 1; }
   //CORE LOOT CHANCE
@@ -1587,6 +1597,8 @@ function WinFight() {
   $("#EnnemyDesc").html("<br><br>");
   var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Close" : "<i class='times icon ICR'></i>Close <span class='desc'>(F)</span>";
   $("#btn-CRW").html("<div onclick='hideRewards();' class='big ui bottom attached labeled icon closing button'>" + btncntnt + "</div>");
+  $("#btn-CRW").show();
+  $("#btn-ACT").hide();
   $("#rewards-title").html("<span class='vert'> " + Game.Ennemy[0] + " defeated !</span>");
   $("#rewards-desc").html("<br>You have defeated " + fix(Game.Defeated[Game.Ennemy[1]], 3) + " <div class='ui small " + Class + " basic label'><span class='" + Class + "'>" + ThreatLevel + "</span></div><br> " + LEVELUP);
   if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
@@ -1650,7 +1662,7 @@ function LoseFight() {
   $("#combat").hide();
   Game.xp[0] = 0;
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
-    Game.MissionStarted = [false, 0, 0];
+    Game.MissionStarted = [false, 0, 0, 0];
     showmessage("<span class='rouge'>MISSION FAILED</span>", "You failed to clear the fortress, now returning outside of it.");
     Game.Location = 10;
     hideRewards();
@@ -1703,7 +1715,8 @@ function UpdateCombat() {
 
 
   var EnnemyName = Game.Ennemy[1] > 5 ? Game.Ennemy[0] : "" + Game.Ennemy[0];
-  $("#EnnemyText").html("<div class='ui " + TC + " basic label'>" + TLC + ThreatLevel + "</span></div> " + TLC + EnnemyName + "</span><br>" + LVLTEXT + fix(TIERTEXT, 4) + "<br><span class='" + EnnemyText + "'>" + fix(Game.Ennemy[5], 5) + "</span> <i class='red heart icon'></i><br>" + fix(Game.Ennemy[3], 5) + " <i class='blue crosshairs icon'></i>");
+  $("#EnnemyDesc").html("<div class='ui " + TC + " basic label'>" + TLC + ThreatLevel + "</span></div> " + TLC + EnnemyName + "</span><br>" + LVLTEXT + fix(TIERTEXT, 4))
+  $("#EnnemyText").html("<span class='" + EnnemyText + "'>" + fix(Game.Ennemy[5], 5) + "</span> <i class='red heart icon'></i><br>" + fix(Game.Ennemy[3], 5) + " <i class='blue crosshairs icon'></i>");
   $("#PlayerText").html("<span class='" + lifetext + "'>" + fix(Game.CoreLife, 5) + "</span>/" + fix(Game.CoreBaseLife, 5) + " <i class='red heart icon'></i><br>" + fix(Game.CorePower, 5) + " <i class='blue crosshairs icon'></i>");
   $("#EnnemyHP").progress({
     className: {
@@ -1713,14 +1726,14 @@ function UpdateCombat() {
       warning: ""
     }
   });
-  var MOBILETEXT = url.match(/mobile/gi) ? "EMP" : "EMP (E)";
+  var MOBILETEXT = url.match(/mobile/gi) ? "Special Attack" : "Special Attack (E)";
   if (Game.Emp > 0) {
     $("#emp-btn").show();
     $("#emp-btn").html("<i class='bolt icon'></i>" + fix(Game.Emp, 4) + " " + MOBILETEXT);
     if (url.match(/mobile/gi)) {
-      $("#emp-btn").attr("class", "ui big orange button");
+      $("#emp-btn").attr("class", "ui big orange button alphaSDW");
     } else {
-      $("#emp-btn").attr("class", "ui huge orange button");
+      $("#emp-btn").attr("class", "ui huge orange button alphaSDW");
     }
   } else {
     $("#emp-btn").hide();
@@ -2828,13 +2841,7 @@ function UPCore(core, type, nb) {
 }
 
 function BuyXPMult() {
-  var price = 5;
-  if (Game.Upgrades[0] > 2) {
-    price = 7.5;
-  }
-  if (Game.Upgrades[0] > 5) {
-    price = 10;
-  }
+  var price = GetMultPrice(0);
   if (Game.Shards >= price) {
     Game.Shards -= price;
     Game.Upgrades[0]++;
@@ -2851,40 +2858,6 @@ function BuyPowerMult() {
   UpdateGame();
 }
 
-function GetMultPrice(id) {
-  if (id == 1 || id == 2) {
-    price = 3;
-    if (Game.Upgrades[id] > 2) {
-      price = 3.5;
-    }
-    if (Game.Upgrades[id] > 5) {
-      price = 4;
-    }
-    if (Game.Upgrades[id] > 10) {
-      price = 5;
-    }
-    if (Game.Upgrades[id] > 20) {
-      price = 10;
-    }
-    if (id == 1 && Game.PowerMult >= 10) {
-      price = 10;
-    }
-    if (id == 2 && Game.LifeMult >= 10) {
-      price = 10;
-    }
-  }
-  if (id == 0) {
-    price = 5;
-    if (Game.Upgrades[id] > 2) {
-      price = 7.5;
-    }
-    if (Game.Upgrades[id] > 5) {
-      price = 10;
-    }
-  }
-  return price;
-}
-
 function BuyLifeMult() {
   var price = GetMultPrice(2);
   if (Game.Shards >= price) {
@@ -2893,20 +2866,47 @@ function BuyLifeMult() {
   }
   UpdateGame();
 }
-//WORLD TIER FUNCTIONS
+
+function BuyInvSlot() {
+  var price = GetMultPrice(3);
+  if (Game.Shards >= price) {
+    Game.Shards -= price;
+    Game.Upgrades[3]++;
+  }
+  UpdateGame();
+}
+
+function GetMultPrice(id) {
+  if (Game.Upgrades[id] == null) { Game.Upgrades[id] = 0; }
+  price = 1;
+  if (Game.Upgrades[id] > 5) { price = 2; }
+  if (Game.Upgrades[id] > 10) { price = 3; }
+  if (Game.Upgrades[id] > 20) { price = 4; }
+  if (Game.Upgrades[id] > 30) { price = 5; }
+  if (Game.Upgrades[id] > 40) { price = 6; }
+  if (Game.Upgrades[id] > 50) { price = 7; }
+  if (Game.Upgrades[id] > 60) { price = 8; }
+  if (Game.Upgrades[id] > 70) { price = 9; }
+  if (Game.Upgrades[id] > 80) { price = 10; }
+
+  if (id == 0 && Game.Upgrades[id] >= 200) { price = 1e999; }
+  if (id == 1 && Game.Upgrades[id] >= 100) { price = 1e999; }
+  if (id == 2 && Game.Upgrades[id] >= 100) { price = 1e999; }
+  if (id == 3 && Game.Upgrades[id] >= 50) { price = 1e999; }
+  return price;
+}
 
 function ChangeWT() {
   if (Game.Level >= Game.MaxLevel && Game.Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && Game.FNMission >= Game.TotalMissions) {
     Game.Simulation++;
-    //RESET STATS FOR CLEAN WT
     Game.xp = [0, 0, 0];
     Game.Level = 1;
-    Game.Shards = Math.round(((Game.Ranking - 100) * 750) / 3500);
+    Game.Shards = Math.round(Game.Ranking / 10 / 5 - 6);
     Game.LifeMult = 1;
     Game.PowerMult = 1;
     Game.Emp = 0;
     Game.inventory = [];
-    Game.Upgrades = [0, 0, 0];
+    //Game.Upgrades = [0, 0, 0, 0];
     Game.MaxUPC = [0, 0, 0, 0];
     Game.core1 = ["Basic Armor", "Normal", 100, 10, 1];
     Game.core2 = ["Basic Armor", "Normal", 100, 10, 1];
@@ -2923,7 +2923,7 @@ function ChangeWT() {
     Game.isInFight = 0;
     Game.MissionsCompleted = [];
     Game.Location = 0;
-    Game.MissionStarted = [false, 0, 0];
+    Game.MissionStarted = [false, 0, 0, 0];
     Game.ATR[0] = 0;
     Game.ATR[1] = 0;
     Game.ATR[2] = 0;

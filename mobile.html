@@ -11,8 +11,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="DATA/favicon.ico" />
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.544" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.544" />
+    <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.55" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.55" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <style>
         #rewards-title {
@@ -27,7 +28,7 @@
         .ui.comments .comment .destroy {
             width: inherit !important;
             float: inherit !important;
-            margin: 0% 0 0; 
+            margin: 0% 0 0;
         }
 
         .ui.comments .comment .GS {
@@ -39,7 +40,9 @@
 
 <body id="body" class="noselect" oncontextmenu="return true;">
     <div id="container" class="container">
-        <div id="output" class="container"></div></div><div style="display: none;" id="controls" class="controls"></div>
+        <div id="output" class="container"></div>
+    </div>
+    <div style="display: none;" id="controls" class="controls"></div>
     <div id="loading">
         <div class="ui equal width center aligned padded grid">
             <div class="row">
@@ -102,11 +105,12 @@
                         <p>
                             <span class="vert">AlphaRPG by Purple Wizard</span><br>
                             <i class="large blue discord icon"></i>Purple Wizard#0001 <i
-                                class="large red reddit icon"></i>u/Aizen45 <i class="large blue steam icon"></i>Purple Wizard
+                                class="large red reddit icon"></i>u/Aizen45 <i class="large blue steam icon"></i>Purple
+                            Wizard
                             <span class="desc"><br>Special thanks to <span class="vert">Tiwaz</span> for his
                                 help.</span>
                         </p>
-                        <div class="fluid ui labeled icon alpha button" id="discord-btn"><i
+                        <div class="fluid ui labeled icon alpha button alphaSDW" id="discord-btn"><i
                                 class="discord icon"></i>AlphaRPG
                             Discord</div>
                     </div>
@@ -153,27 +157,110 @@
                 <div class="ui accordion">
                     <div class="active title">
                         <i class="dropdown icon"></i>
-                        Cores
+                        Equipped armors
+                    </div>
+                    <div class="description">
+                        <div class="ui comments">
+                            <div class="comment CoreClass0" id="core1">
+                                <div id="core1-icon" class="classBar0"></div>
+                                <div class="ui horizontal segments">
+                                    <div class="ui left aligned segment">
+                                        <div id="core1-title" class="text">Armor 1</div>
+                                        <div id="GS1T" class="text"></div>
+                                    </div>
+                                    <div class="ui right aligned segment">
+                                        <div id="core1-text" class="text"></div>
+                                        <div id="core1-rarity" class="text"></div>
+                                        <div id="Dcore1" class="fluid ui icon rainbow button">
+                                            Destroy <i class="red trash icon"></i></div>
+                                    </div>
+                                </div><br>
+                            </div>
+
+                            <div class="comment CoreClass0" id="core2">
+                                <div id="core2-icon" class="classBar0"></div>
+                                <div class="ui horizontal segments">
+                                    <div class="ui left aligned segment">
+                                        <div id="core2-title" class="text">Armor 2</div>
+                                        <div id="GS2T" class="text"></div>
+                                    </div>
+                                    <div class="ui right aligned segment">
+                                        <div id="core2-text" class="text"></div>
+                                        <div id="core2-rarity" class="text"></div>
+                                        <div id="Dcore2" class="fluid ui icon rainbow button">
+                                            Destroy <i class="red trash icon"></i></div>
+                                    </div>
+                                </div><br>
+                            </div>
+
+                            <div class="comment CoreClass0" id="core3">
+                                <div id="core3-icon" class="classBar0"></div>
+                                <div class="ui horizontal segments">
+                                    <div class="ui left aligned segment">
+                                        <div id="core3-title" class="text">Armor 3</div>
+                                        <div id="GS3T" class="text"></div>
+                                    </div>
+                                    <div class="ui right aligned segment">
+                                        <div id="core3-text" class="text"></div>
+                                        <div id="core3-rarity" class="text"></div>
+                                        <div id="Dcore3" class="fluid ui icon rainbow button">
+                                            Destroy <i class="red trash icon"></i></div>
+                                    </div>
+                                </div><br>
+                            </div>
+
+                            <div class="comment CoreClass0" id="core4">
+                                <div id="core4-icon" class="classBar0"></div>
+                                <div class="ui horizontal segments">
+                                    <div class="ui left aligned segment">
+                                        <div id="core4-title" class="text">Armor 4</div>
+                                        <div id="GS4T" class="text"></div>
+                                    </div>
+                                    <div class="ui right aligned segment">
+                                        <div id="core4-text" class="text"></div>
+                                        <div id="core4-rarity" class="text"></div>
+                                        <div id="Dcore4" class="fluid ui icon rainbow button">
+                                            Destroy <i class="red trash icon"></i></div>
+                                    </div>
+                                </div><br>
+                            </div>
+
+                            <div class="comment" id="core5">
+                                <div id="core5-icon" class="classBar6"></div>
+                                <div class="content">
+                                    <span id="core5-title" class="author desc"></span>
+                                    <div class="metadata"><span id="core5-rarity" class="date blanc"></span>
+                                    </div>
+                                    <div id="core5-text" class="locked"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui accordion">
+                    <div class="active title">
+                        <i class="dropdown icon"></i>
+                        Armors
                     </div>
                     <div id="inv1" class="active content">
                     </div>
                 </div>
 
                 <div class="ui accordion">
-                    <div class="title">
+                    <div class="active title">
                         <i class="dropdown icon"></i>
                         Keys
                     </div>
-                    <div id="inv2" class="content">
+                    <div id="inv2" class="active content">
                     </div>
                 </div>
 
                 <div class="ui accordion">
-                    <div class="title">
+                    <div class="active title">
                         <i class="dropdown icon"></i>
                         Relics
                     </div>
-                    <div id="inv3" class="content">
+                    <div id="inv3" class="active content">
                     </div>
                 </div>
             </div>
@@ -210,7 +297,8 @@
 
                 <div class="ui black message">
                     <h3 class="rouge"><i class="info icon"></i>Dimension informations</h3>
-                    <div class="desc">By passing through the dimensional rift you will lose your current equipment and bonuses.<br>The story will be reset and
+                    <div class="desc">By passing through the dimensional rift you will lose your current
+                        equipment.<br>The story will be reset and
                         the difficulty will raise by 5%.<br>
                         <br>For each dimension: +50 max tier score, 3% more EXP, +2 inventory slots
                     </div>
@@ -229,7 +317,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="center aligned desc">XP Multiplier</td>
+                            <td class="center aligned desc">EXP Multiplier</td>
                             <td id="XPMULTVAL" class="center aligned desc">0</td>
                             <td id="XPMULTPRICE" class="center aligned">3<i class="bleu dna icon"></i>
                             </td>
@@ -257,6 +345,17 @@
                             </td>
                             <td class="center aligned">
                                 <div id="lpm-btn" class="fluid ui rainbow button">
+                                    Upgrade
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="center aligned desc">Inventory slots</td>
+                            <td id="INVUPGVAL" class="center aligned desc">0</td>
+                            <td id="INVUPGPRICE" class="center aligned">3<i class="bleu dna icon"></i>
+                            </td>
+                            <td class="right aligned">
+                                <div id="invu-btn" class="fluid ui rainbow button">
                                     Upgrade
                                 </div>
                             </td>
@@ -582,43 +681,72 @@
             </div>
 
             <div id="combat" class="ui segments" style="padding: inherit;">
-                <div id="MDTL" class="ui label">Mission<div class="detail"></div>
-                </div>
-                <div id="PlayerCard"><span id="PlayerID"></span><br>
-                    <span id="PlayerLevel"></span><br>
-                    <span id="capacity"></span>
-                </div>
-                <div class="desc vert" id="WTUNLOCK"></div>
-                <div class="" id="SHARDSRW"></div>
-                <div class="desc rouge" id="LowScore"></div>
-                <div class="desc rouge" id="MaxPOSLVL"></div>
-                <div id="PlayerHP" class="ui big inverted indicating progress" style="margin: 0em!important;">
-                    <div class="bar">
-                        <div class="progress"></div>
+                <div class="ui horizontal segments" style="margin: 0rem 0;">
+                    <div class="ui segment">
+                        <div id="MDTL" class="fluid ui label">Mission<div class="detail"></div>
+                        </div>
+                        <div class="desc vert" id="WTUNLOCK"></div>
+                        <div class="desc" id="SHARDSRW"></div>
+                        <div class="desc rouge" id="LowScore"></div>
+                        <div class="desc rouge" id="MaxPOSLVL"></div>
+                        <div class="desc jaune" id="NextRetreat"></div>
+                    </div>
+                    <div class="ui segment">
+                        <div class="ui right aligned segment">
+                            <div class="text2" id="PlayerLevel"></div>
+                        </div>
+                        <div class="ui right aligned segment">
+                            <div class="label">
+                                <div class="desc" id="capacity"></div>
+                            </div>
+                            <div id="PlayerXP" class="ui tiny grey inverted progress" style="margin: 0 0 0 0;">
+                                <div class="bar"></div>
+                            </div>
+                            <div class="text" id="EXPProgress"></div>
+                        </div>
+
                     </div>
                 </div>
-                <div id="PlayerText"></div>
                 <div class="ui segments">
-                    <div class="ui segment"></div>
+                    <div class="ui left aligned segment">
+                        <div id="DimensionID"></div>
+                        <div id="PlayerID"></div>
+                    </div>
+                    <div class="ui segment">
+                        <div id="PlayerHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
+                            <div class="bar">
+                                <div class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui segment">
+                        <div id="PlayerText"></div>
+                    </div>
+                </div>
+                <div class="ui segments">
+                    <div class="ui right aligned segment">
+                        <font id="EnnemyDesc"><br><br></font>
+                    </div>
+                    <div class="ui segment">
+                        <div id="EnnemyHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
+                            <div class="bar">
+                                <div class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="ui segment">
                         <div id="EnnemyText"></div>
                     </div>
                 </div>
-
-                <div id="EnnemyHP" class="ui big inverted indicating progress" style="margin: 0em!important;">
-                    <div class="bar">
-                        <div class="progress"></div>
-                    </div>
-                </div><br>
+                <br>
                 <div class="ui labeled two icon buttons">
-                    <div id="emp-btn" class="ui huge rainbow button"></div>
-                    <div id="attack-btn" class="ui huge blue button"></div>
+                    <div id="emp-btn" class="ui huge rainbow button alphaSDW"></div>
+                    <div id="attack-btn" class="ui huge alpha button alphaSDW"></div>
                 </div>
                 <div class="ui labeled two icon buttons">
-                    <div id="run-btn" class="ui huge grey button"></div>
+                    <div id="run-btn" class="ui huge grey button alphaSDW"></div>
                     <div id="cover-btn" class="ui huge button"></div>
                 </div>
-                <div class="desc" id="NextRetreat"></div>
             </div>
 
             <div id="rewards" style="display: none;">
@@ -628,79 +756,6 @@
                 <div id="rewards-loot" class="ui segment"></div>
                 <br>
                 <div id="btn-CRW">
-                    <div onclick="hideRewards();" class="ui bottom attached labeled icon closing button"><i
-                            class="times icon"></i>Close (F)</div>
-                </div>
-            </div>
-
-            <div class="ui comments" id="cores">
-                <div class="comment CoreClass0" id="core1">
-                    <div id="core1-icon" class="classBar0"></div>
-                    <div class="statistic GS">
-                        <span class="value" id="GS1T"></span>
-                        <span class="label" id="GS1C"></span>
-                    </div>
-                    <span id="core1-title" class="author desc">Armor 1</span>
-                    <span id="core1-rarity" class="date blanc"></span>
-                    <div id="core1-text" class="text2"></div>
-                    <span class="destroy">
-                        <div id="Dcore1" class="ui icon rainbow button">
-                            <i class="red trash icon"></i></div>
-                    </span>
-                </div>
-                <div class="comment CoreClass0" id="core2">
-                    <div id="core2-icon" class="classBar0"></div>
-                    <div class="statistic GS">
-                        <span class="value" id="GS2T"></span>
-                        <span class="label" id="GS2C"></span>
-                    </div>
-                    <span id="core2-title" class="author desc">Armor 2</span>
-                    <span id="core2-rarity" class="date blanc"></span>
-                    <div id="core2-text" class="text2"></div>
-                    <span class="destroy">
-                        <div id="Dcore2" class="ui icon rainbow button">
-                            <i class="red trash icon"></i>
-                        </div>
-                    </span>
-                </div>
-                <div class="comment CoreClass0" id="core3">
-                    <div id="core3-icon" class="classBar0"></div>
-                    <div class="statistic GS">
-                        <span class="value" id="GS3T"></span>
-                        <span class="label" id="GS3C"></span>
-                    </div>
-                    <span id="core3-title" class="author desc">Armor 3</span>
-                    <span id="core3-rarity" class="date blanc"></span>
-                    <div id="core3-text" class="text2"></div>
-                    <span class="destroy">
-                        <div id="Dcore3" class="ui icon rainbow button">
-                            <i class="red trash icon"></i>
-                        </div>
-                    </span>
-                </div>
-                <div class="comment CoreClass0" id="core4">
-                    <div id="core4-icon" class="classBar0"></div>
-                    <div class="statistic GS">
-                        <span class="value" id="GS4T"></span>
-                        <span class="label" id="GS4C"></span>
-                    </div>
-                    <span id="core4-title" class="author desc">Armor 4</span>
-                    <span id="core4-rarity" class="date blanc"></span>
-                    <div id="core4-text" class="text2"></div>
-                    <span class="destroy">
-                        <div id="Dcore4" class="ui icon rainbow button">
-                            <i class="red trash icon"></i>
-                        </div>
-                    </span>
-                </div>
-                <div class="comment" id="core5">
-                    <div id="core5-icon" class="classBar6"></div>
-                    <div class="content">
-                        <span id="core5-title" class="author desc"></span>
-                        <div class="metadata"><span id="core5-rarity" class="date blanc"></span>
-                        </div>
-                        <div id="core5-text" class="locked"></div>
-                    </div>
                 </div>
             </div>
 
@@ -829,12 +884,13 @@
 <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.10.0/firebase-database.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js" async></script>
 <script type="text/javascript" src="DATA/semantic.min.js" async></script>
 <script type="text/javascript" src="DATA/checkbox.min.js" async></script>
 <script type="text/javascript" src="DATA/accordion.min.js" async></script>
 <script type="text/javascript" src="DATA/numeral.min.js" async></script>
 <script type="text/javascript" src="DATA/progress.min.js" async></script>
-<script type="text/javascript" src="utils.js?v=1.544" async></script>
-<script type="text/javascript" src="core.js?v=1.549" async></script>
+<script type="text/javascript" src="utils.js?v=1.55" async></script>
+<script type="text/javascript" src="core.js?v=1.55" async></script>
+
 </html>
