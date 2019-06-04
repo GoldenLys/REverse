@@ -777,7 +777,7 @@ function GetEXPPercent() {
 
 function ResetTheme(code) {
   if (code != 0) {
-    Game.Theme = ["#00dca0", "#282b3473", "#006450", "#FFFFFF", "#0f1419a6", "#282b34", "#282b34"];
+    Game.Theme = ["#00dca0", "#282b3473", "#006450", "#FFFFFF", "#0f1419a6", "#282b34", "#0c0d16"];
   }
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
   document.documentElement.style.setProperty('--black2', Game.Theme[1]);
@@ -1008,7 +1008,7 @@ function hideMenus() {
 }
 
 function explore(loc) {
-  if (POS[loc][1] <= Game.Level) {
+  if (POS[loc][1] <= Game.Level && Game.MissionStarted[0] == false) {
     if (Game.MissionsCompleted[POS[loc][4]] == 1) {
       Game.Location = loc;
       Game.isInFight = 0;
@@ -1155,6 +1155,8 @@ function GenExplorationMenu() {
     } else {
       BTN = "";
     }
+
+if(Game.MissionStarted[0] == true) { BTN = ""; }
 
     if (Game.Location == E) { BTN = ""; }
 
@@ -1404,10 +1406,12 @@ function CompleteMission() {
         var FRGR = Missions[Game.MissionStarted[1]][5] > 0 ? "+<i class='bleu dna icon'></i><span class='bleu bold'>" + fix(Missions[Game.MissionStarted[1]][5], 3) + "</span> Fragments " : "";
         $("#btn-CRW").html("<div onclick='hideMissionRewards();' class='big ui bottom attached labeled icon closing button'>" + btncntnt + "</div>");
         $("#rewards-desc").html("");
-        if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP); } else {
+        if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP + FRGR); } else {
           $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP ");
         }
         $("#combat").hide();
+        $("#btn-CRW").show();
+        $("#btn-ACT").hide();
         $("#rewards").show();
         //KEYS & Relic MISSING
       }

@@ -239,15 +239,11 @@ function UpdateEngine() {
   if (loadState < 3) {
     loadState++;
     $("#loading").show();
-    $("#gamediv1").animate({ right: '30%' });
-    $("#gamediv2").animate({ left: '70%' });
     $("#main").hide();
     $("#q").hide();
   }
   if (loadState == 3) {
     $("#loading").hide();
-    $("#gamediv1").animate({ right: '0%' }, 1500);
-    $("#gamediv2").animate({ left: '0%' }, 1500);
     $("#main").show();
     $("#q").show();
     loadState++;
@@ -306,6 +302,12 @@ function UpdateEngine() {
 
   if ($('#combat').is(":visible") && Game.isInFight != 0) {
     Game.isInFight = 1;
+    $("#btn-CRW").hide();
+    $("#btn-ACT").show();
+  }
+  if ($('#rewards').is(":visible") && Game.isInFight == 2) {
+    $("#btn-CRW").show();
+    $("#btn-ACT").hide();
   }
   if (Game.isInFight == 1 && Game.CoreLife <= 0) {
     LoseFight();
@@ -325,7 +327,7 @@ function UpdateEngine() {
     }
     for (var IV2 in Game.inventory) {
       if (Game.inventory[I].id == 1 || Game.inventory[I].id == 3) {
-        if (Game.inventory[I].life == Game.inventory[IV2].life && Game.inventory[I].power == Game.inventory[IV2].power && IV2 != I) {
+        if (Game.inventory[I].life == Game.inventory[IV2].life && Game.inventory[I].power == Game.inventory[IV2].power && IV2 != I && Game.inventory[I].name == Game.inventory[IV2].name && Game.inventory[I].id != 3) {
           Game.inventory.splice(I, 1);
         }
       }
@@ -490,7 +492,7 @@ function UpdateGame() {
   if (Game.isInFight != 2) { CompleteMission(); }
   for (var IV in Game.inventory) {
     if (Game.Level < 10) {
-      if (Game.inventory[IV].class == 'Uncommon' || Game.inventory[IV].class == 'Rare' || Game.inventory[IV].class == 'Epic' || Game.inventory[IV].class == 'Exotic' || Game.inventory[IV].class == 'Divine') { RemoveItem(IV); }
+      if (Game.inventory[IV].class == 'Uncommon' || Game.inventory[IV].class == 'Rare' || Game.inventory[IV].class == 'Epic' || Game.inventory[IV].class == 'Exotic' || Game.inventory[IV].class == 'Divine') { RemoveItem(IV);}
     }
     if (Game.Level < 15) {
       if (Game.inventory[IV].class == 'Rare' || Game.inventory[IV].class == 'Epic' || Game.inventory[IV].class == 'Exotic' || Game.inventory[IV].class == 'Divine') { RemoveItem(IV); }
@@ -1048,15 +1050,14 @@ function Protect() {
   HealText = "";
   if (Game.CoreLife < Game.CoreBaseLife) {
     var luck = random(1, 100);
-    if (luck <= 8) {
-      MINMULT = 45;
-      MAXMULT = 50;
+    if (luck <= 15) {
+      MINMULT = 65;
+      MAXMULT = 75;
     } else {
-
-      MINMULT = 10;
-      MAXMULT = 35;
+      MINMULT = 20;
+      MAXMULT = 50;
     }
-    if (luck >= 75) {
+    if (luck >= 85) {
       MINMULT = 0;
       MAXMULT = 0;
     }
@@ -1070,7 +1071,7 @@ function Protect() {
     MAXMULT2 = 10;
   } else {
     MINMULT2 = 35;
-    MAXMULT2 = 75;
+    MAXMULT2 = 50;
   } //10% ENNEMY ATTACK FAILS 
   var rEnnemyPower = random((Game.Ennemy[3] * MINMULT2), (Game.Ennemy[3] * MAXMULT2)) / 100;
   var DamagesText = "You took <span class='rouge'><a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a></span> damages.";
@@ -1664,8 +1665,8 @@ function LoseFight() {
   $("#rewards-loot").html("");
   $("#rewards").show();
   $("#combat").hide();
-  $("#btn-ACT").show();
-  $("#btn-CRW").hide();
+  $("#btn-ACT").hide();
+  $("#btn-CRW").show();
   Game.xp[0] = 0;
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
     Game.MissionStarted = [false, 0, 0, 0];
@@ -1721,7 +1722,7 @@ function UpdateCombat() {
 
 
   var EnnemyName = Game.Ennemy[1] > 5 ? Game.Ennemy[0] : "" + Game.Ennemy[0];
-  $("#EnnemyDesc").html("<div class='ui " + TC + " basic label'>" + TLC + ThreatLevel + "</span></div> " + TLC + EnnemyName + "</span><br>" + LVLTEXT + fix(TIERTEXT, 4))
+  $("#EnnemyTitle").html("<div class='ui " + TC + " basic label'>" + TLC + ThreatLevel + "</span></div> " + TLC + EnnemyName + "</span><br>" + LVLTEXT + fix(TIERTEXT, 4));
   $("#EnnemyText").html("<span class='" + EnnemyText + "'>" + fix(Game.Ennemy[5], 5) + "</span> <i class='red heart icon'></i><br>" + fix(Game.Ennemy[3], 5) + " <i class='blue crosshairs icon'></i>");
   $("#PlayerText").html("<span class='" + lifetext + "'>" + fix(Game.CoreLife, 5) + "</span>/" + fix(Game.CoreBaseLife, 5) + " <i class='red heart icon'></i><br>" + fix(Game.CorePower, 5) + " <i class='blue crosshairs icon'></i>");
   $("#EnnemyHP").progress({
@@ -1858,56 +1859,39 @@ function NewRelic(luck) {
 
   if (Game.Level < 5) {
     os.type = 0;
+    os.class = "Normal";
   }
 
   if (Game.Level < 10) {
     if (os.class == 'Uncommon' || os.class == 'Rare' || os.class == 'Epic' || os.class == 'Exotic' || os.class == 'Divine') {
       os.type = 1;
+      os.class = "Common";
     }
   }
 
   if (Game.Level < 15) {
     if (os.class == 'Rare' || os.class == 'Epic' || os.class == 'Exotic' || os.class == 'Divine') {
       os.type = 2;
+      os.class = "Uncommon";
     }
   }
 
   if (Game.Level < 20) {
     if (os.class == 'Epic' || os.class == 'Exotic' || os.class == 'Divine') {
       os.type = 3;
+      os.class = "Rare";
     }
   }
 
   if (Game.Level < 30) {
     if (os.class == 'Exotic' || os.class == 'Divine') {
       os.type = 4;
+      os.class = "Epic";
     }
   }
 
   if (os.type > POS[Game.Location][3]) {
     os.type = POS[Game.Location][3];
-  }
-
-  if (os.type == 0) {
-    os.class = "Normal";
-  }
-  if (os.type == 1) {
-    os.class = "Common";
-  }
-  if (os.type == 2) {
-    os.class = "Uncommon";
-  }
-  if (os.type == 3) {
-    os.class = "Rare";
-  }
-  if (os.type == 4) {
-    os.class = "Epic";
-  }
-  if (os.type == 5) {
-    os.class = "Exotic";
-  }
-  if (os.type == 6) {
-    os.class = "Divine";
   }
 
   var RandomT = random(1, 2);
@@ -2884,16 +2868,16 @@ function BuyInvSlot() {
 
 function GetMultPrice(id) {
   if (Game.Upgrades[id] == null) { Game.Upgrades[id] = 0; }
-  price = 1;
-  if (Game.Upgrades[id] > 5) { price = 2; }
-  if (Game.Upgrades[id] > 10) { price = 3; }
-  if (Game.Upgrades[id] > 20) { price = 4; }
-  if (Game.Upgrades[id] > 30) { price = 5; }
-  if (Game.Upgrades[id] > 40) { price = 6; }
-  if (Game.Upgrades[id] > 50) { price = 7; }
-  if (Game.Upgrades[id] > 60) { price = 8; }
-  if (Game.Upgrades[id] > 70) { price = 9; }
-  if (Game.Upgrades[id] > 80) { price = 10; }
+  price = 2;
+  if (Game.Upgrades[id] > 5) { price = 3; }
+  if (Game.Upgrades[id] > 10) { price = 4; }
+  if (Game.Upgrades[id] > 20) { price = 5; }
+  if (Game.Upgrades[id] > 30) { price = 7.5; }
+  if (Game.Upgrades[id] > 40) { price = 10; }
+  if (Game.Upgrades[id] > 50) { price = 12; }
+  if (Game.Upgrades[id] > 60) { price = 14; }
+  if (Game.Upgrades[id] > 70) { price = 15; }
+  if (Game.Upgrades[id] > 80) { price = 25; }
 
   if (id == 0 && Game.Upgrades[id] >= 200) { price = 1e999; }
   if (id == 1 && Game.Upgrades[id] >= 100) { price = 1e999; }
