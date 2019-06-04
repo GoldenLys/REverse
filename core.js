@@ -540,6 +540,9 @@ function UpdateGame() {
   if (Game.MissionStarted[0] == false) {
     if (Game.Location == 11 || Game.Location == 17) { Game.Location--; }
   }
+  if ($('#inventory').is(":visible") && Game.isInFight != 0) {
+    Game.isInFight = 16;
+  }
   UpdateUI();
   save();
 }
