@@ -1050,12 +1050,13 @@ function Protect() {
     var luck = random(1, 100);
     if (luck <= 8) {
       MINMULT = 45;
-      MAXMULT = 75;
-    } else {
-      MINMULT = 35;
       MAXMULT = 50;
+    } else {
+
+      MINMULT = 10;
+      MAXMULT = 35;
     }
-    if (luck >= 90) {
+    if (luck >= 75) {
       MINMULT = 0;
       MAXMULT = 0;
     }
@@ -1068,8 +1069,8 @@ function Protect() {
     MINMULT2 = 0;
     MAXMULT2 = 10;
   } else {
-    MINMULT2 = 25;
-    MAXMULT2 = 45;
+    MINMULT2 = 35;
+    MAXMULT2 = 75;
   } //10% ENNEMY ATTACK FAILS 
   var rEnnemyPower = random((Game.Ennemy[3] * MINMULT2), (Game.Ennemy[3] * MAXMULT2)) / 100;
   var DamagesText = "You took <span class='rouge'><a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a></span> damages.";
@@ -1663,6 +1664,8 @@ function LoseFight() {
   $("#rewards-loot").html("");
   $("#rewards").show();
   $("#combat").hide();
+  $("#btn-ACT").show();
+  $("#btn-CRW").hide();
   Game.xp[0] = 0;
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
     Game.MissionStarted = [false, 0, 0, 0];
