@@ -1225,3 +1225,7 @@ input[type=number], label {
 body.pushable>.pusher {
   background: var(--black);
 }
+
+#guild-btn, .brand-logo {
+  display: none!important;
+}

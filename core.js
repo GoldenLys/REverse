@@ -167,7 +167,7 @@ var POS = {
   if (Game.username != "Default") {
     $("#menu").show();
     $('.ui.sidebar').sidebar('hide');
-    $("#sidebar-btn").on("click", function () { $('.ui.sidebar').sidebar('toggle'); });
+    $("#sidebar-btn").on("click", function () { $('.ui.sidebar').sidebar('toggle'); $("#guild-btn").hide(); $(".brand-logo").hide(); });
     $("#CATEGORIE-1").show();
     $("#begin").hide();
     UpdateGame();
