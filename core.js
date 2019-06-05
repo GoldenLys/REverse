@@ -492,7 +492,7 @@ function UpdateGame() {
   if (Game.isInFight != 2) { CompleteMission(); }
   for (var IV in Game.inventory) {
     if (Game.Level < 10) {
-      if (Game.inventory[IV].class == 'Uncommon' || Game.inventory[IV].class == 'Rare' || Game.inventory[IV].class == 'Epic' || Game.inventory[IV].class == 'Exotic' || Game.inventory[IV].class == 'Divine') { RemoveItem(IV);}
+      if (Game.inventory[IV].class == 'Uncommon' || Game.inventory[IV].class == 'Rare' || Game.inventory[IV].class == 'Epic' || Game.inventory[IV].class == 'Exotic' || Game.inventory[IV].class == 'Divine') { RemoveItem(IV); }
     }
     if (Game.Level < 15) {
       if (Game.inventory[IV].class == 'Rare' || Game.inventory[IV].class == 'Epic' || Game.inventory[IV].class == 'Exotic' || Game.inventory[IV].class == 'Divine') { RemoveItem(IV); }
@@ -576,7 +576,7 @@ function UpdateUI() {
   }
   $("#PlayerXP").progress({ percent: GetEXPPercent() });
   $("#EXPProgress").html(fix(GetEXPPercent(), 7) + "%");
-    if (Game.Simulation > 1) {
+  if (Game.Simulation > 1) {
     WTText = "Dimension <i class='globe icon'></i> " + Game.Simulation + "<br>";
   } else { WTText = ""; }
   if (Game.Shards >= 3) { $("#SHARDSRW").html("<i class='bleu dna icon'></i><span class='bleu'>" + fix(Game.Shards, 7) + "</span> dimensional fragments available."); } else { $("#SHARDSRW").html(""); }
@@ -1887,6 +1887,16 @@ function NewRelic(luck) {
     if (os.class == 'Exotic' || os.class == 'Divine') {
       os.type = 4;
       os.class = "Epic";
+    }
+  }
+  if (Game.Level >= 30) {
+    if (os.class == 'Exotic') {
+      os.type = 5;
+      os.class = "Exotic";
+    }
+    if (os.class == 'Divine') {
+      os.type = 6;
+      os.class = "Divine";
     }
   }
 
