@@ -329,12 +329,15 @@ body {
   /* background-attachment: fixed; */
   /* background-size: contain; */
   font-size: 100%;
-  font-family: 'Noto Sans HK', sans-serif;
   font-family: 'Electrolize', sans-serif;
+  cursor: crosshair;
+}
+
+body.pushable {
+  background: var(--black)!important;
 }
 
 .ui.card>.content>.header, .ui.cards>.card>.content>.header, .ui.message, .ui.message .header, .ui.button {
-  font-family: 'Noto Sans HK', sans-serif;
   font-family: 'Electrolize', sans-serif;
 }
 
@@ -443,15 +446,13 @@ body {
 
 @keyframes rainbow2 {
   0% {
-    background: linear-gradient(to right,  var(--green2) 0%, var(--black) 50%, var(--black) 100%);
-    
+    background: linear-gradient(to right, var(--green2) 0%, var(--black) 50%, var(--black) 100%);
   }
   50% {
-    background: linear-gradient(to right,  var(--black) 0%, var(--green2) 50%, var(--black) 100%);
+    background: linear-gradient(to right, var(--black) 0%, var(--green2) 50%, var(--black) 100%);
   }
-
   100% {
-    background: linear-gradient(to right,  var(--black) 0%, var(--black) 50%, var(--green2) 100%);
+    background: linear-gradient(to right, var(--black) 0%, var(--black) 50%, var(--green2) 100%);
   }
 }
 
@@ -906,10 +907,8 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
   width: 80%;
   left: 10%;
   padding: 2%;
-  background-color: var(--darkgrey5);
+  background-color: transparent!important;
   user-select: none;
-  -webkit-clip-path: polygon(100% 0, 100% 80%, 98.5% 100%, 1.5% 100%, 0% 80%, 0% 0%);
-  clip-path: polygon(100% 0, 100% 80%, 98.5% 100%, 1.5% 100%, 0% 80%, 0% 0%);
 }
 
 .ui.card>.content, .ui.cards>.card>.content {
@@ -1205,6 +1204,8 @@ input[type=number], label {
 }
 
 .ui.alpha.button, .ui.alpha.buttons .button {
+  border-top-left-radius: 0px!important;
+  border-top-right-radius: 0px!important;
   background-color: var(--green);
   color: #fff;
   text-shadow: none;
@@ -1218,8 +1219,9 @@ input[type=number], label {
 .ui[class*="bottom right attached"].label {
   position: fixed;
 }
+
 .ui.comments .comment .text {
-    color: var(--white);
+  color: var(--white);
 }
 
 body.pushable>.pusher {
@@ -1228,4 +1230,8 @@ body.pushable>.pusher {
 
 #guild-btn, .brand-logo {
   display: none!important;
+}
+
+.ui.sidebar {
+  overflow-y: hidden!important;
 }

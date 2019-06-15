@@ -776,8 +776,8 @@ function GetEXPPercent() {
 //THEME FUNCTIONS
 
 function ResetTheme(code) {
-  if (code != 0) {
-    Game.Theme = ["#00dca0", "#282b3473", "#006450", "#FFFFFF", "#0f1419a6", "#282b34", "#0c0d16"];
+  if (code != 2) {
+    Game.Theme = ["#00dca0", "#282b3473", "#05b8a0", "#FFFFFF", "#0f1419a6", "#282b34", "#0c0d16"];
   }
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
   document.documentElement.style.setProperty('--black2', Game.Theme[1]);
@@ -786,10 +786,7 @@ function ResetTheme(code) {
   document.documentElement.style.setProperty('--darkgrey5', Game.Theme[4]);
   document.documentElement.style.setProperty('--darkgrey', Game.Theme[5]);
   document.documentElement.style.setProperty('--black', Game.Theme[6]);
-
-  if (code != 1) {
-    save();
-  }
+  if (code == 1) { save(); }
 }
 
 function ThemeDefine(id) {
@@ -1156,7 +1153,7 @@ function GenExplorationMenu() {
       BTN = "";
     }
 
-if(Game.MissionStarted[0] == true) { BTN = ""; }
+    if (Game.MissionStarted[0] == true) { BTN = ""; }
 
     if (Game.Location == E) { BTN = ""; }
 
@@ -1323,7 +1320,7 @@ function CompleteMission() {
         }
 
         if (Game.MissionStarted[3] == 0) {
-          
+
           if (Missions[Game.MissionStarted[1]][6] == 0) {//CORE REWARD
             if (Game.MissionStarted[0] == true) {
               newItem(0, Game.Ranking, Missions[Game.MissionStarted[1]][7]);

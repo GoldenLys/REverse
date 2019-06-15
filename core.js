@@ -1,5 +1,4 @@
 // TUTORIAL TEXTS - WHEN THE GAME WILL BE NEARLY FINISHED
-// FIX MISSIONS EXP REWARDS (not fortresses)
 // MONEY LOOTED ALONG WITH A SHOP SYSTEM ?
 // NEW MISSIONS - GUILD PROMOTIONS : 2 ELITES & 1 BOSS TO PROMOTE TO F-A OR S Rank which will increase your rewards. (money/exp)
 // SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
@@ -71,7 +70,7 @@ var Game = {
   NCore: 0,
   Leader: 0,
   LastEscape: 0,
-  MaxScore: 300,
+  MaxScore: 350,
   MissionsCompleted: [],
   Location: 0,
   PlayTime: 0,
@@ -157,7 +156,7 @@ var POS = {
 };
 
 (function () {
-  ResetTheme(1);
+  ResetTheme(0);
   if (localStorage.getItem("Matrix2") != null) {
     load();
   }
@@ -166,7 +165,7 @@ var POS = {
   }
   if (Game.username != "Default") {
     $("#menu").show();
-    $('.ui.sidebar').sidebar('hide');
+    $('.ui.sidebar').sidebar('setting', 'transition', 'scale down', {dimPage: false}).sidebar('hide');
     $("#sidebar-btn").on("click", function () { $('.ui.sidebar').sidebar('toggle'); $("#guild-btn").hide(); $(".brand-logo").hide(); });
     $("#CATEGORIE-1").show();
     $("#begin").hide();
@@ -738,7 +737,7 @@ function UpdateUI() {
   Shortcuts();
   GenCores();
   GenInventory();
-  ResetTheme(0);
+  ResetTheme(2);
 }
 
 function GenInventory() {
@@ -1065,7 +1064,8 @@ function Protect() {
     }
     var rRandPlayerHeal = random((Game.CorePower * MINMULT), (Game.CorePower * MAXMULT)) / 100;
     Game.CoreLife = Math.round(Game.CoreLife + rRandPlayerHeal);
-    HealText = "<br>You restored <a class='ui circular small label'>+" + fix(rRandPlayerHeal, 4) + "<i class='red heart icon'></i></a> of life.";
+    HealText = "You restored <a class='ui circular small label'>+" + fix(rRandPlayerHeal, 4) + "<i class='red heart icon'></i></a> of life.";
+    if (rRandPlayerHeal < 1) { HealText = ""; }
   }
   var luck2 = random(1, 100);
   if (luck2 >= 75) {
@@ -1076,24 +1076,17 @@ function Protect() {
     MAXMULT2 = 50;
   } //10% ENNEMY ATTACK FAILS 
   var rEnnemyPower = random((Game.Ennemy[3] * MINMULT2), (Game.Ennemy[3] * MAXMULT2)) / 100;
-  var DamagesText = "You took <span class='rouge'><a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a></span> damages.";
+  var DamagesText = "You took <span class='rouge'><a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a></span> damages.<br>";
+  if (rEnnemyPower < 1) { DamagesText = ""; }
   if (Game.CoreLife >= Game.CoreBaseLife * 0.99) {
     rEnnemyPower = 0;
-    DamagesText = "<br>You dodged the attack!";
+    DamagesText = "You dodged the attack!";
   }
   Game.CoreLife -= rEnnemyPower;
-  if (Game.isInFight == 1 && Game.CoreLife <= 0) {
-    LoseFight();
-  } else {
-    if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) {
-      WinFight();
-    }
-  }
-  if (Game.CoreLife > Game.CoreBaseLife) {
-    Game.CoreLife = Game.CoreBaseLife;
-  }
-  $("#EnnemyDesc").html(DamagesText + HealText
-  );
+  if (Game.isInFight == 1 && Game.CoreLife <= 0) { LoseFight(); }
+  else { if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) { WinFight(); } }
+  if (Game.CoreLife > Game.CoreBaseLife) { Game.CoreLife = Game.CoreBaseLife; }
+  $("#EnnemyDesc").html(DamagesText + HealText);
   UpdateGame();
 }
 
@@ -1752,10 +1745,10 @@ function UpdateCombat() {
     $("#emp-btn").hide();
     $("#emp-btn").attr("class", "");
   }
-  var MOBILETEXT2 = url.match(/mobile/gi) ? "Attack" : "Attack <span class='desc'>(SPACE)</span>";
-  $("#attack-btn").html("<i class='crosshairs icon'></i> " + MOBILETEXT2);
-  var MOBILETEXT3 = url.match(/mobile/gi) ? "Take cover" : "Take cover <span class='desc'>(R)</span>";
-  $("#cover-btn").html("<i class='shield alternate icon'></i> " + MOBILETEXT3);
+  var MOBILETEXT2 = url.match(/mobile/gi) ? "<i class='crosshairs icon'></i>Attack" : "<i class='crosshairs icon ICR'></i>Attack <span class='desc'>(SPACE)</span>";
+  $("#attack-btn").html(MOBILETEXT2);
+  var MOBILETEXT3 = url.match(/mobile/gi) ? "<i class='shield alternate icon'></i>Take cover" : "<i class='shield alternate icon ICR'></i>Take cover <span class='desc'>(R)</span>";
+  $("#cover-btn").html(MOBILETEXT3);
   var MOBILETEXT4 = url.match(/mobile/gi) ? "<i class='eye slash outline icon'></i> Run Away" : "<i class='eye slash outline icon ICR'></i> Run Away <span class='desc'>(F)</span>";
   $("#run-btn").html("" + MOBILETEXT4);
   $("#EnnemyHP").progress({
@@ -2880,16 +2873,16 @@ function BuyInvSlot() {
 
 function GetMultPrice(id) {
   if (Game.Upgrades[id] == null) { Game.Upgrades[id] = 0; }
-  price = 2;
-  if (Game.Upgrades[id] > 5) { price = 3; }
-  if (Game.Upgrades[id] > 10) { price = 4; }
-  if (Game.Upgrades[id] > 20) { price = 5; }
-  if (Game.Upgrades[id] > 30) { price = 7.5; }
-  if (Game.Upgrades[id] > 40) { price = 10; }
-  if (Game.Upgrades[id] > 50) { price = 12; }
-  if (Game.Upgrades[id] > 60) { price = 14; }
-  if (Game.Upgrades[id] > 70) { price = 15; }
-  if (Game.Upgrades[id] > 80) { price = 25; }
+  var price = 2;
+  if (Game.Upgrades[id] >= 5) { price = 3; }
+  if (Game.Upgrades[id] >= 10) { price = 4; }
+  if (Game.Upgrades[id] >= 20) { price = 5; }
+  if (Game.Upgrades[id] >= 30) { price = 7.5; }
+  if (Game.Upgrades[id] >= 40) { price = 10; }
+  if (Game.Upgrades[id] >= 50) { price = 12; }
+  if (Game.Upgrades[id] >= 60) { price = 14; }
+  if (Game.Upgrades[id] >= 70) { price = 15; }
+  if (Game.Upgrades[id] >= 80) { price = 25; }
 
   if (id == 0 && Game.Upgrades[id] >= 200) { price = 1e999; }
   if (id == 1 && Game.Upgrades[id] >= 100) { price = 1e999; }
