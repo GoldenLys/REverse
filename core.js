@@ -1,10 +1,10 @@
-// TUTORIAL TEXTS - WHEN THE GAME WILL BE NEARLY FINISHED
-// MONEY LOOTED ALONG WITH A SHOP SYSTEM ?
-// NEW MISSIONS - GUILD PROMOTIONS : 2 ELITES & 1 BOSS TO PROMOTE TO F-A OR S Rank which will increase your rewards. (money/exp)
+// TUTORIAL/WELCOMING 
+// MONEY LOOTED + SHOP SYSTEM
+// GUILD PROMOTIONS : 2 ELITES & 1 BOSS TO PROMOTE TO F-A OR S Rank which will increase your rewards. (money/exp)
 // SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
 
 var url = window.location.href;
-var version = "1.5"; //!\ ONLY 1.X /!\\
+var version = "1.6"; //!\ ONLY 1.X /!\\
 var loadState = 0;
 var codes = {};
 var REWARDSW8 = 0;
@@ -1053,10 +1053,10 @@ function Protect() {
     var luck = random(1, 100);
     if (luck <= 15) {
       MINMULT = 65;
-      MAXMULT = 75;
+      MAXMULT = 85;
     } else {
-      MINMULT = 20;
-      MAXMULT = 50;
+      MINMULT = 40;
+      MAXMULT = 65;
     }
     if (luck >= 85) {
       MINMULT = 0;
@@ -1198,7 +1198,7 @@ function GenEnnemy() {
     if (Game.Level < 30) {
       LifeMult = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
       PowerMult = [0.75, 0.85, 1, 1, 1, 1, 1];
-      MaxPowerMult = [0.85, 1, 1, 1.10, 1.15, 1.20, 1.25];
+      MaxPowerMult = [0.85, 1, 1, 1.10, 1.15, 1.15, 1.15];
     } else {
       LifeMult = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
       PowerMult = [0.95, 1, 1, 1, 1, 1, 1];
