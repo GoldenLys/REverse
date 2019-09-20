@@ -4,9 +4,10 @@
 // SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
 
 var url = window.location.href;
-var version = "1.6"; //!\ ONLY 1.X /!\\
+var version = "1.7"; //!\ ONLY 1.X /!\\
 var loadState = 0;
 var codes = {};
+var isTabActive = "None";
 var REWARDSW8 = 0;
 var Relicname = ["Ares Relic", "Yggdrasil Relic", "Vulcan Relic", "Recon Relic", "Sniper Relic", "Hunter Relic", "Pathfinder Relic"];
 var CoreNames = {
@@ -46,6 +47,7 @@ var Game = {
   CorePower: 10,
   Loses: 0,
   Wins: 0,
+  Cash: 0,
   isInFight: 0,
   Ranking: 0,
   MarketTimer: 0,
@@ -70,6 +72,7 @@ var Game = {
   NCore: 0,
   Leader: 0,
   LastEscape: 0,
+  Sprite: 0,
   MaxScore: 350,
   MissionsCompleted: [],
   Location: 0,
@@ -112,27 +115,28 @@ var Missions = {
   //NAME, DESC, LEVEL, TYPE, REQ KILLS, EXP, REWARD TYPE, QUALITY, LOCATION, REQ MISSION
 };
 var Ennemies = {
-  0: ["White Spirit", "Black Spirit"],
-  1: ["Beautiful Fairy", "Aggressive Fairy", "Powerful Fairy", "Guardian Fairy", "Old Fairy"],
-  2: ["Angry Wolf", "Baby Wolf", "Wolf", "Bear", "Huge Bear"],
-  3: ["Thief", "Pickpocket", "Big Rat", "Assassin"],
-  4: ["Harpy", "Troll", "Rattlesnake", "Hawk"],
-  5: ["Cyclops", "Bat", "Goblin", "Slime"],
-  6: ["Spider", "Snake", "Chimera", "Centaur"],
-  7: ["Demonized Citizen", "Assassin", "Demonized Guard", "Vampire"],
-  8: ["Slow Zombie", "Zombie", "Sleeping Zombie", "Baby Zombie"],
-  9: ["Salamander", "Phoenix", "Hellhound", "Firebird"],
-  10: ["Corrupted Demon", "Corrupted Goblin", "Corrupted Orc", "Corrupted Zombie"],
-  11: ["Corrupted Goblin", "Corrupted Demon", "Corrupted Zombie", "Corrupted Ghost"],
-  12: ["Elysian Guard", "Drunk Elysian Guard", "Angry Elysian Guard", "Patrolling Elysian Guard"],
-  13: ["Lesser Vampire", "Thirsty Lesser Vampire", "Angry Lesser Vampire", "Bloody Lesser Vampire"],
-  14: ["Higher Vampire", "Noble Vampire", "Angry Noble Vampire", "Bloody Higher Vampire"],
-  15: ["Squirrel", "Boar", "Deer", "Salmon", "Carp"],
-  16: ["Vampire Guard", "Vampire Knight", "Higher Vampire", "Noble Vampire"],
-  17: ["Pure Blood Vampire", "Noble Vampire", "Vampire Knight", "Vampire Count"],
+  0: ["Kind Soul", "Evil Soul"],
+  1: ["Fire Fairy", "Water Fairy", "Grass Fairy"],
+  2: ["Wolf", " White Wolf", "African Wolf"],
+  3: ["Gray Rat", "Brown Rat"],
+  4: ["Stone Golem", "Water Golem"],
+  5: ["Blue Slime", "Black Slime", "Yellow Slime"],
+  6: ["Black Spider", "Red Spider"],
+  7: ["Fire Mage", "Water Mage"],
+  8: ["Zombie", "Burning Zombie"],
+  9: ["Ghost", "Crying Ghost"],
+  10: ["White Knight", "Red Knight"],
+  11: ["Minor Rank Demon", "Middle Rank Demon", "Higher Rank Demon"],
+  12: ["Skeleton", "Decrepit Skeleton", "Burnt Skeleton"],
+  13: ["Jack-o'-lantern", "Jack-o'-lantern"],
+  14: ["Vampire"],
+  15: ["Fish-Man", "Fish-Man", "Fish-Man"],
+  16: ["Vampire Lord", "Vampire"],
+  17: ["Vampire Lord", "Noble Vampire"],
 };
 
-var BossNames = ['Pure Spirit', 'Fairy Queen', 'Ancestral Bear', 'Wanted Criminal', 'Yeti', 'Rat Snake', 'Cerberus', 'Demon Lord', 'Ghoul', 'Dragon', 'Ifrit', 'Demon Lord', 'Devil', 'Captain of the Elysian Guard', 'Higher Vampire', "Pure Blood Vampire", "Crocodile", "Commander of the Vampire Knights", "Dhampir King"];
+var BossNames = ['Pure Soul', 'Fairy Queen', 'Alpha Wolf', 'Huge Rat', 'Poison Golem', 'Pink Slime', 'Albino Spider', 'Black Mage', 'Ghoul', 'Poltergeist', 'Knight Commander', 'Demon Lord', 'Powerful Skeleton',
+   "Jack-o'-lantern", "Vampire Lord", "Big Fish-Man", "Noble Vampire", "Vampire King"];
 
 var POS = {
   0: ["The White Light", 1, 4, 0, 0], //NAME, MINLEVEL, MAXLEVEL, MAX DROP QUALITY, MISSION COMPLETE
@@ -281,12 +285,14 @@ function UpdateEngine() {
   if (Backup != "Default" && canSave == 1 && Backup != Game.username) { Game.username = Backup; }
   if (Game.xp[2] == undefined) { Game.xp[2] = 1; }
   if (url.match(/mobile/gi)) {
-    $("#PlayerID").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span class='text2' style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
+    $("#PlayerID").html("<img class='ui middle aligned tiny circular image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
+    $("#Name").html("<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
     $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#market-btn").attr('style', '');
   } else {
-    $("#PlayerID").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span class='text2' style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
+    $("#PlayerID").html("<img class='ui middle aligned tiny circular image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
+    $("#Name").html("<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
     $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#market-btn").attr('style', 'border-right:none;');
@@ -580,7 +586,7 @@ function UpdateUI() {
   if (Game.Simulation > 1) {
     WTText = "Dimension <i class='globe icon'></i> " + Game.Simulation + "<br>";
   } else { WTText = ""; }
-  if (Game.Shards >= 3) { $("#SHARDSRW").html("<i class='bleu dna icon'></i><span class='bleu'>" + fix(Game.Shards, 7) + "</span> dimensional fragments available."); } else { $("#SHARDSRW").html(""); }
+  if (Game.Shards >= 3) { $("#SHARDSRW").html(fix(Game.Shards, 7)); } else { $("#SHARDSRW").html("0"); }
   if (Game.MaxLevel > Game.Level || Game.FNMission < Game.TotalMissions) {
     $("#DimensionID").html(WTText);
     $("#PlayerLevel").html("Level " + fix(Game.Level, 4));
@@ -592,7 +598,7 @@ function UpdateUI() {
   }
   if (Game.Level >= Game.MaxLevel) {
     $("#PlayerXP").hide();
-    $("#capacity").html("");
+    $("#capacity").html("Max Level");
   }
   if (Game.Level >= Game.MaxLevel && Game.Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && Game.FNMission >= Game.TotalMissions) {
     $("#WTBTN").show();
@@ -688,14 +694,14 @@ function UpdateUI() {
     MTEXT = "";
     hori = "";
   } else {
-    MTEXT = " <span class='desc'>(Escape)</span>";
+    MTEXT = " <a class='alphalabel'>Escape</a>";
     hori = "horizontal";
   }
   if (Game.MissionStarted[0] == true) {
     if (Game.isInFight == 1) {
       $("#btn-CRW").hide();
       $("#btn-ACT").show();
-      $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Menu" + MTEXT);
+      $("#gotomenu-btn").html("<i class='angle left icon'></i>Menu" + MTEXT);
     }
     if (Missions[Game.MissionStarted[1]][3] == 1) {
       $("#MDTL").html("Mission<div class='detail'>Defeat <span class='vert'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> enemies in <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span>.</div>");
@@ -707,7 +713,7 @@ function UpdateUI() {
     if (Game.isInFight == 1) {
       $("#btn-CRW").hide();
       $("#btn-ACT").show();
-      $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Menu" + MTEXT);
+      $("#gotomenu-btn").html("<i class='angle left icon'></i>Menu" + MTEXT);
     }
     $("#MDTL").html("Exploration<div class='detail'> <span class='vert'>" + POS[Game.Location][0] + "</span></div>");
   }
@@ -715,8 +721,11 @@ function UpdateUI() {
     $("#rewards").hide();
   }
   if ($('#inventory').is(":visible")) {
-    $("#gotomenu-btn").html("<i class='angle left icon ICR'></i>Inventory " + (Game.inventory.length) + "/" + Game.MaxInv + MTEXT);
+    $("#gotomenu-btn").html("<i class='angle left icon'></i>Inventory " + (Game.inventory.length) + "/" + Game.MaxInv + MTEXT);
   }
+
+  $("#islots").html((Game.inventory.length) + "/" + Game.MaxInv);
+  $("#cash").html(Game.Cash);
   $("#mcount").html(CompletedMissions + "/" + Game.TotalMissions + " Missions completed.");
   if (Game.Level >= POS[Game.Location][2] && Game.MaxLevel > Game.Level && Game.FNMission <= Game.TotalMissions && Game.MissionStarted[0] == false) {
     $("#MaxPOSLVL").html("You\'ve reached the maximum level in this area, check the available missions.");
@@ -994,9 +1003,9 @@ function GenCores() {
     $("#" + core + "-text").html(fix(coreId[2], 3) + "<i class='red heart icon'></i> " + fix(coreId[3], 5) + "<i class='blue crosshairs icon'></i>");
     $("#" + core + "-rarity").html(RLSTXT);
     if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
-      $("#" + core + "-title").html(coreId[0] + " " + UPCTEXT + "<br><span class='" + coreId[1] + "'>" + coreId[1] + "</span>");
+      $("#" + core + "-title").html(coreId[0] + " " + UPCTEXT + "<a class='ui circular small label'><span class='" + coreId[1] + "'>" + coreId[1] + "</span></a>");
     } else {
-      $("#" + core + "-title").html(coreId[0] + " " + UPCTEXT + "<br><span class='" + coreId[1] + "'>" + coreId[1] + "</span>");
+      $("#" + core + "-title").html(coreId[0] + " " + UPCTEXT + "<a class='ui circular small label'><span class='" + coreId[1] + "'>" + coreId[1] + "</span></a>");
     }
     if (Game.cores[UPC] == false) {
       $("#" + core).hide();
@@ -1064,8 +1073,8 @@ function Protect() {
     }
     var rRandPlayerHeal = random((Game.CorePower * MINMULT), (Game.CorePower * MAXMULT)) / 100;
     Game.CoreLife = Math.round(Game.CoreLife + rRandPlayerHeal);
-    HealText = "You restored <a class='ui circular small label'>+" + fix(rRandPlayerHeal, 4) + "<i class='red heart icon'></i></a> of life.";
-    if (rRandPlayerHeal < 1) { HealText = ""; }
+    HealText = "<a class='ui circular small label'>+" + fix(rRandPlayerHeal, 4) + "<i class='red heart icon'></i></a>";
+    if (rRandPlayerHeal < 1) { HealText = "MISSED"; }
   }
   var luck2 = random(1, 100);
   if (luck2 >= 75) {
@@ -1076,39 +1085,40 @@ function Protect() {
     MAXMULT2 = 50;
   } //10% ENNEMY ATTACK FAILS 
   var rEnnemyPower = random((Game.Ennemy[3] * MINMULT2), (Game.Ennemy[3] * MAXMULT2)) / 100;
-  var DamagesText = "You took <span class='rouge'><a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a></span> damages.<br>";
-  if (rEnnemyPower < 1) { DamagesText = ""; }
+  var DamagesText = "<a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a>";
+  if (rEnnemyPower < 1) { DamagesText = "MISSED"; }
   if (Game.CoreLife >= Game.CoreBaseLife * 0.99) {
     rEnnemyPower = 0;
-    DamagesText = "You dodged the attack!";
+    DamagesText = "";
   }
   Game.CoreLife -= rEnnemyPower;
   if (Game.isInFight == 1 && Game.CoreLife <= 0) { LoseFight(); }
   else { if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) { WinFight(); } }
   if (Game.CoreLife > Game.CoreBaseLife) { Game.CoreLife = Game.CoreBaseLife; }
-  $("#EnnemyDesc").html(DamagesText + HealText);
+  $("#EnnemyDamage").html(DamagesText);
+  $("#PlayerDamage").html(HealText);
   UpdateGame();
 }
 
 function Attack() {
-  TEST1 = "<br>";
-  TEST2 = "<br>";
+  EDamage = "";
+  PDamage = "";
   var luck = random(1, 100);
   var rPlayerPower = random((Game.CorePower * 85), Game.CorePower * 100) / 100;
   if (luck <= random(6, 10)) {
     rPlayerPower = Game.CorePower * 1.15;
-    TEST1 = "Critical hit of <a class='ui circular small label'>-" + fix(rPlayerPower, 3) + "<i class='red heart icon'></i></a> damages !";
+    EDamage = "<a class='ui circular small label'>-" + fix(rPlayerPower, 3) + "<i class='red heart icon'></i></a>";
   } else {
-    TEST1 = "You did <a class='ui circular small label'>-" + fix(Math.round(rPlayerPower), 3) + "<i class='red heart icon'></i></a> damages.";
+    EDamage = "<a class='ui circular small label'>-" + fix(Math.round(rPlayerPower), 3) + "<i class='red heart icon'></i></a>";
   }
   Game.Ennemy[5] = Math.floor(Game.Ennemy[5] - rPlayerPower);
 
   var rEnnemyPower = random((Game.Ennemy[3] * 65), Game.Ennemy[3] * 100) / 100;
   if (luck >= 90) {
     rEnnemyPower = 0;
-    TEST2 = "<br>You dodged the attack!";
+    PDamage = "MISSED";
   } else {
-    TEST2 = "<br>You took <a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a> damages.";
+    PDamage = "<a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a>";
   }
   Game.CoreLife -= rEnnemyPower;
 
@@ -1119,8 +1129,8 @@ function Attack() {
       WinFight();
     }
   }
-
-  $("#EnnemyDesc").html(TEST1 + TEST2);
+  $("#EnnemyDamage").html(EDamage);
+  $("#PlayerDamage").html(PDamage);
   UpdateGame();
 }
 
@@ -1147,11 +1157,9 @@ function LaunchEMP() {
         WinFight();
       }
     }
+    $("#EnnemyDamage").html("<a class='ui circular small label'>-" + fix(Math.round(rPlayerPower), 5) + "<i class='red heart icon'></i></a>");
+    $("#PlayerDamage").html("<a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a>");
 
-    $("#EnnemyDesc").html(
-      "You did <a class='ui circular small label'>-" + fix(Math.round(rPlayerPower), 5) +
-      "<i class='red heart icon'></i></a> damages.<br>You took <a class='ui circular small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='red heart icon'></i></a> damages."
-    );
   }
   UpdateGame();
 }
@@ -1385,9 +1393,13 @@ function GenEnnemy() {
     Game.Ennemy[5] = Game.Ennemy[4];
     if (Game.Ennemy[1] >= 6) {
       Game.Ennemy[0] = BossNames[Game.Location];
+      Game.Sprite = "boss";
     } else {
-      Game.Ennemy[0] = Ennemies[Game.Location][Math.floor(Math.random() * Ennemies[Game.Location].length)];
+      Game.Sprite = Math.floor(Math.random() * Ennemies[Game.Location].length);
+      Game.Ennemy[0] = Ennemies[Game.Location][Game.Sprite];
     }
+    $("#EnnemyDamage").html("");
+    $("#PlayerDamage").html("");
     UpdateGame();
   }
 }
@@ -1427,7 +1439,7 @@ function WinFight() {
     Game.xp[0] += Math.round(expGain);
     if (Game.xp[0] >= Game.xp[1]) {
       Game.Level++;
-      LEVELUP = "<br><font class='bleu'>LEVEL UP ! (<span class='blanc'>" + Game.Level + "</span>)</font>";
+      LEVELUP = "<br><font class='bleu'>LEVEL UP ! (<span class='blanc'>" + Game.Level + "</span>)</font><br>";
     }
     UpdateGame();
   }
@@ -1582,10 +1594,13 @@ function WinFight() {
       if (IF3 < Game.MaxInv) { $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IF3].type + "'><div class='classBar" + Game.inventory[IF3].type + "'></div>" + Game.inventory[IF3].name + "<br><span class='" + Game.inventory[IF3].class + "'>" + Game.inventory[IF3].class + "</span><br>" + descitem + "</div></div>"); }
     }
   }
-  var INVENTORYFULL = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length) + "/" + Game.MaxInv + " items in inventory." : "Inventory full, you can\'t recover any new item.";
+  var INVENTORYFULL = (Game.inventory.length - 1) < Game.MaxInv ? "" : "Inventory full, you can\'t recover any new item.";
   $("#rewards-loot").append(INVENTORYFULL);
   if (THEREISLOOT == 0) { $("#rewards-loot").html(REWARDTEXT + "<br>" + INVENTORYFULL); }
   Game.isInFight = 2;
+  var ToAddCash = Math.floor(random(1 * (Game.Ennemy[2]-5), Game.Ennemy[1] * Game.Ennemy[2]));
+  if (ToAddCash < 1) { ToAddCash = 1; }
+  Game.Cash += ToAddCash;
 
   if (Game.Ennemy[1] == 1) { Class = "Ennemy1"; ThreatLevel = "NORMAL"; }
   if (Game.Ennemy[1] == 2) { Class = "Ennemy2"; ThreatLevel = "ADVANCED"; }
@@ -1595,12 +1610,12 @@ function WinFight() {
   if (Game.Ennemy[1] == 6) { Class = "Ennemy6"; ThreatLevel = "BOSS"; }
   if (Game.Ennemy[1] == 7) { Class = "Ennemy7"; ThreatLevel = "GOD"; }
   $("#EnnemyDesc").html("<br><br>");
-  var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Close" : "<i class='times icon ICR'></i>Close <span class='desc'>(F)</span>";
+  var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Close" : "<i class='times icon'></i>Close <a class='alphalabel'>F</a>";
   $("#btn-CRW").html("<div onclick='hideRewards();' class='big ui bottom attached labeled icon closing button'>" + btncntnt + "</div>");
   $("#btn-CRW").show();
   $("#btn-ACT").hide();
   $("#rewards-title").html("<span class='vert'> " + Game.Ennemy[0] + " defeated !</span>");
-  $("#rewards-desc").html("<br>You have defeated " + fix(Game.Defeated[Game.Ennemy[1]], 3) + " <div class='ui small " + Class + " basic label'><span class='" + Class + "'>" + ThreatLevel + "</span></div><br> " + LEVELUP);
+  $("#rewards-desc").html("<br>You have defeated " + fix(Game.Defeated[Game.Ennemy[1]], 3) + " <div class='ui small " + Class + " basic label'><span class='" + Class + "'>" + ThreatLevel + "</span></div><br> " + LEVELUP + "+<i class='green dollar icon'></i>" +ToAddCash);
   if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
     //IF PLAYER ISNT IN endgame MODE
     $("#rewards-text").html("+<span class='vert bold'>" + fix(Math.floor(expGain), 5) + "</span> EXP " + EMP);
@@ -1649,7 +1664,7 @@ function LoseFight() {
   }
   $("#rewards-title").html("<span class='rouge'>" + Game.Ennemy[0] + " killed you !</span>");
   $("#rewards-desc").html("");
-  var MOBILETEXT5 = url.match(/mobile/gi) ? "" : "<span class='desc vert'>(F)</span>";
+  var MOBILETEXT5 = url.match(/mobile/gi) ? "" : "<a class='alphalabel'>F</a>";
   if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
     $("#rewards-text").html("You lose all your EXP.<br>Current Ratio <span class='rouge'>" + fix(Game.Wins / Game.Loses, 7));
     $("#btn-CRW").html("<div onclick='hideRewards();' id='btn-hide' class='fluid ui rainbow button'><i class='green recycle icon'></i> Respawn " + MOBILETEXT5 + "</div>");
@@ -1675,8 +1690,10 @@ function UpdateCombat() {
   TC = "Ennemy1";
   TLC = "<span class='Ennemy1'>";
   ThreatLevel = "NORMAL";
-  lifetext = Game.CoreLife <= Game.Ennemy[3] ? " rouge" : " ";
-  EnnemyText = Game.Ennemy[5] < Game.Ennemy[4] / 2 ? " rouge" : " ";
+  //lifetext = Game.CoreLife <= Game.Ennemy[3] ? " rouge" : " ";
+  //EnnemyText = Game.Ennemy[5] < Game.Ennemy[4] / 2 ? " rouge" : " ";
+  EnnemyText = " ";
+  lifetext = " ";
   if (Game.Ennemy[1] == 2) {
     TC = "Ennemy2";
     TLC = "<span class='Ennemy2'>";
@@ -1714,12 +1731,14 @@ function UpdateCombat() {
     LVLTEXT = " Score <i class='gem icon'></i>";
     TIERTEXT = Math.floor(Game.Ennemy[2] * 10);
   }
-
-
   var EnnemyName = Game.Ennemy[1] > 5 ? Game.Ennemy[0] : "" + Game.Ennemy[0];
-  $("#EnnemyTitle").html("<div class='ui " + TC + " basic label'>" + TLC + ThreatLevel + "</span></div> " + TLC + EnnemyName + "</span><br>" + LVLTEXT + fix(TIERTEXT, 4));
-  $("#EnnemyText").html("<span class='" + EnnemyText + "'>" + fix(Game.Ennemy[5], 5) + "</span> <i class='red heart icon'></i><br>" + fix(Game.Ennemy[3], 5) + " <i class='blue crosshairs icon'></i>");
-  $("#PlayerText").html("<span class='" + lifetext + "'>" + fix(Game.CoreLife, 5) + "</span>/" + fix(Game.CoreBaseLife, 5) + " <i class='red heart icon'></i><br>" + fix(Game.CorePower, 5) + " <i class='blue crosshairs icon'></i>");
+  $("#EnnemyTitle").html("<div class='ui " + TC + " basic label'>" + TLC + ThreatLevel + "</span></div> " + TLC + EnnemyName + "</span>");
+  $("#EnnemyLevel").html(LVLTEXT + fix(TIERTEXT, 4));
+  $("#EnnemyPower").html(fix(Game.Ennemy[3], 5) + " <i class='blue crosshairs icon'></i>");
+  $("#EnnemyText").html("<span class='" + EnnemyText + "'>" + fix(Game.Ennemy[5], 5) + "</span> <i class='red heart icon'></i>");
+  $("#PlayerLife").html("<span class='" + lifetext + "'>" + fix(Game.CoreLife, 5) + "</span>/" + fix(Game.CoreBaseLife, 5) + " <i class='red heart icon'></i>");
+  $("#PlayerPower").html(fix(Game.CorePower, 5) + " <i class='blue crosshairs icon'></i>");
+  $("#EnnemySprite").html("<img class='ui middle aligned medium circular image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png'>");
   $("#EnnemyHP").progress({
     className: {
       active: "",
@@ -1728,7 +1747,7 @@ function UpdateCombat() {
       warning: ""
     }
   });
-  var MOBILETEXT = url.match(/mobile/gi) ? "Special Attack" : "Special Attack (E)";
+  var MOBILETEXT = url.match(/mobile/gi) ? "Special Attack" : "Special Attack <a class='alphalabel'>E</a>";
   if (Game.Emp > 0) {
     $("#emp-btn").show();
     $("#emp-btn").html("<i class='bolt icon'></i>" + fix(Game.Emp, 4) + " " + MOBILETEXT);
@@ -1745,11 +1764,11 @@ function UpdateCombat() {
     $("#emp-btn").hide();
     $("#emp-btn").attr("class", "");
   }
-  var MOBILETEXT2 = url.match(/mobile/gi) ? "<i class='crosshairs icon'></i>Attack" : "<i class='crosshairs icon ICR'></i>Attack <span class='desc'>(SPACE)</span>";
+  var MOBILETEXT2 = url.match(/mobile/gi) ? "<i class='crosshairs icon'></i>Attack" : "<i class='crosshairs icon'></i>Attack <a class='alphalabel'>SPACE</a>";
   $("#attack-btn").html(MOBILETEXT2);
-  var MOBILETEXT3 = url.match(/mobile/gi) ? "<i class='shield alternate icon'></i>Take cover" : "<i class='shield alternate icon ICR'></i>Take cover <span class='desc'>(R)</span>";
+  var MOBILETEXT3 = url.match(/mobile/gi) ? "<i class='shield alternate icon'></i>Take cover" : "<i class='shield alternate icon'></i>Take cover <a class='alphalabel'>R</a>";
   $("#cover-btn").html(MOBILETEXT3);
-  var MOBILETEXT4 = url.match(/mobile/gi) ? "<i class='eye slash outline icon'></i> Run Away" : "<i class='eye slash outline icon ICR'></i> Run Away <span class='desc'>(F)</span>";
+  var MOBILETEXT4 = url.match(/mobile/gi) ? "<i class='eye slash outline icon'></i> Run Away" : "<i class='eye slash outline icon'></i> Run away <a class='alphalabel'>F</a>";
   $("#run-btn").html("" + MOBILETEXT4);
   $("#EnnemyHP").progress({
     percent: GetEnnemyHPPercent()
@@ -2577,7 +2596,7 @@ function ConfirmDestroy(core) {
   if (url.match(/mobile/gi)) {
     $("#DBTN").html("<div class='ui icon cu2 button' onclick='DestroyCore(" + core + ");'><i class='rouge trash icon'></i></div><div onclick='DCancel();' class='ui icon cu button'><i class='green times icon'></i></div>");
   } else {
-    $("#DBTN").html("<div class='ui cu2 button' onclick='DestroyCore(" + core + ");'><i class='rouge trash icon'></i> Confirm</div><div onclick='DCancel();' class='ui cu button'><i class='green times icon'></i> Cancel</div>");
+    $("#DBTN").html("<div class='ui cu2 button' onclick='DestroyCore(" + core + ");'><i class='rouge trash icon'></i> Confirm</div><div onclick='DCancel();' class='ui cu button'><i class='green times icon'></i><span class='blanc'>Cancel</span></div>");
   }
   $("#modal-2").modal("show");
 }
