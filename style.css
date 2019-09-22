@@ -319,6 +319,38 @@
   background: linear-gradient(to right, var(--black) 0%, var(--Error) 1em, var(--Error2) 25%, transparent 90%) !important;
 }
 
+.CoreShadow0 {
+  box-shadow: 0 1px 2rem 0 var(--normal2), 0rem 0rem 0rem 0.1rem var(--normal2) !important;
+}
+
+.CoreShadow1 {
+  box-shadow: 0 1px 2rem 0 var(--common), 0rem 0rem 0rem 0.1rem var(--common) !important;
+}
+
+.CoreShadow2 {
+  box-shadow: 0 1px 2rem 0 var(--uncommon), 0rem 0rem 0rem 0.1rem var(--uncommon) !important;
+}
+
+.CoreShadow3 {
+  box-shadow: 0 1px 2rem 0 var(--rare), 0rem 0rem 0rem 0.1rem var(--rare) !important;
+}
+
+.CoreShadow4 {
+  box-shadow: 0 1px 2rem 0 var(--epic), 0rem 0rem 0rem 0.1rem var(--epic) !important;
+}
+
+.CoreShadow5 {
+  box-shadow: 0 1px 2rem 0 var(--Exotic), 0rem 0rem 0rem 0.1rem var(--Exotic) !important;
+}
+
+.CoreShadow6 {
+  box-shadow: 0 1px 2rem 0 var(--Divine), 0rem 0rem 0rem 0.1rem var(--Divine) !important;
+}
+
+.CoreShadowE {
+  box-shadow: 0 1px 2rem 0 var(--Error), 0rem 0rem 0rem 0.1rem var(--Error) !important;
+}
+
 body {
   color: var(--white);
   text-align: center;
@@ -896,7 +928,8 @@ div#C5.active {
   vertical-align: middle !important;
   background: var(--darkgrey5);
   color: var(--white);
-  margin: 0;
+  margin: 2px;
+  border-radius: 0.5rem;
 }
 
 .ui.toggle.checkbox .box,
@@ -949,7 +982,7 @@ div#C5.active {
 }
 
 .customB {
-  position: absolute;
+  position: relative;
   width: 94%;
   left: 3%;
   padding: 2% 0% 0% 0%;
@@ -1380,7 +1413,10 @@ input[type=range]::-webkit-slider-thumb {
   border: none !important;
 }
 
-.ui.medium.image, .ui.medium.images .image, .ui.medium.images img, .ui.medium.images svg {
+.ui.medium.image,
+.ui.medium.images .image,
+.ui.medium.images img,
+.ui.medium.images svg {
   width: 100px;
   height: 100px;
   font-size: 1rem;
@@ -1399,4 +1435,40 @@ input[type=range]::-webkit-slider-thumb {
   background: var(--darkgrey5) !important;
   color: var(--green) !important;
   margin: 0% 1% 0% 1% !important;
+}
+
+#core1-rarity, #core2-rarity, #core3-rarity, #core4-rarity, 
+#core1-keys, #core2-keys, #core3-keys, #core4-keys {
+  font-size: 1rem;
+  color: var(--white) !important;
+  padding: 0;
+  border: none !important;
+  text-align: left;
+}
+
+.ui.basic.label {
+  font-weight: normal !important;
+}
+
+.customcard {
+  background: transparent !important;
+  color: var(--white) !important;
+  width: 22.5% !important;
+  margin: 1% !important;
+  display: inline-grid!important;;
+  border-radius: 0.5rem !important;
+}
+
+.fa, .fas, .fal, .far, .fad {
+  height: 1em;
+  width: auto;
+  margin: 0 .75em 0 0;
+}
+
+.ui[class*="top right attached"].label {
+  border-radius: 0 0.5rem 0 0.5rem;
+}
+
+.revertmargin {
+  margin: 0 0 0 .75em!important;
 }

@@ -289,7 +289,7 @@ function UpdateDB(snapshot) {
       $("#LEADERBOARD").append("<tr id='leader-" + id + "' class='" + isPlayer + "'>" +
         "<td class='center aligned'>#" + id + "</td>" +
         "<td class='center aligned' style='color:" + Theme + ";'><img class='ui mini avatar image' src='DATA/avatars/avatar" + Avatar + ".jpg'>" + snapshot.key + "</td>" +
-        "<td class='center aligned'><i class='small gem icon'></i>" + fix(snapshot.val().Ranking, 4) + " (" + fix(snapshot.val().Level, 4) + ") " + "</td>" +
+        "<td class='center aligned'><i class='fad fa-dice-d20'></i>" + fix(snapshot.val().Ranking, 4) + " (" + fix(snapshot.val().Level, 4) + ") " + "</td>" +
         "<td class='center aligned'>" + fix(snapshot.val().WT, 3) + "</td>" +
         "<td class='center aligned'>" + fix(snapshot.val().CorePower, 5) + "</td>" +
         "<td class='center aligned'>" + fix(snapshot.val().CoreLife, 5) + "</td>" +
@@ -579,7 +579,7 @@ function Shortcuts() {
   document.onkeyup = function (e) {
     e = e || window.event;
     var key = e.which || e.keyCode;
-    if (Game.isInFight == 1) { //IN FIGHT
+    if (Game.isInFight == 1 && isTabActive != "Settings") { //IN FIGHT
       if (key === 69) {
         if (Game.Emp > 0) {
           LaunchEMP();
@@ -826,8 +826,6 @@ function ThemeDefine(id) {
   if (id == 3) {
     Game.Theme[2] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
     document.documentElement.style.setProperty('--green2', Game.Theme[2]);
-    save();
-    location.reload();
   }
   if (id == 4) {
     Game.Theme[3] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
@@ -845,7 +843,7 @@ function ThemeDefine(id) {
 //GAME FUNCTIONS
 
 function ChangeAvatar() {
-  if (Game.Avatar < 34) {
+  if (Game.Avatar < 39) {
     Game.Avatar++;
   } else {
     Game.Avatar = 1;
@@ -1285,7 +1283,7 @@ function CompleteMission() {
             TIERRANK = Game.inventory[Game.inventory.length - 1].level;
           } else {
             TIER = "Score";
-            TIERRANK = "<i class='gem icon'></i>" + Math.floor(Game.inventory[Game.inventory.length - 1].level * 10);
+            TIERRANK = "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[Game.inventory.length - 1].level * 10);
           }
 
           var UPS = Game.inventory[Game.inventory.length - 1].ups > 0 ? "" + Game.inventory[Game.inventory.length - 1].ups + "<i class='key icon'></i>" : "";
@@ -1342,7 +1340,7 @@ function CompleteMission() {
         }
         var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Finish" : "<i class='times icon'></i>Finish <a class='alphalabel'>F</a>";
         var FRGR = Missions[Game.MissionStarted[1]][5] > 0 ? "+<i class='bleu dna icon'></i><span class='bleu bold'>" + fix(Missions[Game.MissionStarted[1]][5], 3) + "</span> Fragments " : "";
-        $("#btn-CRW").html("<div onclick='hideMissionRewards();' class='big ui bottom attached labeled icon closing button'>" + btncntnt + "</div>");
+        $("#btn-CRW").html("<div onclick='hideMissionRewards();' class='fluid ui closing button'>" + btncntnt + "</div>");
         $("#rewards-desc").html("");
         if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP + FRGR); } else {
           $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP ");

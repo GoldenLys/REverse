@@ -13,9 +13,10 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.7" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.7" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.72" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.72" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
     <style>
         #rewards-title {
             position: inherit !important;
@@ -48,6 +49,10 @@
 
         .ui.label>.icon {
             margin: 0 0 0 0;
+        }
+
+        .customcard {
+            width: 45% !important;
         }
     </style>
 </head>
@@ -102,11 +107,11 @@
         <div id="CATEGORIE-1" style="display: none;">
             <div class="ui message customA">
                 <div id="gamediv1">
-                    <div class="big ui top attached rainbow7 buttons">
-                        <div id="missions-btn" class="ui rainbow7 button"><i class="folder icon"></i></div>
-                        <div id="exploration-btn" class="ui rainbow7 button"><i class="compass icon"></i></div>
-                        <div id="inventory-btn" class="ui rainbow7 button"><i class="clipboard list icon"></i></div>
-                        <div id="miscs-btn" class="ui rainbow7 button"><i class="align justify icon"></i></div>
+                    <div class="big ui top attached buttons">
+                        <div id="missions-btn" class="ui rainbow7 button"><i class="fas fa-map-marker-alt"></i></div>
+                        <div id="exploration-btn" class="ui rainbow7 button"><i class="fas fa-map-marked-alt"></i></div>
+                        <div id="inventory-btn" class="ui rainbow7 button"><i class="fas fa-sack"></i></div>
+                        <div id="miscs-btn" class="ui rainbow7 button"><i class="fal fa-align-justify"></i></div>
                     </div>
                     <div class="ui inverted divider"></div>
                 </div>
@@ -175,98 +180,123 @@
                                         <label class="Exotic">Exotic</label></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="ui accordion">
-                            <div class="active title">
-                                <i class="dropdown icon"></i>
-                                Equipped armors
+                        </div><br>
+                        <div class="title">Equipped armors</div>
+
+                        <div class="ui card custom" id="core1">
+                            <div class="content">
+                                <div class="ui top right attached label" id="core1-level"></div>
+                                <div id="core1-title"></div>
                             </div>
-                            <div class="description">
-                                <div class="ui comments">
-                                    <div class="comment CoreClass0" id="core1">
-                                        <div id="core1-icon" class="classBar0"></div>
-                                        <div class="ui horizontal segments">
-                                            <div class="ui left aligned segment">
-                                                <div id="core1-title" class="text">Armor 1</div>
-                                                <div id="GS1T" class="text"></div>
-                                            </div>
-                                            <div class="ui right aligned segment">
-                                                <div id="core1-text" class="text"></div>
-                                                <div id="core1-rarity" class="text"></div>
-                                            </div>
-                                            <div class="ui left aligned segment" style="max-width: 20%;">
-                                                <div id="Dcore1" class="fluid ui icon rainbow button"><i
-                                                        class="red trash icon"></i></div>
-                                            </div>
-                                        </div><br>
+                            <div class="image" id="core1-image"></div>
+                            <div class="content">
+                                <div class="ui horizontal segments">
+                                    <div class="ui segment">
+                                        <i class="rouge fas fa-heart"></i>
+                                        <span id="core1-life" class="text"></span>
                                     </div>
-
-                                    <div class="comment CoreClass0" id="core2">
-                                        <div id="core2-icon" class="classBar0"></div>
-                                        <div class="ui horizontal segments">
-                                            <div class="ui left aligned segment">
-                                                <div id="core2-title" class="text">Armor 2</div>
-                                                <div id="GS2T" class="text"></div>
-                                            </div>
-                                            <div class="ui right aligned segment" style="max-width: 30%;">
-                                                <div id="core2-text" class="text"></div>
-                                                <div id="core2-rarity" class="text"></div>
-                                            </div>
-                                            <div class="ui left aligned segment" style="max-width: 20%;">
-                                                <div id="Dcore2" class="fluid ui icon rainbow button"><i
-                                                        class="red trash icon"></i></div>
-                                            </div>
-                                        </div><br>
-                                    </div>
-
-                                    <div class="comment CoreClass0" id="core3">
-                                        <div id="core3-icon" class="classBar0"></div>
-                                        <div class="ui horizontal segments">
-                                            <div class="ui left aligned segment">
-                                                <div id="core3-title" class="text">Armor 3</div>
-                                                <div id="GS3T" class="text"></div>
-                                            </div>
-                                            <div class="ui right aligned segment" style="max-width: 30%;">
-                                                <div id="core3-text" class="text"></div>
-                                                <div id="core3-rarity" class="text"></div>
-                                            </div>
-                                            <div class="ui left aligned segment" style="max-width: 20%;">
-                                                <div id="Dcore3" class="fluid ui icon rainbow button"><i
-                                                        class="red trash icon"></i></div>
-                                            </div>
-                                        </div><br>
-                                    </div>
-
-                                    <div class="comment CoreClass0" id="core4">
-                                        <div id="core4-icon" class="classBar0"></div>
-                                        <div class="ui horizontal segments">
-                                            <div class="ui left aligned segment">
-                                                <div id="core4-title" class="text">Armor 4</div>
-                                                <div id="GS4T" class="text"></div>
-                                            </div>
-                                            <div class="ui right aligned segment" style="max-width: 30%;">
-                                                <div id="core4-text" class="text"></div>
-                                                <div id="core4-rarity" class="text"></div>
-                                            </div>
-                                            <div class="ui left aligned segment" style="max-width: 20%;">
-                                                <div id="Dcore4" class="fluid ui icon rainbow button"><i
-                                                        class="red trash icon"></i></div>
-                                            </div>
-                                        </div><br>
-                                    </div>
-
-                                    <div class="comment" id="core5">
-                                        <div id="core5-icon" class="classBar6"></div>
-                                        <div class="content">
-                                            <span id="core5-title" class="author desc"></span>
-                                            <div class="metadata"><span id="core5-rarity" class="date blanc"></span>
-                                            </div>
-                                            <div id="core5-text" class="locked"></div>
-                                        </div>
+                                    <div class="ui segment">
+                                        <i class="bleu fas fa-sword"></i>
+                                        <span id="core1-power" class="text"></span>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="extra content">
+                                <a class="fluid ui basic label" id="core1-keys"></a>
+                                <a class="fluid ui basic label" id="core1-rarity"></a>
+                                <div id="Dcore1" class="fluid ui icon rainbow button">Throw <i
+                                        class="red trash icon"></i></div>
+                                <br>
                             </div>
                         </div>
+
+                        <div class="ui card custom" id="core2">
+                            <div class="content">
+                                <div class="ui top right attached label" id="core2-level"></div>
+                                <div id="core2-title"></div>
+                            </div>
+                            <div class="image" id="core2-image"></div>
+                            <div class="content">
+                                <div class="ui horizontal segments">
+                                    <div class="ui segment">
+                                        <i class="rouge fas fa-heart"></i>
+                                        <span id="core2-life" class="text"></span>
+                                    </div>
+                                    <div class="ui segment">
+                                        <i class="bleu fas fa-sword"></i>
+                                        <span id="core2-power" class="text"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="extra content">
+                                <a class="fluid ui basic label" id="core2-keys"></a>
+                                <a class="fluid ui basic label" id="core2-rarity"></a>
+                                <div id="Dcore2" class="fluid ui icon rainbow button">Throw <i
+                                        class="red trash icon"></i></div>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="ui card custom" id="core3">
+                            <div class="content">
+                                <div class="ui top right attached label" id="core3-level"></div>
+                                <div id="core3-title"></div>
+                            </div>
+                            <div class="image" id="core3-image"></div>
+                            <div class="content">
+                                <div class="ui horizontal segments">
+                                    <div class="ui segment">
+                                        <i class="rouge fas fa-heart"></i>
+                                        <span id="core3-life" class="text"></span>
+                                    </div>
+                                    <div class="ui segment">
+                                        <i class="bleu fas fa-sword"></i>
+                                        <span id="core3-power" class="text"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="extra content">
+                                <a class="fluid ui basic label" id="core3-keys"></a>
+                                <a class="fluid ui basic label" id="core3-rarity"></a>
+                                <div id="Dcore1" class="fluid ui icon rainbow button">Throw <i
+                                        class="red trash icon"></i></div>
+                                <br>
+                            </div>
+                        </div>
+
+
+                        <div class="ui card custom" id="core4">
+                            <div class="content">
+                                <div class="ui top right attached label" id="core4-level"></div>
+                                <div id="core4-title"></div>
+                            </div>
+                            <div class="image" id="core4-image"></div>
+                            <div class="content">
+                                <div class="ui horizontal segments">
+                                    <div class="ui segment">
+                                        <i class="rouge fas fa-heart"></i>
+                                        <span id="core4-life" class="text"></span>
+                                    </div>
+                                    <div class="ui segment">
+                                        <i class="bleu fas fa-sword"></i>
+                                        <span id="core4-power" class="text"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="extra content">
+                                <a class="fluid ui basic label" id="core4-keys"></a>
+                                <a class="fluid ui basic label" id="core4-rarity"></a>
+                                <div id="Dcore4" class="fluid ui icon rainbow button">Throw <i
+                                        class="red trash icon"></i></div>
+                                <br>
+                            </div>
+                        </div>
+                        <div id="core5" class="author desc"></div>
+
                         <div class="ui accordion">
                             <div class="active title">
                                 <i class="dropdown icon"></i>
@@ -279,7 +309,7 @@
                         <div class="ui accordion">
                             <div class="active title">
                                 <i class="dropdown icon"></i>
-                                Keys
+                                Gems
                             </div>
                             <div id="inv2" class="active content">
                             </div>
@@ -782,11 +812,11 @@
             <div class="customB">
                 <div id="btn-CRW"></div>
                 <div id="btn-ACT">
-                    <div class="ui labeled two icon buttons">
+                    <div class="ui two buttons">
                         <div id="emp-btn" class="ui huge rainbow button alphaSDW"></div>
                         <div id="attack-btn" class="ui huge red button alphaSDW"></div>
                     </div>
-                    <div class="ui labeled two icon buttons">
+                    <div class="ui two buttons">
                         <div id="run-btn" class="ui huge grey button alphaSDW"></div>
                         <div id="cover-btn" class="ui huge button"></div>
                     </div>
@@ -807,11 +837,12 @@
 
                     </div>
                     <div class="ui segment">
-                        <div class="ui label tooltip"><i class="bleu dna icon"></i><span id="SHARDSRW"></span><span class="tooltiptext">Dimensional
+                        <div class="ui label tooltip"><i class="bleu dna icon"></i><span id="SHARDSRW"></span><span
+                                class="tooltiptext">Dimensional
                                 fragments</span></div>
                     </div>
                     <div class="ui segment">
-                        <div class="ui label tooltip"><i class="clipboard list icon"></i><span id="islots"></span><span
+                        <div class="ui label tooltip"><span id="islots"></span><span
                                 class="tooltiptext">Inventory slots</span></div>
                     </div>
                     <div class="ui segment">
@@ -955,7 +986,7 @@
 <script type="text/javascript" src="DATA/numeral.min.js"></script>
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
-<script type="text/javascript" src="utils.js?v=1.7"></script>
-<script type="text/javascript" src="core.js?v=1.7"></script>
+<script type="text/javascript" src="utils.js?v=1.72"></script>
+<script type="text/javascript" src="core.js?v=1.72"></script>
 
 </html>
