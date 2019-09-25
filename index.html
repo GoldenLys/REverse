@@ -13,10 +13,13 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.72" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.72" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.73" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.73" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
+    <style>
+
+    </style>
 </head>
 
 <body id="body" class="noselect" oncontextmenu="return true;">
@@ -597,138 +600,146 @@
                             <div id="TOP10" class="fluid ui rainbow5 button">Top 10 </div>
                         </div>
                         <p>
-                            <div class="ui Common basic label"><span class="green"><i class="info icon"></i> INFO
-                                </span></div>
-                            You
-                            can choose a custom color for your name,
-                            just change the <span class="vert">theme color</span> in the settings.
+                            <span class="ui Common basic label"><span class="green"><i
+                                        class="info icon"></i>INFO</span></span>You can choose a custom color for your
+                            name, just change the <span class="vert">theme color</span> in the settings.
                         </p>
                     </div>
-                    <div id="settings" class="ui segments" style="display: none;">
+                    <div id="settings" class="ui segments" style="display: none;"><br>
                         <div class="ui horizontal segments">
+                            <div class="ui segment" style="max-width: 5%;"></div>
+
                             <div class="ui segment">
-                                <h1 class="title"><i class="cogs icon"></i> Settings</h1>
-                                <div class="ui segment">
-                                    <div class="ui horizontal segments">
-                                        <div class="ui segment">
-                                            <div class="ui centered card">
-                                                <div id="avatar2" class="ui centered image">
-                                                </div>
-                                                <div id="ChangeAvatar" class="ui bottom attached rainbow button">
-                                                    Change
-                                                    avatar
-                                                </div>
-                                            </div>
+                                <div class="ui horizontal divider"><i class="cogs icon"></i> Settings</div>
+                                <div class="ui horizontal segments">
+                                    <div class="ui center aligned segment">
+                                        <div class="fluid ui vertical rainbow buttons">
+                                            <div id="reset-btn" class="ui rainbow button">Delete the save</div>
+                                            <div id="export-btn" class="ui rainbow button">Export save</div>
+                                            <div id="import-btn" class="ui rainbow button">Import save</div>
                                         </div>
-                                        <div class="ui center aligned segment">
-                                            <div class="ui toggle checkbox" id="AlertToggle">
-                                                <input type="checkbox" tabindex="0" class="hidden">
-                                                <label class="text">Confirm change core</label>
-                                            </div><br><br>
-                                            <div class="ui toggle checkbox" id="AlertToggle2">
-                                                <input type="checkbox" tabindex="0" class="hidden">
-                                                <label class="text">Confirm change Relic</label>
-                                            </div><br><br>
-                                            <div class="ui toggle checkbox" id="SkipRewards">
-                                                <input type="checkbox" tabindex="0" class="hidden">
-                                                <label class="text">Skip Rewards</label>
-                                            </div><br><br>
-                                            <div class="ui toggle checkbox" id="AutoMissions">
-                                                <input type="checkbox" tabindex="0" class="hidden">
-                                                <label class="text">Auto-Start Missions</label>
-                                            </div><br><br>
-                                            <div class="fluid ui vertical rainbow buttons">
-                                                <div id="reset-btn" class="ui rainbow button">Delete the save</div>
-                                                <div id="export-btn" class="ui rainbow button">Export save</div>
-                                                <div id="import-btn" class="ui rainbow button">Import save</div>
-                                            </div>
-                                            <div class="fluid ui rainbow buttons">
-                                                <div id="exportt-btn" class="ui rainbow button">Export theme</div>
-                                                <div id="importt-btn" class="ui rainbow button">Import theme</div>
-                                            </div>
+                                        <div class="fluid ui rainbow buttons">
+                                            <div id="exportt-btn" class="ui rainbow button">Export theme</div>
+                                            <div id="importt-btn" class="ui rainbow button">Import theme</div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="ui horizontal segments">
-                                    <div class="ui segment">
-                                        <h1 class="title"><i class="magic icon"></i> Promotional Codes</h1>
-                                        <p>If you have a promotional code, write it here.</p>
-                                        <form class="ui form attached fluid">
-                                            <div class="field">
-                                                <label>Code</label>
-                                                <input id="promocode" placeholder="Abc123" type="text" maxlength="6">
+                                    <div class="ui segment" style="max-width: 25%;">
+                                        <div class="ui centered card">
+                                            <div id="avatar2" class="ui centered image">
                                             </div>
-                                        </form>
+                                            <div id="ChangeAvatar" class="ui bottom attached rainbow button">Change
+                                                avatar</div>
+                                        </div>
+                                    </div>
+                                    <div class="ui segment">
+                                        <div class="ui toggle checkbox" id="AlertToggle">
+                                            <input type="checkbox" tabindex="0" class="hidden">
+                                            <label class="text">Confirm change core</label>
+                                        </div><br><br>
+                                        <div class="ui toggle checkbox" id="AlertToggle2">
+                                            <input type="checkbox" tabindex="0" class="hidden">
+                                            <label class="text">Confirm change Relic</label>
+                                        </div><br><br>
+                                        <div class="ui toggle checkbox" id="SkipRewards">
+                                            <input type="checkbox" tabindex="0" class="hidden">
+                                            <label class="text">Skip Rewards</label>
+                                        </div><br><br>
+                                        <div class="ui toggle checkbox" id="AutoMissions">
+                                            <input type="checkbox" tabindex="0" class="hidden">
+                                            <label class="text">Auto-Start Missions</label>
+                                        </div>
+                                    </div>
+                                    <div class="ui segment" style="max-width: 25%;">
+                                        <h1 class="title"><i class="magic icon"></i> Promotional Codes</h1>
+                                        <form class="ui form attached fluid">
+                                            <div class="field tooltip" style="width: 100%;">
+                                                <input id="promocode" placeholder="Abc123" type="text" maxlength="6">
+                                                <span class="tooltiptext">If you have a promotional code, write it
+                                                    here.</span>
+                                            </div>
+                                        </form><br>
                                         <div class="fluid ui buttons">
                                             <button id="CheckCode" class="ui rainbow button">Check code</button>
                                         </div><br><br>
                                         <span id="codereturn"></span>
                                     </div>
-                                    <div class="ui segment">
-                                        <div class="ui center aligned segment">
-                                            <h1 class="title"><i class="paint brush icon"></i> Theme</h1>
-                                            <div class="ui horizontal segments">
-                                                <div class="ui segment">
-                                                    <div class="ui form">
-                                                        <div class="fluid ui labeled input">
-                                                            <div class="ui label">Red</div>
-                                                            <input type="number" id="redNum">
-                                                        </div>
-                                                        <input class="inputR" value="0" type="range" min="0" max="255"
-                                                            id="red"><br><br>
-                                                        <div class="fluid ui labeled input">
-                                                            <div class="ui label">Green</div>
-                                                            <input type="number" id="greenNum">
-                                                        </div>
-                                                        <input class="inputR" value="0" type="range" min="0" max="255"
-                                                            id="green"><br><br>
-                                                        <div class="fluid ui labeled input">
-                                                            <div class="ui label">Blue</div>
-                                                            <input type="number" id="blueNum">
-                                                        </div>
-                                                        <input class="inputR" value="0" type="range" min="0" max="255"
-                                                            id="blue"><br><br>
-                                                        <div class="color-slider-wrap">
-                                                            <div class="color-wrap">
-                                                                <div id="color-display"></div>
-                                                            </div>
-                                                        </div>
+                                </div><br>
+                                <div class="ui horizontal divider"><i class="paint brush icon"></i> Theme</div>
+                                <div class="ui center aligned segment">
+                                    <div class="ui horizontal segments">
+                                        <div class="ui segment">
+                                            <div class="ui form">
+                                                <div class="fluid ui labeled input">
+                                                    <div class="ui label tooltip">Red
+                                                        <span class="tooltiptext">Move the slider to change
+                                                            color or
+                                                            enter a number between 0-255 in the number
+                                                            field</span>
                                                     </div>
+                                                    <input type="number" id="redNum">
                                                 </div>
-                                                <div class="ui segment">
-                                                    <div class="fluid ui labeled icon vertical rainbow buttons">
-                                                        <div id="themeBTN1" onclick="ThemeDefine(1);"
-                                                            class="ui rainbow button">
-                                                            <i class="large vert square icon WS"></i>Set theme</div>
-                                                        <div id="themeBTN2" onclick="ThemeDefine(2);"
-                                                            class="ui rainbow button">
-                                                            <i class="large bgcolor square icon WS"></i>Set
-                                                            background
-                                                        </div>
-                                                        <div id="themeBTN3" onclick="ThemeDefine(3);"
-                                                            class="ui rainbow button">
-                                                            <i class="large bgtextcolor square icon WS"></i>Set
-                                                            secondary
-                                                            background</div>
-                                                        <div id="themeBTN4" onclick="ThemeDefine(4);"
-                                                            class="ui rainbow button">
-                                                            <i class="large Normal square icon WS"></i>Set text
-                                                        </div>
-                                                        <div id="themeBTN5" onclick="ThemeDefine(5);"
-                                                            class="ui rainbow button">
-                                                            <i class="large menucolor square icon WS"></i>Set menus
-                                                        </div>
-                                                        <div id="themeBTNR" class="ui rainbow button"><i
-                                                                class="large red times icon"></i>Reset
-                                                            Theme
-                                                        </div>
+                                                <input class="inputR" value="0" type="range" min="0" max="255"
+                                                    id="red"><br><br>
+                                                <div class="fluid ui labeled input">
+                                                    <div class="ui label tooltip">Green
+                                                        <span class="tooltiptext">Move the slider to change
+                                                            color or
+                                                            enter a number between 0-255 in the number
+                                                            field</span>
                                                     </div>
+                                                    <input type="number" id="greenNum">
+                                                </div>
+                                                <input class="inputR" value="0" type="range" min="0" max="255"
+                                                    id="green"><br><br>
+                                                <div class="fluid ui labeled input">
+                                                    <div class="ui label tooltip">Blue
+                                                        <span class="tooltiptext">Move the slider to change
+                                                            color or
+                                                            enter a number between 0-255 in the number
+                                                            field</span>
+                                                    </div>
+                                                    <input type="number" id="blueNum">
+                                                </div>
+                                                <input class="inputR" value="0" type="range" min="0" max="255"
+                                                    id="blue"><br><br>
+                                            </div>
+                                        </div>
+                                        <div class="ui segment">
+                                            <div class="fluid ui labeled icon vertical rainbow buttons">
+                                                <div id="themeBTN1" onclick="ThemeDefine(1);" class="ui rainbow button">
+                                                    <i class="large vert square icon WS"></i>Set theme</div>
+                                                <div id="themeBTN2" onclick="ThemeDefine(2);" class="ui rainbow button">
+                                                    <i class="large bgcolor square icon WS"></i>Set
+                                                    background
+                                                </div>
+                                                <div id="themeBTN3" onclick="ThemeDefine(3);" class="ui rainbow button">
+                                                    <i class="large bgtextcolor square icon WS"></i>Set
+                                                    secondary
+                                                    background</div>
+                                                <div id="themeBTN4" onclick="ThemeDefine(4);" class="ui rainbow button">
+                                                    <i class="large Normal square icon WS"></i>Set text
+                                                </div>
+                                                <div id="themeBTN5" onclick="ThemeDefine(5);" class="ui rainbow button">
+                                                    <i class="large menucolor square icon WS"></i>Set menus
+                                                </div>
+                                                <div id="themeBTNR" class="ui rainbow button"><i
+                                                        class="large red times icon"></i>Reset
+                                                    Theme
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="color-slider-wrap">
+                                        <div class="color-wrap">
+                                            <div id="color-display"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="ui segment" style="max-width: 5%;"></div>
                         </div>
                     </div>
                     <div id="combat">
@@ -739,8 +750,8 @@
                                 <div id="PlayerID"></div>
                                 <div id="PlayerPower"></div>
                             </div>
-                            <div class="ui segment">
-                                <div id="Name" class="text2" style="margin-top: 1rem;"></div>
+                            <div class="ui segment leftbar">
+                                <div id="Name" class="vert text2" style="margin-top: 1rem;"></div>
                                 <div id="PlayerHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
                                     <div class="bar">
                                         <div id="PlayerLife" class="bartext"></div>
@@ -750,18 +761,18 @@
                                 <div id="MDTL" class="fluid ui label">Mission<div class="detail"></div>
                                 </div>
                             </div>
-                            <div class="ui segment" style="max-width: 5%;"></div>
+                            <div class="ui segment" style="max-width: 15%;"></div>
                         </div>
 
 
                         <div class="ui horizontal segments">
-                            <div class="ui segment" style="max-width: 5%;"></div>
-                            <div class="ui segment">
-                                <div id="EnnemyTitle" style="margin-top: 2rem;"></div>
-                                <div id="EnnemyHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
+                            <div class="ui segment" style="max-width: 15%;"></div>
+                            <div class="ui segment rightbar">
+                                <div id="EnnemyTitle"></div>
+                                <div id="EnnemyHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;transform: rotate(180deg)">
                                     <div class="bar">
-                                        <div id="EnnemyText" class="bartext"></div>
-                                        <div id="EnnemyDamage" class="bartext2"></div>
+                                        <div id="EnnemyText" class="bartext" style="transform: rotate(180deg)"></div>
+                                        <div id="EnnemyDamage" class="bartext2" style="transform: rotate(180deg)"></div>
                                     </div>
                                 </div>
                             </div>
@@ -784,13 +795,21 @@
             </div>
             <div class="customB">
                 <div id="btn-CRW"></div>
-                <div id="btn-ACT" class="fluid vertical big ui rainbow buttons">
-                    <div id="attack-btn" class="ui huge red button alphaSDW">
+                <div id="btn-ACT" class="ui horizontal segments">
+                    <div class="ui segment" style="max-width: 10%;"></div>
+                    <div class="ui segment">
+                        <div class="fluid ui buttons">
+                            <div id="attack-btn" class="ui huge red button alphaSDW"></div>
+                            <div class="alphadivider"></div>
+                            <div id="emp-btn" class="ui huge rainbow button alphaSDW"></div>
+                            <div class="alphadivider"></div>
+                            <div id="cover-btn" class="ui huge button"></div>
+                        </div>
+                        <div class="alphadivider"></div>
+                        <div id="run-btn" class="fluid ui huge grey button alphaSDW"></div>
+
                     </div>
-                    <div id="emp-btn" class="ui huge rainbow button alphaSDW"></div>
-                    <div id="cover-btn" class="ui button">
-                    </div>
-                    <div id="run-btn" class="ui grey button alphaSDW"></div>
+                    <div class="ui segment" style="max-width: 10%;"></div>
                 </div>
                 <div class="vert" id="WTUNLOCK"></div>
                 <div class="rouge" id="LowScore"></div>
@@ -813,15 +832,15 @@
                             class="tooltiptext">Dimensional fragments</span></div>
                 </div>
                 <div class="ui segment">
-                    <div class="ui label tooltip"><span id="islots"></span><span
-                            class="tooltiptext">Inventory slots</span></div>
+                    <div class="ui label tooltip"><span id="islots"></span><span class="tooltiptext">Inventory
+                            slots</span></div>
                 </div>
                 <div class="ui segment">
                     <div class="ui label tooltip"><span id="vloader"></span><span class="tooltiptext">Current
                             version</span></div>
                 </div>
             </div>
-            <div id="PlayerXP" class="ui tiny grey inverted progress" style="margin: 0 0 0 0;">
+            <div id="PlayerXP" class="ui tiny purple inverted progress" style="margin: 0 0 0 0;">
                 <div class="bar"></div>
             </div>
         </div>
@@ -961,7 +980,7 @@
 <script type="text/javascript" src="DATA/numeral.min.js"></script>
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
-<script type="text/javascript" src="utils.js?v=1.72"></script>
-<script type="text/javascript" src="core.js?v=1.72"></script>
+<script type="text/javascript" src="utils.js?v=1.73"></script>
+<script type="text/javascript" src="core.js?v=1.73"></script>
 
 </html>

@@ -800,7 +800,7 @@ function GetEXPPercent() {
 
 function ResetTheme(code) {
   if (code != 2) {
-    Game.Theme = ["#00dca0", "#282b3473", "#05b8a0", "#FFFFFF", "#0f1419a6", "#282b34", "#0c0d16"];
+    Game.Theme = ["#00ffa0", "#23232373", "#ffffff", "#ffffff", "#373c3fa6", "#232323", "#101115"];
   }
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
   document.documentElement.style.setProperty('--black2', Game.Theme[1]);
@@ -987,6 +987,9 @@ function closeTabs() {
   } else {
     $("#combat").hide();
     $(".customB").hide();
+  }
+  if (Game.isInFight == 2) { 
+    hideRewards();
   }
   $("#missions-btn").removeClass("active");
   $("#exploration-btn").removeClass("active");

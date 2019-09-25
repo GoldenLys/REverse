@@ -285,13 +285,13 @@ function UpdateEngine() {
   if (Backup != "Default" && canSave == 1 && Backup != Game.username) { Game.username = Backup; }
   if (Game.xp[2] == undefined) { Game.xp[2] = 1; }
   if (url.match(/mobile/gi)) {
-    $("#PlayerID").html("<img class='ui circular middle aligned tiny image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
+    $("#PlayerID").html("<img class='ui circular middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
     $("#Name").html("<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
     $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#market-btn").attr('style', '');
   } else {
-    $("#PlayerID").html("<img class='ui circular middle aligned tiny image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
+    $("#PlayerID").html("<img class='ui circular middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
     $("#Name").html("<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
     $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
@@ -1500,8 +1500,8 @@ function WinFight() {
       TIER = "Score";
       TIERRANK = "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IF2].level * 10);
     }
-    var UPS = Game.inventory[IF2].ups > 0 ? "" + Game.inventory[IF2].ups + "<i class='orange fad fa-gem'></i>" : "";
-    if (IF2 < Game.MaxInv) { $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IF2].type + "'><div class='classBar" + Game.inventory[IF2].type + "'></div><div class='statistic GS'><div class='value'>" + TIER + "</div><div class='label'> " + TIERRANK + "</div></div>" + Game.inventory[IF2].name + "<span class='" + Game.inventory[IF2].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[IF2].class + "'> " + Game.inventory[IF2].class + " </span><br><i class='rouge fas fa-heart'></i>" + fix(Game.inventory[IF2].life, 5) + "<i class='bleu fas fa-sword'></i>" + fix(Game.inventory[IF2].power, 5) + "</div></div>"); }
+    var UPS = Game.inventory[IF2].ups > 0 ? "" + Game.inventory[IF2].ups + "<i class='orange fad fa-gem revertmargin'></i>" : "";
+    if (IF2 < Game.MaxInv) { $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IF2].type + "'><div class='classBar" + Game.inventory[IF2].type + "'></div><div class='statistic GS'><div class='value'>" + TIER + "</div><div class='label'> " + TIERRANK + "</div></div>" + Game.inventory[IF2].name + "<span class='" + Game.inventory[IF2].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[IF2].class + "'> " + Game.inventory[IF2].class + " </span><br><i class='rouge fas fa-heart revertmargin'></i>" + fix(Game.inventory[IF2].life, 5) + "<i class='bleu fas fa-sword revertmargin'></i>" + fix(Game.inventory[IF2].power, 5) + "</div></div>"); }
   }
   //RELIC LOOT CHANCE
   var LOOTCHANCE2 = random(0, 100);
@@ -1589,10 +1589,10 @@ function WinFight() {
     }
     if (Game.inventory[IF3].object > 0 && Game.inventory[IF3].object < 3) {
       if (Game.inventory[IF3].object == 1) {
-        descitem = "+<i class='rouge fas fa-heart'></i>" + fix(Game.inventory[IF3].life, 5) + "<br>";
+        descitem = "+<i class='rouge fas fa-heart nomargin'></i>" + fix(Game.inventory[IF3].life, 5) + "<br>";
       }
       if (Game.inventory[IF3].object == 2) {
-        descitem = "+<i class='bleu fas fa-sword'></i>" + fix(Game.inventory[IF3].power, 5) + "<br>";
+        descitem = "+<i class='bleu fas fa-sword nomargin'></i>" + fix(Game.inventory[IF3].power, 5) + "<br>";
       }
       if (IF3 < Game.MaxInv) { $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IF3].type + "'><div class='classBar" + Game.inventory[IF3].type + "'></div>" + Game.inventory[IF3].name + "<br><span class='" + Game.inventory[IF3].class + "'>" + Game.inventory[IF3].class + "</span><br>" + descitem + "</div></div>"); }
     }
@@ -1741,7 +1741,7 @@ function UpdateCombat() {
   $("#EnnemyText").html("<span class='" + EnnemyText + "'>" + fix(Game.Ennemy[5], 5) + "</span> <i class='rouge fas fa-heart'></i>");
   $("#PlayerLife").html("<span class='" + lifetext + "'>" + fix(Game.CoreLife, 5) + "</span>/" + fix(Game.CoreBaseLife, 5) + " <i class='rouge fas fa-heart'></i>");
   $("#PlayerPower").html("<i class='bleu fas fa-sword'></i>" + fix(Game.CorePower, 5));
-  $("#EnnemySprite").html("<img class='ui middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png'>");
+  $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png' style='background-color: var(--darkgrey);'>");
   $("#EnnemyHP").progress({
     className: {
       active: "",

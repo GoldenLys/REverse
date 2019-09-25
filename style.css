@@ -166,7 +166,8 @@
 
 .vert {
   color: var(--green) !important;
-  border-color: var(--vert) !important;
+  text-shadow: 0px 0px .75rem var(--green) !important;
+  border-color: var(--green) !important;
 }
 
 .gris {
@@ -357,7 +358,7 @@ body {
   font-size: 100%;
   font-family: 'Electrolize', sans-serif;
   cursor: crosshair;
-  background-image: linear-gradient(to bottom, var(--green2) 0%, var(--black) 40%, var(--black) 99.2%, var(--green2) 100%) !important;
+  background-image: linear-gradient(to bottom, var(--green2) 0%, var(--black) 40%, var(--black) 100%) !important;
   background-attachment: fixed;
 }
 
@@ -877,6 +878,10 @@ div#C5.active {
   background-color: var(--green) !important;
 }
 
+.ui.purple.inverted.progress .bar {
+  background-color: var(--green) !important;
+}
+
 .centrer {
   text-align: center !important;
 }
@@ -1176,12 +1181,12 @@ i.orange.icon {
 /* color display */
 
 #color-display {
-  padding: 2em;
-  border-radius: 1em;
+  padding: 0.5em;
+  border-radius: 0.5em;
 }
 
 #color-display::before {
-  content: 'Move sliders to change color or enter a number between 0-255 in the number field';
+  content: 'Selected color';
   color: var(--white);
   text-shadow: 0 0 4px #333333;
 }
@@ -1380,7 +1385,7 @@ input[type=range]::-webkit-slider-thumb {
 .tooltip {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted var(--darkgrey5);
+  border-bottom: 0px dotted var(--darkgrey5);
   /* If you want dots under the hoverable text */
 }
 
@@ -1432,13 +1437,20 @@ input[type=range]::-webkit-slider-thumb {
   transition: background .1s ease;
   -webkit-box-shadow: 0 0px 3px 0px var(--white), 0 0 0 0px var(--white) !important;
   box-shadow: 0 0px 3px 0px var(--white), 0 0 0 0px var(--white) !important;
-  background: var(--darkgrey5) !important;
+  background: var(--darkgrey) !important;
   color: var(--green) !important;
   margin: 0% 1% 0% 1% !important;
+  text-shadow: 0px 0px .75rem var(--green) !important;
 }
 
-#core1-rarity, #core2-rarity, #core3-rarity, #core4-rarity, 
-#core1-keys, #core2-keys, #core3-keys, #core4-keys {
+#core1-rarity,
+#core2-rarity,
+#core3-rarity,
+#core4-rarity,
+#core1-keys,
+#core2-keys,
+#core3-keys,
+#core4-keys {
   font-size: 1rem;
   color: var(--white) !important;
   padding: 0;
@@ -1455,11 +1467,16 @@ input[type=range]::-webkit-slider-thumb {
   color: var(--white) !important;
   width: 22.5% !important;
   margin: 1% !important;
-  display: inline-grid!important;;
+  display: inline-grid !important;
+  ;
   border-radius: 0.5rem !important;
 }
 
-.fa, .fas, .fal, .far, .fad {
+.fa,
+.fas,
+.fal,
+.far,
+.fad {
   height: 1em;
   width: auto;
   margin: 0 .75em 0 0;
@@ -1470,5 +1487,45 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .revertmargin {
-  margin: 0 0 0 .75em!important;
+  margin: 0 0 0 .75em !important;
+}
+
+.nomargin {
+  margin: 0em !important;
+}
+
+.alphadivider {
+  margin: 1rem;
+  border-bottom: 1px solid rgba(34, 36, 38, 0);
+}
+
+#cover-btn,
+#run-btn,
+#attack-btn,
+#emp-btn {
+  border-radius: .28571429rem;
+}
+
+#btn-ACT {
+  margin-bottom: 1rem;
+}
+
+#MDTL {
+  margin: .5rem 0 .5rem 0;
+}
+
+.ui.inverted.progress, .ui.inverted.progress {
+  background: var(--darkgrey) !important;
+}
+
+.leftbar {
+  position: relative!important;
+    left: -5rem!important;
+    top: 1.5rem!important;
+}
+
+.rightbar {
+  position: relative!important;
+  right: -5rem!important;
+  top: 1rem!important;
 }
