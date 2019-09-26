@@ -13,8 +13,8 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.73" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.73" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.74" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.74" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
     <style>
@@ -54,19 +54,32 @@
         .customcard {
             width: 45% !important;
         }
+
+        .alphadivider {
+            margin: 0.5rem;
+            border-bottom: none !important;
+        }
+
+        .rainbow7:hover {
+            background: var(--darkgrey5) !important;
+            color: var(--white) !important;
+            border-bottom: 1px solid var(--darkgrey) !important;
+        }
+
+        .rainbow7.active:hover {
+            background: var(--darkgrey5) !important;
+            color: var(--green) !important;
+            border-bottom: 1px solid var(--green) !important;
+        }
     </style>
 </head>
 
 <body id="body" class="noselect" oncontextmenu="return true;">
-    <div id="container" class="container">
-        <div id="output" class="container"></div>
-    </div>
     <div id="loading">
         <div class="ui equal width center aligned padded grid">
             <div class="row">
-                <div class="spinner">
-                    <p class="loading-text"></p>
-                </div>
+                <p class="loading-text"></p>
+                <div class="lds-dual-ring"></div>
             </div>
         </div>
     </div>
@@ -108,10 +121,13 @@
             <div class="ui message customA">
                 <div id="gamediv1">
                     <div class="big ui top attached buttons">
-                        <div id="missions-btn" class="ui rainbow7 button"><i class="fas fa-map-marker-alt"></i></div>
-                        <div id="exploration-btn" class="ui rainbow7 button"><i class="fas fa-map-marked-alt"></i></div>
-                        <div id="inventory-btn" class="ui rainbow7 button"><i class="fas fa-sack"></i></div>
-                        <div id="miscs-btn" class="ui rainbow7 button"><i class="fal fa-align-justify"></i></div>
+                        <div id="missions-btn" class="ui rainbow7 button"><i class="fas fa-map-marker-alt nomargin"></i>
+                        </div>
+                        <div id="exploration-btn" class="ui rainbow7 button"><i
+                                class="fas fa-map-marked-alt nomargin"></i></div>
+                        <div id="inventory-btn" class="ui rainbow7 button"><i class="fas fa-sack nomargin"></i></div>
+                        <div id="miscs-btn" class="ui rainbow7 button"><i class="fal fa-align-justify nomargin"></i>
+                        </div>
                     </div>
                     <div class="ui inverted divider"></div>
                 </div>
@@ -131,9 +147,9 @@
                             <div class="content">
                                 <p>
                                     <span class="vert">AlphaRPG by Purple Wizard</span><br>
-                                    <i class="large blue discord icon"></i>Purple Wizard#0001 <i
+                                    <i class="large blue discord icon"></i>𝓟𝓾𝓻𝓹𝓵𝓮 𝓦𝓲𝔃𝓪𝓻𝓭#0001 <i
                                         class="large red reddit icon"></i>u/Aizen45 <i
-                                        class="large blue steam icon"></i>Purple
+                                        class="large blue steam icon"></i>LYSEN-FR
                                     Wizard
                                     <span class="desc"><br>Special thanks to <span class="vert">Tiwaz</span> for his
                                         help.</span>
@@ -811,14 +827,17 @@
             </div>
             <div class="customB">
                 <div id="btn-CRW"></div>
-                <div id="btn-ACT">
-                    <div class="ui two buttons">
-                        <div id="emp-btn" class="ui huge rainbow button alphaSDW"></div>
-                        <div id="attack-btn" class="ui huge red button alphaSDW"></div>
-                    </div>
-                    <div class="ui two buttons">
-                        <div id="run-btn" class="ui huge grey button alphaSDW"></div>
-                        <div id="cover-btn" class="ui huge button"></div>
+                <div id="btn-ACT" class="ui horizontal segments">
+                    <div class="ui segment">
+                        <div class="fluid ui buttons">
+                            <div id="attack-btn" class="ui huge red button alphaSDW"></div>
+                            <div class="alphadivider"></div>
+                            <div id="emp-btn" class="ui huge rainbow button alphaSDW" style="max-width: 50%;"></div>
+                        </div>
+                        <div class="alphadivider"></div>
+                        <div id="cover-btn" class="fluid ui huge button"></div>
+                        <div class="alphadivider"></div>
+                        <div id="run-btn" class="fluid ui huge grey button alphaSDW"></div>
                     </div>
                 </div>
                 <div class="vert" id="WTUNLOCK"></div>
@@ -841,8 +860,8 @@
                                 class="tooltiptext">Dimensional bFragments</span></div>
                     </div>
                     <div class="ui segment">
-                        <div class="ui label tooltip"><span id="islots"></span><span
-                                class="tooltiptext">Inventory slots</span></div>
+                        <div class="ui label tooltip"><span id="islots"></span><span class="tooltiptext">Inventory
+                                slots</span></div>
                     </div>
                     <div class="ui segment">
                         <div class="ui label tooltip"><span id="vloader"></span><span class="tooltiptext">Current
@@ -985,7 +1004,7 @@
 <script type="text/javascript" src="DATA/numeral.min.js"></script>
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
-<script type="text/javascript" src="utils.js?v=1.73"></script>
-<script type="text/javascript" src="core.js?v=1.73"></script>
+<script type="text/javascript" src="utils.js?v=1.74"></script>
+<script type="text/javascript" src="core.js?v=1.74"></script>
 
 </html>
