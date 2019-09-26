@@ -647,16 +647,16 @@ body {
   border-bottom: 1px solid var(--white);
 }
 
-.rainbow7.active {
-  background: var(--darkgrey5) !important;
-  color: var(--green) !important;
-  border-bottom: 1px solid var(--green);
-}
-
 .rainbow7.active:hover {
   background: var(--darkgrey) !important;
   color: var(--green) !important;
   border-bottom: 1px solid var(--darkgrey);
+}
+
+.rainbow7.active {
+  background: var(--darkgrey5) !important;
+  color: var(--green) !important;
+  border-bottom: 1px solid var(--green);
 }
 
 .ui.attached.segment {
