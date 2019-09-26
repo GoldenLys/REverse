@@ -580,10 +580,8 @@ function Shortcuts() {
     e = e || window.event;
     var key = e.which || e.keyCode;
     if (Game.isInFight == 1 && isTabActive != "Settings") { //IN FIGHT
-      if (key === 69) {
-        if (Game.Emp > 0) {
-          LaunchEMP();
-        }
+      if (key === 69 && Game.Emp > 0) {
+        LaunchEMP();
       }
       if (key === 82) {
         Protect();
@@ -603,7 +601,7 @@ function Shortcuts() {
       if (key === 99 || key === 51) {
         ShowInventoryMenu();
       }
-      if (key === 100 || key === 52) { 
+      if (key === 100 || key === 52) {
         ShowMiscsMenu();
       }
       if (key === 101 || key === 53) {
@@ -744,7 +742,9 @@ function Shortcuts() {
 
 $(document).keydown(function (e) {
   if (e.keyCode == 27) {
-    GotoMenu();
+    closeTabs();
+    $("#combat").show();
+    $(".customB").show();
   }
 });
 
@@ -988,7 +988,7 @@ function closeTabs() {
     $("#combat").hide();
     $(".customB").hide();
   }
-  if (Game.isInFight == 2) { 
+  if (Game.isInFight == 2) {
     hideRewards();
   }
   $("#missions-btn").removeClass("active");
@@ -1211,7 +1211,7 @@ function GenMissions() {
 
 function ResetMission() {
   if (Game.MissionStarted[0] == true) {
-    Game.MissionStarted = [false, 0, 0, 0];
+    Game.MissionStarted = [false, 0, 0, 0, 0];
     $("#combat").show();
     $("#missions").hide();
     Game.conf4 = 0;
@@ -1230,7 +1230,7 @@ function MissionStory(id) {
 
 function mission(id) {
   if (Game.MissionStarted[0] == false && Game.Level >= Missions[id][2]) {
-    Game.MissionStarted = [true, id, 0, 0];
+    Game.MissionStarted = [true, id, 0, 0, 0];
     Game.isInFight = 0;
     isTabActive = "None";
     closeTabs();
@@ -1249,6 +1249,7 @@ function CompleteMission() {
     if (Missions[Game.MissionStarted[1]][3] == 1 || Missions[Game.MissionStarted[1]][3] == 2) {
       if (Game.MissionStarted[2] >= Missions[Game.MissionStarted[1]][4]) {
         Game.isInFight = 2;
+        Game.MissionStarted[4] = 1;
         TSK = 1;
 
         if (Game.Level < Game.MaxLevel) {
@@ -1261,23 +1262,13 @@ function CompleteMission() {
           }
         }
 
-        if (Game.MissionStarted[3] == 0) {
-
-          if (Missions[Game.MissionStarted[1]][6] == 0) {//CORE REWARD
+        if (Missions[Game.MissionStarted[1]][6] == 0) {//CORE REWARD
+          if (Game.MissionStarted[3] == 0) {
             if (Game.MissionStarted[0] == true) {
               newItem(0, Game.Ranking, Missions[Game.MissionStarted[1]][7]);
               Game.MissionStarted[3] = 1;
             } else {
               newItem(0, Game.Level, Missions[Game.MissionStarted[1]][7]);
-              Game.MissionStarted[3] = 1;
-            }
-          }
-          if (Missions[Game.MissionStarted[1]][6] == 2) {//RELIC REWARD 
-            if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
-              NewRelic(Missions[Game.MissionStarted[1]][7]);
-              Game.MissionStarted[3] = 1;
-            } else {
-              NewRelic(Missions[Game.MissionStarted[1]][7]);
               Game.MissionStarted[3] = 1;
             }
           }
@@ -1288,54 +1279,62 @@ function CompleteMission() {
             TIER = "Score";
             TIERRANK = "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[Game.inventory.length - 1].level * 10);
           }
-
-          var UPS = Game.inventory[Game.inventory.length - 1].ups > 0 ? "" + Game.inventory[Game.inventory.length - 1].ups + "<i class='key icon'></i>" : "";
-
-          if (Missions[Game.MissionStarted[1]][6] == 0) {
-            $("#rewards-loot").html("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[Game.inventory.length - 1].type + "'><div class='classBar" + Game.inventory[Game.inventory.length - 1].type + "'></div><div class='statistic GS'><div class='value'>" + TIER + "</div><div class='label'> " + TIERRANK + "</div></div>" + Game.inventory[Game.inventory.length - 1].name + "<span class='" + Game.inventory[Game.inventory.length - 1].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[Game.inventory.length - 1].class + "'> " + Game.inventory[Game.inventory.length - 1].class + " </span><br> " + fix(Game.inventory[Game.inventory.length - 1].life, 5) + " <i class='red heart icon'></i> " + fix(Game.inventory[Game.inventory.length - 1].power, 5) + " <i class='blue crosshairs icon'></i></div></div>");
-          }
-
-          if (Missions[Game.MissionStarted[1]][6] == 2) {
-            var IV = Game.inventory.length - 1;
-            if (Game.inventory[IV].object == 0) {
-              DESC = "-";
+          var UPS = Game.inventory[Game.inventory.length - 1].ups > 0 ? "" + Game.inventory[Game.inventory.length - 1].ups + "<i class='orange fad fa-gem'></i>" : "";
+          $("#rewards-loot").html("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[Game.inventory.length - 1].type + "'><div class='classBar" + Game.inventory[Game.inventory.length - 1].type + "'></div><div class='statistic GS'><div class='value'>" + TIER + "</div><div class='label'> " + TIERRANK + "</div></div>" + Game.inventory[Game.inventory.length - 1].name + "<span class='" + Game.inventory[Game.inventory.length - 1].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[Game.inventory.length - 1].class + "'> " + Game.inventory[Game.inventory.length - 1].class + " </span><br> " + fix(Game.inventory[Game.inventory.length - 1].life, 5) + " <i class='rouge fas fa-heart revertmargin'></i> " + fix(Game.inventory[Game.inventory.length - 1].power, 5) + " <i class='bleu fas fa-sword revertmargin'></i></div></div>");
+        }
+        if (Missions[Game.MissionStarted[1]][6] == 2) {//RELIC REWARD 
+          if (Game.MissionStarted[3] == 0) {
+            if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
+              NewRelic(Missions[Game.MissionStarted[1]][7]);
+              Game.MissionStarted[3] = 1;
+            } else {
+              NewRelic(Missions[Game.MissionStarted[1]][7]);
+              Game.MissionStarted[3] = 1;
             }
-            if (Game.inventory[IV].object == 1) {
-              DESC = "Power bonus of " + fix(Game.inventory[IV].bonus, 9);
-            }
-            if (Game.inventory[IV].object == 2) {
-              DESC = "Life bonus of " + fix(Game.inventory[IV].bonus, 9);
-            }
-            if (Game.inventory[IV].object == 3) {
-              DESC = "Max Score increased by " + fix(Game.inventory[IV].bonus, 3);
-            }
-            if (Game.inventory[IV].object == 4) {
-              if (Game.inventory[IV].bonus == 1) {
-                DESCT = "<span class='Normal'>Normal</span>";
-              }
-              if (Game.inventory[IV].bonus == 2000) {
-                DESCT = "<span class='Common'>Common</span>";
-              }
-              if (Game.inventory[IV].bonus == 5000) {
-                DESCT = "<span class='Uncommon'>Uncommon</span>";
-              }
-              if (Game.inventory[IV].bonus == 7000) {
-                DESCT = "<span class='Rare'>Rare</span>";
-              }
-              if (Game.inventory[IV].bonus == 8500) {
-                DESCT = "<span class='Epic'>Epic</span>";
-              }
-              if (Game.inventory[IV].bonus == 9500) {
-                DESCT = "<span class='Exotic'>Exotic</span>";
-              }
-              if (Game.inventory[IV].bonus == 9850) {
-                DESCT = "<span class='Divine'>Divine</span>";
-              }
-              DESC = "Minimal drop quality " + DESCT;
-            }
-            $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IV].type + "'><div class='classBar" + Game.inventory[IV].type + "'></div>" + Game.inventory[IV].name + "<br><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span><br>" + DESC + "</div></div>");
           }
         }
+
+        if (Missions[Game.MissionStarted[1]][6] == 2) {
+          var IV = Game.inventory.length - 1;
+          if (Game.inventory[IV].object == 0) {
+            DESC = "-";
+          }
+          if (Game.inventory[IV].object == 1) {
+            DESC = "Power bonus of " + fix(Game.inventory[IV].bonus, 9);
+          }
+          if (Game.inventory[IV].object == 2) {
+            DESC = "Life bonus of " + fix(Game.inventory[IV].bonus, 9);
+          }
+          if (Game.inventory[IV].object == 3) {
+            DESC = "Max Score increased by " + fix(Game.inventory[IV].bonus, 3);
+          }
+          if (Game.inventory[IV].object == 4) {
+            if (Game.inventory[IV].bonus == 1) {
+              DESCT = "<span class='Normal'>Normal</span>";
+            }
+            if (Game.inventory[IV].bonus == 2000) {
+              DESCT = "<span class='Common'>Common</span>";
+            }
+            if (Game.inventory[IV].bonus == 5000) {
+              DESCT = "<span class='Uncommon'>Uncommon</span>";
+            }
+            if (Game.inventory[IV].bonus == 7000) {
+              DESCT = "<span class='Rare'>Rare</span>";
+            }
+            if (Game.inventory[IV].bonus == 8500) {
+              DESCT = "<span class='Epic'>Epic</span>";
+            }
+            if (Game.inventory[IV].bonus == 9500) {
+              DESCT = "<span class='Exotic'>Exotic</span>";
+            }
+            if (Game.inventory[IV].bonus == 9850) {
+              DESCT = "<span class='Divine'>Divine</span>";
+            }
+            DESC = "Minimal drop quality " + DESCT;
+          }
+          $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IV].type + "'><div class='classBar" + Game.inventory[IV].type + "'></div>" + Game.inventory[IV].name + "<br><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span><br>" + DESC + "</div></div>");
+        }
+
         if (Missions[Game.MissionStarted[1]][3] == 1) {
           $("#rewards-title").html("<span class='vert'>Successfully completed the mission !</span>");
         } else {
@@ -1365,7 +1364,7 @@ function hideMissionRewards() {
   if (TSK == 1) {
     Game.MissionsCompleted[Game.MissionStarted[1]] = 1;
     if (Missions[Game.MissionStarted[1]][3] == 2) { Game.FP++; Game.Shards += Missions[Game.MissionStarted[1]][5]; }
-    Game.MissionStarted = [false, 0, 0, 0];
+    Game.MissionStarted = [false, 0, 0, 0, 0];
     TSK = 0;
   }
   Game.isInFight = 0;

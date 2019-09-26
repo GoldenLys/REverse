@@ -1,80 +1,46 @@
 .loading-text {
-    margin-top: 60%!important;
+    text-shadow: 0px 0px .75rem var(--green) !important;
+    position: absolute;
+    top: 45% !important;
+    left: 35%;
+    right: 35%;
+    text-align: center;
     font-size: 1.5em;
-    transform-origin: 50% 100%;
-    transform: perspective(20em) rotateX(-25deg);
 }
 
-.loading-text:after {
-    white-space: pre;
-    content: "Loading AlphaRPG";
-    animation: lds-text 1.5s linear infinite;
-}
-
-@keyframes lds-text {
-    25% {
-        content: "Loading AlphaRPG. \A";
-    }
-    50% {
-        content: "Loading AlphaRPG.. \A";
-    }
-    75% {
-        content: "Loading AlphaRPG... \A";
-    }
-}
-
-.spinner {
-    position: relative;
-    margin: auto;
-    box-sizing: border-box;
-    background-clip: padding-box;
+.lds-dual-ring {
+    display: inline-block;
     width: 22em;
     height: 22em;
-    border-radius: 15em;
-    border: 0.2em solid var(--darkgrey);
-    transform-origin: 50% 60%;
-    transform: perspective(20em) rotateX(50deg);
-    animation: spinner-wiggle 1.5s infinite;
 }
 
-.spinner:before, .spinner:after {
-    content: "";
-    position: absolute;
-    left: -3px;
-    top: -3px;
-    box-sizing: inherit;
-    width: inherit;
-    height: inherit;
-    border-radius: inherit;
-    opacity: .05;
-    border: inherit;
-    border-color: transparent;
-    animation: spinner-spin 1.5s cubic-bezier(0.8, 0.6, 0, 0.5) infinite, spinner-fade 1.5s linear infinite;
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 22em;
+    height: 22em;
+    margin: 1px;
+    border-radius: 50%;
+    border: 5px solid var(--green);
+    border-color: var(--green) var(--green) var(--green) var(--green);
+    box-shadow: 0px 0px .75rem var(--green) !important;
+    animation: lds-dual-ring 1.2s linear infinite;
 }
 
-.spinner:before {
-    border-top-color: var(--green);
-}
-
-.spinner:after {
-    border-top-color: var(--green);
-    animation-delay: 0.5s;
-}
-
-@keyframes spinner-spin {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes spinner-fade {
-    20% {
-        opacity: .1;
-    }
-    40% {
+@keyframes lds-dual-ring {
+    0% {
+        box-shadow: 0px 0px .75rem var(--green) !important;
+        filter: alpha(opacity=100);
+        -moz-opacity: 1;
+        -khtml-opacity: 1;
         opacity: 1;
     }
-    60% {
-        opacity: .1;
+
+    100% {
+        box-shadow: 0px 0px 0.25rem var(--green) !important;
+        filter: alpha(opacity=0);
+        -moz-opacity: 0.0;
+        -khtml-opacity: 0.0;
+        opacity: 0.0;
     }
 }

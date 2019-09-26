@@ -1468,7 +1468,6 @@ input[type=range]::-webkit-slider-thumb {
   width: 22.5% !important;
   margin: 1% !important;
   display: inline-grid !important;
-  ;
   border-radius: 0.5rem !important;
 }
 
