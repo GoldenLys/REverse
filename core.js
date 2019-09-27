@@ -98,7 +98,7 @@ var Missions = {
   10: ["Corrupted World", 'You have successfully passed the portal.. but where are you now ?', 29, 1, 10, 10000, 0, 8500, 10, 9],
   11: ["Corrupted Fortress", 'You see a huge fortress with nothing good inside, you must clean this place.', 30, 2, 10, 0, 0, 9500, 11, 10],
   12: ["Corrupted Fortress - Basement", 'There is a door in the fortress which leads to another level, clean this place too.', 30, 2, 25, 0, 2, 9500, 11, 11],
-  13: ["Corrupted Fortress - Core", 'This is the last floor, the Core of the Fortress, where the corruption started.. Destroy it.', 30, 2, 50, 1, 0, 9500, 11, 12],
+  13: ["Corrupted Fortress - Core", 'This is the last floor, the core of the Fortress, where the corruption started.. Destroy it.', 30, 2, 50, 1, 0, 9500, 11, 12],
   14: ["The Black Portal", 'Just after you destroyed the fortress core, another portal appeared..<br><br> A new story begins.', 30, 1, 10, 15000, 0, 9500, 12, 11],
   15: ["The Black Portal 2", 'The passage becomes darker and darker, you keep moving forward and perceive a light in the distance..', 30, 1, 10, 20000, 0, 9500, 12, 14],
   16: ["Light of Elysia", 'You\'ve just landed in a new world, in the city of Elysia. This world seems really beautiful, and so you decide to explore it.', 31, 1, 10, 25000, 0, 9500, 13, 15],
@@ -886,7 +886,6 @@ function RemoveItem(id) {
   } else {
     Game.inventory.splice(id, 1);
   }
-
   UpdateGame();
 }
 
@@ -1022,7 +1021,7 @@ function GenCores() {
     $("#" + core + "-power").html(fix(coreId[3], 5));
     $("#" + core + "-rarity").html("<i class='jaune fas fa-stars'></i>" + RLSTXT);
     $("#" + core + "-keys").html("<i class='orange fad fa-gem'></i>" + UPCTEXT + " Gems incrusted");
-    $("#" + core + "-image").html("<img class='ui middle aligned tiny circular image' src='DATA/Armors/" + core + "-" + Class + ".png'></img>");
+    $("#" + core + "-image").html("<img class='ui middle aligned tiny circular image' style='height: 200px;' src='DATA/Armors/" + core + "-" + Class + ".png'></img>");
     if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
       $("#" + core + "-title").html("<a class='ui small label'><span class='" + coreId[1] + "'>" + coreId[1] + "</span></a> " + coreId[0]);
     } else {
