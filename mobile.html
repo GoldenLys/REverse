@@ -778,14 +778,16 @@
                     </div>
                     <div id="combat">
                         <div class="ui horizontal segments">
-                            <div class="ui segment" style="max-width: 35%;">
+                            <div class="ui segment"
+                                style="max-width: 15%;padding: 1em 0em!important;min-width: fit-content;">
                                 <div id="DimensionID"></div>
                                 <div class="title" id="PlayerLevel"></div>
                                 <div id="PlayerID"></div>
                                 <div id="PlayerPower"></div>
                             </div>
-                            <div class="ui segment">
-                                <div id="Name" class="vert text2" style="margin-top: 1rem;"></div>
+                            <div class="ui left aligned segment"
+                                style="margin-top: 2.5rem!important;max-width: 65%;padding-left: 0%;">
+                                <div id="Name" class="vert text2"></div>
                                 <div id="PlayerHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
                                     <div class="bar">
                                         <div id="PlayerLife" class="bartext"></div>
@@ -799,8 +801,11 @@
 
 
                         <div class="ui horizontal segments">
-                            <div class="ui segment">
-                                <div id="EnnemyTitle" style="margin-top: 2rem;"></div>
+                            <div class="ui segment" style="max-width: 20%;padding: 1em 0em!important;"></div>
+                            <div class="ui right aligned segment"
+                                style="margin-top: 1rem!important;max-width: 65%;padding-right: 0%;">
+
+                                <div id="EnnemyTitle"></div>
                                 <div id="EnnemyHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
                                     <div class="bar">
                                         <div id="EnnemyText" class="bartext"></div>
@@ -809,7 +814,8 @@
                                 </div>
                             </div>
 
-                            <div class="ui segment" style="max-width: 35%;">
+                            <div class="ui segment"
+                                style="max-width: 15%;padding: 1em 0em!important;min-width: fit-content;">
                                 <div class="title" id="EnnemyLevel"></div>
                                 <div id="EnnemySprite"></div>
                                 <div id="EnnemyPower"></div>
@@ -857,7 +863,7 @@
                     </div>
                     <div class="ui segment">
                         <div class="ui label tooltip"><i class="bleu dna icon"></i><span id="SHARDSRW"></span><span
-                                class="tooltiptext">Dimensional bFragments</span></div>
+                                class="tooltiptext">Dimensional Fragments</span></div>
                     </div>
                     <div class="ui segment">
                         <div class="ui label tooltip"><span id="islots"></span><span class="tooltiptext">Inventory
@@ -896,7 +902,7 @@
             <div class="ui basic modal" id="modal-2">
                 <div class="ui icon header">
                     <i class="big microchip icon"></i>
-                    <font id="confirm-title" class="title">Destroy core confirmation</font>
+                    <font id="confirm-title" class="title">Destroy armor confirmation</font>
                 </div>
                 <div class="centrer content">
                     <div class="ui icon trs message">
@@ -914,7 +920,7 @@
             <div class="ui basic modal" id="modal-4">
                 <div class="ui icon header">
                     <i class="big microchip icon"></i>
-                    <font id="confirm3-title" class="title">New core confirmation</font>
+                    <font id="confirm3-title" class="title">New armor confirmation</font>
                 </div>
                 <div class="centrer content">
                     <div class="ui icon trs message">
@@ -1005,6 +1011,6 @@
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
 <script type="text/javascript" src="utils.js?v=1.74"></script>
-<script type="text/javascript" src="core.js?v=1.74"></script>
+<script type="text/javascript" src="core.js?v=1.75"></script>
 
 </html>

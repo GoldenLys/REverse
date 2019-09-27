@@ -644,7 +644,7 @@ body {
 .rainbow7:hover {
   background: var(--darkgrey) !important;
   color: var(--green) !important;
-  border-bottom: 1px solid var(--white);
+  border-bottom: 1px solid var(--darkgrey);
 }
 
 .rainbow7.active:hover {
@@ -1392,17 +1392,18 @@ input[type=range]::-webkit-slider-thumb {
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  right: 0%;
+  min-width: 7rem;
   bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  /* Use half of the width (120/2 = 60), to center the tooltip */
+  left: 0%;
   background-color: var(--darkgrey5);
   border-bottom: 1px solid var(--green);
   color: #fff;
   text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  position: absolute;
+  z-index: 1;
 
   /* Position the tooltip text - see examples below! */
   position: absolute;
@@ -1513,18 +1514,19 @@ input[type=range]::-webkit-slider-thumb {
   margin: .5rem 0 .5rem 0;
 }
 
-.ui.inverted.progress, .ui.inverted.progress {
+.ui.inverted.progress,
+.ui.inverted.progress {
   background: var(--darkgrey) !important;
 }
 
 .leftbar {
-  position: relative!important;
-    left: -5rem!important;
-    top: 1.5rem!important;
+  position: relative !important;
+  left: -5rem !important;
+  top: 1.5rem !important;
 }
 
 .rightbar {
-  position: relative!important;
-  right: -5rem!important;
-  top: 1rem!important;
+  position: relative !important;
+  right: -5rem !important;
+  top: 1rem !important;
 }
