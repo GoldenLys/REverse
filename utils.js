@@ -1230,7 +1230,7 @@ function MissionStory(id) {
 
 function mission(id) {
   if (Game.MissionStarted[0] == false && Game.Level >= Missions[id][2]) {
-    Game.MissionStarted = [true, id, 0, 0, 0];
+    Game.MissionStarted = [true, id, 0, 0, 0, 0];
     Game.isInFight = 0;
     isTabActive = "None";
     closeTabs();

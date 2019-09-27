@@ -1425,7 +1425,7 @@ function GenEnnemy() {
 }
 //WIN OR LOSE FIGHT
 function WinFight() {
-  if (Game.MissionStarted[0] == true && Game.MissionStarted[4] == 0) {
+  if (Game.MissionStarted[4] == 0) {
     var CORELOOT = 35;
     var RELICLOOT = 15;
     var KEYLOOT = 45;
