@@ -800,7 +800,7 @@ function GetEXPPercent() {
 
 function ResetTheme(code) {
   if (code != 2) {
-    Game.Theme = ["#00ffa0", "#23232373", "#ffffff", "#00c8b4", "#373c3fa6", "#232323", "#101115"];
+    Game.Theme = ["#00ffa0", "#23232373", "#00c8b4", "#ffffff", "#373c3fa6", "#232323", "#101115"];
   }
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
   document.documentElement.style.setProperty('--black2', Game.Theme[1]);
