@@ -399,6 +399,7 @@ function UpdateGame() {
   Game.PowerMult = Game.Upgrades[1] * 0.01 + 1;
   Game.LifeMult = Game.Upgrades[2] * 0.01 + 1;
   Game.MaxInv = (Game.Simulation * 2) + 18 + (Game.Upgrades[3] * 1);
+  if (Game.MissionStarted[4] == undefined) Game.MissionStarted[4] = 0;
   if (Game.isInFight == 0) {
     Game.CoreLife = Game.CoreBaseLife;
     GenEnnemy();
@@ -609,7 +610,7 @@ function UpdateUI() {
     $("#DimensionID").html(WTText);
     $("#PlayerLevel").html("Level " + fix(Game.Level, 4));
     $("#PlayerXP").show();
-    $("#capacity").html("<span class='vert bold'>" + fix(Game.xp[0], 3) + "</span>/" + fix(Game.xp[1], 3) + " EXP");
+    $("#capacity").html("<span class='vert bold'>" + fix(Game.xp[0], 6) + "</span>/" + fix(Game.xp[1], 6) + " EXP");
   } else {
     $("#DimensionID").html(WTText);
     $("#PlayerLevel").html("Score <i class='fad fa-dice-d20'></i> " + fix(Game.Ranking, 4));
@@ -2422,9 +2423,10 @@ function NewCore(id, n) {
       "<i class='bleu fas fa-sword'></i><span class='" + powercolor + "'>" + Game.inventory[n].power + "</span>");
 
     if (url.match(/mobile/gi)) {
-      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace Armor " + id + " <span class='vert'>(Y)</span></div>");
-    } else {
-      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'> Cancel</div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'> Replace Armor " + id + "</div>");
+      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i></div>");
+    }
+    else {
+      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace Armor " + id + " <span class='vert'>(Y)</span></div>");
     }
     $("#modal-4").modal("show");
   } else {

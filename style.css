@@ -1,7 +1,7 @@
 :root {
   --white: rgb(255, 255, 255);
   --green: rgb(0, 220, 160);
-  --green2: rgb(0, 100, 80);
+  --green2: rgb(0, 200, 180);
   --red: rgb(255, 0, 0);
   --orange: #ff9800;
   --yellow: rgb(255, 255, 0);
@@ -356,9 +356,9 @@ body {
   color: var(--white);
   text-align: center;
   font-size: 100%;
-  font-family: 'Electrolize', sans-serif;
+  font-family: 'Electrolize', sans-serif !important;
   cursor: crosshair;
-  background-image: linear-gradient(to bottom, var(--green2) 0%, var(--black) 40%, var(--black) 100%) !important;
+  background-image: -webkit-linear-gradient(90deg, var(--purple), var(--green2), var(--green));
   background-attachment: fixed;
 }
 
@@ -1322,6 +1322,19 @@ input[type=range]::-webkit-slider-thumb {
 
 .ui.alpha.button:hover {
   background-color: var(--green2);
+}
+
+i.discord.icon {
+  color: #7289da !important;
+}
+
+.ui.discord.button {
+  background-color: #7289da;
+  color: #fff;
+}
+
+.ui.discord.button:hover {
+  background-color: #31427d;
 }
 
 .ui[class*="bottom right attached"].label {

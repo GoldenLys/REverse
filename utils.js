@@ -800,7 +800,7 @@ function GetEXPPercent() {
 
 function ResetTheme(code) {
   if (code != 2) {
-    Game.Theme = ["#00ffa0", "#23232373", "#ffffff", "#ffffff", "#373c3fa6", "#232323", "#101115"];
+    Game.Theme = ["#00ffa0", "#23232373", "#ffffff", "#00c8b4", "#373c3fa6", "#232323", "#101115"];
   }
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
   document.documentElement.style.setProperty('--black2', Game.Theme[1]);
@@ -1230,7 +1230,7 @@ function MissionStory(id) {
 
 function mission(id) {
   if (Game.MissionStarted[0] == false && Game.Level >= Missions[id][2]) {
-    Game.MissionStarted = [true, id, 0, 0, 0, 0];
+    Game.MissionStarted = [true, id, 0, 0, 0];
     Game.isInFight = 0;
     isTabActive = "None";
     closeTabs();
@@ -1377,10 +1377,11 @@ function hideRewards() {
   if (Game.confirmations == 1) {
     $("#modal-4").modal("hide");
   }
-  GenEnnemy();
   Game.isInFight = 0;
   $("#rewards").hide();
-  $("#combat").show();
+  if (isTabActive == "None") {
+    $("#combat").show();
+  }
   UpdateGame();
   CompleteMission();
 }
