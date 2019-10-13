@@ -385,10 +385,18 @@ body {
 .ui.message .header,
 .ui.button {
   font-family: 'Electrolize', sans-serif;
+  font-weight: 500;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Electrolize', sans-serif;
+  font-weight: 500;
 }
 
 .ui.button {
   margin: 0 0 0 0 !important;
+  font-family: 'Electrolize', sans-serif !important;
+  font-weight: 500;
 }
 
 .title {
@@ -408,7 +416,7 @@ body {
 }
 
 .desc {
-  font-size: 0.7em !important;
+  font-size: 0.85em !important;
 }
 
 .text3 {
@@ -1561,6 +1569,7 @@ i.discord.icon {
 
 #MDTL {
   margin: .5rem 0 .5rem 0;
+  font-weight: 500;
 }
 
 .ui.inverted.progress,
