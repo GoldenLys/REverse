@@ -405,6 +405,7 @@ function UpdateGame() {
   if (Game.isInFight == 1 && Game.class == "none") {
     Game.username = "Default";
     Backup = "Default";
+    ResetTheme(1);
     save();
   }
   Game.WTMult[2] = (Game.Simulation * 0.03) - 0.03; //EXPMULT
