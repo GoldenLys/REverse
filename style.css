@@ -5,6 +5,8 @@
   --red: rgb(255, 0, 0);
   --orange: #ff9800;
   --yellow: rgb(255, 255, 0);
+  --bg2: rgb(137, 47, 255);
+  --bg3: rgb(0, 120, 255);
   --blue: rgb(0, 120, 255);
   --pink: rgb(237, 34, 255);
   --purple: rgb(137, 47, 255);
@@ -15,7 +17,7 @@
   --black8: rgba(40, 43, 52, 0.8);
   --black6: rgba(40, 43, 52, 0.6);
   --black4: rgba(40, 43, 52, 0.4);
-  --black2: rgb(40, 43, 52);
+  --black2: rgba(40, 43, 52, 0.25);
   --black1: rgba(40, 43, 52, 0.15);
   --locked: rgb(64, 64, 64);
   --normal2: rgba(255, 255, 255, 0.5);
@@ -140,12 +142,12 @@
   color: var(--common);
 }
 
-.bgcolor {
-  color: var(--black);
+.bgcolor2 {
+  color: var(--bg2);
 }
 
-.bgtextcolor {
-  color: var(--green2);
+.bgcolor3 {
+  color: var(--bg3);
 }
 
 .menucolor {
@@ -192,7 +194,7 @@
 }
 
 .blanc {
-  color: var(--white);
+  color: var(--white) ! important;
 }
 
 .noir {
@@ -358,8 +360,23 @@ body {
   font-size: 100%;
   font-family: 'Electrolize', sans-serif !important;
   cursor: crosshair;
-  background-image: -webkit-linear-gradient(90deg, var(--purple), var(--green2), var(--green));
-  background-attachment: fixed;
+  background: linear-gradient(115deg, var(--bg2), var(--bg3), var(--green));
+  background-size: 300% 400%;
+  -webkit-animation: bganim 15s ease infinite !important;
+  animation: bganim 15s ease infinite !important;
+
+}
+
+@keyframes bganim {
+	0% {
+		background-position: 0% 50%;
+  }
+	50% {
+		background-position: 100% 50%;
+  }
+	100% {
+    background-position: 0% 50%;
+  }
 }
 
 .ui.card>.content>.header,
@@ -647,6 +664,10 @@ body {
   border-bottom: 1px solid var(--darkgrey);
 }
 
+.glitched {
+  animation: glitch-text .1s steps(1) 6 alternate forwards, glitch-blink .3s steps(1) 2
+}
+
 .rainbow7.active:hover {
   background: var(--darkgrey) !important;
   color: var(--green) !important;
@@ -846,6 +867,13 @@ div#C5.active {
   animation: matrix3 1s infinite alternate !important;
 }
 
+.customborder {
+  border: 1px solid var(--black)!important;
+  border-right: none!important;
+  -webkit-animation: matrix3 1s infinite alternate !important;
+  animation: matrix3 1s infinite alternate !important;
+}
+
 .ui.form input[type=text]:active,
 .ui.form input[type=text]:focus {
   background: var(--black8);
@@ -931,10 +959,14 @@ div#C5.active {
 
 .ui.label {
   vertical-align: middle !important;
-  background: var(--darkgrey5);
+  background: var(--black8);
   color: var(--white);
   margin: 2px;
   border-radius: 0.5rem;
+}
+
+#PlayerName {
+  border-left: none;
 }
 
 .ui.toggle.checkbox .box,
@@ -1286,6 +1318,7 @@ input[type=range]::-webkit-slider-thumb {
 .ui.trs.message {
   background-color: transparent;
   color: var(--white);
+  box-shadow: none!important;
 }
 
 .ui.checkbox label,
@@ -1325,12 +1358,16 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 i.discord.icon {
-  color: #7289da !important;
+  color: #7289da;
 }
 
 .ui.discord.button {
   background-color: #7289da;
   color: #fff;
+}
+
+.discordlabel {
+  color: #7289da !important;
 }
 
 .ui.discord.button:hover {
@@ -1479,7 +1516,6 @@ i.discord.icon {
 .customcard {
   background: transparent !important;
   color: var(--white) !important;
-  width: 22.5% !important;
   margin: 1% !important;
   display: inline-grid !important;
   border-radius: 0.5rem !important;
@@ -1542,4 +1578,285 @@ i.discord.icon {
   position: relative !important;
   right: -5rem !important;
   top: 1rem !important;
+}
+
+@keyframes glitch-text {
+  25% {
+    transform: skew(10deg) scaleX(1.05)
+  }
+
+  50% {
+    transform: skew(-20deg) scaleX(1.08)
+  }
+
+  75% {
+    transform: skew(15deg)
+  }
+
+  to {
+    transform: skew(0) scaleX(1)
+  }
+}
+
+@keyframes glitch-blink {
+  50% {
+    opacity: 0
+  }
+
+  75% {
+    opacity: 1
+  }
+}
+
+#EnnemySprite {
+  background-color: var(--darkgrey);
+  width: 100px;
+  height: 100px;
+  border-radius: 5rem;
+  margin-left: 2.5rem;
+}
+
+.bgmask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--black2);
+}
+
+.glow {
+  text-shadow: 0px 0px .75rem var(--green) !important;
+}
+
+.titlecontainer {
+  background: var(--darkgrey);
+  position: relative;
+  top:0;
+  left: 0%;
+  right: 0%;
+}
+
+.glitch {
+  color: white;
+  font-size: 4rem;
+  margin: 0 auto;
+  width: 18rem;
+  position: relative;
+  top: 0rem;
+  padding-top: 2.5rem;
+  height: 6rem;
+}
+
+.glitch:after {
+  animation: glitch-animation 2s infinite linear alternate-reverse;
+  clip: rect( 0, 900px, 0, 0 );
+  background: var(--darkgrey);
+  color: #ffffff;
+  content: attr( data-text );
+  overflow: hidden;
+  left: 0;
+  position: absolute;
+  text-shadow: -2px 0 var(--green);
+  top: 0rem;
+  padding-top: 2.5rem;
+  height: 6rem;
+}
+.glitch:before {
+  animation: glitch-animation-2 3s infinite linear alternate-reverse;
+  clip: rect( 0, 900px, 0, 0 );
+  background: var(--darkgrey);
+  color: #ffffff;
+  content: attr( data-text );
+  overflow: hidden;
+  position: absolute;
+  text-shadow: 2px 0 var(--red);
+  top: 0rem;
+  padding-top: 2.5rem;
+  height: 6rem;
+}
+@keyframes glitch-animation {
+  0% {
+    clip: rect(42px, 9999px, 44px, 0);
+  }
+  5% {
+    clip: rect(12px, 9999px, 59px, 0);
+  }
+  10% {
+    clip: rect(48px, 9999px, 29px, 0);
+  }
+  15.0% {
+    clip: rect(42px, 9999px, 73px, 0);
+  }
+  20% {
+    clip: rect(63px, 9999px, 27px, 0);
+  }
+  25% {
+    clip: rect(34px, 9999px, 55px, 0);
+  }
+  30.0% {
+    clip: rect(86px, 9999px, 73px, 0);
+  }
+  35% {
+    clip: rect(20px, 9999px, 20px, 0);
+  }
+  40% {
+    clip: rect(26px, 9999px, 60px, 0);
+  }
+  45% {
+    clip: rect(25px, 9999px, 66px, 0);
+  }
+  50% {
+    clip: rect(57px, 9999px, 98px, 0);
+  }
+  55.0% {
+    clip: rect(5px, 9999px, 46px, 0);
+  }
+  60.0% {
+    clip: rect(82px, 9999px, 31px, 0);
+  }
+  65% {
+    clip: rect(54px, 9999px, 27px, 0);
+  }
+  70% {
+    clip: rect(28px, 9999px, 99px, 0);
+  }
+  75% {
+    clip: rect(45px, 9999px, 69px, 0);
+  }
+  80% {
+    clip: rect(23px, 9999px, 85px, 0);
+  }
+  85.0% {
+    clip: rect(54px, 9999px, 84px, 0);
+  }
+  90% {
+    clip: rect(45px, 9999px, 47px, 0);
+  }
+  95% {
+    clip: rect(37px, 9999px, 20px, 0);
+  }
+  100% {
+    clip: rect(4px, 9999px, 91px, 0);
+  }
+}
+@keyframes glitch-animation-2 {
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+  }
+  5% {
+    clip: rect(52px, 9999px, 74px, 0);
+  }
+  10% {
+    clip: rect(79px, 9999px, 85px, 0);
+  }
+  15.0% {
+    clip: rect(75px, 9999px, 5px, 0);
+  }
+  20% {
+    clip: rect(67px, 9999px, 61px, 0);
+  }
+  25% {
+    clip: rect(14px, 9999px, 79px, 0);
+  }
+  30.0% {
+    clip: rect(1px, 9999px, 66px, 0);
+  }
+  35% {
+    clip: rect(86px, 9999px, 30px, 0);
+  }
+  40% {
+    clip: rect(23px, 9999px, 98px, 0);
+  }
+  45% {
+    clip: rect(85px, 9999px, 72px, 0);
+  }
+  50% {
+    clip: rect(71px, 9999px, 75px, 0);
+  }
+  55.0% {
+    clip: rect(2px, 9999px, 48px, 0);
+  }
+  60.0% {
+    clip: rect(30px, 9999px, 16px, 0);
+  }
+  65% {
+    clip: rect(59px, 9999px, 50px, 0);
+  }
+  70% {
+    clip: rect(41px, 9999px, 62px, 0);
+  }
+  75% {
+    clip: rect(2px, 9999px, 82px, 0);
+  }
+  80% {
+    clip: rect(47px, 9999px, 73px, 0);
+  }
+  85.0% {
+    clip: rect(3px, 9999px, 27px, 0);
+  }
+  90% {
+    clip: rect(26px, 9999px, 55px, 0);
+  }
+  95% {
+    clip: rect(42px, 9999px, 97px, 0);
+  }
+  100% {
+    clip: rect(38px, 9999px, 49px, 0);
+  }
+}
+
+.ui.steps .step {
+  background: var(--black6);
+  color: var(--white);
+}
+
+.ui.steps .step.active, .ui.steps .step.completed, .ui.steps .step.active:after {
+  background: var(--darkgrey);
+}
+
+.ui.steps .step .description {
+  color: var(--white);
+}
+
+.ui.steps .step:after {
+  background-color: transparent;
+}
+
+.ui.ordered.steps .step.active:before, .ui.steps .active.step .icon {
+  color: var(--white);
+}
+
+.ui.divider:not(.vertical):not(.horizontal) {
+  border-top: 0.5px solid var(--black1);
+  border-bottom: 0.5px solid var(--black8);
+}
+
+.ui.card>.button, .ui.card>.buttons, .ui.cards>.card>.button, .ui.cards>.card>.buttons {
+  width: calc(100%);
+}
+
+.ui.custom.cards {
+  -webkit-box-shadow: 0 1px 3px 0 var(--green), 0 0 0 1px var(--green) !important;
+  box-shadow: 0 1px 3px 0 var(--green), 0 0 0 1px var(--green) !important;
+  background: var(--darkgrey5) !important;
+  color: var(--white) !important;
+  border-radius: 0.5rem;
+  margin: 0% 1% 1% 1% !important;
+}
+
+.ui.custom.cards>.card {
+  width: inherit;
+}
+
+.ui.fluid.card {
+  background-color: var(--darkgrey)!important;
+}
+
+.ui.fluid.card>.content {
+  padding: 1em 1em;
+}
+
+.ui.steps .completed.step .title, .ui.ordered.steps .step.completed:before, .ui.steps .step.completed>.icon:before {
+  color: var(--green)!important;
 }

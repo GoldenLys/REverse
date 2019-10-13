@@ -13,8 +13,8 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.77" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.77" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.8" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.8" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
     <style>
@@ -79,6 +79,7 @@
 </head>
 
 <body id="body" class="noselect" oncontextmenu="return true;">
+    <div class="bgmask"></div>
     <div id="loading">
         <div class="ui equal width center aligned padded grid">
             <div class="row">
@@ -88,38 +89,148 @@
         </div>
     </div>
     <div id="main" style="overflow: hidden; display: none;">
-        <div id="begin" class="ui message">
-            <h1 id="default-title" class="title">AlphaRPG</h1>
-            <div class="ui divider"></div><br>
-            <p>
-                Welcome to AlphaRPG ! <br>
-                Before entering to the world of AlphaRPG,<br>
-                We need to know your name (3-16 characters with only numbers and letters).
-                <br>Type "Neo" to generate a random name.
-            </p>
-            <div class="ui vertical segments">
-                <div class="ui segment">
-                    <form class="ui form fluid segment">
-                        <div class="field">
-                            <label>Username</label>
-                            <input id="PlayerName" placeholder="Neo" type="text" maxlength="16">
+        <div id="begin" class="ui trs message">
+            <div class="titlecontainer">
+                <div class="glitch" data-text="AlphaRPG">AlphaRPG</div>
+            </div>
+            <br>
+            <span id="namehelp"></span><br>
+            <div id="tutorial-1">
+                <p class="title glow">Introduction</p>
+                <p>
+                   Welcome to AlphaRPG, a game made by Purple Wizard.<br>
+                   The main goal of this game is to fight enemies and progress through the story to gain <span class="glow">EQUIPMENTS</span> and <span class="glow">EXPERIENCE</span>.<br>
+                   You will discover a new world named Alpha with various kingdoms & monsters.<br>
+                   But be careful there are also powerful monsters named <span class=" ui Ennemy6 basic label"><span class="Ennemy6">BOSS</span></span> so you need to fight wisely to deal with them.<br>
+                   Also, if you have any question, don't hesitate to join our <a class="discordlabel" id="discord-btn2">discord server</a>.
+                   <br>
+                   Okay, now we need to know who your character is..
+                </p>
+            </div>
+            <div id="tutorial-2" style="display: none;">
+                <p class="title glow">Name Selection</p>
+                <p>
+                    Before entering to the world of AlphaRPG, We need to know your name (3-16 characters with only
+                    numbers and letters).
+                    <br>Type "Neo" to generate a random name.
+                </p>
+                <form class="ui form fluid segment">
+                    <div class="ui labeled input">
+                        <div class="ui label customborder">
+                            Username
                         </div>
-                    </form>
+                        <input id="PlayerName" placeholder="Neo" type="text" maxlength="16" style="width: auto;">
+                    </div>
+                </form>
+            </div>
+            <div id="tutorial-3" style="display: none;">
+                <p class="title glow">Avatar Selection</p>
+                <div class="ui centered card">
+                    <div id="avatar3" class="ui centered image">
+                    </div>
+                    <div id="ChangeAvatarBegin" class="ui rainbow button">Change avatar
+                    </div>
                 </div>
-                <div class="ui segment">
-                    <div class="ui centered card">
-                        <div id="avatar3" class="ui centered image">
+            </div>
+            <div id="tutorial-4" style="display: none;">
+                <p class="title glow">Class Selection</p>
+                <div class="ui three column grid">
+                    <div class="column">
+                        <div id="paladin" class="ui fluid card">
+                            <div class="content">
+                                <div class="header">Paladin</div>
+                                <div class="description">
+                                    Paladins are the frontlines in a fight, they deal the most damages<br>(+5% Damages
+                                    multiplier)
+                                </div>
+                            </div>
+                            <div id="ChoosePaladin" class="ui bottom attached rainbow7 button">
+                                <i class="add icon"></i>
+                                Choose this class
+                            </div>
                         </div>
-                        <div id="ChangeAvatarBegin" class="ui rainbow button">Change avatar
+                    </div>
+                    <div class="column">
+                        <div id="knight" class="ui fluid card">
+                            <div class="content">
+                                <div class="header">Knight</div>
+                                <div class="description">
+                                    Knights are fighting for justice, they protect the weaks with their shield.<br>(+5%
+                                    Armor multiplier)
+                                </div>
+                            </div>
+                            <div id="ChooseKnight" class="ui bottom attached rainbow7 button">
+                                <i class="add icon"></i>
+                                Choose this class
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="ninja" class="ui fluid card">
+                            <div class="content">
+                                <div class="header">Ninja</div>
+                                <div class="description">
+                                    Ninjas are the elite fighters in terms of skills, they learn & act fast<br>(+5%
+                                    Experience multiplier)
+                                </div>
+                            </div>
+                            <div id="ChooseNinja" class="ui bottom attached rainbow7 button">
+                                <i class="add icon"></i>
+                                Choose this class
+                            </div>
                         </div>
                     </div>
                 </div>
-<br>
-                <div class="fluid ui buttons">
-                    <button id="UpdateName" class="ui rainbow button">Start</button>
-                </div><span id="namehelp"></span>
             </div>
-
+            <div id="tutorial-5" style="display: none;">
+                <p class="title glow">Confirmation</p>
+                <div id="WelcomeName"></div>
+                <p id="WelcomeClass"></p>
+            </div>
+            <br>
+            <div class="ui divider"></div><br>
+            <button id="WelcomePrevious" class="big ui rainbow left labeled icon button" style="display: none;">Previous
+                <i class='left arrow icon'></i></button>
+            <button id="WelcomeNext" class="big ui rainbow right labeled icon button">Next <i
+                    class='right arrow icon'></i></button>
+            <br><br>
+            <div class="ui fluid steps">
+                <div id="step1" class="active step">
+                    <i class="help icon"></i>
+                    <div class="content">
+                        <div class="title">Welcome</div>
+                        <div class="description">Welcome to AlphaRPG</div>
+                    </div>
+                </div>
+                <div id="step2" class="step">
+                    <i class="pencil alternate icon"></i>
+                    <div class="content">
+                        <div class="title">Username</div>
+                        <div class="description">Choosing a username</div>
+                    </div>
+                </div>
+                <div id="step3" class="step">
+                    <i class="image icon"></i>
+                    <div class="content">
+                        <div class="title">Avatar</div>
+                        <div class="description">Choosing an avatar</div>
+                    </div>
+                </div>
+                <div id="step4" class="step">
+                    <i class="bolt icon"></i>
+                    <div class="content">
+                        <div class="title">Class</div>
+                        <div class="description">Choosing a class</div>
+                    </div>
+                </div>
+                <div id="step5" class="step">
+                    <i class="address card icon"></i>
+                    <div class="content">
+                        <div class="title">Confirmation</div>
+                        <div class="description">Confirm your choice</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="CATEGORIE-1" style="display: none;">
             <div class="ui message customA">
@@ -155,10 +266,10 @@
                                     <i class="large red reddit icon"></i>u/Aizen45
                                     <i class="large blue steam icon"></i>LYSEN-FR
                                     <span class="desc"><br>Huge thanks to <span class="vert">Tiwaz</span>
-                                    for his help.</span>
+                                        for his help.</span>
                                 </p>
                                 <div class="fluid ui labeled icon discord button alphaSDW" id="discord-btn"><i
-                                        class="discord icon"></i>AlphaRPG
+                                        class="discord icon blanc"></i>AlphaRPG
                                     Discord</div>
                             </div>
                         </div>
@@ -412,7 +523,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="right aligned desc">Power Multiplier</td>
+                                    <td class="right aligned desc">Damage Multiplier</td>
                                     <td id="POWERMULTVAL" class="center aligned desc">0</td>
                                     <td id="POWERMULTPRICE" class="center aligned">3<i class="bleu dna icon"></i>
                                     </td>
@@ -423,7 +534,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="right aligned desc">Life Multiplier</td>
+                                    <td class="right aligned desc">Armor Multiplier</td>
                                     <td id="LIFEMULTVAL" class="center aligned desc">0</td>
                                     <td id="LIFEMULTPRICE" class="center aligned">3<i class="bleu dna icon"></i>
                                     </td>
@@ -472,12 +583,17 @@
                                 </div>
                                 <div class="ui fitted inverted divider"></div>
                                 <div class="fluid ui horizontal segments">
-                                    <div class="ui segment left aligned">Current Power</div>
+                                    <div class="ui segment left aligned">Class</div>
+                                    <div class="ui segment right aligned" id="Classstat"></div>
+                                </div>
+                                <div class="ui fitted inverted divider"></div>
+                                <div class="fluid ui horizontal segments">
+                                    <div class="ui segment left aligned">Current Damages</div>
                                     <div class="ui segment right aligned" id="powerstat"></div>
                                 </div>
                                 <div class="ui fitted inverted divider"></div>
                                 <div class="fluid ui horizontal segments">
-                                    <div class="ui segment left aligned">Current Base Life</div>
+                                    <div class="ui segment left aligned">Current Base Armor</div>
                                     <div class="ui segment right aligned" id="lifestat"></div>
                                 </div>
                                 <div class="ui fitted inverted divider"></div>
@@ -998,9 +1114,11 @@
         </div>
     </div>
 </body>
-<script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-firestore.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="DATA/semantic.min.js"></script>
 <script type="text/javascript" src="DATA/checkbox.min.js"></script>
@@ -1008,7 +1126,7 @@
 <script type="text/javascript" src="DATA/numeral.min.js"></script>
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
-<script type="text/javascript" src="utils.js?v=1.77"></script>
-<script type="text/javascript" src="core.js?v=1.77"></script>
+<script type="text/javascript" src="utils.js?v=1.8"></script>
+<script type="text/javascript" src="core.js?v=1.8"></script>
 
 </html>

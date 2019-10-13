@@ -180,10 +180,27 @@ var config = {
   authDomain: "matrix-731a7.firebaseapp.com",
   databaseURL: "https://matrix-731a7.firebaseio.com",
   projectId: "matrix-731a7",
-  storageBucket: "",
-  messagingSenderId: "752237806136"
+  storageBucket: "matrix-731a7.appspot.com",
+  messagingSenderId: "752237806136",
+  appId: "1:752237806136:web:08da7c06397b384b201ccd",
+  measurementId: "G-FK9048JSDP"
 };
+
 firebase.initializeApp(config);
+firebase.analytics();
+var provider = new firebase.auth.GoogleAuthProvider();
+
+(function () {
+  // Using a popup.
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('profile');
+  provider.addScope('email');
+//  firebase.auth().signInWithPopup(provider).then(function (result) {
+//    var token = result.credential.accessToken;
+//    var user = result.user;
+//    Game.email = user.email;
+//  });
+})();
 
 var PAGE = 1;
 var MAXVIEW = 10;
@@ -204,6 +221,8 @@ function ResetLeaderBoard() {
 function writeUserData(userId) {
   if (location.href.match(/(goldenlys.github.io).*/) && userId == Game.username && Game.Level > 1 && userId != "Default" && userId != "null") {
     firebase.database().ref('users/' + userId).set({
+      Name: Game.username,
+      Email: Game.email,
       Order: (-1 * Game.Ranking) - (100000 * Game.Simulation),
       Order2: -1 * Game.Ranking,
       Level: Game.Level,
@@ -224,14 +243,10 @@ function writeUserData(userId) {
 function NewUserData(old) {
   if (old != "Default" && old == Game.username) {
     firebase.database().ref('users/' + old).set(null);
-    Game.username = "Default";
-    Backup = "Default";
-    save();
-    $("#CATEGORIE-1").hide();
-    $("#CATEGORIE-2").hide();
-    $("#CATEGORIE-3").hide();
-    $("#CATEGORIE-4").hide();
-    $("#begin").show();
+    var newname = prompt("Please write a new name");
+
+    Game.username = newname;
+    Backup = newname;
   }
 }
 
@@ -353,8 +368,11 @@ function ClickEvents() {
   $("#run-btn").on("click", function () {
     RunAway();
   });
-  $("#UpdateName").on("click", function () {
-    UpdateName();
+  $("#WelcomeNext").on("click", function () {
+    WelcomeNext();
+  });
+  $("#WelcomePrevious").on("click", function () {
+    ChangeStep(0);
   });
   $("#closeMSG").on("click", function () {
     hideModals();
@@ -379,6 +397,24 @@ function ClickEvents() {
   });
   $("#ChangeAvatarBegin").on("click", function () {
     ChangeAvatar();
+  });
+  $("#ChoosePaladin").on("click", function () {
+    WelcomeData[2] = "Paladin";
+    $("#paladin").attr("class", "ui fluid custom card");
+    $("#knight").attr("class", "ui fluid card");
+    $("#ninja").attr("class", "ui fluid card");
+  });
+  $("#ChooseKnight").on("click", function () {
+    WelcomeData[2] = "Knight";
+    $("#paladin").attr("class", "ui fluid card");
+    $("#knight").attr("class", "ui fluid custom card");
+    $("#ninja").attr("class", "ui fluid card");
+  });
+  $("#ChooseNinja").on("click", function () {
+    WelcomeData[2] = "Ninja";
+    $("#paladin").attr("class", "ui fluid card");
+    $("#knight").attr("class", "ui fluid card");
+    $("#ninja").attr("class", "ui fluid custom card");
   });
   $("#xpm-btn").on("click", function () {
     BuyXPMult();
@@ -447,6 +483,9 @@ function ClickEvents() {
     ShowSettings();
   });
   $("#discord-btn").on("click", function () {
+    window.open('https://discordapp.com/invite/SBuYeHh', '_blank');
+  });
+  $("#discord-btn2").on("click", function () {
     window.open('https://discordapp.com/invite/SBuYeHh', '_blank');
   });
   $("#AlertToggle").on("click", function () {
@@ -702,7 +741,7 @@ function Shortcuts() {
     }
     if (Game.isInFight == 3) { //BEGIN & SELECT USERNAME
       if (key === 13) {
-        UpdateName();
+        WelcomeNext();
       }
     }
     if (Game.isInFight == 6) { //NEW CORE CONFIRMATION
@@ -800,11 +839,11 @@ function GetEXPPercent() {
 
 function ResetTheme(code) {
   if (code != 2) {
-    Game.Theme = ["#00ffa0", "#23232373", "#00c8b4", "#ffffff", "#373c3fa6", "#232323", "#101115"];
+    Game.Theme = ["#00ffa0", "#0078ff", "#892fff", "#ffffff", "#373c3fa6", "#232323", "#101115"];
   }
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
-  document.documentElement.style.setProperty('--black2', Game.Theme[1]);
-  document.documentElement.style.setProperty('--green2', Game.Theme[2]);
+  document.documentElement.style.setProperty('--bg2', Game.Theme[1]);
+  document.documentElement.style.setProperty('--bg3', Game.Theme[2]);
   document.documentElement.style.setProperty('--white', Game.Theme[3]);
   document.documentElement.style.setProperty('--darkgrey5', Game.Theme[4]);
   document.documentElement.style.setProperty('--darkgrey', Game.Theme[5]);
@@ -818,14 +857,13 @@ function ThemeDefine(id) {
     document.documentElement.style.setProperty('--green', Game.Theme[0]);
   }
   if (id == 2) {
-    Game.Theme[1] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val()) + "73";
+    Game.Theme[1] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
     Game.Theme[6] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--black2', Game.Theme[1]);
-    document.documentElement.style.setProperty('--black', Game.Theme[6]);
+    document.documentElement.style.setProperty('--bg2', Game.Theme[1]);
   }
   if (id == 3) {
     Game.Theme[2] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--green2', Game.Theme[2]);
+    document.documentElement.style.setProperty('--bg3', Game.Theme[2]);
   }
   if (id == 4) {
     Game.Theme[3] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
@@ -858,7 +896,7 @@ function CheckCode(debug) {
   });
   var code = $("#promocode").val();
   if (code != null) {
-    if (code === codes[1] || code === codes[2] || code === codes[3] || code === codes[4] || code === codes[5] || code === codes[6] || code === codes[7] || code === codes[8] || code === codes[9]) {
+    if (code === codes[1] || code === codes[2] || code === codes[3] || code === codes[4] || code === codes[5] || code === codes[6] || code === codes[7] || code === codes[8] || code === codes[9] || code === codes[10]) {
       if (code === codes[1]) {
         $("#codereturn").html("Code Accepted, name change.");
         NewUserData(Game.username);
@@ -907,6 +945,13 @@ function CheckCode(debug) {
         $("#codereturn").html("Code Accepted, your god killed stats has been set to '1'.");
         Game.Defeated[7] = 1;
       }
+      if (code === codes[10]) {
+        $("#codereturn").html("Code Accepted, Reset save.");
+        Game.username = "Default";
+        Backup = "Default";
+        save();
+        confirmReset();
+      }
     } else {
       if (debug != 1) {
         CheckCode(1);
@@ -916,7 +961,7 @@ function CheckCode(debug) {
   } else {
     invalidCode(2);
   }
-  codes = [];
+  //codes = [];
   UpdateGame();
 }
 

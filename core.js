@@ -3,9 +3,12 @@
 // GUILD PROMOTIONS : 2 ELITES & 1 BOSS TO PROMOTE TO F-A OR S Rank which will increase your rewards. (money/exp)
 // SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
 
+//FINISH ADDING EMAILS, LOGIN NOT NECESSARY
+
 var url = window.location.href;
-var version = "1.7"; //!\ ONLY 1.X /!\\
+var version = "1.8"; //!\ ONLY 1.X /!\\
 var loadState = 0;
+var WelcomeData = [1, "Neo", "None"];
 var codes = {};
 var isTabActive = "None";
 var REWARDSW8 = 0;
@@ -52,7 +55,7 @@ var Game = {
   Ranking: 0,
   MarketTimer: 0,
   Emp: 0,
-  Shards: 10,
+  Shards: 0,
   Defeated: [null, 0, 0, 0, 0, 0, 0, 0],
   PowerMult: 1,
   LifeMult: 1,
@@ -83,6 +86,8 @@ var Game = {
   FP: 0,
   ATR: [0, 0, 0, 0, 0, 0],
   TotalMissions: 0,
+  email: "none",
+  class: "none",
 };
 var Missions = {
   0: ["White Light", 'You woke up in an unknown world where a white light dazzles you..<br> this place seems weird, you want to leave it as quick as possible.', 1, 1, 10, 200, 0, 1, 0, -1],
@@ -135,8 +140,11 @@ var Ennemies = {
   17: ["Vampire Lord", "Noble Vampire"],
 };
 
-var BossNames = ['Pure Soul', 'Fairy Queen', 'Alpha Wolf', 'Huge Rat', 'Poison Golem', 'Pink Slime', 'Albino Spider', 'Black Mage', 'Ghoul', 'Poltergeist', 'Knight Commander', 'Demon Lord', 'Powerful Skeleton',
-  "Jack-o'-lantern", "Vampire Lord", "Big Fish-Man", "Noble Vampire", "Vampire King"];
+var BossNames = [
+  'Pure Soul', 'Fairy Queen', 'Alpha Wolf', 'Huge Rat',
+  'Poison Golem', 'Pink Slime', 'Albino Spider', 'Black Mage',
+  'Ghoul', 'Poltergeist', 'Knight Commander', 'Demon Lord', 'Powerful Skeleton',
+  "Jack-o'-lantern", 'Vampire Lord', 'Big Fish-Man', 'Noble Vampire', 'Vampire King'];
 
 var POS = {
   0: ["The White Light", 1, 4, 0, 0], //NAME, MINLEVEL, MAXLEVEL, MAX DROP QUALITY, MISSION COMPLETE
@@ -173,6 +181,7 @@ var POS = {
     $("#sidebar-btn").on("click", function () { $('.ui.sidebar').sidebar('toggle'); $("#guild-btn").hide(); $(".brand-logo").hide(); });
     $("#CATEGORIE-1").show();
     $("#begin").hide();
+    $(".footer").show();
     UpdateGame();
     SendStats();
   }
@@ -231,6 +240,7 @@ var POS = {
   } else {
     $("#OnlyMyVersion").checkbox("uncheck");
   }
+
   $("#redNum").val("0");
   $("#greenNum").val("0");
   $("#blueNum").val("0");
@@ -391,6 +401,11 @@ function UpdateGame() {
     if (Game.RLS[R][2] == 3) {
       Game.MaxScore += (Game.RLS[R][3] / 10);
     }
+  }
+  if (Game.isInFight == 1 && Game.class == "none") {
+    Game.username = "Default";
+    Backup = "Default";
+    save();
   }
   Game.WTMult[2] = (Game.Simulation * 0.03) - 0.03; //EXPMULT
   Game.WTMult[3] = (Game.Simulation * 0.05) + 0.95; //DIFFICULTYMULT
@@ -598,6 +613,7 @@ function UpdateUI() {
     $("#menu").hide();
     $("#CATEGORIE-1").hide();
     $("#begin").show();
+    $(".footer").hide();
     Game.isInFight = 3;
   }
   $("#PlayerXP").progress({ percent: GetEXPPercent() });
@@ -673,6 +689,7 @@ function UpdateUI() {
   $("#Killstat").html(Game.Wins);
   $("#Deathstat").html(Game.Loses);
   $("#Levelstat").html("<span class='vert'>" + fix(Game.Level, 4) + "</span>/" + Game.MaxLevel);
+  $("#Classstat").html(Game.class);
   $("#Scorestat").html("<span class='vert'><i class='fad fa-dice-d20'></i>" + fix(Game.Ranking, 4) + "</span>/" + (Game.MaxScore * 10));
   $("#Difficultystat").html(fix(Game.WTMult[3], 9));
   $("#Rankstat").html(Game.Leader + "/" + LastId);
@@ -891,6 +908,7 @@ function RemoveItem(id) {
 }
 
 function SendStats() {
+  save();
   writeUserData(Game.username);
   Game.lastCloudSave = 0;
   UpdateUI();
@@ -914,27 +932,35 @@ function GetLevelRequired() {
 
 function GenCores() {
   var Class = 0;
+  var Names = ["", "Helmet", "Armor", "Leggings", "Boots"];
+  var name = "";
   for (var UPC = 1; UPC < 5; UPC++) {
     if (UPC == 1) {
       core = "core1";
       coreId = Game.core1;
       RLSid = Game.RLS[1];
+      name = Game.core1[0];
     }
     if (UPC == 2) {
       core = "core2";
       coreId = Game.core2;
       RLSid = Game.RLS[2];
+      name = Game.core2[0];
     }
     if (UPC == 3) {
       core = "core3";
       coreId = Game.core3;
       RLSid = Game.RLS[3];
+      name = Game.core3[0];
     }
     if (UPC == 4) {
       core = "core4";
       coreId = Game.core4;
       RLSid = Game.RLS[4];
+      name = Game.core4[0];
     }
+    var newname = name.replace(/Armor/gi, Names[UPC]);
+    coreId[0] = newname;
 
     if (coreId[1] == "Normal") {
       Class = "0";
@@ -1022,12 +1048,9 @@ function GenCores() {
     $("#" + core + "-power").html(fix(coreId[3], 5));
     $("#" + core + "-rarity").html("<i class='jaune fas fa-stars'></i>" + RLSTXT);
     $("#" + core + "-keys").html("<i class='orange fad fa-gem'></i>" + UPCTEXT + " Gems incrusted");
-    $("#" + core + "-image").html("<img class='ui middle aligned tiny circular image' style='height: 200px;' src='DATA/Armors/" + core + "-" + Class + ".png'></img>");
-    if (Game.Level < Game.MaxLevel || Game.FNMission < Game.TotalMissions) {
-      $("#" + core + "-title").html("<a class='ui small label'><span class='" + coreId[1] + "'>" + coreId[1] + "</span></a> " + coreId[0]);
-    } else {
-      $("#" + core + "-title").html("<a class='ui small label'><span class='" + coreId[1] + "'>" + coreId[1] + "</span></a> " + coreId[0]);
-    }
+    $("#" + core + "-image").html("<img class='ui middle aligned tiny circular image' style='height: 100px; width: auto;' src='DATA/Armors/" + core + "-" + Class + ".png'></img>");
+
+    $("#" + core + "-title").html("<a class='ui small label'><span class='" + coreId[1] + "'>" + coreId[1] + "</span></a> " + coreId[0]);
     if (Game.cores[UPC] == false) {
       $("#" + core).hide();
       $("#" + core).attr("class", "");
@@ -1048,31 +1071,89 @@ function GenCores() {
   }
 }
 
-function UpdateName() {
-  NICKNAME = $("#PlayerName").val();
-  if (NICKNAME != null) {
-    if (NICKNAME == null || NICKNAME == "" || NICKNAME == " " || NICKNAME == "_" || NICKNAME.length < 3 || NICKNAME == "null") {
-      ErrorName();
-    } else {
-      NICKNAME = NICKNAME.replace(/[^a-zA-Z0-9]/g, '_');
-      if (NICKNAME == "Neo" || NICKNAME == "NEO" || NICKNAME == "neo" || NICKNAME == "GoldenLys") {
-        NICKNAME = "P-" + random(10000, 999999);
-      }
-      Backup = Game.username = NICKNAME;
-      $("#menu").show();
-      $("#CATEGORIE-1").show();
-      $("#begin").hide();
-      save();
-      Game.isInFight = 0;
-      SendStats();
+function ChangeStep(type) {
+  //0 = BACK & 1 = NEXT
+  if (type == 0 && WelcomeData[0] > 1) {
+    WelcomeData[0]--;
+  }
+
+  if (type == 1) {
+    WelcomeData[0]++;
+  }
+
+  for (var L = 1; L < 6; L++) {
+    $("#step" + L).attr("class", "step");
+    $("#tutorial-" + L).hide();
+  }
+
+  for (var L2 = 1; L2 < WelcomeData[0] + 1; L2++) {
+    $("#step" + L2).attr("class", "completed step");
+  }
+  $("#step" + WelcomeData[0]).attr("class", "active step");
+  $("#tutorial-" + WelcomeData[0]).show();
+  if (WelcomeData[0] > 1) { $("#WelcomePrevious").show(); } else { $("#WelcomePrevious").hide(); }
+}
+
+function WelcomeNext() {
+
+  if (WelcomeData[0] == 5) {
+    $("#step4").attr("class", "completed step");
+    $("#tutorial-4").hide();
+    $("#tutorial-5").show();
+    $("#menu").show();
+    $("#CATEGORIE-1").show();
+    $("#begin").hide();
+    $(".footer").show();
+    Game.isInFight = 0;
+    SendStats();
+  }
+
+  if (WelcomeData[0] == 4) {
+
+    if (WelcomeData[2] == "Paladin") { Game.Upgrades = [0, 5, 0]; }
+    if (WelcomeData[2] == "Knight") { Game.Upgrades = [0, 0, 5]; }
+    if (WelcomeData[2] == "Ninja") { Game.Upgrades = [5, 0, 0]; }
+    if (WelcomeData[2] != "Paladin" && WelcomeData[2] != "Knight" && WelcomeData[2] != "Ninja") { $("#namehelp").html("You need to select a class !"); } else {
+      ChangeStep(1);
+      Game.class = WelcomeData[2];
+      $("#namehelp").html("");
+      $("#WelcomeName").html(WelcomeData[1]);
+      $("#WelcomeName").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span>" + WelcomeData[1] + "<div class='ui horizontal label'>Level 1</div></span>");
+      $("#WelcomeClass").html("Class : " + WelcomeData[2]);
+      $("#WelcomeNext").html("Start <i class='right arrow icon'></i>");
     }
-  } else {
-    ErrorName();
+  }
+
+  if (WelcomeData[0] == 3) {
+    ChangeStep(1);
+  }
+
+  if (WelcomeData[0] == 2) {
+    NICKNAME = $("#PlayerName").val();
+    if (NICKNAME != null) {
+      if (NICKNAME == null || NICKNAME == "" || NICKNAME == " " || NICKNAME == "_" || NICKNAME.length < 3 || NICKNAME == "null") {
+        ErrorName();
+      } else {
+        NICKNAME = NICKNAME.replace(/[^a-zA-Z0-9]/g, '_');
+        if (NICKNAME == "Neo" || NICKNAME == "NEO" || NICKNAME == "neo" || NICKNAME == "GoldenLys") {
+          NICKNAME = "Adventurer" + random(10000, 999999);
+        }
+        Backup = WelcomeData[1] = NICKNAME;
+        ChangeStep(1);
+        $("#namehelp").html("");
+      }
+    } else {
+      ErrorName();
+    }
+  }
+
+  if (WelcomeData[0] == 1) {
+    ChangeStep(1);
   }
 }
 
 function ErrorName() {
-  $("#namehelp").html("You need to write a username ! (3-16 characters with only numbers and letters)<br>Type 'Neo' to generate one.");
+  $("#namehelp").html("You need to write a username !");
 }
 
 //FIGHT ACTIONS
@@ -1124,6 +1205,7 @@ function Protect() {
 function Attack() {
   EDamage = "";
   PDamage = "";
+  $("#EnnemySprite").html("<img class='ui circular middle aligned medium image glitched' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png' >");
   var luck = random(1, 100);
   var rPlayerPower = random((Game.CorePower * 85), Game.CorePower * 100) / 100;
   if (luck <= random(6, 10)) {
@@ -1158,6 +1240,7 @@ function Attack() {
 function LaunchEMP() {
   if (Game.Emp > 0) {
     Game.Emp--;
+    $("#EnnemySprite").html("<img class='ui circular middle aligned medium image glitched' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png' >");
     var luck = random(0, 100);
     MINPOWER = 1.25;
     MAXPOWER = 2;
@@ -1180,7 +1263,6 @@ function LaunchEMP() {
     }
     $("#EnnemyDamage").html("<a class='ui small label'>-" + fix(Math.round(rPlayerPower), 5) + "<i class='rouge fas fa-heart'></i></a>");
     $("#PlayerDamage").html("<a class='ui small label'>-" + fix(Math.round(rEnnemyPower), 3) + "<i class='rouge fas fa-heart'></i></a>");
-
   }
   UpdateGame();
 }
@@ -1419,6 +1501,7 @@ function GenEnnemy() {
       Game.Sprite = Math.floor(Math.random() * Ennemies[Game.Location].length);
       Game.Ennemy[0] = Ennemies[Game.Location][Game.Sprite];
     }
+    $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png'>");
     $("#EnnemyDamage").html("");
     $("#PlayerDamage").html("");
     UpdateGame();
@@ -1759,7 +1842,7 @@ function UpdateCombat() {
   $("#EnnemyText").html("<span class='" + EnnemyText + "'>" + fix(Game.Ennemy[5], 5) + "</span> <i class='rouge fas fa-heart'></i>");
   $("#PlayerLife").html("<span class='" + lifetext + "'>" + fix(Game.CoreLife, 5) + "</span>/" + fix(Game.CoreBaseLife, 5) + " <i class='rouge fas fa-heart'></i>");
   $("#PlayerPower").html("<i class='bleu fas fa-sword'></i>" + fix(Game.CorePower, 5));
-  $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png' style='background-color: var(--darkgrey);'>");
+  if ($("#EnnemySprite").html() == "") $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png'>");
   $("#EnnemyHP").progress({
     className: {
       active: "",
