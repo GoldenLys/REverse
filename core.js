@@ -1,9 +1,10 @@
-// TUTORIAL/WELCOMING 
-// MONEY LOOTED + SHOP SYSTEM
-// GUILD PROMOTIONS : 2 ELITES & 1 BOSS TO PROMOTE TO F-A OR S Rank which will increase your rewards. (money/exp)
-// SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
 
-//FINISH ADDING EMAILS, LOGIN NOT NECESSARY
+//1-- SEPARATE DAMAGES FROM CORES AND CREATE PRE MADE WEAPONS EG : Sword Of Aztral : 500 Damage which some can be looted in certains areas
+//2-- ADDING ATTRIBUTES TO WEAPONS & MONSTERS (Water, Fire, Earth, Wind, Dark, Light)
+//3-- ADD NEW LOOTABLE OBJECTS
+//4-- CREATE A CRAFTING FUNCTION, WITH THE ABILITY TO CHOOSE ELEMENT & MATERIAL(REF #3)
+//5-- NEW STORY WITH CHARACTERS, REMOVE THE CONCEPT OF DIMENSION TO FOCUS ON ONLY 1 CONTINENT WITH DIFFERENT KINGDOMS
+//6-- GUILD PROMOTIONS : 2 ELITES & 1 BOSS TO PROMOTE TO F-A OR S Rank which will increase your rewards. (money/exp)
 
 var url = window.location.href;
 var version = "1.8"; //!\ ONLY 1.X /!\\
@@ -182,6 +183,7 @@ var POS = {
     $("#CATEGORIE-1").show();
     $("#begin").hide();
     $(".footer").show();
+    GetWBcontent("retour");
     UpdateGame();
     SendStats();
   }
@@ -249,6 +251,20 @@ var POS = {
   UpdateEngine();
   UpdateUI();
 })();
+
+function GetWBcontent(reason) {
+  if (reason == "retour") {
+    $("#wb-title").html("AlphaRPG");
+    $("#wb-texttitle").html("Welcome back to <span class='glow'>AlphaRPG</span>, " + Game.username);
+    $("#wb-text").html("Would you like to login ?");
+    $("#modal-3").modal("show");
+  } else {
+    $("#wb-title").html("NO REASON GIVEN");
+    $("#wb-texttitle").html("");
+    $("#wb-text").html("Error 7");
+    $("#modal-3").modal("show");
+  }
+}
 
 function UpdateLoadingText(statu) {
   if (statu !== 0 && statu !== 1 && statu !== 2 && statu !== 3) statu = 0;
@@ -763,7 +779,7 @@ function UpdateUI() {
 
   $("#islots").html("<i class='fas fa-sack'></i>" + (Game.inventory.length) + "/" + Game.MaxInv);
   $("#cash").html(fix(Game.Cash, 3));
-  $("#mcount").html(CompletedMissions + "/" + Game.TotalMissions + " Missions completed.");
+  $("#mcount").html("<i class='dropdown icon'></i> " + "Missions completed (" + CompletedMissions + "/" + Game.TotalMissions + ")");
   if (Game.Level >= POS[Game.Location][2] && Game.MaxLevel > Game.Level && Game.FNMission <= Game.TotalMissions && Game.MissionStarted[0] == false) {
     $("#MaxPOSLVL").html("You\'ve reached the maximum level in this area, check the available missions.");
   } else {

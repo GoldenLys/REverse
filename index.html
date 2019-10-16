@@ -13,8 +13,8 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.8" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.8" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.81" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.81" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
     <style>
@@ -407,9 +407,8 @@
                         </div>
                     </div>
                     <div id="missions" style="display: none;">
-                        <p id="mcount"></p>
                         <div class="ui accordion black">
-                            <div class="title active"><i class="dropdown icon"></i>Missions</div>
+                            <div  class="title active"><i class="dropdown icon"></i>Missions</div>
                             <div class="content active">
                                 <div id="MissionsList"></div>
                             </div>
@@ -422,7 +421,7 @@
                         </div>
 
                         <div class="ui accordion black">
-                            <div class="title"><i class="dropdown icon"></i>Missions Completed</div>
+                            <div id="mcount" class="title"></div>
                             <div class="content">
                                 <div id="MissionsCPL"></div>
                             </div>
@@ -824,7 +823,8 @@
                                                 <div id="themeBTN1" onclick="ThemeDefine(1);" class="ui rainbow button">
                                                     <i class="large vert square icon WS"></i>Set theme</div>
                                                 <div id="themeBTN2" onclick="ThemeDefine(2);" class="ui rainbow button">
-                                                    <i class="large bgcolor2 square icon WS"></i>Set 2nd layer background
+                                                    <i class="large bgcolor2 square icon WS"></i>Set 2nd layer
+                                                    background
                                                 </div>
                                                 <div id="themeBTN3" onclick="ThemeDefine(3);" class="ui rainbow button">
                                                     <i class="large bgcolor3 square icon WS"></i>Set 2rd layer
@@ -994,38 +994,25 @@
                 </div>
             </div>
         </div>
-
-        <!--NEWCORE-->
-        <div class="ui basic modal" id="modal-4">
-            <div class="ui icon header">
-                <i class="big microchip icon"></i>
-                <font id="confirm3-title" class="title">New armor confirmation</font>
-            </div>
+        <!--Welcome Back-->
+        <div class="ui basic modal" id="modal-3">
+            <h2 class="ui center aligned header">
+                <img class="ui circular image" src="DATA/avatars/avatar34.jpg">
+                <font id="wb-title" class="title"></font>
+            </h2>
             <div class="centrer content">
                 <div class="ui icon trs message">
                     <div class="content">
-                        <div class="ui equal width centered grid">
-                            <div class="equal width row">
-                                <div class="column">
-                                    <p id="OldCore-text" style="text-align: right;"></p>
-                                </div>
-                                <div class="centered column">
-                                    <center><br><br>Old <i class="arrow right icon"></i> New</center>
-                                </div>
-                                <div class="column">
-                                    <p id="NewCore-text" style="text-align: left;"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="actions">
-                    <div id="confirm-btn" class="fluid ui rainbow buttons">
+                        <h3 id="wb-texttitle" class="title"></h3>
+                        <p id="wb-text"></p>
+                        <div id="LOGIN-BTN" class="ui cu button">
+                            <span class="blanc"><i class="check icon"></i> Yes </span></div>
+                        <div id="WB-BTN" class="ui cu2 button">
+                            <span class="blanc"><i class="remove icon"></i> No </span></div>
                     </div>
                 </div>
             </div>
         </div>
-
         <!--NEW Relic-->
         <div class="ui basic modal" id="modal-3">
             <div class="ui icon header">
@@ -1056,7 +1043,36 @@
                 </div>
             </div>
         </div>
-
+        <!--NEWCORE-->
+        <div class="ui basic modal" id="modal-4">
+            <div class="ui icon header">
+                <i class="big microchip icon"></i>
+                <font id="confirm3-title" class="title">New armor confirmation</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui icon trs message">
+                    <div class="content">
+                        <div class="ui equal width centered grid">
+                            <div class="equal width row">
+                                <div class="column">
+                                    <p id="OldCore-text" style="text-align: right;"></p>
+                                </div>
+                                <div class="centered column">
+                                    <center><br><br>Old <i class="arrow right icon"></i> New</center>
+                                </div>
+                                <div class="column">
+                                    <p id="NewCore-text" style="text-align: left;"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div id="confirm-btn" class="fluid ui rainbow buttons">
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--RESET-->
         <div class="ui basic modal" id="modal-6">
             <div class="ui icon header">
@@ -1095,7 +1111,7 @@
 <script type="text/javascript" src="DATA/numeral.min.js"></script>
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
-<script type="text/javascript" src="utils.js?v=1.8"></script>
-<script type="text/javascript" src="core.js?v=1.8"></script>
+<script type="text/javascript" src="utils.js?v=1.81"></script>
+<script type="text/javascript" src="core.js?v=1.81"></script>
 
 </html>

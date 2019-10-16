@@ -195,12 +195,16 @@ var provider = new firebase.auth.GoogleAuthProvider();
   var provider = new firebase.auth.GoogleAuthProvider();
   provider.addScope('profile');
   provider.addScope('email');
-//  firebase.auth().signInWithPopup(provider).then(function (result) {
-//    var token = result.credential.accessToken;
-//    var user = result.user;
-//    Game.email = user.email;
-//  });
 })();
+
+function login() {
+  firebase.auth().signInWithPopup(provider).then(function (result) {
+    var token = result.credential.accessToken;
+    var user = result.user;
+    Game.email = user.email;
+    $("#modal-3").modal("hide");
+  });
+}
 
 var PAGE = 1;
 var MAXVIEW = 10;
@@ -415,6 +419,13 @@ function ClickEvents() {
     $("#paladin").attr("class", "ui fluid card");
     $("#knight").attr("class", "ui fluid card");
     $("#ninja").attr("class", "ui fluid custom card");
+  });
+  $("#WB-BTN").on("click", function () {
+    $("#modal-3").modal("hide");
+  });
+  $("#LOGIN-BTN").on("click", function () {
+    $("#modal-3").modal("hide");
+   login();
   });
   $("#xpm-btn").on("click", function () {
     BuyXPMult();

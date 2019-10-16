@@ -13,8 +13,8 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.8" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.8" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.81" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.81" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
     <style>
@@ -98,13 +98,16 @@
             <div id="tutorial-1">
                 <p class="title glow">Introduction</p>
                 <p>
-                   Welcome to AlphaRPG, a game made by Purple Wizard.<br>
-                   The main goal of this game is to fight enemies and progress through the story to gain <span class="glow">EQUIPMENTS</span> and <span class="glow">EXPERIENCE</span>.<br>
-                   You will discover a new world named Alpha with various kingdoms & monsters.<br>
-                   But be careful there are also powerful monsters named <span class=" ui Ennemy6 basic label"><span class="Ennemy6">BOSS</span></span> so you need to fight wisely to deal with them.<br>
-                   Also, if you have any question, don't hesitate to join our <a class="discordlabel" id="discord-btn2">discord server</a>.
-                   <br>
-                   Okay, now we need to know who your character is..
+                    Welcome to AlphaRPG, a game made by Purple Wizard.<br>
+                    The main goal of this game is to fight enemies and progress through the story to gain <span
+                        class="glow">EQUIPMENTS</span> and <span class="glow">EXPERIENCE</span>.<br>
+                    You will discover a new world named Alpha with various kingdoms & monsters.<br>
+                    But be careful there are also powerful monsters named <span class=" ui Ennemy6 basic label"><span
+                            class="Ennemy6">BOSS</span></span> so you need to fight wisely to deal with them.<br>
+                    Also, if you have any question, don't hesitate to join our <a class="discordlabel"
+                        id="discord-btn2">discord server</a>.
+                    <br>
+                    Okay, now we need to know who your character is..
                 </p>
             </div>
             <div id="tutorial-2" style="display: none;">
@@ -455,7 +458,6 @@
                         </div>
                     </div>
                     <div id="missions" style="display: none;">
-                        <p id="mcount"></p>
                         <div class="ui accordion black">
                             <div class="title active"><i class="dropdown icon"></i>Missions</div>
                             <div class="content active">
@@ -470,7 +472,7 @@
                         </div>
 
                         <div class="ui accordion black">
-                            <div class="title"><i class="dropdown icon"></i>Missions Completed</div>
+                            <div id="mcount" class="title"></div>
                             <div class="content">
                                 <div id="MissionsCPL"></div>
                             </div>
@@ -866,13 +868,12 @@
                                                             <i class="large vert square icon WS"></i>Set theme</div>
                                                         <div id="themeBTN2" onclick="ThemeDefine(2);"
                                                             class="ui rainbow button">
-                                                            <i class="large bgcolor square icon WS"></i>Set
+                                                            <i class="large bgcolor2 square icon WS"></i>Set 2nd layer
                                                             background
                                                         </div>
                                                         <div id="themeBTN3" onclick="ThemeDefine(3);"
                                                             class="ui rainbow button">
-                                                            <i class="large bgtextcolor square icon WS"></i>Set
-                                                            secondary
+                                                            <i class="large bgcolor3 square icon WS"></i>Set 2rd layer
                                                             background</div>
                                                         <div id="themeBTN4" onclick="ThemeDefine(4);"
                                                             class="ui rainbow button">
@@ -1029,7 +1030,25 @@
                     </div>
                 </div>
             </div>
-
+            <!--Welcome Back-->
+            <div class="ui basic modal" id="modal-3">
+                <h2 class="ui center aligned header">
+                    <img class="ui circular image" src="DATA/avatars/avatar34.jpg">
+                    <font id="wb-title" class="title"></font>
+                </h2>
+                <div class="centrer content">
+                    <div class="ui icon trs message">
+                        <div class="content">
+                            <h3 id="wb-texttitle" class="title"></h3>
+                            <p id="wb-text"></p>
+                            <div id="LOGIN-BTN" class="ui cu button">
+                                <span class="blanc"><i class="check icon"></i> Yes </span></div>
+                            <div id="WB-BTN" class="ui cu2 button">
+                                <span class="blanc"><i class="remove icon"></i> No </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!--NEWCORE-->
             <div class="ui basic modal" id="modal-4">
                 <div class="ui icon header">
@@ -1126,7 +1145,7 @@
 <script type="text/javascript" src="DATA/numeral.min.js"></script>
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
-<script type="text/javascript" src="utils.js?v=1.8"></script>
-<script type="text/javascript" src="core.js?v=1.8"></script>
+<script type="text/javascript" src="utils.js?v=1.81"></script>
+<script type="text/javascript" src="core.js?v=1.81"></script>
 
 </html>
