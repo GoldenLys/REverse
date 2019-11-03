@@ -229,9 +229,9 @@ function ResetLeaderBoard() {
   $("#LEADERBOARD").html("<thead><tr class='shadow'><th class='ui center aligned'></th><th class='ui center aligned'>Name</th><th class='ui center aligned'><a onclick='filter(1);'>Ranking</a></th><th class='ui center aligned'><a onclick='filter(0);'>Dimension</a></th><th class='ui center aligned'>Power</th><th class='ui center aligned'>Life</th><th class='ui center aligned'>Ratio (K/D)</th>");
 }
 
-function writeUserData(userId) {
-  if (location.href.match(/(goldenlys.github.io).*/) && userId == Game.username && Game.Level > 1 && userId != "Default" && userId != "null") {
-    firebase.database().ref('users/' + userId).set({
+function writeUserData() {
+  if (location.href.match(/(goldenlys.github.io).*/) && Game.Level > 1 && Game.username != "Default" && Game.username != null && LoggedIn == 1) {
+    firebase.database().ref('users/' + Game.username).set({
       Name: Game.username,
       Email: Email,
       Order: (-1 * Ranking) - (100000 * Game.Simulation),
@@ -789,7 +789,7 @@ function CheckCode(debug) {
       }
       if (code === codes[8]) {
         $("#codereturn").html("Code Accepted, cloud save done.");
-        writeUserData(Game.username);
+        writeUserData();
         lastCloudSave = 0;
       }
       if (code === codes[9]) {

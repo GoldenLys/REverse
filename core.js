@@ -870,7 +870,7 @@ function RemoveItem(id) {
 
 function SendStats() {
   save();
-  if (LoggedIn == 1) writeUserData(Game.username);
+  if (LoggedIn == 1) writeUserData();
   lastCloudSave = 0;
 }
 
