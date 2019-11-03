@@ -96,7 +96,7 @@ function Reset() {
 function confirmReset() {
   canSave = 0;
   localStorage.clear();
-  BackupData();
+  Backup = "Default";
   location.reload();
 }
 
@@ -640,181 +640,7 @@ function ClickEvents() {
     $("#blueNum").val($("#blue").val());
     document.documentElement.style.setProperty('--temp3', "rgb(0, 0, " + $("#blue").val() + ")");
   });
-  Shortcuts();
 }
-
-function Shortcuts() {
-  document.onkeyup = function (e) {
-    e = e || window.event;
-    var key = e.which || e.keyCode;
-    if (Game.isInFight == 1 && isTabActive != "Settings") { //IN FIGHT
-      if (key === 69 && Game.Emp > 0) {
-        LaunchEMP();
-      }
-      if (key === 82) {
-        Protect();
-      }
-      if (key === 32) {
-        Attack();
-      }
-      if (key === 70) {
-        RunAway();
-      }
-      if (key === 97 || key === 49) {
-        ShowMissionsMenu();
-      }
-      if (key === 98 || key === 50) {
-        ShowExplorationMenu();
-      }
-      if (key === 99 || key === 51) {
-        ShowInventoryMenu();
-      }
-      if (key === 100 || key === 52) {
-        ShowMiscsMenu();
-      }
-      if (key === 101 || key === 53) {
-        if (isTabActive == "Dimension") {
-          isTabActive = "None";
-          closeTabs();
-        } else {
-          isTabActive = "Dimension";
-          ShowScoreMenu();
-        }
-      }
-      if (key === 102 || key === 54) {
-        if (isTabActive == "Stats") {
-          isTabActive = "None";
-          closeTabs();
-        } else {
-          isTabActive = "Stats";
-          ShowStatsMenu();
-        }
-      }
-      if (key === 103 || key === 55) {
-        if (isTabActive == "Leaderboard") {
-          isTabActive = "None";
-          closeTabs();
-        } else {
-          isTabActive = "Leaderboard";
-          ShowLeaderboard();
-        }
-      }
-      if (key === 104 || key === 56) {
-        if (isTabActive == "Settings") {
-          isTabActive = "None";
-          closeTabs();
-        } else {
-          isTabActive = "Settings";
-          ShowSettings();
-        }
-      }
-    }
-    if (Game.isInFight == 2) { //FIGHT ENDED
-      if (key === 70) {
-        if (Game.MissionStarted[0] == 1 && Game.MissionStarted[2] >= Missions[Game.MissionStarted[1]][4]) { hideMissionRewards(); }
-        else { hideRewards(); }
-      }
-    }
-    if (Game.isInFight == 5) { //CORE LOOTED
-      if (key === 97 || key === 49) {
-        if (Game.Armors[1][0] == true) {
-          NewCore(1);
-        }
-      }
-      if (key === 98 || key === 50) {
-        if (Game.Armors[2][0] == true) {
-          NewCore(2);
-        }
-      }
-      if (key === 99 || key === 51) {
-        if (Game.Armors[3][0] == true) {
-          NewCore(3);
-        }
-      }
-      if (key === 100 || key === 52) {
-        if (Game.Armors[4][0] == true) {
-          NewCore(4);
-        }
-      }
-      if (key === 78) {
-        Cancelconfirm();
-      }
-      if (key === 70) {
-        hideRewards();
-      }
-    }
-    if (Game.isInFight == 4) { //KEY LOOTED
-      if (key === 97 || key === 49) {
-        if (Game.Armors[1][0] == true) {
-          UPCore(1, item.object);
-        }
-      }
-      if (key === 98 || key === 50) {
-        if (Game.Armors[2][0] == true) {
-          UPCore(2, item.object);
-        }
-      }
-      if (key === 99 || key === 51) {
-        if (Game.Armors[3][0] == true) {
-          UPCore(3, item.object);
-        }
-      }
-      if (key === 100 || key === 52) {
-        if (Game.Armors[4][0] == true) {
-          UPCore(4, item.object);
-        }
-      }
-      if (key === 70) {
-        hideRewards();
-      }
-    }
-    if (Game.isInFight == 3) { //BEGIN & SELECT USERNAME
-      if (key === 13) {
-        WelcomeNext();
-      }
-    }
-    if (Game.isInFight == 6) { //NEW ARMOR CONFIRMATION
-      if (key === 89) {
-        if (NewArmorID == 1) {
-          DefineCore(1);
-        }
-        if (NewArmorID == 2) {
-          DefineCore(2);
-        }
-        if (NewArmorID == 3) {
-          DefineCore(3);
-        }
-        if (NewArmorID == 4) {
-          DefineCore(4);
-        }
-      }
-      if (key === 78) {
-        Cancelconfirm();
-      }
-    }
-    if (Game.isInFight == 7) { //RELIC LOOTED
-      if (key === 70) {
-        hideRewards();
-      }
-    }
-    if (Game.isInFight == 8) { //NEW RELIC CONFIRMATATION
-      if (key === 89) {
-        ConfirmOS();
-      }
-      if (key === 78) {
-        Cancelconfirm();
-      }
-    }
-  };
-}
-
-$(document).keydown(function (e) {
-  if (e.keyCode == 27) {
-    closeTabs();
-    $("#combat").show();
-    $(".customB").show();
-  }
-});
 
 function hideModals() {
   for (var id = 1; id < 10; id++) {
@@ -1368,9 +1194,8 @@ function CompleteMission() {
         } else {
           $("#rewards-title").html("<span class='vert'>Fortress cleared !</span>");
         }
-        var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Finish" : "<i class='times icon'></i>Finish <a class='alphalabel'>F</a>";
         var FRGR = Missions[Game.MissionStarted[1]][5] > 0 ? "+<i class='bleu dna icon'></i><span class='bleu bold'>" + fix(Missions[Game.MissionStarted[1]][5], 3) + "</span> Fragments " : "";
-        $("#btn-CRW").html("<div onclick='hideMissionRewards();' class='fluid ui closing button'>" + btncntnt + "</div>");
+        $("#btn-CRW").html("<div onclick='hideMissionRewards();' class='fluid ui closing button'><i class='times icon'></i>Finish</div>");
         $("#rewards-desc").html("");
         if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP + FRGR); } else {
           $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP ");
@@ -1449,11 +1274,7 @@ function fullColorHex(r, g, b) {
 
 function CalcEXP(level) {
   var exp = 0;
-  if (level < 30) {
-    exp = (level * 25) + (500 * (level / 3.5));
-  } else {
-    exp = (level * 25) + (600 * (level / 2.5));
-  }
+  exp = (level * 25) + (500 * (level / 3.5));
 
   for (T = 0; T < (level + 1); T++) {
     if (T < 30) {
@@ -1524,17 +1345,15 @@ function ChangeStep(type) {
 
 function WelcomeNext() {
   isTabActive = "Login";
-  Game.Level = 1;
-  Game.xp = [0,100, 1];
+
   if (WelcomeData[0] == 5) {
     $("#CATEGORIE-1").show();
     $("#begin").hide();
     $(".footer").show();
+    if (Game.username == "Default") Game.username = WelcomeData[1];
     Game.isInFight = 0;
     GetWBcontent("firstlogin");
-    SendStats();
     save();
-    location.reload();
   }
 
   if (WelcomeData[0] == 4) {

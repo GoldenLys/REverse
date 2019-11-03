@@ -13,8 +13,8 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.9" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.9" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.91" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.91" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
     <style>
@@ -968,7 +968,8 @@
                                 <div id="PlayerLife"></div>
                                 <div id="PlayerPower"></div>
                             </div>
-                            <div class="ui left aligned segment" style="margin-top: 5.25rem!important;margin-left: -5%!important;max-width: 55%;padding-left: 0%;">
+                            <div class="ui left aligned segment"
+                                style="margin-top: 5.25rem!important;margin-left: -5%!important;max-width: 55%;padding-left: 0%;">
                                 <div id="PlayerHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
                                     <div class="bar">
                                         <div id="PlayerDamage" class="bartext"></div>
@@ -1187,6 +1188,26 @@
                     </div>
                 </div>
             </div>
+
+            <!--DIMENSIONAL RIFT CONFIRMATION-->
+            <div class="ui basic modal" id="modal-7">
+                <div class="ui icon header">
+                    <font id="confirm2-title" class="title">Do you really want to go inside the rift ?</font>
+                </div>
+                <div class="centrer content">
+                    <div class="ui icon message">
+                        <div class="content">
+                            <p id="resetconfirm-text">You will lose your current equipment.</p>
+                        </div>
+                    </div>
+                    <div class="fluid ui buttons">
+                        <div id="confirmrift" onclick="confirmReset();" class="ui cu button">
+                            <span class="blanc"><i class="check icon"></i> Yes </span></div>
+                        <div onclick="hideModals();" class="ui cu2 button">
+                            <span class="blanc"><i class="remove icon"></i> No </span></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
@@ -1202,7 +1223,7 @@
 <script type="text/javascript" src="DATA/numeral.min.js"></script>
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
-<script type="text/javascript" src="utils.js?v=1.9"></script>
-<script type="text/javascript" src="core.js?v=1.9"></script>
+<script type="text/javascript" src="utils.js?v=1.91"></script>
+<script type="text/javascript" src="core.js?v=1.91"></script>
 
 </html>

@@ -13,8 +13,8 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.9" />
-    <link rel="stylesheet" type="text/css" href="loading.css?v=1.9" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.91" />
+    <link rel="stylesheet" type="text/css" href="loading.css?v=1.91" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
     <style>
@@ -183,13 +183,11 @@
                 <div id="gamediv1">
                     <div class="big ui top attached buttons">
                         <div id="missions-btn" class="ui rainbow7 button"><i
-                                class="fas fa-map-marker-alt"></i>Missions<a class="alphalabel">1</a></div>
+                                class="fas fa-map-marker-alt"></i>Missions</div>
                         <div id="exploration-btn" class="ui rainbow7 button"><i
-                                class="fas fa-map-marked-alt"></i>Exploration<a class="alphalabel">2</a></div>
-                        <div id="inventory-btn" class="ui rainbow7 button"><i class="fas fa-sack"></i>Inventory<a
-                                class="alphalabel">3</a></div>
-                        <div id="miscs-btn" class="ui rainbow7 button"><i class="fal fa-align-justify"></i>Misc<a
-                                class="alphalabel">4</a></div>
+                                class="fas fa-map-marked-alt"></i>Exploration</div>
+                        <div id="inventory-btn" class="ui rainbow7 button"><i class="fas fa-sack"></i>Inventory</div>
+                        <div id="miscs-btn" class="ui rainbow7 button"><i class="fal fa-align-justify"></i>Misc</div>
                     </div>
                     <div class="ui inverted divider"></div>
                 </div>
@@ -198,14 +196,12 @@
                     <div id="miscs" style="display: none;">
                         <br>
                         <div class="fluid ui big vertical rainbow labeled icon buttons">
-                            <div id="prestige-btn" class="ui rainbow7 button"><i class="globe icon"></i>Dimension<a
-                                    class="alphalabel">5</a></div>
+                            <div id="prestige-btn" class="ui rainbow7 button"><i class="globe icon"></i>Dimension</div>
                             <div id="stats-btn" class="ui rainbow7 button"><i
-                                    class="clipboard list icon"></i>Statistics<a class="alphalabel">6</a></div>
+                                    class="clipboard list icon"></i>Statistics</div>
                             <div id="leaderboard-btn" class="ui rainbow7 button"><i
-                                    class="trophy icon"></i>Leaderboard<a class="alphalabel">7</a></div>
-                            <div id="settings-btn" class="ui rainbow7 button"><i class="cogs icon"></i>Settings<a
-                                    class="alphalabel">8</a></div>
+                                    class="trophy icon"></i>Leaderboard</div>
+                            <div id="settings-btn" class="ui rainbow7 button"><i class="cogs icon"></i>Settings</div>
                         </div>
                         <div class="fluid ui trs message">
                             <div class="ui grid">
@@ -1134,6 +1130,25 @@
                 </div>
             </div>
         </div>
+        <!--DIMENSIONAL RIFT CONFIRMATION-->
+        <div class="ui basic modal" id="modal-7">
+            <div class="ui icon header">
+                <font id="confirm2-title" class="title">Do you really want to go inside the rift ?</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui icon message">
+                    <div class="content">
+                        <p id="resetconfirm-text">You will lose your current equipment.</p>
+                    </div>
+                </div>
+                <div class="fluid ui buttons">
+                    <div id="confirmrift" onclick="confirmReset();" class="ui cu button">
+                        <span class="blanc"><i class="check icon"></i> Yes </span></div>
+                    <div onclick="hideModals();" class="ui cu2 button">
+                        <span class="blanc"><i class="remove icon"></i> No </span></div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
@@ -1153,7 +1168,7 @@
 <script type="text/javascript" src="DATA/numeral.min.js"></script>
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
-<script type="text/javascript" src="utils.js?v=1.9"></script>
-<script type="text/javascript" src="core.js?v=1.9"></script>
+<script type="text/javascript" src="utils.js?v=1.91"></script>
+<script type="text/javascript" src="core.js?v=1.91"></script>
 
 </html>

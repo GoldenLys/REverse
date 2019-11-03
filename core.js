@@ -201,11 +201,10 @@ function test() {
     $(".footer").show();
     UpdateGame();
   }
-  if (Game.isInFight == 2) {
+  if (Game.isInFight == 2 && loadState > 4) {
     Game.isInFight = 0;
   }
   setInterval(UpdateEngine, 1000);
-  setInterval(UpdatePage, 1000 * 60 * 60);
   UpdateLoadingText();
   ClickEvents();
   filter(0);
@@ -342,6 +341,7 @@ function UpdateEngine() {
         Game.Level++;
       }
     }
+    if (Game.Emp > 50) Game.Emp = 50;
     if (url.match(/mobile/gi)) {
       $("#PlayerID").html("<div class='vert text2'><span style='color:" + Game.Theme[0] + ";'>" + Game.username + "<br><div class='ui horizontal label'>" + LEVEL + "</div></span></div><img class='ui circular middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
       $("#Equipment-Title").html("Equipment " + SCORE);
@@ -427,26 +427,25 @@ function UpdateGame() {
   Game.MaxInv = (Game.Simulation * 2) + 18 + (Game.Upgrades[3] * 1);
   if (Game.MissionStarted[4] == undefined) Game.MissionStarted[4] = 0;
   if (Game.isInFight == 0) { CoreLife = CoreBaseLife; GenEnnemy(); }
-  if (ScoreModeEnabled == 0 && loadState >= 4) {
-    Game.xp[1] = CalcEXP(Game.Level);
-    if (Game.xp[0] > Game.xp[1] && Game.Level == POS[Game.Location][2]) { Game.xp[0] = CalcEXP(Game.Level - 1); }
-    if (Game.xp[0] < CalcEXP(Game.Level - 1) && Game.Level > 1) { Game.xp[0] = CalcEXP(Game.Level - 1); }
-    if (Game.Armors[1][4] > Game.Level) { ErrorArmor(1); }
-    if (Game.Armors[2][4] > Game.Level) { ErrorArmor(2); }
-    if (Game.Armors[3][4] > Game.Level) { ErrorArmor(3); }
-    if (Game.Armors[4][4] > Game.Level) { ErrorArmor(4); }
-    if (Game.Weapons.Main[3] > Game.Level) { ErrorArmor(5); }
-    if (Game.Weapons.Special[3] > Game.Level) { ErrorArmor(6); }
-  } else {
-    Game.xp[1] = 1;
-    Game.xp[0] = 1;
-    Game.Level = MaxLevel;
-    if (Game.Armors[1][4] > MaxScore) { ErrorArmor(1); }
-    if (Game.Armors[2][4] > MaxScore) { ErrorArmor(2); }
-    if (Game.Armors[3][4] > MaxScore) { ErrorArmor(3); }
-    if (Game.Armors[4][4] > MaxScore) { ErrorArmor(4); }
-    if (Game.Weapons.Main[3] > MaxScore) { ErrorArmor(5); }
-    if (Game.Weapons.Special[3] > MaxScore) { ErrorArmor(6); }
+  if (loadState > 4) {
+    if (ScoreModeEnabled == 0) {
+      Game.xp[1] = CalcEXP(Game.Level);
+      if (Game.xp[0] > Game.xp[1] && Game.Level == POS[Game.Location][2]) { Game.xp[0] = CalcEXP(Game.Level - 1); }
+      if (Game.xp[0] < CalcEXP(Game.Level - 1) && Game.Level > 1) { Game.xp[0] = CalcEXP(Game.Level - 1); }
+      if (Game.Armors[1][4] > Game.Level) { ErrorArmor(1); }
+      if (Game.Armors[2][4] > Game.Level) { ErrorArmor(2); }
+      if (Game.Armors[3][4] > Game.Level) { ErrorArmor(3); }
+      if (Game.Armors[4][4] > Game.Level) { ErrorArmor(4); }
+      if (Game.Weapons.Main[3] > Game.Level) { ErrorArmor(5); }
+      if (Game.Weapons.Special[3] > Game.Level) { ErrorArmor(6); }
+    } else {
+      if (Game.Armors[1][4] > MaxScore) { ErrorArmor(1); }
+      if (Game.Armors[2][4] > MaxScore) { ErrorArmor(2); }
+      if (Game.Armors[3][4] > MaxScore) { ErrorArmor(3); }
+      if (Game.Armors[4][4] > MaxScore) { ErrorArmor(4); }
+      if (Game.Weapons.Main[3] > MaxScore) { ErrorArmor(5); }
+      if (Game.Weapons.Special[3] > MaxScore) { ErrorArmor(6); }
+    }
   }
   if (Game.Level >= 10) { Game.Armors[2][0] = true; }
   else { Game.Armors[2][0] = false; }
@@ -599,7 +598,7 @@ function UpdateUI() {
   if (Game.Simulation > 1) {
     WTText = "Dimension <i class='globe icon'></i> " + Game.Simulation + "<br>";
   } else { WTText = ""; }
-  if (Game.Shards >= 3) { $("#SHARDSRW").html(fix(Game.Shards, 7)); } else { $("#SHARDSRW").html("0"); }
+  $("#SHARDSRW").html(fix(Game.Shards, 6));
   if (ScoreModeEnabled == 0) {
     $("#DimensionID").html(WTText);
     $("#PlayerXP").show();
@@ -709,7 +708,7 @@ function UpdateUI() {
     MTEXT = "";
     hori = "";
   } else {
-    MTEXT = " <a class='alphalabel'>Escape</a>";
+    MTEXT = "";
     hori = "horizontal";
   }
   if (Game.MissionStarted[0] == true) {
@@ -758,7 +757,6 @@ function UpdateUI() {
     $("#combat").hide();
   }
   if (Game.isInFight != 2 || Game.isInFight != 3) UpdateCombat();
-  Shortcuts();
   GenArmors();
   GenWeapons();
   GenInventory();
@@ -893,7 +891,6 @@ function SendStats() {
   save();
   if (LoggedIn == 1) writeUserData(Game.username);
   lastCloudSave = 0;
-  UpdateUI();
 }
 
 function GetLevelRequired() {
@@ -959,7 +956,7 @@ function GenWeapons() {
     $("#" + TYPE + "WeaponSprite").html("<img class='ui middle aligned tiny circular image' style='height: 100px; width: auto;' src='DATA/Weapons/" + TYPE + "-" + Class + ".png'></img>");
     $("#" + TYPE + "WeaponLevel").html(LEVELTEXT);
     $("#" + TYPE + "WeaponText").html(Game.Weapons[TYPE][4]);
-    $("#" + TYPE + "WeaponTitle").html(Game.Weapons[TYPE][0]);
+    $("#" + TYPE + "WeaponTitle").html("<span class='" + Game.Weapons[TYPE][1] + "'>" + Game.Weapons[TYPE][1] + "</span> " + Game.Weapons[TYPE][0]);
     $("#" + TYPE + "nWeaponText").html(Game.Weapons[TYPE][4]);
   }
 }
@@ -1423,7 +1420,9 @@ function WinFight() {
       if (Missions[Game.MissionStarted[1]][3] == 2) { expGain = random(expGain * 0.9, expGain * 1.2); }
       else { expGain = random(expGain * 0.9, expGain); }
     }
-    if (expGain < 1 || ((Game.Level - 5) * 10) >= Ranking || Game.Level >= POS[Game.Location][2]) { expGain = 0; }
+
+    //BLOCK EXP IF LOW SCORE
+    //if (expGain < 1 || ((Game.Level - 5) * 10) >= Ranking || Game.Level >= POS[Game.Location][2]) { expGain = 0; }
     if (Game.MissionStarted[0] == true && Game.Level >= POS[Missions[Game.MissionStarted[1]][8]][2]) { expGain = 0; }
     Game.Wins++;
     Game.Defeated[Game.Ennemy[1]]++;
@@ -1602,7 +1601,7 @@ function WinFight() {
     if (Game.Ennemy[1] == 6) { Class = "Ennemy6"; ThreatLevel = "BOSS"; }
     if (Game.Ennemy[1] == 7) { Class = "Ennemy7"; ThreatLevel = "GOD"; }
     $("#EnnemyDesc").html("<br><br>");
-    var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Close" : "<i class='times icon'></i>Close <a class='alphalabel'>F</a>";
+    var btncntnt = url.match(/mobile/gi) ? "<i class='times icon'></i>Close" : "<i class='times icon'></i>Close";
     $("#btn-CRW").html("<div onclick='hideRewards();' class='fluid ui closing button'>" + btncntnt + "</div>");
     $("#btn-CRW").show();
     $("#btn-ACT").hide();
@@ -1656,13 +1655,12 @@ function LoseFight() {
   }
   $("#rewards-title").html("<span class='rouge'>" + Game.Ennemy[0] + " killed you !</span>");
   $("#rewards-desc").html("");
-  var MOBILETEXT5 = url.match(/mobile/gi) ? "" : "<a class='alphalabel'>F</a>";
   if (ScoreModeEnabled == 0) {
     $("#rewards-text").html("You lose all your EXP.<br>Current Ratio <span class='rouge'>" + fix(Game.Wins / Game.Loses, 7));
-    $("#btn-CRW").html("<div onclick='hideRewards();' id='btn-hide' class='fluid ui rainbow button'><i class='green recycle icon'></i> Respawn " + MOBILETEXT5 + "</div>");
+    $("#btn-CRW").html("<div onclick='hideRewards();' id='btn-hide' class='fluid ui rainbow button'><i class='green recycle icon'></i> Respawn</div>");
   } else {
     $("#rewards-text").html("Current Ratio <span class='rouge'>" + fix(Game.Wins / Game.Loses, 7) + "</span>");
-    $("#btn-CRW").html("<div onclick='hideRewards();' id='btn-hide' class='fluid ui rainbow button'><i class='green recycle icon'></i> Respawn " + MOBILETEXT5 + "</div>");
+    $("#btn-CRW").html("<div onclick='hideRewards();' id='btn-hide' class='fluid ui rainbow button'><i class='green recycle icon'></i> Respawn</div>");
   }
   $("#rewards-loot").html("");
   $("#rewards").show();
@@ -1730,18 +1728,10 @@ function UpdateCombat() {
   $("#PlayerLife").html("<i class='rouge fas fa-heart'></i><span class='" + lifetext + "'>" + fix(CoreLife, 5) + "</span>/" + fix(CoreBaseLife, 5) + " ");
   $("#PlayerPower").html("<i class='bleu fas fa-sword'></i>" + fix(WeaponsPower, 5) + "<br><i class='orange fas fa-swords'></i>" + fix(SpecialPower, 5));
   if ($("#EnnemySprite").html() == "") $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png'>");
-  $("#EnnemyHP").progress({
-    className: {
-      active: "",
-      error: "",
-      success: "",
-      warning: ""
-    }
-  });
-  var MOBILETEXT = url.match(/mobile/gi) ? "Special Attack" : "Special Attack <a class='alphalabel'>E</a>";
+  $("#EnnemyHP").progress({ className: { active: "", error: "", success: "", warning: "" } });
   if (Game.Emp > 0) {
     $("#emp-btn").show();
-    $("#emp-btn").html("<i class='fas fa-swords'></i>" + fix(Game.Emp, 4) + " " + MOBILETEXT);
+    $("#emp-btn").html("<i class='fas fa-swords'></i>" + fix(Game.Emp, 4) + " Special Attack");
     if (url.match(/mobile/gi)) {
       $("#emp-btn").attr("class", "ui big orange button alphaSDW");
     } else {
@@ -1755,18 +1745,11 @@ function UpdateCombat() {
     $("#emp-btn").hide();
     $("#emp-btn").attr("class", "");
   }
-  var MOBILETEXT2 = url.match(/mobile/gi) ? "<i class='fas fa-sword'></i>Main Attack" : "<i class='fas fa-sword'></i></i>Main Attack <a class='alphalabel'>SPACE</a>";
-  $("#attack-btn").html(MOBILETEXT2);
-  var MOBILETEXT3 = url.match(/mobile/gi) ? "<i class='fas fa-shield'></i>Take cover" : "<i class='fas fa-shield'></i>Take cover <a class='alphalabel'>R</a>";
-  $("#cover-btn").html(MOBILETEXT3);
-  var MOBILETEXT4 = url.match(/mobile/gi) ? "<i class='fas fa-running'></i> Run Away" : "<i class='fas fa-running'></i> Run away <a class='alphalabel'>F</a>";
-  $("#run-btn").html("" + MOBILETEXT4);
-  $("#EnnemyHP").progress({
-    percent: GetEnnemyHPPercent()
-  });
-  $("#PlayerHP").progress({
-    percent: GetPlayerHPPercent()
-  });
+  $("#attack-btn").html("<i class='fas fa-sword'></i></i>Main Attack");
+  $("#cover-btn").html("<i class='fas fa-shield'></i>Take cover");
+  $("#run-btn").html("<i class='fas fa-running'></i> Run Away");
+  $("#EnnemyHP").progress({ percent: GetEnnemyHPPercent() });
+  $("#PlayerHP").progress({ percent: GetPlayerHPPercent() });
 }
 
 //EQUIPMENT & STATS UPGRADES FUNCTIONS
@@ -2252,7 +2235,7 @@ function ChangeWT() {
     Game.Simulation++;
     Game.xp = [0, 0, 0];
     Game.Level = 1;
-    Game.Shards = Math.round(Ranking / 10 / 5 - 6);
+    Game.Shards += Math.round(Ranking / 10 / 5 - 6);
     LifeMult = 1;
     PowerMult = 1;
     Game.Emp = 0;
