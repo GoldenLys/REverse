@@ -2078,7 +2078,7 @@ function DefineWeapon(type, selected) {
     Game.MaxUPC[core - 1] = Game.inventory[selected].ups;
     //Game.WeaponUpgrades[weapon] = [0, 0];
   }
-  //if (selected <= Game.MaxInv) RemoveItem(selected);
+  if (selected <= Game.MaxInv) RemoveItem(selected);
 
   if ($('#inventory').is(":visible")) {
     hideModals();
