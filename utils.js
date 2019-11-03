@@ -230,7 +230,7 @@ function ResetLeaderBoard() {
 }
 
 function writeUserData() {
-  if (location.href.match(/(goldenlys.github.io).*/) && Game.Level > 1 && Game.username != "Default" && Game.username != null && LoggedIn == 1) {
+  if (location.href.match(/(goldenlys.github.io).*/) && Game.username != "Default" && Game.username != null && LoggedIn == 1) {
     firebase.database().ref('users/' + Game.username).set({
       Name: Game.username,
       Email: Email,
