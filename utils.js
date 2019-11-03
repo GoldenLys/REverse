@@ -1533,6 +1533,8 @@ function WelcomeNext() {
     Game.isInFight = 0;
     GetWBcontent("firstlogin");
     SendStats();
+    save();
+    location.reload();
   }
 
   if (WelcomeData[0] == 4) {
