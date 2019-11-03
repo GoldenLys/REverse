@@ -1,12 +1,10 @@
+//1-- ADD ATTRIBUTES TO WEAPONS & MONSTERS (Water, Fire, Earth, Wind, Dark, Light)
+//2-- ADD NEW LOOTABLE OBJECTS ( crafting materials, potions, bonus objects, weapons )
+//3-- CREATE A CRAFTING FUNCTION, WITH THE ABILITY TO CHOOSE ELEMENT & MATERIAL
+//4-- NEW STORY WITH CHARACTERS, REMOVE THE CONCEPT OF DIMENSION(not the prestige, i meant only in the story) TO FOCUS ON ONLY 1 CONTINENT WITH DIFFERENT KINGDOMS
+//5-- GUILD PROMOTIONS : 2-3 ELITES & 1 BOSS (low chances to get a god) TO PROMOTE FROM RANK F>E>D>C>B>A>S which will increase rewards. (money/exp)
 
-//1-- remove armors damages and create weapons (Primary as main attacks & Special used for the special attacks)
-//2-- ADD ATTRIBUTES TO WEAPONS & MONSTERS (Water, Fire, Earth, Wind, Dark, Light)
-//3-- ADD NEW LOOTABLE OBJECTS ( crafting materials, potions, bonus objects, weapons )
-//4-- CREATE A CRAFTING FUNCTION, WITH THE ABILITY TO CHOOSE ELEMENT & MATERIAL
-//5-- NEW STORY WITH CHARACTERS, REMOVE THE CONCEPT OF DIMENSION(not the prestige, i meant only in the story) TO FOCUS ON ONLY 1 CONTINENT WITH DIFFERENT KINGDOMS
-//6-- GUILD PROMOTIONS : 2-3 ELITES & 1 BOSS (low chances to get a god) TO PROMOTE FROM RANK F>E>D>C>B>A>S which will increase rewards. (money/exp)
-
-// Gems & Relics rewards MISSING in completed mission
+// Gems & Relics rewards MISSING in completed mission (even if still not used for now)
 // add new classes, healer/wizard
 // remove the healing function in the take cover button (you can still hide) but healing require potions (need to create the crafting function for them)
 // HEALER : healer would be able to heal itself without potions
@@ -294,12 +292,18 @@ function UpdateEngine() {
     UpdateGame();
   }
   if (loadState == 5) {
+    Game.PlayTime++;
+    if (Game.Level >= MaxLevel && LastMission >= TotalMissions) { ScoreModeEnabled = 1; } else { ScoreModeEnabled = 0; }
+    if (Game.Level == 1 && Game.MissionStarted[0] == false && Game.MissionsCompleted[0] == 0 && isTabActive == "None" && Game.config[3] == 1) {
+      mission(0);
+    }
+
     $("#color-display").css("background-color", "rgb(" + $(red).val() + ", " + $(green).val() + ", " + $(blue).val() + ")");
     if (CoreLife > CoreBaseLife) {
       CoreLife = CoreBaseLife;
       UpdateUI();
     }
-    if (Game.isInFight != 2 && CoreLife == null || Game.Ennemy[5] == null) {
+    if (Game.isInFight != 2 && CoreLife == null || Game.Ennemy[5] == null || Game.Ennemy[5] == 0) {
       Game.isInFight = 0;
       UpdateGame();
     }
@@ -353,7 +357,6 @@ function UpdateEngine() {
       $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
       $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     }
-    if (Game.Level >= MaxLevel && LastMission >= TotalMissions) { ScoreModeEnabled = 1; } else { ScoreModeEnabled = 0; }
 
     if ($('#combat').is(":visible") && Game.isInFight != 0) {
       Game.isInFight = 1;
@@ -371,7 +374,6 @@ function UpdateEngine() {
         WinFight();
       }
     }
-    Game.PlayTime++;
     for (var I in Game.inventory) {
       if (I > Game.MaxInv) {
         Game.inventory.splice(I, 1);
@@ -427,7 +429,7 @@ function UpdateGame() {
   Game.MaxInv = (Game.Simulation * 2) + 18 + (Game.Upgrades[3] * 1);
   if (Game.MissionStarted[4] == undefined) Game.MissionStarted[4] = 0;
   if (Game.isInFight == 0) { CoreLife = CoreBaseLife; GenEnnemy(); }
-  if (loadState > 4) {
+  if (loadState == 5 && isTabActive != "Login") {
     if (ScoreModeEnabled == 0) {
       Game.xp[1] = CalcEXP(Game.Level);
       if (Game.xp[0] > Game.xp[1] && Game.Level == POS[Game.Location][2]) { Game.xp[0] = CalcEXP(Game.Level - 1); }
@@ -455,37 +457,16 @@ function UpdateGame() {
   else { Game.Armors[4][0] = false; }
   CoreBaseLife = 0;
   Ranking = 0;
+  Ranking += Game.Weapons.Main[3];
+  Ranking += Game.Weapons.Special[3];
+  divisor = 2;
   for (core = 1; core < 5; core++) {
-    if (core == 1 && Game.Armors[1][0] == true) {
-      CoreBaseLife += Game.Armors[1][3];
-      Ranking += Game.Armors[1][4];
+    if (Game.Armors[core][0] == true) {
+      CoreBaseLife += Game.Armors[core][3];
+      Ranking += Game.Armors[core][4];
       divisor++;
-      if (Game.Armors[1][5] == undefined) {
-        Game.Armors[1][5] = 0;
-      }
-    }
-    if (core == 2 && Game.Armors[2][0] == true) {
-      CoreBaseLife += Game.Armors[2][3];
-      Ranking += Game.Armors[2][4];
-      divisor++;
-      if (Game.Armors[2][5] == undefined) {
-        Game.Armors[2][5] = 0;
-      }
-    }
-    if (core == 3 && Game.Armors[3][0] == true) {
-      CoreBaseLife += Game.Armors[3][3];
-      Ranking += Game.Armors[3][4];
-      divisor++;
-      if (Game.Armors[3][5] == undefined) {
-        Game.Armors[3][5] = 0;
-      }
-    }
-    if (core == 4 && Game.Armors[4][0] == true) {
-      CoreBaseLife += Game.Armors[4][3];
-      Ranking += Game.Armors[4][4];
-      divisor++;
-      if (Game.Armors[4][5] == undefined) {
-        Game.Armors[4][5] = 0;
+      if (Game.Armors[core][5] == undefined) {
+        Game.Armors[core][5] = 0;
       }
     }
   }
@@ -850,12 +831,12 @@ function EquipItem(id, type) {
   }
 
   if (type == 5) {
-    var MainUPBTN = Game.Armors[1][0] == true ? "<div onClick='UPWeapon(1, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Main Weapon</div>" : "";
-    var SpecialUPBTN = Game.Armors[2][0] == true ? "<div onClick='UPWeapon(2, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Special Weapon</div>" : "";
-    if (Game.Armors[1][5] >= Game.MaxUPC[4] && Game.Armors[1][0] == true) {
+    var MainUPBTN = Game.Armors[1][0] == true ? "<div onClick='UPWeapon(1, " + id + ");' class='ui rainbow button'>Upgrade Main Weapon</div>" : "";
+    var SpecialUPBTN = Game.Armors[2][0] == true ? "<div onClick='UPWeapon(2, " + id + ");' class='ui rainbow button'>Upgrade Special Weapon</div>" : "";
+    if (Game.Weapons.Main[2] >= Game.MaxUPC[4]) {
       MainUPBTN = "<div class='ui disabled button'>No Main Weapon gem slots left.</div>";
     }
-    if (Game.Armors[2][5] >= Game.MaxUPC[5] && Game.Armors[2][0] == true) {
+    if (Game.Weapons.Special[2] >= Game.MaxUPC[5]) {
       SpecialUPBTN = "<div class='ui disabled button'>No Secondary Weapon gem slots left.</div>";
     }
     showmessage("Select a Weapon", "<div class='fluid vertical ui buttons'>" + MainUPBTN + SpecialUPBTN + "</div>");
@@ -1726,7 +1707,7 @@ function UpdateCombat() {
   $("#EnnemyPower").html("<i class='bleu fas fa-sword'></i>" + fix(Game.Ennemy[3], 5));
   $("#EnnemyLife").html("<i class='rouge fas fa-heart'></i><span class='" + EnnemyText + "'>" + fix(Game.Ennemy[5], 5) + "</span>");
   $("#PlayerLife").html("<i class='rouge fas fa-heart'></i><span class='" + lifetext + "'>" + fix(CoreLife, 5) + "</span>/" + fix(CoreBaseLife, 5) + " ");
-  $("#PlayerPower").html("<i class='bleu fas fa-sword'></i>" + fix(WeaponsPower, 5) + "<br><i class='orange fas fa-swords'></i>" + fix(SpecialPower, 5));
+  $("#PlayerPower").html("<i class='bleu fas fa-sword'></i>" + fix(WeaponsPower, 6) + "<br><i class='orange fas fa-swords'></i>" + fix(SpecialPower, 6));
   if ($("#EnnemySprite").html() == "") $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png'>");
   $("#EnnemyHP").progress({ className: { active: "", error: "", success: "", warning: "" } });
   if (Game.Emp > 0) {
@@ -1842,11 +1823,11 @@ function NewWeapon(id, n) {
     if (ScoreModeEnabled == 0) {
       TIER = "Level ";
       TIERRANK = Math.round(Game.inventory[n].level);
-      OLDTIERRANK = OldCore[4];
+      OLDTIERRANK = OldCore[3];
     } else {
       TIER = "Score <i class='fad fa-dice-d20'></i>";
       TIERRANK = Math.floor(Game.inventory[n].level * 10);
-      OLDTIERRANK = Math.floor(OldCore[4] * 10);
+      OLDTIERRANK = Math.floor(OldCore[3] * 10);
     }
 
     if (url.match(/mobile/gi)) { BR = " "; } else { BR = "<br>"; }
@@ -2057,8 +2038,8 @@ function DefineWeapon(type, selected) {
   if (Game.config[0] == 1) $("#modal-4").modal("hide");
   if (Game.inventory[selected].power !== undefined) {
 
-    Game.Weapons[weapon] = [Game.inventory[selected].name, Game.inventory[selected].class, Game.inventory[selected].ups, Game.inventory[selected].level, Game.inventory[selected].power];
-    Game.MaxUPC[core - 1] = Game.inventory[selected].ups;
+    Game.Weapons[weapon] = [Game.inventory[selected].name, Game.inventory[selected].class, 0, Game.inventory[selected].level, Game.inventory[selected].power];
+    Game.MaxUPC[type + 3] = Game.inventory[selected].ups;
     //Game.WeaponUpgrades[weapon] = [0, 0];
   }
   if (selected <= Game.MaxInv) RemoveItem(selected);
@@ -2502,44 +2483,42 @@ function newItem(type, level, rarity) {
 }
 
 
-function UPWeapon(core, type, nb) {
+function UPWeapon(core, nb) {
   var weapon = "Main";
-  if (core == 1) weapon = "Special";
+  if (core == 2) weapon = "Special";
 
   if (Game.Weapons[weapon][2] < Game.MaxUPC[core + 3]) {
-
     Game.Weapons[weapon][4] += Game.inventory[nb].power;
-
     Game.Weapons[weapon][2]++;
 
     if (ScoreModeEnabled == 1) {
       if (Game.inventory[nb].type == 1) {
-        if ((Game.Weapons[weapon][4] + 0.1) <= MaxScore) { Game.Weapons[weapon][4] += 0.1; }
-        else { Game.Weapons[weapon][4] = MaxScore; }
+        if ((Game.Weapons[weapon][3] + 0.1) <= MaxScore) { Game.Weapons[weapon][3] += 0.1; }
+        else { Game.Weapons[weapon][3] = MaxScore; }
       }
       if (Game.inventory[nb].type == 2) {
-        if ((Game.Weapons[weapon][4] + 0.2) <= MaxScore) { Game.Weapons[weapon][4] += 0.2; }
-        else { Game.Weapons[weapon][4] = MaxScore; }
+        if ((Game.Weapons[weapon][3] + 0.2) <= MaxScore) { Game.Weapons[weapon][3] += 0.2; }
+        else { Game.Weapons[weapon][3] = MaxScore; }
       }
       if (Game.inventory[nb].type == 3) {
-        if ((Game.Weapons[weapon][4] + 0.3) <= MaxScore) { Game.Weapons[weapon][4] += 0.3; }
-        else { Game.Weapons[weapon][4] = MaxScore; }
+        if ((Game.Weapons[weapon][3] + 0.3) <= MaxScore) { Game.Weapons[weapon][3] += 0.3; }
+        else { Game.Weapons[weapon][3] = MaxScore; }
       }
       if (Game.inventory[nb].type == 4) {
-        if ((Game.Weapons[weapon][4] + 0.4) <= MaxScore) { Game.Weapons[weapon][4] += 0.4; }
-        else { Game.Weapons[weapon][4] = MaxScore; }
+        if ((Game.Weapons[weapon][3] + 0.4) <= MaxScore) { Game.Weapons[weapon][3] += 0.4; }
+        else { Game.Weapons[weapon][3] = MaxScore; }
       }
       if (Game.inventory[nb].type == 5) {
-        if ((Game.Weapons[weapon][4] + 0.5) <= MaxScore) { Game.Weapons[weapon][4] += 0.5; }
-        else { Game.Weapons[weapon][4] = MaxScore; }
+        if ((Game.Weapons[weapon][3] + 0.5) <= MaxScore) { Game.Weapons[weapon][3] += 0.5; }
+        else { Game.Weapons[weapon][3] = MaxScore; }
       }
       if (Game.inventory[nb].type == 6) {
-        if ((Game.Weapons[weapon][4] + 0.6) <= MaxScore) { Game.Weapons[weapon][4] += 0.6; }
-        else { Game.Weapons[weapon][4] = MaxScore; }
+        if ((Game.Weapons[weapon][3] + 0.6) <= MaxScore) { Game.Weapons[weapon][3] += 0.6; }
+        else { Game.Weapons[weapon][3] = MaxScore; }
       }
       if (Game.inventory[nb].type == 7) {
-        if ((Game.Weapons[weapon][4] + 0.7) <= MaxScore) { Game.Weapons[weapon][4] += 0.7; }
-        else { Game.Weapons[weapon][4] = MaxScore; }
+        if ((Game.Weapons[weapon][3] + 0.7) <= MaxScore) { Game.Weapons[weapon][3] += 0.7; }
+        else { Game.Weapons[weapon][3] = MaxScore; }
       }
     }
     if (nb < Game.MaxInv) {

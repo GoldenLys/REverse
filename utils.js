@@ -207,10 +207,10 @@ function login() {
     var user = result.user;
     Email = user.email;
     $("#modal-5").modal("hide");
-    LoggedIn = 1;
-    SendStats();
     isTabActive = "None";
   });
+  LoggedIn = 1;
+  SendStats();
 }
 
 var PAGE = 1;
@@ -431,9 +431,6 @@ function ClickEvents() {
     $("#modal-5").modal("hide");
     $("#modal-5").modal("hide");
     isTabActive = "None";
-    if (Game.Level == 1 && Game.MissionStarted[0] == false && Game.MissionsCompleted[0] == 0) {
-      mission(0);
-    }
   });
   $("#LOGIN-BTN").on("click", function () {
     $("#modal-5").modal("hide");
@@ -770,6 +767,8 @@ function CheckCode(debug) {
         Game.Armors[2][4] = MaxScore;
         Game.Armors[3][4] = MaxScore;
         Game.Armors[4][4] = MaxScore;
+        Game.Weapons.Main[3] = MaxScore;
+        Game.Weapons.Special[3] = MaxScore;
         ChangeWT();
       }
       if (code === codes[5]) {
@@ -800,6 +799,8 @@ function CheckCode(debug) {
         Game.Armors[2][4] = MaxScore;
         Game.Armors[3][4] = MaxScore;
         Game.Armors[4][4] = MaxScore;
+        Game.Weapons.Main[3] = MaxScore;
+        Game.Weapons.Special[3] = MaxScore;
         Game.MissionStarted = [false, 0, 0, 0];
         for (var Mission in Missions) { Game.MissionsCompleted[Mission] = 1; }
   
@@ -914,6 +915,7 @@ function ShowExplorationMenu() {
 function ShowInventoryMenu() {
   if (isTabActive != "Inventory") { isTabActive = "Inventory"; closeTabs(); $("#inventory-btn").addClass("active"); $("#inventory").show(); }
   else { isTabActive = "None"; closeTabs(); }
+  UpdateUI();
 }
 
 function ShowMiscsMenu() {
@@ -1039,11 +1041,11 @@ function GenMissions() {
     else { BTN = "<br><div class='fluid ui icon rainbow button' onclick='mission(" + M + ");' >Launch <i class='" + UNLOCKED + " right arrow icon'></i></div>"; }
 
     var Status = Game.MissionsCompleted[M] == 1 ? "<span class='green'>Complete</span>" : "<span class='rouge'>Incomplete</span>";
-    if (Game.MissionStarted[1] == M && Game.MissionsCompleted[M] == 0) {
+    if (Game.MissionStarted[0] == true && Game.MissionStarted[1] == M && Game.MissionsCompleted[M] == 0) {
       Status = "<span class='jaune'>In Progress</span>";
       BTN = "<br><div class='fluid ui icon rainbow button' onclick='ResetMission();' >Cancel mission <i class='green right arrow icon'></i></div>";
     }
-    if (Game.MissionsCompleted[M] == 1 && Missions[M][3] != 2) {
+    if (Game.MissionStarted[0] == true && Game.MissionsCompleted[M] == 1 && Missions[M][3] != 2) {
       BTN = "<br><div class='fluid ui icon rainbow button' onclick='MissionStory(" + M + ");' >Story <i class='green right arrow icon'></i></div>";
     }
 
