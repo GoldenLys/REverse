@@ -2266,6 +2266,7 @@ function ChangeWT() {
 //ITEM GENERATION FUNCTION
 function newItem(type, level, rarity) {
   var item = {};
+  var luck = 0;
   var Mult = [random(100, 105) / 100, random(115, 120) / 100, random(125, 130) / 100, random(135, 140) / 100, random(150, 160) / 100, random(175, 185) / 100, random(195, 210) / 100];
   var Rarities = ["Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Divine"];
   if (level < 1) { level = 1; }
@@ -2282,13 +2283,13 @@ function newItem(type, level, rarity) {
   //IF PLAYER HAVE A MINIMAL RARITY RELIC THEN USE IT HERE
   for (var R in Game.RLS) {
     if (Game.RLS[R][1] == 4) {
-      if (Game.RLS[R][2] == "Normal") { luck = 1; }
-      if (Game.RLS[R][2] == "Common") { luck = 2000; }
-      if (Game.RLS[R][2] == "Uncommon") { luck = 5000; }
-      if (Game.RLS[R][2] == "Rare") { luck = 7000; }
-      if (Game.RLS[R][2] == "Epic") { luck = 8500; }
-      if (Game.RLS[R][2] == "Exotic") { luck = 9500; }
-      if (Game.RLS[R][2] == "Divine") { luck = 9850; }
+      if (Game.RLS[R][2] == "Normal" && 1 > luck) { luck = 1; }
+      if (Game.RLS[R][2] == "Common" && 2000 > luck) { luck = 2000; }
+      if (Game.RLS[R][2] == "Uncommon" && 5000 > luck) { luck = 5000; }
+      if (Game.RLS[R][2] == "Rare" && 7000 > luck) { luck = 7000; }
+      if (Game.RLS[R][2] == "Epic" && 8500 > luck) { luck = 8500; }
+      if (Game.RLS[R][2] == "Exotic" && 9500 > luck) { luck = 9500; }
+      if (Game.RLS[R][2] == "Divine" && 9850 > luck) { luck = 9850; }
     }
   }
 
@@ -2307,17 +2308,6 @@ function newItem(type, level, rarity) {
     if (level > POS[Game.Location][2]) { level = POS[Game.Location][2]; }
   }
 
-  //IF THE PLAYER IS IN A FORTRESS THEN GENERATE AN EXOTIC OR BETTER ITEM
-  if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
-    if (type == "Gem") {
-      if (Game.Ennemy[1] >= 1 && luck < 9500) { luck = 22500; }
-      if (Game.Ennemy[1] == 7 && luck < 9850) { luck = 24000; }
-    } else {
-      if (Game.Ennemy[1] >= 1 && luck < 9500) { luck = 9500; }
-      if (Game.Ennemy[1] == 7 && luck < 9850) { luck = 9850; }
-    }
-  }
-
   var chance = random(luck, 10000);
 
   //DEFINE THE ITEM RARITY
@@ -2325,29 +2315,35 @@ function newItem(type, level, rarity) {
     item.class = 'Normal';
     item.type = 0;
   }
-  if (chance > 2000 && chance <= 5000) {
+  if (chance >= 2000 && chance < 5000) {
     item.class = 'Common';
     item.type = 1;
   }
-  if (chance > 5000 && chance <= 7000) {
+  if (chance >= 5000 && chance < 7000) {
     item.class = 'Uncommon';
     item.type = 2;
   }
-  if (chance > 7000 && chance <= 8500) {
+  if (chance >= 7000 && chance < 8500) {
     item.class = 'Rare';
     item.type = 3;
   }
-  if (chance > 8500 && chance <= 9500) {
+  if (chance >= 8500 && chance < 9500) {
     item.class = 'Epic';
     item.type = 4;
   }
-  if (chance > 9500 && chance <= 10000) {
+  if (chance >= 9500 && chance < 10000) {
     item.class = 'Exotic';
     item.type = 5;
   }
-  if (chance > 9850 && chance <= 10000) {
+  if (chance >= 9850 && chance < 10000) {
     item.class = 'Divine';
     item.type = 6;
+  }
+
+  //IF THE PLAYER IS IN A FORTRESS THEN GENERATE AN EXOTIC OR BETTER ITEM
+  if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
+    if (Game.Ennemy[1] >= 1) { item.class = 'Exotic'; item.type = 5; }
+    if (Game.Ennemy[1] == 7) { item.class = 'Divine'; item.type = 6; }
   }
 
   //IF PLAYER DOESN'T HAVE THE REQUIRED LEVEL REPLACE THE ITEM RARITY
@@ -2413,17 +2409,17 @@ function newItem(type, level, rarity) {
     var baseluck = 1;
     if (rarity == "Normal") luck = 3000;
     if (rarity == "Common") luck = 7500;
-    if (rarity == "Uncommon") luck = 15000;
-    if (rarity == "Rare") luck = 19500;
-    if (rarity == "Epic") luck = 22500;
-    if (rarity == "Exotic") luck = 24000;
-    if (rarity == "Divine") { baseluck = 24000; luck = random(24000, 30000); }
+    if (rarity == "Uncommon") { luck = 15000; }
+    if (rarity == "Rare") { baseluck = 15000; luck = 19500; }
+    if (rarity == "Epic") { baseluck = 19500; luck = 22500; }
+    if (rarity == "Exotic") { baseluck = 22500; luck = 24000; }
+    if (rarity == "Divine") { baseluck = 24000; luck = 30000; }
 
     var multiplier = random(baseluck, luck); //Random number between 0.1% - 2.5%
-
     var type2 = random(1, 100);
-    if (type2 > 0 && type2 <= 45) { //GENERATE A POWER GEM
+    if (type2 > 0 && type2 <= 35) { //GENERATE A POWER GEM
       item.power = Math.floor((multiplier / 10000) * ((WeaponsPower / (PowerMult + Game.WTMult[0])) * 0.01) + item.type);
+      console.log("Mult: " + multiplier + " | Power :" + item.power);
       if (item.power < 1) { item.power = 1; }
       item.life = 0;
       item.name = "Power Gem";
@@ -2431,8 +2427,9 @@ function newItem(type, level, rarity) {
       item.object = 2;
       item.id = 5; //SET AS POWER GEM
     }
-    if (type2 > 45 && type2 <= 100) { //GENERATE A LIFE GEM
+    if (type2 > 35 && type2 <= 100) { //GENERATE A LIFE GEM
       item.life = Math.floor((multiplier / 10000) * ((CoreBaseLife / (LifeMult + Game.WTMult[1])) * 0.01) + item.type);
+      console.log("Mult: " + multiplier + " | Life :" + item.life);
       if (item.life < 1) { item.life = 1; }
       item.power = 0;
       item.name = "Life Gem";
