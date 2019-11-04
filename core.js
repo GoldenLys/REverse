@@ -183,10 +183,9 @@ function test() {
 }
 
 (function () {
+  if (location.href.match(/(goldenlys.github.io).*/)) window.oncontextmenu = (e) => { e.preventDefault(); };
   ResetTheme(0);
-  if (localStorage.getItem("Alpha") != null) {
-    load();
-  }
+  if (localStorage.getItem("Alpha") != null) { load(); }
   if (localStorage.getItem("Alpha-Backup") != null) {
     loadBackup();
   }
