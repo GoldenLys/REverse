@@ -569,7 +569,7 @@ function UpdateUI() {
     $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%");
   }
   $("#INVUPGVAL").html(Game.MaxInv);
-  $("#ShardsNumber").html("<i class='bleu dna icon'></i>" + fix(Game.Shards, 7) + "</span> Fragments");
+  $("#ShardsNumber").html("<i class='bleu dna icon'></i>" + fix(Game.Shards, 6) + "</span> Dimensional Fragments");
   if (Game.username == "Default") {
     $("#menu").hide();
     $("#CATEGORIE-1").hide();
@@ -596,7 +596,7 @@ function UpdateUI() {
   }
   if (Game.Level >= MaxLevel && Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && LastMission >= TotalMissions) {
     $("#WTBTN").show();
-    $("#WTUNLOCK").html("<span class='ShadowReset vert'>Dimension <i class='globe icon'></i>" + (Game.Simulation + 1) + " available.");
+    $("#WTUNLOCK").html("<span class='ShadowReset vert'>Dimensional Rift <i class='globe icon'></i>" + (Game.Simulation + 1) + " is opened.");
   } else {
     $("#WTBTN").hide();
     $("#WTUNLOCK").html("");
@@ -605,10 +605,10 @@ function UpdateUI() {
   var POWMCOL = GetMultPrice(1) > Game.Shards ? "rouge" : "green";
   var LIFEMCOL = GetMultPrice(2) > Game.Shards ? "rouge" : "green";
   var INVCOL = GetMultPrice(3) > Game.Shards ? "rouge" : "green";
-  $("#XPMULTPRICE").html("<span class='" + XPMCOL + "'>" + GetMultPrice(0) + "<i class='dna icon'></i></span>");
-  $("#POWERMULTPRICE").html("<span class='" + POWMCOL + "'>" + GetMultPrice(1) + "<i class='dna icon'></i></span>");
-  $("#LIFEMULTPRICE").html("<span class='" + LIFEMCOL + "'>" + GetMultPrice(2) + "<i class='dna icon'></i></span>");
-  $("#INVUPGPRICE").html("<span class='" + INVCOL + "'>" + GetMultPrice(3) + "<i class='dna icon'></i></span>");
+  $("#XPMULTPRICE").html("<span class='" + XPMCOL + "'><i class='dna icon'></i>" + GetMultPrice(0) + "</span>");
+  $("#POWERMULTPRICE").html("<span class='" + POWMCOL + "'><i class='dna icon'></i>" + GetMultPrice(1) + "</span>");
+  $("#LIFEMULTPRICE").html("<span class='" + LIFEMCOL + "'><i class='dna icon'></i>" + GetMultPrice(2) + "</span>");
+  $("#INVUPGPRICE").html("<span class='" + INVCOL + "'><i class='dna icon'></i>" + GetMultPrice(3) + "</span>");
   for (var i = 0; i < 4; i++) {
     if (GetMultPrice(i) == 999999999) {
       if (i == 0) { XPMCOL = "rouge"; $("#XPMULTPRICE").html("<span class='" + XPMCOL + "'>Maximum reached</span>"); }
@@ -2215,6 +2215,10 @@ function GetMultPrice(id) {
 }
 
 function ChangeWT() {
+  $("#modal-7").modal("show");
+}
+
+function ConfirmWT() {
   if (Game.Level >= MaxLevel && Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && LastMission >= TotalMissions) {
     Game.Simulation++;
     Game.xp = [0, 0, 0];

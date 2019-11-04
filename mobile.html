@@ -13,7 +13,7 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.91" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.93" />
     <link rel="stylesheet" type="text/css" href="loading.css?v=1.91" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
@@ -78,6 +78,20 @@
 
         #EnnemySprite {
             margin-left: 0rem;
+        }
+
+        .leftbar {
+            position: fixed !important;
+            left: 25% !important;
+            top: 22% !important;
+            right: 10% !important;
+        }
+
+        .rightbar {
+            position: absolute !important;
+            right: -5.25% !important;
+            top: 2.25em !important;
+            left: 15% !important;
         }
     </style>
 </head>
@@ -272,8 +286,9 @@
                                     <i class="large discord icon"></i>𝓟𝓾𝓻𝓹𝓵𝓮 𝓦𝓲𝔃𝓪𝓻𝓭#3154
                                     <i class="large red reddit icon"></i>u/Aizen45
                                     <i class="large blue steam icon"></i>LYSEN-FR
-                                    <span class="desc"><br>Huge thanks to <span class="vert">Tiwaz</span> and <span class="vert">Pedter</span>
-                                    for their help.</span>
+                                    <span class="desc"><br>Huge thanks to <span class="vert">Tiwaz</span> and <span
+                                            class="vert">Pedter</span>
+                                        for their help.</span>
                                 </p>
                                 <div class="fluid ui labeled icon discord button alphaSDW" id="discord-btn"><i
                                         class="discord icon blanc"></i>AlphaRPG
@@ -959,7 +974,7 @@
                         </div>
                     </div>
                     <div id="combat">
-                        <div id="MDTL" style="margin:0;" class="fluid ui label"></div>
+                        <div id="MDTL" style="margin:0;" class="fluid ui image label"></div>
                         <div class="ui horizontal segments">
                             <div class="ui segment"
                                 style="max-width: 15%;padding: 1em 0em!important;min-width: fit-content;">
@@ -967,30 +982,27 @@
                                 <div id="PlayerID"></div>
                                 <div id="PlayerLife"></div>
                                 <div id="PlayerPower"></div>
-                            </div>
-                            <div class="ui left aligned segment"
-                                style="margin-top: 5.25rem!important;margin-left: -5%!important;max-width: 55%;padding-left: 0%;">
-                                <div id="PlayerHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
-                                    <div class="bar">
-                                        <div id="PlayerDamage" class="bartext"></div>
+                                <div class="leftbar">
+                                    <div id="PlayerHP" class="ui big inverted indicating progress"
+                                        style="margin: 0 0 0 0;">
+                                        <div class="bar">
+                                            <div id="PlayerDamage" class="bartext"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="ui horizontal segments">
-                            <div class="ui segment" style="max-width: 15%;padding: 1em 0em!important;"></div>
-                            <div class="ui right aligned segment"
-                                style="margin-top: 1rem!important;max-width: 65%;padding-right: 0%;">
-
-                                <div id="EnnemyHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
-                                    <div class="bar">
-                                        <div id="EnnemyDamage" class="bartext"></div>
+                            <div class="ui segment" style="max-width: 85%;padding: 1em 0em!important;">
+                                <div class="rightbar">
+                                    <div id="EnnemyHP" class="ui big inverted indicating progress"
+                                        style="margin: 0 0 0 0;">
+                                        <div class="bar">
+                                            <div id="EnnemyDamage" class="bartext"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="ui segment"
                                 style="max-width: 15%;padding: 1em 0em!important;min-width: fit-content;">
                                 <div id="EnnemyTitle" class="text"
@@ -1001,214 +1013,215 @@
                             </div>
                         </div>
                     </div>
-                    <div id="rewards" style="display: none;">
-                        <p id="rewards-title" class="title"></p>
-                        <span id="rewards-desc"></span>
-                        <p id="rewards-text"></p>
-                        <div id="rewards-loot" class="ui segment"></div>
+                </div>
+                <div id="rewards" style="display: none;">
+                    <p id="rewards-title" class="title"></p>
+                    <span id="rewards-desc"></span>
+                    <p id="rewards-text"></p>
+                    <div id="rewards-loot" class="ui segment"></div>
 
-                    </div>
                 </div>
             </div>
-            <div class="customB">
-                <div id="btn-CRW"></div>
-                <div id="btn-ACT" class="ui horizontal segments">
-                    <div class="ui segment" style="padding: 1em 0em;">
-                        <div class="fluid ui buttons">
-                            <div id="attack-btn" class="ui huge blue button alphaSDW"></div>
-                            <div id="emp-btn" class="ui huge rainbow button alphaSDW" style="max-width: 50%;">
-                            </div>
-                        </div>
-                        <div class="alphadivider"></div>
-                        <div id="cover-btn" class="fluid ui huge button"></div>
-                        <div class="alphadivider"></div>
-                        <div id="run-btn" class="fluid ui huge grey button alphaSDW"></div>
-                    </div>
-                </div>
-                <div class="vert" id="WTUNLOCK"></div>
-                <div class="rouge" id="LowScore"></div>
-                <div class="rouge" id="MaxPOSLVL"></div>
-                <div class="jaune" id="NextRetreat"></div>
-            </div>
-            <div class="footer">
-                <div class="ui horizontal segments">
-                    <div class="ui segment ">
-                        <div class="ui label" id="capacity"></div>
-                    </div>
-                    <div class="ui segment">
-                        <div class="ui label tooltip"><i class="green dollar icon"></i><span id="cash"></span><span
-                                class="tooltiptext">Money</span></div>
-
-                    </div>
-                    <div class="ui segment">
-                        <div class="ui label tooltip"><i class="bleu dna icon"></i><span id="SHARDSRW"></span><span
-                                class="tooltiptext">Dimensional Fragments</span>
-                        </div>
-                    </div>
-                    <div class="ui segment">
-                        <div class="ui label tooltip"><span id="islots"></span><span class="tooltiptext">Inventory
-                                slots</span></div>
-                    </div>
-                </div>
-                <div id="PlayerXP" class="ui tiny purple inverted progress" style="margin: 0 0 0 0;">
-                    <div class="bar"></div>
-                </div>
-            </div>
-            <span id="exportBody"></span>
-            <!--GAME MESSAGE-->
-            <div class="ui basic modal" id="modal-1">
-                <div class="ui icon header">
-                    <i class="info circle icon"></i>
-                    <font id="message-title" class="title">Message</font>
-                </div>
-                <div class="centrer content">
-                    <div class="ui trs message">
-                        <div class="content">
-                            <p id="message-text">
-                            </p>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <div id="closeMSG" class="ui cu button">
-                            <i class="remove icon"></i>Close </div>
-                    </div>
-                </div>
-            </div>
-            <!--DESTROYCORE-->
-            <div class="ui basic modal" id="modal-2">
-                <div class="ui icon header">
-                    <font id="confirm-title" class="title">Destroy armor confirmation</font>
-                </div>
-                <div class="centrer content">
-                    <div class="ui icon trs message">
-                        <div class="content">
-                            <h3 class="title">You will lose this item.</h3>
-                            <p id="Destroy-text"></p>
-
-                            <div id="DBTN" class="fluid ui rainbow buttons"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Welcome Back-->
-            <div class="ui basic modal" id="modal-5">
-                <h2 class="ui center aligned header">
-                    <img class="ui circular image" src="DATA/avatars/avatar34.jpg">
-                    <font id="wb-title" class="title"></font>
-                </h2>
-                <div class="centrer content">
-                    <div class="ui icon trs message">
-                        <div class="content">
-                            <h3 id="wb-texttitle" class="title"></h3>
-                            <p id="wb-text"></p>
-                            <div id="LOGIN-BTN" class="ui cu button">
-                                <span class="blanc"><i class="check icon"></i> Yes </span></div>
-                            <div id="WB-BTN" class="ui cu2 button">
-                                <span class="blanc"><i class="remove icon"></i> No </span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--NEWCORE-->
-            <div class="ui basic modal" id="modal-4">
-                <div class="ui icon header">
-                    <font id="confirm3-title" class="title">New armor confirmation</font>
-                </div>
-                <div class="centrer content">
-                    <div class="ui icon trs message">
-                        <div class="content">
-                            <div class="ui equal width centered grid">
-                                <div class="equal width row">
-                                    <div class="column">
-                                        <p id="OldCore-text" style="text-align: right;"></p>
-                                    </div>
-                                    <div class="centered column">
-                                        <center><br><br>Old <i class="arrow right icon"></i> New</center>
-                                    </div>
-                                    <div class="column">
-                                        <p id="NewCore-text" style="text-align: left;"></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <div id="confirm-btn" class="fluid ui rainbow buttons">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--NEW Relic-->
-            <div class="ui basic modal" id="modal-3">
-                <div class="ui icon header">
-                    <font id="confirm4-title" class="title">New Relic confirmation</font>
-                </div>
-                <div class="centrer content">
-                    <div class="ui icon message">
-                        <div class="content">
-                            <div class="ui equal width centered grid">
-                                <div class="equal width row">
-                                    <div class="column">
-                                        <p id="OldRelic-text" style="text-align: right;"></p>
-                                    </div>
-                                    <div class="centered column">
-                                        <center><br><br>Old <i class="arrow right icon"></i> New</center>
-                                    </div>
-                                    <div class="column">
-                                        <p id="NewRelic-text" style="text-align: left;"></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <div id="confirm2-btn" class="fluid ui cu buttons">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--RESET-->
-            <div class="ui basic modal" id="modal-6">
-                <div class="ui icon header">
-                    <font id="confirm2-title" class="title">Confirm reset</font>
-                </div>
-                <div class="centrer content">
-                    <div class="ui icon message">
-                        <div class="content">
-                            <p id="resetconfirm-text">Do you really want to reset all your stats ?</p>
-                        </div>
-                    </div>
+        </div>
+        <div class="customB">
+            <div id="btn-CRW"></div>
+            <div id="btn-ACT" class="ui horizontal segments">
+                <div class="ui segment" style="padding: 1em 0em;">
                     <div class="fluid ui buttons">
-                        <div id="confirmsell-btn" onclick="confirmReset();" class="ui cu button">
-                            <span class="blanc"><i class="check icon"></i> Yes </span></div>
-                        <div onclick="hideModals();" class="ui cu2 button">
-                            <span class="blanc"><i class="remove icon"></i> No </span></div>
+                        <div id="attack-btn" class="ui huge blue button alphaSDW"></div>
+                        <div id="emp-btn" class="ui huge rainbow button alphaSDW" style="max-width: 50%;">
+                        </div>
+                    </div>
+                    <div class="alphadivider"></div>
+                    <div id="cover-btn" class="fluid ui huge button"></div>
+                    <div class="alphadivider"></div>
+                    <div id="run-btn" class="fluid ui huge grey button alphaSDW"></div>
+                </div>
+            </div>
+            <div class="vert" id="WTUNLOCK"></div>
+            <div class="rouge" id="LowScore"></div>
+            <div class="rouge" id="MaxPOSLVL"></div>
+            <div class="jaune" id="NextRetreat"></div>
+        </div>
+        <div class="footer">
+            <div class="ui horizontal segments">
+                <div class="ui segment ">
+                    <div class="ui label" id="capacity"></div>
+                </div>
+                <div class="ui segment">
+                    <div class="ui label tooltip"><i class="green dollar icon"></i><span id="cash"></span><span
+                            class="tooltiptext">Money</span></div>
+
+                </div>
+                <div class="ui segment">
+                    <div class="ui label tooltip"><i class="bleu dna icon"></i><span id="SHARDSRW"></span><span
+                            class="tooltiptext">Dimensional Fragments</span>
+                    </div>
+                </div>
+                <div class="ui segment">
+                    <div class="ui label tooltip"><span id="islots"></span><span class="tooltiptext">Inventory
+                            slots</span></div>
+                </div>
+            </div>
+            <div id="PlayerXP" class="ui tiny purple inverted progress" style="margin: 0 0 0 0;">
+                <div class="bar"></div>
+            </div>
+        </div>
+        <span id="exportBody"></span>
+        <!--GAME MESSAGE-->
+        <div class="ui basic modal" id="modal-1">
+            <div class="ui icon header">
+                <i class="info circle icon"></i>
+                <font id="message-title" class="title">Message</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui trs message">
+                    <div class="content">
+                        <p id="message-text">
+                        </p>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div id="closeMSG" class="ui cu button">
+                        <i class="remove icon"></i>Close </div>
+                </div>
+            </div>
+        </div>
+        <!--DESTROYCORE-->
+        <div class="ui basic modal" id="modal-2">
+            <div class="ui icon header">
+                <font id="confirm-title" class="title">Destroy armor confirmation</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui icon trs message">
+                    <div class="content">
+                        <h3 class="title">You will lose this item.</h3>
+                        <p id="Destroy-text"></p>
+
+                        <div id="DBTN" class="fluid ui rainbow buttons"></div>
                     </div>
                 </div>
             </div>
-
-            <!--DIMENSIONAL RIFT CONFIRMATION-->
-            <div class="ui basic modal" id="modal-7">
-                <div class="ui icon header">
-                    <font id="confirm2-title" class="title">Do you really want to go inside the rift ?</font>
-                </div>
-                <div class="centrer content">
-                    <div class="ui icon message">
-                        <div class="content">
-                            <p id="resetconfirm-text">You will lose your current equipment.</p>
-                        </div>
-                    </div>
-                    <div class="fluid ui buttons">
-                        <div id="confirmrift" onclick="confirmReset();" class="ui cu button">
+        </div>
+        <!--Welcome Back-->
+        <div class="ui basic modal" id="modal-5">
+            <h2 class="ui center aligned header">
+                <img class="ui circular image" src="DATA/avatars/avatar34.jpg">
+                <font id="wb-title" class="title"></font>
+            </h2>
+            <div class="centrer content">
+                <div class="ui icon trs message">
+                    <div class="content">
+                        <h3 id="wb-texttitle" class="title"></h3>
+                        <p id="wb-text"></p>
+                        <div id="LOGIN-BTN" class="ui cu button">
                             <span class="blanc"><i class="check icon"></i> Yes </span></div>
-                        <div onclick="hideModals();" class="ui cu2 button">
+                        <div id="WB-BTN" class="ui cu2 button">
                             <span class="blanc"><i class="remove icon"></i> No </span></div>
                     </div>
                 </div>
             </div>
         </div>
+        <!--NEWCORE-->
+        <div class="ui basic modal" id="modal-4">
+            <div class="ui icon header">
+                <font id="confirm3-title" class="title">New armor confirmation</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui icon trs message">
+                    <div class="content">
+                        <div class="ui equal width centered grid">
+                            <div class="equal width row">
+                                <div class="column">
+                                    <p id="OldCore-text" style="text-align: right;"></p>
+                                </div>
+                                <div class="centered column">
+                                    <center><br><br>Old <i class="arrow right icon"></i> New</center>
+                                </div>
+                                <div class="column">
+                                    <p id="NewCore-text" style="text-align: left;"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div id="confirm-btn" class="fluid ui rainbow buttons">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--NEW Relic-->
+        <div class="ui basic modal" id="modal-3">
+            <div class="ui icon header">
+                <font id="confirm4-title" class="title">New Relic confirmation</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui icon message">
+                    <div class="content">
+                        <div class="ui equal width centered grid">
+                            <div class="equal width row">
+                                <div class="column">
+                                    <p id="OldRelic-text" style="text-align: right;"></p>
+                                </div>
+                                <div class="centered column">
+                                    <center><br><br>Old <i class="arrow right icon"></i> New</center>
+                                </div>
+                                <div class="column">
+                                    <p id="NewRelic-text" style="text-align: left;"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div id="confirm2-btn" class="fluid ui cu buttons">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--RESET-->
+        <div class="ui basic modal" id="modal-6">
+            <div class="ui icon header">
+                <font id="confirm2-title" class="title">Confirm reset</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui icon message">
+                    <div class="content">
+                        <p id="resetconfirm-text">Do you really want to reset all your stats ?</p>
+                    </div>
+                </div>
+                <div class="fluid ui buttons">
+                    <div id="confirmsell-btn" onclick="confirmReset();" class="ui cu button">
+                        <span class="blanc"><i class="check icon"></i> Yes </span></div>
+                    <div onclick="hideModals();" class="ui cu2 button">
+                        <span class="blanc"><i class="remove icon"></i> No </span></div>
+                </div>
+            </div>
+        </div>
+
+        <!--DIMENSIONAL RIFT CONFIRMATION-->
+        <div class="ui basic modal" id="modal-7">
+            <div class="ui icon header">
+                <font id="confirm2-title" class="title">Do you really want to go inside the rift ?</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui icon message">
+                    <div class="content">
+                        <p id="resetconfirm-text">You will lose your current equipment.</p>
+                    </div>
+                </div>
+                <div class="fluid ui buttons">
+                    <div id="confirmrift" onclick="confirmReset();" class="ui cu button">
+                        <span class="blanc"><i class="check icon"></i> Yes </span></div>
+                    <div onclick="hideModals();" class="ui cu2 button">
+                        <span class="blanc"><i class="remove icon"></i> No </span></div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
@@ -1224,6 +1237,6 @@
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
 <script type="text/javascript" src="utils.js?v=1.921"></script>
-<script type="text/javascript" src="core.js?v=1.922"></script>
+<script type="text/javascript" src="core.js?v=1.93"></script>
 
 </html>

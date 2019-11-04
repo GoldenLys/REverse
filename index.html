@@ -13,7 +13,7 @@
     <link rel="icon" href="DATA/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.91" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.93" />
     <link rel="stylesheet" type="text/css" href="loading.css?v=1.91" />
     <link rel="stylesheet" type="text/css" href="DATA/progress.min.css" />
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.11.1/css/pro.min.css" />
@@ -211,7 +211,8 @@
                                         <i class="large discord icon"></i>𝓟𝓾𝓻𝓹𝓵𝓮 𝓦𝓲𝔃𝓪𝓻𝓭#3154<i
                                             class="large red reddit icon"></i>u/Aizen45
                                         <i class="large blue steam icon"></i>LYSEN-FR
-                                        <span class="desc"><br>Huge thanks to <span class="vert">Tiwaz</span> and <span class="vert">Pedter</span>
+                                        <span class="desc"><br>Huge thanks to <span class="vert">Tiwaz</span> and <span
+                                                class="vert">Pedter</span>
                                             for their help.</span>
                                     </p>
                                 </div>
@@ -467,86 +468,114 @@
                         </div>
                     </div>
                     <div id="prestige" style="display: none;">
-                        <div class="ui horizontal segments">
+                        <div class="ui segments">
                             <div class="ui segment">
-                                <p>
-                                    <div id="CurrWT"></div>
-                                    <div id="WTShards"></div><br>
-                                </p>
+                                <div class="ui black message">
+                                    <p class="title glow">Dimension</p>
+                                    <div class="ui divider"></div>
+                                    <div class="ui horizontal segments">
+                                        <div class="ui segment">
+                                            <p>
+                                                <div id="CurrWT"></div>
+                                                <div id="WTShards"></div><br>
+                                            </p>
+                                        </div>
+                                        <div class="ui segment">
+                                            <div class="ui trs message">
+                                                <h3 class="rouge"><i class="exclamation circle icon"></i>Informations
+                                                </h3>
+                                                <div class="desc">By passing through the dimensional rift you will lose
+                                                    your
+                                                    current
+                                                    equipment.<br>The story
+                                                    will be
+                                                    reset and the difficulty will raise by 5%.<br>
+                                                    <br>For each dimension: +50 max tier score, 3% more EXP, +2
+                                                    inventory
+                                                    slots
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui horizontal segments">
+                                        <div class="ui segment" style="max-width: 10%;"></div>
+                                        <div class="ui segment">
+                                            <div id="WTBTN" class="fluid big ui rainbow3 button">Dimensional Rift</div>
+                                        </div>
+                                        <div class="ui segment" style="max-width: 10%;"></div>
+                                    </div>
+                                    <br>
+                                </div>
                             </div>
                             <div class="ui segment">
                                 <div class="ui black message">
-                                    <h3 class="rouge"><i class="exclamation circle icon"></i>Informations</h3>
-                                    <div class="desc">By passing through the dimensional rift you will lose your
-                                        current
-                                        equipment.<br>The story
-                                        will be
-                                        reset and the difficulty will raise by 5%.<br>
-                                        <br>For each dimension: +50 max tier score, 3% more EXP, +2 inventory slots
-                                    </div>
+                                    <p class="title glow">Dimensional Upgrades</p>
+                                    <div class="ui divider"></div>
+                                    <span class="text" id="ShardsNumber"></span>
+                                    <table id="Upgrades" class="ui very compact striped inverted Upgrades table">
+                                        <thead>
+                                            <tr id="MSDiv1" class="shadow">
+                                                <th class="ui right aligned">Name</th>
+                                                <th class="ui center aligned">Current value</th>
+                                                <th class="ui center aligned">Price</th>
+                                                <th class="ui center aligned">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="right aligned desc">EXP Multiplier</td>
+                                                <td id="XPMULTVAL" class="center aligned desc">0</td>
+                                                <td id="XPMULTPRICE" class="center aligned">3<i
+                                                        class="bleu dna icon"></i>
+                                                </td>
+                                                <td class="right aligned">
+                                                    <div id="xpm-btn" class="fluid ui rainbow button">
+                                                        Upgrade
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="right aligned desc">Damage Multiplier</td>
+                                                <td id="POWERMULTVAL" class="center aligned desc">0</td>
+                                                <td id="POWERMULTPRICE" class="center aligned">3<i
+                                                        class="bleu dna icon"></i>
+                                                </td>
+                                                <td class="right aligned">
+                                                    <div id="pm-btn" class="fluid ui rainbow button">
+                                                        Upgrade
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="right aligned desc">Armor Multiplier</td>
+                                                <td id="LIFEMULTVAL" class="center aligned desc">0</td>
+                                                <td id="LIFEMULTPRICE" class="center aligned">3<i
+                                                        class="bleu dna icon"></i>
+                                                </td>
+                                                <td class="right aligned">
+                                                    <div id="lpm-btn" class="fluid ui rainbow button">
+                                                        Upgrade
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="right aligned desc">Inventory slots</td>
+                                                <td id="INVUPGVAL" class="center aligned desc">0</td>
+                                                <td id="INVUPGPRICE" class="center aligned">3<i
+                                                        class="bleu dna icon"></i>
+                                                </td>
+                                                <td class="right aligned">
+                                                    <div id="invu-btn" class="fluid ui rainbow button">
+                                                        Upgrade
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br>
                                 </div>
                             </div>
-
                         </div>
-                        <div id="WTBTN" class="fluid ui rainbow3 button">Dimensional Rift</div>
-                        <br>
-                        <span class="text" id="ShardsNumber"></span>
-                        <table id="Upgrades" class="ui very compact inverted Upgrades table">
-                            <thead>
-                                <tr id="MSDiv1" class="shadow">
-                                    <th class="ui right aligned">Name</th>
-                                    <th class="ui center aligned">Current value</th>
-                                    <th class="ui center aligned">Price</th>
-                                    <th class="ui center aligned">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="right aligned desc">EXP Multiplier</td>
-                                    <td id="XPMULTVAL" class="center aligned desc">0</td>
-                                    <td id="XPMULTPRICE" class="center aligned">3<i class="bleu dna icon"></i>
-                                    </td>
-                                    <td class="right aligned">
-                                        <div id="xpm-btn" class="fluid ui rainbow button">
-                                            Upgrade
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="right aligned desc">Damage Multiplier</td>
-                                    <td id="POWERMULTVAL" class="center aligned desc">0</td>
-                                    <td id="POWERMULTPRICE" class="center aligned">3<i class="bleu dna icon"></i>
-                                    </td>
-                                    <td class="right aligned">
-                                        <div id="pm-btn" class="fluid ui rainbow button">
-                                            Upgrade
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="right aligned desc">Armor Multiplier</td>
-                                    <td id="LIFEMULTVAL" class="center aligned desc">0</td>
-                                    <td id="LIFEMULTPRICE" class="center aligned">3<i class="bleu dna icon"></i>
-                                    </td>
-                                    <td class="right aligned">
-                                        <div id="lpm-btn" class="fluid ui rainbow button">
-                                            Upgrade
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="right aligned desc">Inventory slots</td>
-                                    <td id="INVUPGVAL" class="center aligned desc">0</td>
-                                    <td id="INVUPGPRICE" class="center aligned">3<i class="bleu dna icon"></i>
-                                    </td>
-                                    <td class="right aligned">
-                                        <div id="invu-btn" class="fluid ui rainbow button">
-                                            Upgrade
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                     <div id="statistics" style="display: none;">
                         <div class="ui accordion black">
@@ -906,25 +935,26 @@
                                 <div id="PlayerID"></div>
                                 <div id="PlayerLife"></div>
                                 <div id="PlayerPower"></div>
-                            </div>
-                            <div class="ui segment leftbar">
-                                <div id="PlayerHP" class="ui big inverted indicating progress" style="margin: 0 0 0 0;">
-                                    <div class="bar">
-                                        <div id="PlayerDamage" class="bartext"></div>
+                                <div class="leftbar">
+                                    <div id="PlayerHP" class="ui big inverted indicating progress"
+                                        style="margin: 0 0 0 0;">
+                                        <div class="bar">
+                                            <div id="PlayerDamage" class="bartext"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="ui segment" style="max-width: 10%;"></div>
                         </div>
 
 
                         <div class="ui horizontal segments">
-                            <div class="ui segment" style="max-width: 10%;"></div>
-                            <div class="ui segment rightbar">
-                                <div id="EnnemyHP" class="ui big inverted indicating progress"
-                                    style="margin: 0 0 0 0;transform: rotate(180deg)">
-                                    <div class="bar">
-                                        <div id="EnnemyDamage" class="bartext" style="transform: rotate(180deg)">
+                            <div class="ui segment" style="max-width: 85%;">
+                                <div class="rightbar">
+                                    <div id="EnnemyHP" class="ui big inverted indicating progress"
+                                        style="margin: 0 0 0 0;transform: rotate(180deg)">
+                                        <div class="bar">
+                                            <div id="EnnemyDamage" class="bartext" style="transform: rotate(180deg)">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1123,7 +1153,7 @@
                     </div>
                 </div>
                 <div class="fluid ui buttons">
-                    <div id="confirmsell-btn" onclick="confirmReset();" class="ui cu button">
+                    <div id="confirmsell-btn" onclick="confirmWT();" class="ui cu button">
                         <span class="blanc"><i class="check icon"></i> Yes </span></div>
                     <div onclick="hideModals();" class="ui cu2 button">
                         <span class="blanc"><i class="remove icon"></i> No </span></div>
@@ -1169,6 +1199,6 @@
 <script type="text/javascript" src="DATA/progress.min.js"></script>
 <script type="text/javascript" src="DATA/sidebar.min.js"></script>
 <script type="text/javascript" src="utils.js?v=1.921"></script>
-<script type="text/javascript" src="core.js?v=1.922"></script>
+<script type="text/javascript" src="core.js?v=1.93"></script>
 
 </html>

@@ -411,6 +411,7 @@ h5 {
   font-family: 'Electrolize', sans-serif !important;
   font-weight: normal;
   vertical-align: middle;
+  margin-bottom: 0 !important;
 }
 
 .text2 {
@@ -1174,7 +1175,8 @@ a.ui.label {
   color: unset !important;
 }
 
-.ui.blue.button, .ui.blue.buttons .button {
+.ui.blue.button,
+.ui.blue.buttons .button {
   background-color: var(--blue);
   color: #fff;
   text-shadow: 0 0 4px var(--black);
@@ -1334,7 +1336,11 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .ui.gren.segment:not(.inverted) {
+  background: linear-gradient(to bottom, var(--darkgrey5) 65%, transparent);
+  padding: 1em 1em !important;
+  border-radius: 0.5rem !important;
   border-top: 2px solid var(--green) !important;
+  padding-bottom: 2em !important;
 }
 
 .ui.trs.message {
@@ -1450,7 +1456,7 @@ i.discord.icon {
 }
 
 #CATEGORIE-1 {
-  padding-bottom: 4rem;
+  padding-bottom: 2rem;
 }
 
 /* Tooltip container */
@@ -1601,15 +1607,17 @@ i.discord.icon {
 }
 
 .leftbar {
-  position: relative !important;
-  left: -5% !important;
-  top: 5.25rem !important;
+  position: absolute !important;
+  left: 70% !important;
+  top: 6em !important;
+  right: -475% !important;
 }
 
 .rightbar {
-  position: relative !important;
-  right: -8rem !important;
-  top: 1rem !important;
+  position: absolute !important;
+  right: -5.25% !important;
+  top: 2.25em !important;
+  left: 15% !important;
 }
 
 @keyframes glitch-text {
@@ -1647,6 +1655,8 @@ i.discord.icon {
   border-radius: 5rem;
   margin-left: auto;
   margin-right: auto;
+  z-index: 19;
+  position: relative;
 }
 
 .bgmask {
@@ -1957,6 +1967,7 @@ i.discord.icon {
   width: auto;
 }
 
-.ui.top.attached.label+[class*="right floated"]+*, .ui.top.attached.label:first-child+:not(.attached) {
-  margin-top: 3rem!important;
+.ui.top.attached.label+[class*="right floated"]+*,
+.ui.top.attached.label:first-child+:not(.attached) {
+  margin-top: 3rem !important;
 }
