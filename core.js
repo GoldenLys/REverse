@@ -345,7 +345,7 @@ function UpdateEngine() {
       }
     }
     if (Game.Emp > 50) Game.Emp = 50;
-
+    Game.Shards = Math.round(Game.Shards);
     var ONLINEICON = "";
     if (Game.username != "Default" && location.href.match(/(goldenlys.github.io).*/) && Game.username != "Default" && Game.username != null && LoggedIn == 1 && Email != "none") { ONLINEICON = "<i class='vert fas fa-circle'></i>"; } else { ONLINEICON = "<i class='rouge far fa-circle'></i>"; }
 
@@ -761,15 +761,15 @@ function GenInventory() {
       TIER = "Score";
       TIERRANK = "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IV].level * 10);
     }
-    BTN = "<div class='ui right floated vertical buttons'><div onclick='EquipItem(" + IV + ", " + Game.inventory[IV].id + ")' class='green ui button'>Equip</div><div onclick='RemoveItem(" + IV + ")' class='red ui button'>Remove</div></div>";
-
+    var BTN = url.match(/mobile/gi) ? "<div class='ui right floated vertical buttons'><div onclick='EquipItem(" + IV + ", " + Game.inventory[IV].id + ")' class='green ui button'>Equip</div><div onclick='RemoveItem(" + IV + ")' class='red ui button'>Remove</div></div>" : "<div class='ui right floated buttons'><div onclick='EquipItem(" + IV + ", " + Game.inventory[IV].id + ")' class='green ui button'>Equip</div><div onclick='RemoveItem(" + IV + ")' class='red ui button'>Remove</div></div>";
+    var BR = url.match(/mobile/gi) ? " " : "<br>";
     var UPS = Game.inventory[IV].ups > 0 ? " " + (Game.inventory[IV].ups) + "<i class='orange fad fa-gem'></i>" : "";
     if (Game.inventory[IV].id == 1) { //SHOW ARMOR IN INVENTORY
-      $("#inv1").append("<div class='ui gren segment'>" + BTN + "<div class='invL'>" + TIER + "<br>" + TIERRANK + "</div>" + Game.inventory[IV].name + UPS + "<br><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span><br><i class='rouge fas fa-heart revertmargin'></i>" + (Game.inventory[IV].life) + "</div><br>");
+      $("#inv1").append("<div class='ui gren segment'>" + BTN + "<div class='invL'>" + TIER + BR + TIERRANK + "</div><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + Game.inventory[IV].name + UPS + "<br><i class='rouge fas fa-heart revertmargin'></i>" + (Game.inventory[IV].life) + "</div>");
     }
 
     if (Game.inventory[IV].id == 4) { //SHOW WEAPONS IN INVENTORY
-      $("#inv4").append("<div class='ui gren segment'>" + BTN + "<div class='invL'>" + TIER + "<br>" + TIERRANK + "</div>" + Game.inventory[IV].name + UPS + "<br><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span><br><i class='bleu fas fa-sword revertmargin'></i>" + (Game.inventory[IV].power) + "</div><br>");
+      $("#inv4").append("<div class='ui gren segment'>" + BTN + "<div class='invL'>" + TIER + BR + TIERRANK + "</div><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + Game.inventory[IV].name + UPS + "<br><i class='bleu fas fa-sword revertmargin'></i>" + (Game.inventory[IV].power) + "</div>");
     }
 
     if (Game.inventory[IV].id == 2 || Game.inventory[IV].id == 5) { //SHOW Gem IN INVENTORY 
@@ -2197,15 +2197,15 @@ function BuyInvSlot() {
 function GetMultPrice(id) {
   if (Game.Upgrades[id] == null) { Game.Upgrades[id] = 0; }
   var price = 2;
-  if (Game.Upgrades[id] >= 5) { price = 3; }
-  if (Game.Upgrades[id] >= 10) { price = 4; }
-  if (Game.Upgrades[id] >= 20) { price = 5; }
-  if (Game.Upgrades[id] >= 30) { price = 7.5; }
-  if (Game.Upgrades[id] >= 40) { price = 10; }
-  if (Game.Upgrades[id] >= 50) { price = 12; }
-  if (Game.Upgrades[id] >= 60) { price = 14; }
-  if (Game.Upgrades[id] >= 70) { price = 15; }
-  if (Game.Upgrades[id] >= 80) { price = 25; }
+  if (Game.Upgrades[id] >= 10) { price = 3; }
+  if (Game.Upgrades[id] >= 20) { price = 4; }
+  if (Game.Upgrades[id] >= 30) { price = 5; }
+  if (Game.Upgrades[id] >= 40) { price = 6; }
+  if (Game.Upgrades[id] >= 50) { price = 8; }
+  if (Game.Upgrades[id] >= 60) { price = 10; }
+  if (Game.Upgrades[id] >= 70) { price = 12; }
+  if (Game.Upgrades[id] >= 80) { price = 15; }
+  if (Game.Upgrades[id] >= 90) { price = 25; }
 
   if (id == 0 && Game.Upgrades[id] >= 200) { price = 999999999; }
   if (id == 1 && Game.Upgrades[id] >= 100) { price = 999999999; }
@@ -2345,7 +2345,7 @@ function newItem(type, level, rarity) {
 
   //IF THE PLAYER IS IN A FORTRESS THEN GENERATE AN EXOTIC OR BETTER ITEM
   if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
-    if (Game.Ennemy[1] >= 1) { item.class = 'Exotic'; item.type = 5; }
+    if (Game.Ennemy[1] >= 1 && item.type != 6) { item.class = 'Exotic'; item.type = 5; }
     if (Game.Ennemy[1] == 7) { item.class = 'Divine'; item.type = 6; }
   }
 
@@ -2410,13 +2410,13 @@ function newItem(type, level, rarity) {
 
   if (type == "Gem") { //GENERATE A Gem
     var baseluck = 1;
-    if (rarity == "Normal") luck = 3000;
-    if (rarity == "Common") luck = 7500;
-    if (rarity == "Uncommon") { luck = 15000; }
-    if (rarity == "Rare") { baseluck = 15000; luck = 19500; }
-    if (rarity == "Epic") { baseluck = 19500; luck = 22500; }
-    if (rarity == "Exotic") { baseluck = 22500; luck = 24000; }
-    if (rarity == "Divine") { baseluck = 24000; luck = 30000; }
+    if (item.class == "Normal") luck = 3000;
+    if (item.class == "Common") luck = 7500;
+    if (item.class == "Uncommon") { luck = 15000; }
+    if (item.class == "Rare") { baseluck = 15000; luck = 19500; }
+    if (item.class == "Epic") { baseluck = 19500; luck = 22500; }
+    if (item.class == "Exotic") { baseluck = 22500; luck = 24000; }
+    if (item.class == "Divine") { baseluck = 24000; luck = 30000; }
 
     var multiplier = random(baseluck, luck); //Random number between 0.1% - 2.5%
     var type2 = random(1, 100);

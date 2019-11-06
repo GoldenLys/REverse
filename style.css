@@ -1332,7 +1332,6 @@ input[type=range]::-webkit-slider-thumb {
 .invL {
   position: absolute;
   float: left;
-  margin: 1% 5% 0% !important;
 }
 
 .ui.gren.segment:not(.inverted) {
