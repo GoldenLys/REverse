@@ -774,7 +774,7 @@ function GenInventory() {
 
     if (Game.inventory[IV].id == 2 || Game.inventory[IV].id == 5) { //SHOW Gem IN INVENTORY 
       var BONUS = Game.inventory[IV].object == 1 ? "<i class='rouge fas fa-heart'></i>" + Game.inventory[IV].life : "<i class='bleu fas fa-sword'></i>" + Game.inventory[IV].power;
-      $("#inv2").append("<div class='ui gren segment'>" + BTN + "<span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span><br> " + Game.inventory[IV].name + "<br>" + BONUS + "</div><br>");
+      $("#inv2").append("<div class='ui gren segment'>" + BTN + "<span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + Game.inventory[IV].name + "<br>" + BONUS + "</div>");
     }
 
     if (Game.inventory[IV].id == 3) { //SHOW RELIC IN INVENTORY
@@ -793,7 +793,7 @@ function GenInventory() {
       if (Game.inventory[IV].object == 4) {
         DESC = "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>";
       }
-      $("#inv3").append("<div class='ui gren segment'>" + BTN + Game.inventory[IV].name + "<br><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span><br>" + DESC + "</div><br>");
+      $("#inv3").append("<div class='ui gren segment'><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + BTN + Game.inventory[IV].name + "<br>" + DESC + "</div>");
     }
   }
 }
@@ -2422,7 +2422,6 @@ function newItem(type, level, rarity) {
     var type2 = random(1, 100);
     if (type2 > 0 && type2 <= 35) { //GENERATE A POWER GEM
       item.power = Math.floor((multiplier / 10000) * ((WeaponsPower / (PowerMult + Game.WTMult[0])) * 0.01) + item.type);
-      console.log("Mult: " + multiplier + " | Power :" + item.power);
       if (item.power < 1) { item.power = 1; }
       item.life = 0;
       item.name = "Power Gem";
@@ -2432,7 +2431,6 @@ function newItem(type, level, rarity) {
     }
     if (type2 > 35 && type2 <= 100) { //GENERATE A LIFE GEM
       item.life = Math.floor((multiplier / 10000) * ((CoreBaseLife / (LifeMult + Game.WTMult[1])) * 0.01) + item.type);
-      console.log("Mult: " + multiplier + " | Life :" + item.life);
       if (item.life < 1) { item.life = 1; }
       item.power = 0;
       item.name = "Life Gem";
