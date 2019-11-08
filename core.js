@@ -613,7 +613,7 @@ function UpdateUI() {
     if (GetMultPrice(i) == 999999999) {
       if (i == 0) { XPMCOL = "rouge"; $("#XPMULTPRICE").html("<span class='" + XPMCOL + "'>Maximum reached</span>"); }
       if (i == 1) { POWMCOL = "rouge"; $("#POWERMULTPRICE").html("<span class='" + POWMCOL + "'>Maximum reached</span>"); }
-      if (i == 2) { LIFEMCOL = "rouge"; $("LIFEMULTPRICE").html("<span class='" + LIFEMCOL + "'>Maximum reached</span>"); }
+      if (i == 2) { LIFEMCOL = "rouge"; $("#LIFEMULTPRICE").html("<span class='" + LIFEMCOL + "'>Maximum reached</span>"); }
       if (i == 3) { INVCOL = "rouge"; $("#INVUPGPRICE").html("<span class='" + INVCOL + "'>Maximum reached</span>"); }
     }
   }
