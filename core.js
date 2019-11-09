@@ -1378,6 +1378,7 @@ function GenEnnemy() {
     } else {
       Game.Ennemy[0] = Math.floor(Math.random() * Ennemies[Game.Location].length);
     }
+    if (Ennemies[Game.Location][Game.Ennemy[0]] == undefined) Game.Ennemy[0] = 0;
     $("#EnnemyDamage").html("");
     $("#PlayerDamage").html("");
     UpdateGame();
