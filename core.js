@@ -339,10 +339,9 @@ function UpdateEngine() {
       Game.Level = 1;
       Game.xp[0] = 0;
     }
-    if (ScoreModeEnabled == 0 && Game.isInFight != 2 || Game.isInFight != 3) {
-      if (Game.xp[0] >= Game.xp[1]) {
+    if (ScoreModeEnabled == 0 && Game.isInFight != 2 || Game.isInFight != 3 && Game.xp[0] >= Game.xp[1]) {
         Game.Level++;
-      }
+        Game.xp[1] = CalcEXP(Game.Level);
     }
     if (Game.Emp > 50) Game.Emp = 50;
     Game.Shards = Math.round(Game.Shards);
