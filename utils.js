@@ -312,6 +312,7 @@ function UpdateDB(snapshot) {
         Theme = snapshot.val().Theme;
       }
       if (id == Leader) { isPlayer = "fight"; }
+      var DEATHS = snapshot.val().Deaths == 0 ? 1 : snapshot.val().Deaths;
       $("#LEADERBOARD").append("<tr id='leader-" + id + "' class='" + isPlayer + "'>" +
         "<td class='center aligned'>#" + id + "</td>" +
         "<td class='center aligned' style='color:" + Theme + ";'><img class='ui mini avatar image' src='DATA/avatars/avatar" + Avatar + ".jpg'>" + snapshot.key + "</td>" +
@@ -319,7 +320,7 @@ function UpdateDB(snapshot) {
         "<td class='center aligned'>" + fix(snapshot.val().WT, 3) + "</td>" +
         "<td class='center aligned'>" + fix(snapshot.val().CorePower, 5) + "</td>" +
         "<td class='center aligned'>" + fix(snapshot.val().CoreLife, 5) + "</td>" +
-        "<td class='center aligned'>" + fix(snapshot.val().Kills / snapshot.val().Deaths, 7) + "</td>" +
+        "<td class='center aligned'>" + fix(snapshot.val().Kills / DEATHS, 7) + "</td>" +
         "</tr>");
     } else {
       id--;

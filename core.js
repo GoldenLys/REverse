@@ -198,15 +198,22 @@ function test() {
     $(".footer").show();
     UpdateGame();
   }
-  if (Game.isInFight == 2 && loadState > 4) {
-    Game.isInFight = 0;
-  }
   setInterval(UpdateEngine, 1000);
   UpdateLoadingText();
   ClickEvents();
   filter(0);
   $('.ui.accordion').accordion();
   $('.ui.checkbox').checkbox();
+  if (Game.config[0] == 1) {
+    $("#AlertToggle").checkbox("check");
+  } else {
+    $("#AlertToggle").checkbox("uncheck");
+  }
+  if (Game.config[1] == 1) {
+    $("#AlertToggle2").checkbox("check");
+  } else {
+    $("#AlertToggle2").checkbox("uncheck");
+  }
   if (Game.AutoRemove[0] == 1) {
     $("#RM1").checkbox("check");
   } else {
@@ -296,7 +303,7 @@ function UpdateEngine() {
     if (Game.Level == 1 && Game.MissionStarted[0] == false && Game.MissionsCompleted[0] == 0 && isTabActive == "None" && Game.config[3] == 1) {
       mission(0);
     }
-
+    $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Ennemy[0] + ".png'>");
     $("#color-display").css("background-color", "rgb(" + $(red).val() + ", " + $(green).val() + ", " + $(blue).val() + ")");
     if (CoreLife > CoreBaseLife) {
       CoreLife = CoreBaseLife;
@@ -339,13 +346,16 @@ function UpdateEngine() {
       Game.Level = 1;
       Game.xp[0] = 0;
     }
-    if (ScoreModeEnabled == 0 && Game.isInFight == 1 && Game.xp[0] >= Game.xp[1] && Game.Level < MaxLevel) {
+    if (ScoreModeEnabled == 0 && Game.xp[0] >= Game.xp[1] && Game.Level < MaxLevel) {
       Game.Level++;
       Game.xp[1] = CalcEXP(Game.Level);
     }
     if (Game.Level > MaxLevel) {
       Game.Level = MaxLevel;
-      if (ScoreModeEnabled == 0 && Game.Level > Missions[LastMission][2]) Game.Level = Missions[LastMission][2];
+      if (ScoreModeEnabled == 0 && Game.Level > Missions[LastMission][2]) {
+        Game.Level = Missions[LastMission][2];
+        if (Game.Level > POS[Game.Location][2]) Game.Level = POS[Game.Location][2];
+      }
     }
     if (Game.Emp > 50) Game.Emp = 50;
     Game.Shards = Math.round(Game.Shards);
@@ -626,16 +636,6 @@ function UpdateUI() {
   $("#WTShards").html("Score Required : <span class='vert'><i class='fad fa-dice-d20'></i>" + (((30 + (Game.Simulation * 5)) * 10) - 5) + "</span><br>Story completed : " + completedstory + "<br>Fragments reward : <span class='vert'>" + shards + "<i class='dna icon'></i></span>");
   $("#CurrWT").html("Current Dimension : <span class='vert'><i class='globe icon'></i>" + Game.Simulation + "</span>");
   for (var D in Game.Defeated) { if (D != 0) { $("#Defeat" + D).html(fix(Game.Defeated[D], 5)); } }
-  if (Game.config[0] == 1) {
-    $("#AlertToggle").checkbox("check");
-  } else {
-    $("#AlertToggle").checkbox("uncheck");
-  }
-  if (Game.config[1] == 1) {
-    $("#AlertToggle2").checkbox("check");
-  } else {
-    $("#AlertToggle2").checkbox("uncheck");
-  }
   $("#TOPNEXT").html("PAGE " + (PAGE + 1) + " <i class='large arrow alternate circle right outline icon'></i>");
   $("#TOP10").html("TOP 10");
   $("#TOPPREVIOUS").html("<i class='large arrow alternate circle left outline icon'></i> PAGE " + (PAGE - 1) + "");
@@ -658,7 +658,8 @@ function UpdateUI() {
   $("#Scorestat").html("<span class='vert'><i class='fad fa-dice-d20'></i>" + fix(Ranking, 4) + "</span>/" + (MaxScore * 10));
   $("#Difficultystat").html(fix(Game.WTMult[3], 9));
   $("#Rankstat").html(Leader + "/" + LastId);
-  $("#Ratiostat").html(fix(Game.Wins / (Game.Loses + 1), 7));
+  var DEATHS = Game.Loses == 0 ? 1 : Game.Loses;
+  $("#Ratiostat").html(fix(Game.Wins / DEATHS, 7));
   $("#Versionstat").html("v" + version);
   $("#fortressstat").html(Game.FP);
   $("#lifestat").html("<i class='rouge fas fa-heart'></i>" + fix(Math.round(CoreBaseLife / (LifeMult + Game.WTMult[1])), 3) + " (+" + fix(CoreBaseLife - Math.round(CoreBaseLife / (LifeMult + Game.WTMult[1])), 3) + ")");
@@ -1086,7 +1087,6 @@ function Protect() {
 function Attack() {
   EDamage = "";
   PDamage = "";
-  $("#EnnemySprite").html("<img class='ui circular middle aligned medium image glitched' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png' >");
   var luck = random(1, 100);
   var rPlayerPower = random((WeaponsPower * 85), WeaponsPower * 100) / 100;
   if (luck <= random(6, 10)) {
@@ -1121,7 +1121,6 @@ function Attack() {
 function LaunchEMP() {
   if (Game.Emp > 0) {
     Game.Emp--;
-    $("#EnnemySprite").html("<img class='ui circular middle aligned medium image glitched' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png' >");
     var luck = random(0, 100);
     MINPOWER = 0.75;
     MAXPOWER = 1;
@@ -1355,7 +1354,6 @@ function GenEnnemy() {
         EnnemyLevel = POS[Game.Location][2];
       }
     }
-
     Game.Ennemy[2] = EnnemyLevel;
     Game.isInFight = 1;
     Game.Ennemy[3] = 0;
@@ -1376,13 +1374,10 @@ function GenEnnemy() {
     Game.Ennemy[4] *= Game.WTMult[3];
     Game.Ennemy[5] = Game.Ennemy[4];
     if (Game.Ennemy[1] >= 6) {
-      Game.Ennemy[0] = BossNames[Game.Location];
-      Game.Sprite = "boss";
+      Game.Ennemy[0] = "boss";
     } else {
-      Game.Sprite = Math.floor(Math.random() * Ennemies[Game.Location].length);
-      Game.Ennemy[0] = Ennemies[Game.Location][Game.Sprite];
+      Game.Ennemy[0] = Math.floor(Math.random() * Ennemies[Game.Location].length);
     }
-    $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png'>");
     $("#EnnemyDamage").html("");
     $("#PlayerDamage").html("");
     UpdateGame();
@@ -1592,7 +1587,7 @@ function WinFight() {
     $("#btn-CRW").html("<div onclick='hideRewards();' class='fluid ui closing button'>" + btncntnt + "</div>");
     $("#btn-CRW").show();
     $("#btn-ACT").hide();
-    $("#rewards-title").html("<span class='vert'> " + Game.Ennemy[0] + " defeated !</span>");
+    $("#rewards-title").html("<span class='vert'> " + Ennemies[Game.Location][Game.Ennemy[0]] + " defeated !</span>");
     $("#rewards-desc").html("<br>You have defeated " + fix(Game.Defeated[Game.Ennemy[1]], 3) + " <div class='ui small " + Class + " basic label'><span class='" + Class + "'>" + ThreatLevel + "</span></div><br> " + LEVELUP + "+<i class='green dollar icon'></i>" + ToAddCash);
     if (ScoreModeEnabled == 0) {
       $("#rewards-text").html("+<span class='vert bold'>" + fix(Math.floor(expGain), 5) + "</span> EXP " + EMP);
@@ -1640,13 +1635,14 @@ function LoseFight() {
     Class = "Ennemy7";
     ThreatLevel = "GOD";
   }
-  $("#rewards-title").html("<span class='rouge'>" + Game.Ennemy[0] + " killed you !</span>");
+  $("#rewards-title").html("<span class='rouge'>" + Ennemies[Game.Location][Game.Ennemy[0]] + " has killed you !</span>");
   $("#rewards-desc").html("");
+  var DEATHS = Game.Loses == 0 ? 1 : Game.Loses;
   if (ScoreModeEnabled == 0) {
-    $("#rewards-text").html("You lose all your EXP.<br>Current Ratio <span class='rouge'>" + fix(Game.Wins / Game.Loses, 7));
+    $("#rewards-text").html("You lose all your EXP.<br>Current Ratio <span class='rouge'>" + fix(Game.Wins / DEATHS, 7));
     $("#btn-CRW").html("<div onclick='hideRewards();' id='btn-hide' class='fluid ui rainbow button'><i class='green recycle icon'></i> Respawn</div>");
   } else {
-    $("#rewards-text").html("Current Ratio <span class='rouge'>" + fix(Game.Wins / Game.Loses, 7) + "</span>");
+    $("#rewards-text").html("Current Ratio <span class='rouge'>" + fix(Game.Wins / DEATHS, 7) + "</span>");
     $("#btn-CRW").html("<div onclick='hideRewards();' id='btn-hide' class='fluid ui rainbow button'><i class='green recycle icon'></i> Respawn</div>");
   }
   $("#rewards-loot").html("");
@@ -1708,13 +1704,12 @@ function UpdateCombat() {
     LVLTEXT = " Score <i class='fad fa-dice-d20'></i>";
     TIERTEXT = Math.floor(Game.Ennemy[2] * 10);
   }
-  var EnnemyName = Game.Ennemy[1] > 5 ? Game.Ennemy[0] : "" + Game.Ennemy[0];
+  var EnnemyName = Game.Ennemy[1] > 5 ? BossNames[Game.Location] : Ennemies[Game.Location][Game.Ennemy[0]];
   $("#EnnemyTitle").html("<div class='ui " + TC + " basic label'>" + TLC + ThreatLevel + "</span></div><br>" + TLC + EnnemyName + "<div class='ui horizontal label'>" + LVLTEXT + fix(TIERTEXT, 4) + "</div></span>");
   $("#EnnemyPower").html("<i class='bleu fas fa-sword'></i>" + fix(Game.Ennemy[3], 5));
   $("#EnnemyLife").html("<i class='rouge fas fa-heart'></i><span class='" + EnnemyText + "'>" + fix(Game.Ennemy[5], 5) + "</span>");
   $("#PlayerLife").html("<i class='rouge fas fa-heart'></i><span class='" + lifetext + "'>" + fix(CoreLife, 5) + "</span>/" + fix(CoreBaseLife, 5) + " ");
   $("#PlayerPower").html("<i class='bleu fas fa-sword'></i>" + fix(WeaponsPower, 6) + "<br><i class='orange fas fa-swords'></i>" + fix(SpecialPower, 6));
-  if ($("#EnnemySprite").html() == "") $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Sprite + ".png'>");
   $("#EnnemyHP").progress({ className: { active: "", error: "", success: "", warning: "" } });
   if (Game.Emp > 0) {
     $("#emp-btn").show();
