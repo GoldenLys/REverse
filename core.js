@@ -383,13 +383,7 @@ function UpdateEngine() {
       $("#btn-CRW").show();
       $("#btn-ACT").hide();
     }
-    if (Game.isInFight == 1 && CoreLife <= 0) {
-      LoseFight();
-    } else {
-      if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) {
-        WinFight();
-      }
-    }
+    if (Game.isInFight == 1 && CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) WinFight();
     for (var I in Game.inventory) {
       if (I > Game.MaxInv) {
         Game.inventory.splice(I, 1);
@@ -566,21 +560,9 @@ function UpdateGame() {
 
 function UpdateUI() {
   document.title = "AlphaRPG";
-  if (((Game.xp[2] + Game.WTMult[2]) - Math.floor(Game.xp[2] + Game.WTMult[2])) < 1) {
-    $("#XPMULTVAL").html("+" + Game.Upgrades[0] + "%");
-  } else {
-    $("#XPMULTVAL").html("+" + Game.Upgrades[0] + "%");
-  }
-  if (((PowerMult + Game.WTMult[0]) - Math.floor(PowerMult + Game.WTMult[0])) < 1) {
-    $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%");
-  } else {
-    $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%");
-  }
-  if (((LifeMult + Game.WTMult[1]) - Math.floor(LifeMult + Game.WTMult[1])) < 1) {
-    $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%");
-  } else {
-    $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%");
-  }
+  if (((Game.xp[2] + Game.WTMult[2]) - Math.floor(Game.xp[2] + Game.WTMult[2])) < 1) $("#XPMULTVAL").html("+" + Game.Upgrades[0] + "%"); else $("#XPMULTVAL").html("+" + Game.Upgrades[0] + "%");
+  if (((PowerMult + Game.WTMult[0]) - Math.floor(PowerMult + Game.WTMult[0])) < 1) $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%"); else $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%");
+  if (((LifeMult + Game.WTMult[1]) - Math.floor(LifeMult + Game.WTMult[1])) < 1) $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%"); else $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%");
   $("#INVUPGVAL").html(Game.MaxInv);
   $("#ShardsNumber").html("<i class='bleu dna icon'></i>" + fix(Game.Shards, 6) + "</span> Dimensional Fragments");
   if (Game.username == "Default") {
@@ -600,9 +582,7 @@ function UpdateUI() {
     $("#DimensionID").html(WTText);
     $("#PlayerXP").show();
     $("#capacity").html("<span class='vert bold'>" + fix(Game.xp[0], 6) + "</span>/" + fix(Game.xp[1], 6) + " EXP");
-  } else {
-    $("#DimensionID").html(WTText);
-  }
+  } else $("#DimensionID").html(WTText);
   if (Game.Level >= MaxLevel) {
     $("#PlayerXP").hide();
     $("#capacity").html("Max Level");
@@ -630,7 +610,6 @@ function UpdateUI() {
       if (i == 3) { INVCOL = "rouge"; $("#INVUPGPRICE").html("<span class='" + INVCOL + "'>Maximum reached</span>"); }
     }
   }
-
   var shards = Game.Level < MaxLevel ? "0" : Math.round(Ranking / 10 / 5 - 6);
   var completedstory = LastMission == TotalMissions ? "<span class='vert'>Yes</span>" : "<span class='rouge'>No</span>";
   $("#WTShards").html("Score Required : <span class='vert'><i class='fad fa-dice-d20'></i>" + (((30 + (Game.Simulation * 5)) * 10) - 5) + "</span><br>Story completed : " + completedstory + "<br>Fragments reward : <span class='vert'>" + shards + "<i class='dna icon'></i></span>");
@@ -639,16 +618,8 @@ function UpdateUI() {
   $("#TOPNEXT").html("PAGE " + (PAGE + 1) + " <i class='large arrow alternate circle right outline icon'></i>");
   $("#TOP10").html("TOP 10");
   $("#TOPPREVIOUS").html("<i class='large arrow alternate circle left outline icon'></i> PAGE " + (PAGE - 1) + "");
-  if (MAXVIEW + 1 <= LastId) {
-    $("#TOPNEXT").attr('class', 'ui rainbow5 button');
-  } else {
-    $("#TOPNEXT").attr('class', 'ui rainbow5 button dis');
-  }
-  if (PAGE == 1) {
-    $("#TOPPREVIOUS").attr('class', 'ui rainbow5 button dis');
-  } else {
-    $("#TOPPREVIOUS").attr('class', 'ui rainbow5 button');
-  }
+  if (MAXVIEW + 1 <= LastId) $("#TOPNEXT").attr('class', 'ui rainbow5 button'); else $("#TOPNEXT").attr('class', 'ui rainbow5 button dis');
+  if (PAGE == 1) $("#TOPPREVIOUS").attr('class', 'ui rainbow5 button dis'); else $("#TOPPREVIOUS").attr('class', 'ui rainbow5 button');
   $("#namestat").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
   $("#playtimestat").html(toHHMMSS(Game.PlayTime));
   $("#Killstat").html(Game.Wins);
@@ -665,39 +636,18 @@ function UpdateUI() {
   $("#lifestat").html("<i class='rouge fas fa-heart'></i>" + fix(Math.round(CoreBaseLife / (LifeMult + Game.WTMult[1])), 3) + " (+" + fix(CoreBaseLife - Math.round(CoreBaseLife / (LifeMult + Game.WTMult[1])), 3) + ")");
   $("#powerstat").html("<i class='bleu fas fa-sword'></i>" + fix(Math.round(WeaponsPower / (PowerMult + Game.WTMult[0])), 3) + " (+" + fix(WeaponsPower - Math.round(WeaponsPower / (PowerMult + Game.WTMult[0])), 3) + ")");
   $("#core1stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[1][3] - Game.ArmorUpgrades[1][1]) + "(+" + Game.ArmorUpgrades[1][1] + ")");
-  if (Game.Armors[2][0] == true) {
-    $("#core2stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[2][3] - Game.ArmorUpgrades[2][1]) + "(+" + Game.ArmorUpgrades[2][1] + ")");
-  }
-  if (Game.Armors[3][0] == true) {
-    $("#core3stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[3][3] - Game.ArmorUpgrades[3][1]) + "(+" + Game.ArmorUpgrades[3][1] + ")");
-  }
-  if (Game.Armors[4][0] == true) {
-    $("#core4stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[4][3] - Game.ArmorUpgrades[4][1]) + "(+" + Game.ArmorUpgrades[4][1] + ")");
-  }
-  if (((Game.Level - 5) * 10) >= Ranking) {
-    $("#LowScore").html("Using low level armor, upgrade your equipment.");
-  } else {
-    $("#LowScore").html("");
-  }
+  if (Game.Armors[2][0] == true) $("#core2stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[2][3] - Game.ArmorUpgrades[2][1]) + "(+" + Game.ArmorUpgrades[2][1] + ")");
+  if (Game.Armors[3][0] == true) $("#core3stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[3][3] - Game.ArmorUpgrades[3][1]) + "(+" + Game.ArmorUpgrades[3][1] + ")");
+  if (Game.Armors[4][0] == true) $("#core4stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[4][3] - Game.ArmorUpgrades[4][1]) + "(+" + Game.ArmorUpgrades[4][1] + ")");
+  if (((Game.Level - 5) * 10) >= Ranking) $("#LowScore").html("Using low level armor, upgrade your equipment."); else $("#LowScore").html("");
   var CompletedMissions = 0;
-  for (var M in Missions) {
-    if (Missions[M][3] != 2) {
-      if (Game.MissionsCompleted[M] == 1) {
-        CompletedMissions++;
-      }
-    }
-  }
-  if (Game.isInFight != 2 || Game.isInFight != 3) {
-    LastMission = CompletedMissions;
-  }
+  for (var M in Missions) if (Missions[M][3] != 2 && Game.MissionsCompleted[M] == 1) CompletedMissions++;
+  if (Game.isInFight != 2 || Game.isInFight != 3) LastMission = CompletedMissions;
   var MTEXT = "";
-  var hori = "";
+  var hori = "horizontal";
   if (url.match(/mobile/gi)) {
     MTEXT = "";
     hori = "";
-  } else {
-    MTEXT = "";
-    hori = "horizontal";
   }
   if (Game.MissionStarted[0] == true) {
     if (Game.isInFight == 1) {
@@ -705,12 +655,8 @@ function UpdateUI() {
       $("#btn-ACT").show();
       $("#gotomenu-btn").html("<i class='angle left icon'></i>Menu" + MTEXT);
     }
-    if (Missions[Game.MissionStarted[1]][3] == 1) {
-      $("#MDTL").html("<div class='detail'>Mission</div>Defeat <span class='vert'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> enemies in <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span>.");
-    }
-    if (Missions[Game.MissionStarted[1]][3] == 2) {
-      $("#MDTL").html("<div class='detail'>Fortress</div>Clear <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span> (" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + " left).");
-    }
+    if (Missions[Game.MissionStarted[1]][3] == 1) $("#MDTL").html("<div class='detail'>Mission</div>Defeat <span class='vert'>" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + "</span> enemies in <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span>.");
+    if (Missions[Game.MissionStarted[1]][3] == 2) $("#MDTL").html("<div class='detail'>Fortress</div>Clear <span class='vert'>" + POS[Missions[Game.MissionStarted[1]][8]][0] + "</span> (" + (Missions[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + " left).");
   } else {
     if (Game.isInFight == 1) {
       $("#btn-CRW").hide();
@@ -719,27 +665,15 @@ function UpdateUI() {
     }
     $("#MDTL").html("<div class='detail'>Exploration</div><span class='vert'>" + POS[Game.Location][0] + "</span>");
   }
-  if ($('#combat').is(":visible")) {
-    $("#rewards").hide();
-  }
-  if ($('#inventory').is(":visible")) {
-    $("#gotomenu-btn").html("<i class='angle left icon'></i>Inventory " + (Game.inventory.length) + "/" + Game.MaxInv + MTEXT);
-  }
+  if ($('#combat').is(":visible")) $("#rewards").hide();
+  if ($('#inventory').is(":visible")) $("#gotomenu-btn").html("<i class='angle left icon'></i>Inventory " + (Game.inventory.length) + "/" + Game.MaxInv + MTEXT);
 
   $("#islots").html("<i class='fas fa-sack'></i>" + (Game.inventory.length) + "/" + Game.MaxInv);
   $("#cash").html(fix(Game.Cash, 3));
   $("#mcount").html("<i class='dropdown icon'></i> " + "Missions completed (" + CompletedMissions + "/" + TotalMissions + ")");
-  if (Game.Level >= POS[Game.Location][2] && ScoreModeEnabled == 0 && Game.MissionStarted[0] == false) {
-    $("#MaxPOSLVL").html("You\'ve reached the maximum level in this area, check the available missions.");
-  } else {
-    $("#MaxPOSLVL").html("");
-  }
-  if (Game.isInFight == 1) {
-    $("#cores").show();
-  }
-  for (var L in POS) {
-    $("#defeatloc" + L).html("<div class='ui " + hori + " segments'><div class='ui segment left aligned'>" + POS[L][0] + "</div><div class='ui segment right aligned'>" + fix(Game.DefeatedByLocation[L], 3) + " Defeated</div></div><div class='ui fitted inverted divider'></div>");
-  }
+  if (Game.Level >= POS[Game.Location][2] && ScoreModeEnabled == 0 && Game.MissionStarted[0] == false) $("#MaxPOSLVL").html("You\'ve reached the maximum level in this area, check the available missions."); else $("#MaxPOSLVL").html("");
+  if (Game.isInFight == 1) $("#cores").show();
+  for (var L in POS) $("#defeatloc" + L).html("<div class='ui " + hori + " segments'><div class='ui segment left aligned'>" + POS[L][0] + "</div><div class='ui segment right aligned'>" + fix(Game.DefeatedByLocation[L], 3) + " Defeated</div></div><div class='ui fitted inverted divider'></div>");
   if ($('#inventory').is(":visible")) {
     $("#rewards").hide();
     $("#combat").hide();
@@ -758,13 +692,8 @@ function GenInventory() {
   $("#inv4").html("");
 
   for (var IV in Game.inventory) {
-    if (ScoreModeEnabled == 0) {
-      TIER = "Level";
-      TIERRANK = Game.inventory[IV].level;
-    } else {
-      TIER = "Score";
-      TIERRANK = "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IV].level * 10);
-    }
+    var TIER = ScoreModeEnabled == 0 ? "Level " : "Score <i class='fad fa-dice-d20'></i>";
+    var TIERRANK = ScoreModeEnabled == 0 ? Game.inventory[IV].level : "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IV].level * 10);
     var BTN = url.match(/mobile/gi) ? "<div class='ui right floated vertical buttons'><div onclick='EquipItem(" + IV + ", " + Game.inventory[IV].id + ")' class='green ui button'>Equip</div><div onclick='RemoveItem(" + IV + ")' class='red ui button'>Remove</div></div>" : "<div class='ui right floated buttons'><div onclick='EquipItem(" + IV + ", " + Game.inventory[IV].id + ")' class='green ui button'>Equip</div><div onclick='RemoveItem(" + IV + ")' class='red ui button'>Remove</div></div>";
     var BR = url.match(/mobile/gi) ? " " : "<br>";
     var UPS = Game.inventory[IV].ups > 0 ? " " + (Game.inventory[IV].ups) + "<i class='orange fad fa-gem'></i>" : "";
@@ -782,21 +711,11 @@ function GenInventory() {
     }
 
     if (Game.inventory[IV].id == 3) { //SHOW RELIC IN INVENTORY
-      if (Game.inventory[IV].object == 0) {
-        DESC = "-";
-      }
-      if (Game.inventory[IV].object == 1) {
-        DESC = "Power bonus of " + fix(Game.inventory[IV].bonus, 9);
-      }
-      if (Game.inventory[IV].object == 2) {
-        DESC = "Life bonus of " + fix(Game.inventory[IV].bonus, 9);
-      }
-      if (Game.inventory[IV].object == 3) {
-        DESC = "Max Score +" + fix(Game.inventory[IV].bonus, 3);
-      }
-      if (Game.inventory[IV].object == 4) {
-        DESC = "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>";
-      }
+      if (Game.inventory[IV].object == 0) DESC = "-";
+      if (Game.inventory[IV].object == 1) DESC = "Power bonus of " + fix(Game.inventory[IV].bonus, 9);
+      if (Game.inventory[IV].object == 2) DESC = "Life bonus of " + fix(Game.inventory[IV].bonus, 9);
+      if (Game.inventory[IV].object == 3) DESC = "Max Score +" + fix(Game.inventory[IV].bonus, 3);
+      if (Game.inventory[IV].object == 4) DESC = "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>";
       $("#inv3").append("<div class='ui gren segment'><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + BTN + Game.inventory[IV].name + "<br>" + DESC + "</div>");
     }
   }
@@ -822,35 +741,22 @@ function EquipItem(id, type) {
     var CB2B = Game.Armors[2][0] == true ? "<div onClick='UPCore(2, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Armor</div>" : "";
     var CB3B = Game.Armors[3][0] == true ? "<div onClick='UPCore(3, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Shield</div>" : "";
     var CB4B = Game.Armors[4][0] == true ? "<div onClick='UPCore(4, " + Game.inventory[id].object + ", " + id + ");' class='ui rainbow button'>Upgrade Boots</div>" : "";
-    if (Game.Armors[1][5] >= Game.MaxUPC[0] && Game.Armors[1][0] == true) {
-      CB1B = "<div class='ui disabled button'>No Helmet gem slots left.</div>";
-    }
-    if (Game.Armors[2][5] >= Game.MaxUPC[1] && Game.Armors[2][0] == true) {
-      CB2B = "<div class='ui disabled button'>No Armor gem slots left.</div>";
-    }
-    if (Game.Armors[3][5] >= Game.MaxUPC[2] && Game.Armors[3][0] == true) {
-      CB3B = "<div class='ui disabled button'>No Shield gem slots left.</div>";
-    }
-    if (Game.Armors[4][5] >= Game.MaxUPC[3] && Game.Armors[4][0] == true) {
-      CB4B = "<div class='ui disabled button'>No Boots gem slots left.</div>";
-    }
+    if (Game.Armors[1][5] >= Game.MaxUPC[0] && Game.Armors[1][0] == true) CB1B = "<div class='ui disabled button'>No Helmet gem slots left.</div>";
+    if (Game.Armors[2][5] >= Game.MaxUPC[1] && Game.Armors[2][0] == true) CB2B = "<div class='ui disabled button'>No Armor gem slots left.</div>";
+    if (Game.Armors[3][5] >= Game.MaxUPC[2] && Game.Armors[3][0] == true) CB3B = "<div class='ui disabled button'>No Shield gem slots left.</div>";
+    if (Game.Armors[4][5] >= Game.MaxUPC[3] && Game.Armors[4][0] == true) CB4B = "<div class='ui disabled button'>No Boots gem slots left.</div>";
     showmessage("Select an Armor Slot", "<div class='fluid vertical ui buttons'>" + CB1B + CB2B + CB3B + CB4B + "</div>");
   }
 
   if (type == 5) {
     var MainUPBTN = Game.Armors[1][0] == true ? "<div onClick='UPWeapon(1, " + id + ");' class='ui rainbow button'>Upgrade Main Weapon</div>" : "";
     var SpecialUPBTN = Game.Armors[2][0] == true ? "<div onClick='UPWeapon(2, " + id + ");' class='ui rainbow button'>Upgrade Special Weapon</div>" : "";
-    if (Game.Weapons.Main[2] >= Game.MaxUPC[4]) {
-      MainUPBTN = "<div class='ui disabled button'>No Main Weapon gem slots left.</div>";
-    }
-    if (Game.Weapons.Special[2] >= Game.MaxUPC[5]) {
-      SpecialUPBTN = "<div class='ui disabled button'>No Secondary Weapon gem slots left.</div>";
-    }
+    if (Game.Weapons.Main[2] >= Game.MaxUPC[4]) MainUPBTN = "<div class='ui disabled button'>No Main Weapon gem slots left.</div>";
+    if (Game.Weapons.Special[2] >= Game.MaxUPC[5]) SpecialUPBTN = "<div class='ui disabled button'>No Secondary Weapon gem slots left.</div>";
     showmessage("Select a Weapon", "<div class='fluid vertical ui buttons'>" + MainUPBTN + SpecialUPBTN + "</div>");
   }
 
   if (type == 3) {
-    os = Game.inventory[id];
     var RLCB1 = Game.Armors[1][0] == true ? "<div onClick='ConfirmRelic(1, " + id + ");' class='ui rainbow button'>Apply on Helmet</div>" : "";
     var RLCB2 = Game.Armors[2][0] == true ? "<div onClick='ConfirmRelic(2, " + id + ");' class='ui rainbow button'>Apply on Armor</div>" : "";
     var RLCB3 = Game.Armors[3][0] == true ? "<div onClick='ConfirmRelic(3, " + id + ");' class='ui rainbow button'>Apply on Shield</div>" : "";
@@ -864,14 +770,8 @@ function EquipItem(id, type) {
 function RemoveItem(id) {
   if (id < Game.MaxInv) {
     Game.inventory[id].id = 0;
-    if (id >= Game.inventory.length) {
-      Game.inventory.splice(id - 1, 1);
-    } else {
-      Game.inventory.splice(id, 1);
-    }
-  } else {
-    Game.inventory.splice(id, 1);
-  }
+    if (id >= Game.inventory.length) Game.inventory.splice(id - 1, 1); else Game.inventory.splice(id, 1);
+  } else Game.inventory.splice(id, 1);
   UpdateGame();
 }
 
@@ -882,18 +782,10 @@ function SendStats() {
 }
 
 function GetLevelRequired() {
-  if (Game.Level >= 1 && Game.Level < 10) {
-    value = 10;
-  }
-  if (Game.Level >= 10 && Game.Level < 20) {
-    value = 20;
-  }
-  if (Game.Level >= 20 && Game.Level < 30) {
-    value = 30;
-  }
-  if (Game.Level >= 30) {
-    value = 0;
-  }
+  if (Game.Level >= 1 && Game.Level < 10) value = 10;
+  if (Game.Level >= 10 && Game.Level < 20) value = 20;
+  if (Game.Level >= 20 && Game.Level < 30) value = 30;
+  if (Game.Level >= 30) value = 0;
   return value;
 }
 
@@ -904,43 +796,19 @@ function GenWeapons() {
     if (T == 1) { TYPE = "Main"; } else { TYPE = "Special"; }
     Game.Weapons[TYPE][0] = Game.Weapons[TYPE][0].replace(/Weapon/gi, Names[T]);
     var Class = 0;
-    if (Game.Weapons[TYPE][1] == "Normal") {
-      Class = "0";
-    }
-    if (Game.Weapons[TYPE][1] == "Common") {
-      Class = "1";
-    }
-    if (Game.Weapons[TYPE][1] == "Uncommon") {
-      Class = "2";
-    }
-    if (Game.Weapons[TYPE][1] == "Rare") {
-      Class = "3";
-    }
-    if (Game.Weapons[TYPE][1] == "Epic") {
-      Class = "4";
-    }
-    if (Game.Weapons[TYPE][1] == "Exotic") {
-      Class = "5";
-    }
-    if (Game.Weapons[TYPE][1] == "Divine") {
-      Class = "6";
-    }
-    if (Game.Weapons[TYPE][1] == "Error") {
-      Class = "E";
-    }
-
+    if (Game.Weapons[TYPE][1] == "Common") Class = "1";
+    if (Game.Weapons[TYPE][1] == "Uncommon") Class = "2";
+    if (Game.Weapons[TYPE][1] == "Rare") Class = "3";
+    if (Game.Weapons[TYPE][1] == "Epic") Class = "4";
+    if (Game.Weapons[TYPE][1] == "Exotic") Class = "5";
+    if (Game.Weapons[TYPE][1] == "Divine") Class = "6";
+    if (Game.Weapons[TYPE][1] == "Error") Class = "E";
     $("#" + TYPE + "Weapon").attr("class", "ui card customcard CoreShadow" + Class);
-
-    if (ScoreModeEnabled == 0) {
-      LEVELTEXT = "Level " + fix(Math.floor(Game.Weapons[TYPE][3]), 4);
-    } else {
-      LEVELTEXT = "Score <i class='fad fa-dice-d20'></i>" + fix(Math.floor(Game.Weapons[TYPE][3] * 10), 4);
-    }
+    var LEVELTEXT = ScoreModeEnabled == 0 ? "Level " + fix(Math.floor(Game.Weapons[TYPE][3]), 4) : "Score <i class='fad fa-dice-d20'></i>" + fix(Math.floor(Game.Weapons[TYPE][3] * 10), 4);
     var UPWSELECTOR = T == 1 ? 4 : 5;
     var WEAPONUPC = Game.Weapons[TYPE][2] == Game.MaxUPC[UPWSELECTOR] ? "" : "green";
     var UPWTEXT = Game.MaxUPC[UPWSELECTOR] > 0 ? "<i class='orange fad fa-gem'></i><span class='" + WEAPONUPC + "'>" + Game.Weapons[TYPE][2] + "</span>/" + Game.MaxUPC[UPWSELECTOR] + " Gems incrusted" : "";
     $("#" + TYPE + "WeaponGems").html(UPWTEXT);
-
     $("#" + TYPE + "WeaponSprite").html("<img class='ui middle aligned tiny circular image' style='height: 100px; width: auto;' src='DATA/Weapons/" + TYPE + "-" + Class + ".png'></img>");
     $("#" + TYPE + "WeaponLevel").html(LEVELTEXT);
     $("#" + TYPE + "WeaponText").html(Game.Weapons[TYPE][4]);
@@ -949,67 +817,33 @@ function GenWeapons() {
   }
 }
 
-
 function GenArmors() {
   var Class = 0;
+  var RLSTXT = "";
   var Names = ["", "Helmet", "Armor", "Shield", "Boots"];
   for (var UPC = 1; UPC < 5; UPC++) {
     var core = "core" + UPC;
     Game.Armors[UPC][1] = Game.Armors[UPC][1].replace(/Armor/gi, Names[UPC]);
-
-    if (Game.Armors[UPC][2] == "Normal") {
-      Class = "0";
-    }
-    if (Game.Armors[UPC][2] == "Common") {
-      Class = "1";
-    }
-    if (Game.Armors[UPC][2] == "Uncommon") {
-      Class = "2";
-    }
-    if (Game.Armors[UPC][2] == "Rare") {
-      Class = "3";
-    }
-    if (Game.Armors[UPC][2] == "Epic") {
-      Class = "4";
-    }
-    if (Game.Armors[UPC][2] == "Exotic") {
-      Class = "5";
-    }
-    if (Game.Armors[UPC][2] == "Divine") {
-      Class = "6";
-    }
-    if (Game.Armors[UPC][2] == "Error") {
-      Class = "E";
-    }
+    if (Game.Armors[UPC][2] == "Common") Class = "1";
+    if (Game.Armors[UPC][2] == "Uncommon") Class = "2";
+    if (Game.Armors[UPC][2] == "Rare") Class = "3";
+    if (Game.Armors[UPC][2] == "Epic") Class = "4";
+    if (Game.Armors[UPC][2] == "Exotic") Class = "5";
+    if (Game.Armors[UPC][2] == "Divine") Class = "6";
+    if (Game.Armors[UPC][2] == "Error") Class = "E";
 
     $("#" + core).attr("class", "ui card customcard CoreShadow" + Class);
     $("#" + core + "-icon").attr("class", "classBar" + Class);
     $("#" + core + "-title").attr("class", "author text");
 
-    var RLSTXT = "";
-    if (Game.RLS[UPC][1] == 0) {
-      RLSTXT = "";
-    }
-    if (Game.RLS[UPC][1] == 1) {
-      RLSTXT = "Power bonus of " + fix(Game.RLS[UPC][2], 9);
-    }
-    if (Game.RLS[UPC][1] == 2) {
-      RLSTXT = "Life bonus of " + fix(Game.RLS[UPC][2], 9);
-    }
-    if (Game.RLS[UPC][1] == 3) {
-      RLSTXT = "Max Score +" + fix(Game.RLS[UPC][2], 3);
-    }
-    if (Game.RLS[UPC][1] == 4) {
-      RLSTXT = "Minimal drop quality <span class='" + Game.RLS[UPC][2] + "'>" + Game.RLS[UPC][2] + "</span>";
-    }
-    if (Game.RLS[UPC][1] != 0) { RLSTXT = "<i class='jaune fas fa-stars'></i>" + RLSTXT; }
-    if (ScoreModeEnabled == 0) {
-      LEVELICON = "Level";
-      LEVELTEXT = "" + fix(Math.floor(Game.Armors[UPC][4]), 4);
-    } else {
-      LEVELICON = "Score";
-      LEVELTEXT = "<i class='fad fa-dice-d20'></i>" + fix(Math.floor(Game.Armors[UPC][4] * 10), 4);
-    }
+    if (Game.RLS[UPC][1] == 1) RLSTXT = "Power bonus of " + fix(Game.RLS[UPC][2], 9);
+    if (Game.RLS[UPC][1] == 2) RLSTXT = "Life bonus of " + fix(Game.RLS[UPC][2], 9);
+    if (Game.RLS[UPC][1] == 3) RLSTXT = "Max Score +" + fix(Game.RLS[UPC][2], 3);
+    if (Game.RLS[UPC][1] == 4) RLSTXT = "Minimal drop quality <span class='" + Game.RLS[UPC][2] + "'>" + Game.RLS[UPC][2] + "</span>";
+    if (Game.RLS[UPC][1] != 0) RLSTXT = "<i class='jaune fas fa-stars'></i>" + RLSTXT;
+
+    var LEVELICON = ScoreModeEnabled == 0 ? "Level" : "Score";
+    var LEVELTEXT = ScoreModeEnabled == 0 ? fix(Math.floor(Game.Armors[UPC][4]), 4) : "<i class='fad fa-dice-d20'></i>" + fix(Math.floor(Game.Armors[UPC][4] * 10), 4);
     $("#core" + UPC + "-level").html(LEVELICON + " " + LEVELTEXT);
     var COREUPC = Game.Armors[UPC][5] == Game.MaxUPC[UPC - 1] ? "" : "green";
     var UPCTEXT = Game.MaxUPC[UPC - 1] > 0 ? "<i class='orange fad fa-gem'></i><span class='" + COREUPC + "'>" + Game.Armors[UPC][5] + "</span>/" + Game.MaxUPC[UPC - 1] + " Gems incrusted" : "";
@@ -1035,9 +869,7 @@ function GenArmors() {
         $("#core5").html("Next armor unlocked at Lv. " + GetLevelRequired());
       }
     }
-  } else {
-    $("#core5").html("");
-  }
+  } else $("#core5").html("");
 }
 
 //FIGHT ACTIONS
@@ -1046,75 +878,41 @@ function Protect() {
   HealText = "";
   if (CoreLife < CoreBaseLife) {
     var luck = random(1, 100);
-    if (luck <= 15) {
-      MINMULT = 65;
-      MAXMULT = 85;
-    } else {
-      MINMULT = 40;
-      MAXMULT = 65;
-    }
-    if (luck >= 85) {
-      MINMULT = 0;
-      MAXMULT = 0;
-    }
+    if (luck <= 15) { MINMULT = 65; MAXMULT = 85; }
+    else { MINMULT = 40; MAXMULT = 65; }
+    if (luck >= 85) { MINMULT = 0; MAXMULT = 0; }
     var rRandPlayerHeal = random((WeaponsPower * MINMULT), (WeaponsPower * MAXMULT)) / 100;
     CoreLife = Math.round(CoreLife + rRandPlayerHeal);
     HealText = "+" + fix(rRandPlayerHeal, 4) + "<i class='rouge fas fa-heart'></i>";
-    if (rRandPlayerHeal < 1) { HealText = "MISSED"; }
+    if (rRandPlayerHeal < 1) HealText = "MISSED";
   }
   var luck2 = random(1, 100);
-  if (luck2 >= 75) {
-    MINMULT2 = 0;
-    MAXMULT2 = 10;
-  } else {
-    MINMULT2 = 35;
-    MAXMULT2 = 50;
-  } //10% ENNEMY ATTACK FAILS 
+  if (luck2 >= 75) { MINMULT2 = 0; MAXMULT2 = 10; }
+  else { MINMULT2 = 35; MAXMULT2 = 50; }
   var rEnnemyPower = random((Game.Ennemy[3] * MINMULT2), (Game.Ennemy[3] * MAXMULT2)) / 100;
-  if (rEnnemyPower < 1) { DamagesText = "MISSED"; }
-  if (CoreLife >= CoreBaseLife * 0.99) {
-    rEnnemyPower = 0;
-  }
+  if (rEnnemyPower < 1) DamagesText = "MISSED";
+  if (CoreLife >= CoreBaseLife * 0.99) rEnnemyPower = 0;
   CoreLife -= rEnnemyPower;
-  if (Game.isInFight == 1 && CoreLife <= 0) { LoseFight(); }
-  else { if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) { WinFight(); } }
-  if (CoreLife > CoreBaseLife) { CoreLife = CoreBaseLife; }
+  if (Game.isInFight == 1 && CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) WinFight();
+  if (CoreLife > CoreBaseLife) CoreLife = CoreBaseLife;
   $("#EnnemyDamage").html("");
   $("#PlayerDamage").html(HealText);
   UpdateGame();
 }
 
 function Attack() {
-  EDamage = "";
-  PDamage = "";
   var luck = random(1, 100);
   var rPlayerPower = random((WeaponsPower * 85), WeaponsPower * 100) / 100;
-  if (luck <= random(6, 10)) {
-    rPlayerPower = WeaponsPower * 1.15;
-    EDamage = "-" + fix(rPlayerPower, 3) + "<i class='rouge fas fa-heart'></i>";
-  } else {
-    EDamage = "-" + fix(Math.round(rPlayerPower), 3) + "<i class='rouge fas fa-heart'></i>";
-  }
+  if (luck <= random(6, 10)) rPlayerPower = WeaponsPower * 1.15;
+  var EDamage = "-" + fix(Math.round(rPlayerPower), 3) + "<i class='rouge fas fa-heart'></i>";
   Game.Ennemy[5] = Math.floor(Game.Ennemy[5] - rPlayerPower);
-
   var rEnnemyPower = random((Game.Ennemy[3] * 65), Game.Ennemy[3] * 100) / 100;
-  if (luck >= 90) {
-    rEnnemyPower = 0;
-    PDamage = "MISSED";
-  } else {
-    PDamage = "-" + fix(Math.round(rEnnemyPower), 3) + "<i class='rouge fas fa-heart'></i>";
-  }
+  if (luck >= 90) rEnnemyPower = 0;
+  var DAMAGES = rEnnemyPower > 0 ? "-" + fix(Math.round(rEnnemyPower), 3) + "<i class='rouge fas fa-heart'></i>" : "MISSED";
   CoreLife -= rEnnemyPower;
-
-  if (Game.isInFight == 1 && CoreLife <= 0) {
-    LoseFight();
-  } else {
-    if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) {
-      WinFight();
-    }
-  }
+  if (Game.isInFight == 1 && CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) WinFight();
   $("#EnnemyDamage").html(EDamage);
-  $("#PlayerDamage").html(PDamage);
+  $("#PlayerDamage").html(DAMAGES);
   UpdateGame();
 }
 
@@ -1122,57 +920,29 @@ function LaunchEMP() {
   if (Game.Emp > 0) {
     Game.Emp--;
     var luck = random(0, 100);
-    MINPOWER = 0.75;
-    MAXPOWER = 1;
-    if (luck <= 10) {
-      MINPOWER = 1;
-      MAXPOWER = 1.5;
-    }
-    var rPlayerPower = random(SpecialPower * MINPOWER, SpecialPower * MAXPOWER);
+    var POWERRANGES = [0.75, 1];
+    if (luck <= 10) POWERRANGES = [1, 1.5];
+    var rPlayerPower = random(SpecialPower * POWERRANGES[0], SpecialPower * POWERRANGES[1]);
     Game.Ennemy[5] = Math.floor(Game.Ennemy[5] - rPlayerPower);
-
     var rEnnemyPower = random(0, Game.Ennemy[3]);
     CoreLife -= rEnnemyPower;
-
-    if (Game.isInFight == 1 && CoreLife <= 0) {
-      LoseFight();
-    } else {
-      if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) {
-        WinFight();
-      }
-    }
-    $("#EnnemyDamage").html("-" + fix(Math.round(rPlayerPower), 5) + "<i class='rouge fas fa-heart'></i>");
-    $("#PlayerDamage").html("-" + fix(Math.round(rEnnemyPower), 3) + "<i class='rouge fas fa-heart'></i>");
+    if (Game.isInFight == 1 && CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) WinFight();
+    $("#EnnemyDamage").html("-" + fix(Math.round(rPlayerPower), 6) + "<i class='rouge fas fa-heart'></i>");
+    $("#PlayerDamage").html("-" + fix(Math.round(rEnnemyPower), 6) + "<i class='rouge fas fa-heart'></i>");
   }
   UpdateGame();
 }
 
 function RunAway() {
-  if (Game.LastEscape <= 0) {
+  if (Game.LastEscape == 0) {
     Game.LastEscape = 45;
-    if (Game.Level <= 25) {
-      Game.LastEscape = 35;
-    }
-    if (Game.Level <= 20) {
-      Game.LastEscape = 30;
-    }
-    if (Game.Level <= 15) {
-      Game.LastEscape = 25;
-    }
-    if (Game.Level <= 10) {
-      Game.LastEscape = 20;
-    }
-    if (Game.Level <= 5) {
-      Game.LastEscape = 15;
-    }
+    if (Game.Level <= 25) Game.LastEscape = 35;
+    if (Game.Level <= 20) Game.LastEscape = 30;
+    if (Game.Level <= 15) Game.LastEscape = 25;
+    if (Game.Level <= 10) Game.LastEscape = 20;
+    if (Game.Level <= 5) Game.LastEscape = 15;
     CoreLife = CoreBaseLife;
-    if (Game.isInFight == 1 && CoreLife <= 0) {
-      LoseFight();
-    } else {
-      if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) {
-        WinFight();
-      }
-    }
+    if (Game.isInFight == 1 && CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Ennemy[5] <= 0) WinFight();
     Game.isInFight = 0;
     UpdateGame();
   }
@@ -1209,14 +979,8 @@ function GenEnnemy() {
 
   TIER = Ranking;
   EChance = random(0, 700);
-  if (ScoreModeEnabled == 1) {
-    EChance = random(300, 700);
-  }
-  if (Missions[Game.MissionStarted[1]][3] == 2) {
-    if (EChance < 600) {
-      EChance = 600;
-    }
-  }
+  if (ScoreModeEnabled == 1) EChance = random(300, 700);
+  if (Missions[Game.MissionStarted[1]][3] == 2 && EChance < 600) EChance = 600;
   if (Game.isInFight == 0) {
     CoreLife = CoreBaseLife;
     $("#EnnemyDesc").html("<br><br>");
@@ -1227,12 +991,8 @@ function GenEnnemy() {
       EnnemyLifeMult = LifeMult[0];
       EnnemyPowerMult = PowerMult[0];
       EnnemyPowerMultMax = MaxPowerMult[0];
-      if (Ranking > 0) {
-        EnnemyLevel = random((Ranking * 0.85), Ranking);
-      }
-      if (ScoreModeEnabled == 1) {
-        EnnemyLevel = random(TIER - 5, TIER);
-      }
+      if (Ranking > 0) EnnemyLevel = random((Ranking * 0.85), Ranking);
+      if (ScoreModeEnabled == 1) EnnemyLevel = random(TIER - 5, TIER);
     }
 
     //CLASS ADVANCED
@@ -1241,15 +1001,9 @@ function GenEnnemy() {
       EnnemyLifeMult = LifeMult[1];
       EnnemyPowerMult = PowerMult[1];
       EnnemyPowerMultMax = MaxPowerMult[1];
-      if (Ranking > 0) {
-        EnnemyLevel = Ranking;
-      }
-      if (Ranking > 1) {
-        EnnemyLevel = random((Ranking * 0.95), Ranking);
-      }
-      if (ScoreModeEnabled == 1) {
-        EnnemyLevel = random(TIER - 2, TIER + 5);
-      }
+      if (Ranking > 0) EnnemyLevel = Ranking;
+      if (Ranking > 1) EnnemyLevel = random((Ranking * 0.95), Ranking);
+      if (ScoreModeEnabled == 1) EnnemyLevel = random(TIER - 2, TIER + 5);
     }
 
     //CLASS SUPERIOR
@@ -1258,15 +1012,9 @@ function GenEnnemy() {
       EnnemyLifeMult = LifeMult[2];
       EnnemyPowerMult = PowerMult[2];
       EnnemyPowerMultMax = MaxPowerMult[2];
-      if (Ranking > 0) {
-        EnnemyLevel = Ranking;
-      }
-      if (Ranking > 1) {
-        EnnemyLevel = random(Ranking, Ranking + 1);
-      }
-      if (ScoreModeEnabled == 1) {
-        EnnemyLevel = random(TIER - 1, TIER + 10);
-      }
+      if (Ranking > 0) EnnemyLevel = Ranking;
+      if (Ranking > 1) EnnemyLevel = random(Ranking, Ranking + 1);
+      if (ScoreModeEnabled == 1) EnnemyLevel = random(TIER - 1, TIER + 10);
     }
 
     //CLASS VETERAN
@@ -1275,18 +1023,10 @@ function GenEnnemy() {
       EnnemyLifeMult = LifeMult[3];
       EnnemyPowerMult = PowerMult[3];
       EnnemyPowerMultMax = MaxPowerMult[3];
-      if (Ranking > 0) {
-        EnnemyLevel = Ranking;
-      }
-      if (Ranking > 1) {
-        EnnemyLevel = random(Ranking + 1, Ranking + 2);
-      }
-      if (ScoreModeEnabled == 1) {
-        EnnemyLevel = random(TIER + 5, TIER + 15);
-      }
-      if (Game.Level < 10) {
-        EnnemyPowerMult = PowerMult[2];
-      }
+      if (Ranking > 0) EnnemyLevel = Ranking;
+      if (Ranking > 1) EnnemyLevel = random(Ranking + 1, Ranking + 2);
+      if (ScoreModeEnabled == 1) EnnemyLevel = random(TIER + 5, TIER + 15);
+      if (Game.Level < 10) EnnemyPowerMult = PowerMult[2];
     }
 
     //CLASS ELITE
@@ -1295,23 +1035,13 @@ function GenEnnemy() {
       EnnemyLifeMult = LifeMult[4];
       EnnemyPowerMult = PowerMult[4];
       EnnemyPowerMultMax = MaxPowerMult[4];
-      if (Ranking > 0) {
-        EnnemyLevel = Ranking;
-      }
-      if (Ranking > 1) {
-        EnnemyLevel = random(Ranking + 2, Ranking + 4);
-      }
-      if (ScoreModeEnabled == 1) {
-        EnnemyLevel = random(TIER + 15, TIER + 30);
-      }
-      if (Game.Level < 10) {
-        EnnemyPowerMult = PowerMult[2];
-      }
+      if (Ranking > 0) EnnemyLevel = Ranking;
+      if (Ranking > 1) EnnemyLevel = random(Ranking + 2, Ranking + 4);
+      if (ScoreModeEnabled == 1) EnnemyLevel = random(TIER + 15, TIER + 30);
+      if (Game.Level < 10) EnnemyPowerMult = PowerMult[2];
     }
 
-    if (Game.MissionStarted[2] == Missions[Game.MissionStarted[1]][4] - 1) {
-      EChance = 700;
-    }
+    if (Game.MissionStarted[2] == Missions[Game.MissionStarted[1]][4] - 1) EChance = 700;
 
     //CLASS BOSS OR 1:4 GOD
     if (EChance >= 685 && EChance <= 700 && Game.MissionStarted[0] == true) {
@@ -1320,15 +1050,9 @@ function GenEnnemy() {
         EnnemyLifeMult = LifeMult[5];
         EnnemyPowerMult = PowerMult[5];
         EnnemyPowerMultMax = MaxPowerMult[5];
-        if (Ranking > 0) {
-          EnnemyLevel = Ranking + 1;
-        }
-        if (Ranking > 1) {
-          EnnemyLevel = random(Ranking + 4, Ranking + 6);
-        }
-        if (Game.Level < 10) {
-          EnnemyPowerMult = PowerMult[2];
-        }
+        if (Ranking > 0) EnnemyLevel = Ranking + 1;
+        if (Ranking > 1) EnnemyLevel = random(Ranking + 4, Ranking + 6);
+        if (Game.Level < 10) EnnemyPowerMult = PowerMult[2];
         if (ScoreModeEnabled == 1) {
           EnnemyLevel = random(TIER + 20, TIER + 40);
           randomluck = random(1, 5);
@@ -1341,43 +1065,27 @@ function GenEnnemy() {
         }
       }
     }
-    if (EnnemyLevel < 1) { EnnemyLevel = 1; }
+    if (EnnemyLevel < 1) EnnemyLevel = 1;
     if (ScoreModeEnabled == 1) {
       EnnemyLevel = EnnemyLevel / 10;
-      if (EnnemyLevel > Game.Level + 20) { EnnemyLevel = Game.Level + 20; }
+      if (EnnemyLevel > Game.Level + 20) EnnemyLevel = Game.Level + 20;
     } else {
       EnnemyLevel = EnnemyLevel / 10;
-      if (EnnemyLevel < POS[Game.Location][1]) {
-        EnnemyLevel = POS[Game.Location][1];
-      }
-      if (EnnemyLevel > POS[Game.Location][2]) {
-        EnnemyLevel = POS[Game.Location][2];
-      }
+      if (EnnemyLevel < POS[Game.Location][1]) EnnemyLevel = POS[Game.Location][1];
+      if (EnnemyLevel > POS[Game.Location][2]) EnnemyLevel = POS[Game.Location][2];
     }
     Game.Ennemy[2] = EnnemyLevel;
     Game.isInFight = 1;
     Game.Ennemy[3] = 0;
     Game.Ennemy[4] = 0;
-    if (Game.Armors[1][0] == 1) {
-      Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
-    }
-    if (Game.Armors[2][0] == 1 && EnnemyLevel > 9) {
-      Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
-    }
-    if (Game.Armors[3][0] == 1 && EnnemyLevel > 19) {
-      Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
-    }
-    if (Game.Armors[4][0] == 1 && EnnemyLevel > 29) {
-      Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
-    }
+    if (Game.Armors[1][0] == 1) Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
+    if (Game.Armors[2][0] == 1 && EnnemyLevel > 9) Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
+    if (Game.Armors[3][0] == 1 && EnnemyLevel > 19) Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
+    if (Game.Armors[4][0] == 1 && EnnemyLevel > 29) Game.Ennemy[4] += Math.floor(random((EnnemyLevel * 10) * (EnnemyLifeMult * 0.5) + 100, (EnnemyLevel * 10) * (EnnemyLifeMult * 1) + 100));
     Game.Ennemy[3] = random(BasePower * EnnemyPowerMult, BasePower * EnnemyPowerMultMax);
     Game.Ennemy[4] *= Game.WTMult[3];
     Game.Ennemy[5] = Game.Ennemy[4];
-    if (Game.Ennemy[1] >= 6) {
-      Game.Ennemy[0] = "boss";
-    } else {
-      Game.Ennemy[0] = Math.floor(Math.random() * Ennemies[Game.Location].length);
-    }
+    if (Game.Ennemy[1] >= 6) Game.Ennemy[0] = "boss"; else Game.Ennemy[0] = Math.floor(Math.random() * Ennemies[Game.Location].length);
     if (Ennemies[Game.Location][Game.Ennemy[0]] == undefined) Game.Ennemy[0] = 0;
     $("#EnnemyDamage").html("");
     $("#PlayerDamage").html("");
@@ -1401,11 +1109,8 @@ function WinFight() {
     } else {
       expGain = Game.Ennemy[2] + Game.Level * 15 * Game.xp[2];
       if (Missions[Game.MissionStarted[1]][3] == 2) { expGain = random(expGain * 0.9, expGain * 1.2); }
-      else { expGain = random(expGain * 0.9, expGain); }
+      else expGain = random(expGain * 0.9, expGain);
     }
-
-    //BLOCK EXP IF LOW SCORE
-    //if (expGain < 1 || ((Game.Level - 5) * 10) >= Ranking || Game.Level >= POS[Game.Location][2]) { expGain = 0; }
     if (Game.MissionStarted[0] == true && Game.Level >= POS[Missions[Game.MissionStarted[1]][8]][2]) { expGain = 0; }
     Game.Wins++;
     Game.Defeated[Game.Ennemy[1]]++;
@@ -1433,57 +1138,42 @@ function WinFight() {
     EMPCount = random(1, 3);
     if (ELOOTCHANCE <= 25 && Game.Emp < 50) { Game.Emp += EMPCount; EMP = "<br>+<span class='orange'>" + EMPCount + "</span><i class='orange bolt icon'></i>Special Attack"; }
 
-    if (Game.Ennemy[1] >= 6 && Game.MissionStarted[0] == false) { CORELOOT = 1; }
+    if (Game.Ennemy[1] >= 6 && Game.MissionStarted[0] == false) CORELOOT = 1;
     //CORE LOOT CHANCE
     var LOOTCHANCE1 = random(1, 100);
     if (LOOTCHANCE1 > 0 && LOOTCHANCE1 <= CORELOOT && Game.isInFight != 2) {
       THEREISLOOT++;
       if (ScoreModeEnabled == 0) {
         if (Game.Level >= Ranking) {
-          if (Game.Ennemy[1] == 1) { newItem(0, random(Game.Level - 5, Game.Level + 1), "Normal"); }
-          if (Game.Ennemy[1] == 2) { newItem(0, random(Game.Level - 4, Game.Level + 2), "Common"); }
-          if (Game.Ennemy[1] == 3) { newItem(0, random(Game.Level - 3, Game.Level + 3), "Uncommon"); }
-          if (Game.Ennemy[1] == 4) { newItem(0, random(Game.Level - 2, Game.Level + 4), "Rare"); }
-          if (Game.Ennemy[1] == 5) { newItem(0, random(Game.Level - 1, Game.Level + 5), "Epic"); }
-          if (Game.Ennemy[1] == 6) { newItem(0, Game.Level, "Exotic"); }
-          if (Game.Ennemy[1] == 7) { newItem(0, Game.Level, "Divine"); }
+          if (Game.Ennemy[1] == 1) newItem(0, random(Game.Level - 5, Game.Level + 1), "Normal");
+          if (Game.Ennemy[1] == 2) newItem(0, random(Game.Level - 4, Game.Level + 2), "Common");
+          if (Game.Ennemy[1] == 3) newItem(0, random(Game.Level - 3, Game.Level + 3), "Uncommon");
+          if (Game.Ennemy[1] == 4) newItem(0, random(Game.Level - 2, Game.Level + 4), "Rare");
+          if (Game.Ennemy[1] == 5) newItem(0, random(Game.Level - 1, Game.Level + 5), "Epic");
+          if (Game.Ennemy[1] == 6) newItem(0, Game.Level, "Exotic");
+          if (Game.Ennemy[1] == 7) newItem(0, Game.Level, "Divine");
         }
-        else { newItem(0, random(Ranking, Ranking + 2), "Normal"); }
+        else newItem(0, random(Ranking, Ranking + 2), "Normal");
       } else {
         if (Missions[Game.MissionStarted[1]][3] == 2) {
           if (Game.Ennemy[1] >= 1) {
-            if (Game.Ennemy[1] == 7) {
-              newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Divine");
-            } else {
-              newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Exotic");
-            }
+            if (Game.Ennemy[1] == 7) newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Divine");
+            else newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Exotic");
           }
         } else {
-          if (Game.Ennemy[1] == 1 || Game.Ennemy[1] == 2 || Game.Ennemy[1] == 3 || Game.Ennemy[1] == 4) {
-            newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Rare");
-          }
-          if (Game.Ennemy[1] == 5) {
-            newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Epic");
-          }
-          if (Game.Ennemy[1] == 6) {
-            newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Exotic");
-          }
-          if (Game.Ennemy[1] == 7) {
-            newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Divine");
-          }
+          if (Game.Ennemy[1] == 1 || Game.Ennemy[1] == 2 || Game.Ennemy[1] == 3 || Game.Ennemy[1] == 4) newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Rare");
+          if (Game.Ennemy[1] == 5) newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Epic");
+          if (Game.Ennemy[1] == 6) newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Exotic");
+          if (Game.Ennemy[1] == 7) newItem(0, random((Ranking - 10) + Game.Ennemy[1], (Ranking + 5) + Game.Ennemy[1]), "Divine");
         }
       }
       var IF2 = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
-      if (ScoreModeEnabled == 0) {
-        TIER = "Level";
-        TIERRANK = Game.inventory[IF2].level;
-      } else {
-        TIER = "Score";
-        TIERRANK = "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IF2].level * 10);
-      }
+      var TIER = ScoreModeEnabled == 0 ? "Level" : "Score";
+      var TIERRANK = ScoreModeEnabled == 0 ? Game.inventory[IF2].level : "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IF2].level * 10);
+
       var UPS = Game.inventory[IF2].ups > 0 ? "" + Game.inventory[IF2].ups + "<i class='orange fad fa-gem revertmargin'></i>" : "";
       var LOOTCONTENT = Game.inventory[IF2].id == 4 ? "<i class='bleu fas fa-sword revertmargin'></i>" + fix(Game.inventory[IF2].power, 5) : "<i class='rouge fas fa-heart revertmargin'></i>" + fix(Game.inventory[IF2].life, 5);
-      if (IF2 < Game.MaxInv) { $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IF2].type + "'><div class='classBar" + Game.inventory[IF2].type + "'></div><div class='statistic GS'><div class='value'>" + TIER + "</div><div class='label'> " + TIERRANK + "</div></div>" + Game.inventory[IF2].name + "<span class='" + Game.inventory[IF2].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[IF2].class + "'> " + Game.inventory[IF2].class + " </span><br>" + LOOTCONTENT + "</div></div>"); }
+      if (IF2 < Game.MaxInv) $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IF2].type + "'><div class='classBar" + Game.inventory[IF2].type + "'></div><div class='statistic GS'><div class='value'>" + TIER + "</div><div class='label'> " + TIERRANK + "</div></div>" + Game.inventory[IF2].name + "<span class='" + Game.inventory[IF2].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[IF2].class + "'> " + Game.inventory[IF2].class + " </span><br>" + LOOTCONTENT + "</div></div>");
     }
     //RELIC LOOT CHANCE
     var LOOTCHANCE2 = random(0, 100);
@@ -1491,89 +1181,77 @@ function WinFight() {
       THEREISLOOT++;
       if (ScoreModeEnabled == 0) {
         if (Game.Level > Ranking) {
-          if (Game.Ennemy[1] == 1) { newItem("Relic", null, "Normal"); }
-          if (Game.Ennemy[1] == 2) { newItem("Relic", null, "Common"); }
-          if (Game.Ennemy[1] == 3) { newItem("Relic", null, "Uncommon"); }
-          if (Game.Ennemy[1] == 4) { newItem("Relic", null, "Rare"); }
-          if (Game.Ennemy[1] == 5) { newItem("Relic", null, "Epic"); }
-          if (Game.Ennemy[1] == 6) { newItem("Relic", null, "Exotic"); }
-          if (Game.Ennemy[1] == 7) { newItem("Relic", null, "Divine"); }
-        } else { newItem("Relic", null, "Normal"); }
+          if (Game.Ennemy[1] == 1) newItem("Relic", null, "Normal");
+          if (Game.Ennemy[1] == 2) newItem("Relic", null, "Common");
+          if (Game.Ennemy[1] == 3) newItem("Relic", null, "Uncommon");
+          if (Game.Ennemy[1] == 4) newItem("Relic", null, "Rare");
+          if (Game.Ennemy[1] == 5) newItem("Relic", null, "Epic");
+          if (Game.Ennemy[1] == 6) newItem("Relic", null, "Exotic");
+          if (Game.Ennemy[1] == 7) newItem("Relic", null, "Divine");
+        } else newItem("Relic", null, "Normal");
       } else {
         if (Missions[Game.MissionStarted[1]][3] == 2) {
           if (Game.Ennemy[1] >= 1) {
-            if (Game.Ennemy[1] == 7) { newItem("Relic", null, "Divine"); }
-            else { newItem("Relic", null, "Exotic"); }
+            if (Game.Ennemy[1] == 7) newItem("Relic", null, "Divine");
+            else newItem("Relic", null, "Exotic");
           }
         } else {
           if (Game.Ennemy[1] == 1 || Game.Ennemy[1] == 2 || Game.Ennemy[1] == 3 || Game.Ennemy[1] == 4) { newItem("Relic", null, "Rare"); }
-          if (Game.Ennemy[1] == 5) { newItem("Relic", null, "Epic"); }
-          if (Game.Ennemy[1] == 6) { newItem("Relic", null, "Exotic"); }
-          if (Game.Ennemy[1] == 7) { newItem("Relic", null, "Divine"); }
+          if (Game.Ennemy[1] == 5) newItem("Relic", null, "Epic");
+          if (Game.Ennemy[1] == 6) newItem("Relic", null, "Exotic");
+          if (Game.Ennemy[1] == 7) newItem("Relic", null, "Divine");
         }
       }
       var IF = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
-      if (Game.inventory[IF].object == 1) { descos = "Power bonus of " + fix(Game.inventory[IF].bonus, 9); }
-      if (Game.inventory[IF].object == 2) { descos = "Life bonus of " + fix(Game.inventory[IF].bonus, 9); }
-      if (Game.inventory[IF].object == 3) { descos = "Max Score +" + fix(Game.inventory[IF].bonus, 3); }
-      if (Game.inventory[IF].object == 4) { descos = "Minimal drop quality <span class='" + Game.inventory[IF].bonus + "'>" + Game.inventory[IF].bonus + "</span>"; }
-      if (IF < Game.MaxInv) { $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IF].type + "'><div class='classBar" + Game.inventory[IF].type + "'></div>" + Game.inventory[IF].name + "<br><span class='" + Game.inventory[IF].class + "'>" + Game.inventory[IF].class + "</span><br>" + descos + "</div></div>"); }
+      if (Game.inventory[IF].object == 1) descos = "Power bonus of " + fix(Game.inventory[IF].bonus, 9);
+      if (Game.inventory[IF].object == 2) descos = "Life bonus of " + fix(Game.inventory[IF].bonus, 9);
+      if (Game.inventory[IF].object == 3) descos = "Max Score +" + fix(Game.inventory[IF].bonus, 3);
+      if (Game.inventory[IF].object == 4) descos = "Minimal drop quality <span class='" + Game.inventory[IF].bonus + "'>" + Game.inventory[IF].bonus + "</span>";
+      if (IF < Game.MaxInv) $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IF].type + "'><div class='classBar" + Game.inventory[IF].type + "'></div>" + Game.inventory[IF].name + "<br><span class='" + Game.inventory[IF].class + "'>" + Game.inventory[IF].class + "</span><br>" + descos + "</div></div>");
     }
     //KEY LOOT CHANCE
     var LOOTCHANCE3 = random(0, 100);
     if (LOOTCHANCE3 > 0 && LOOTCHANCE3 <= KEYLOOT && Game.Level >= 10 && Game.isInFight != 2) {
       THEREISLOOT++;
       if (ScoreModeEnabled == 0) {
-        if (Game.Ennemy[1] == 1) { newItem("Gem", null, "Normal"); }
-        if (Game.Ennemy[1] == 2) { newItem("Gem", null, "Common"); }
-        if (Game.Ennemy[1] == 3) { newItem("Gem", null, "Uncommon"); }
-        if (Game.Ennemy[1] == 4) { newItem("Gem", null, "Rare"); }
-        if (Game.Ennemy[1] == 5) { newItem("Gem", null, "Epic"); }
-        if (Game.Ennemy[1] == 6) { newItem("Gem", null, "Exotic"); }
-        if (Game.Ennemy[1] == 7) { newItem("Gem", null, "Divine"); }
+        if (Game.Ennemy[1] == 1) newItem("Gem", null, "Normal");
+        if (Game.Ennemy[1] == 2) newItem("Gem", null, "Common");
+        if (Game.Ennemy[1] == 3) newItem("Gem", null, "Uncommon");
+        if (Game.Ennemy[1] == 4) newItem("Gem", null, "Rare");
+        if (Game.Ennemy[1] == 5) newItem("Gem", null, "Epic");
+        if (Game.Ennemy[1] == 6) newItem("Gem", null, "Exotic");
+        if (Game.Ennemy[1] == 7) newItem("Gem", null, "Divine");
       } else {
         if (Missions[Game.MissionStarted[1]][3] == 2) {
           if (Game.Ennemy[1] >= 1) {
-            if (Game.Ennemy[1] == 7) { newItem("Gem", null, "Divine"); }
-            else { newItem("Gem", null, "Exotic"); }
+            if (Game.Ennemy[1] == 7) newItem("Gem", null, "Divine");
+            else newItem("Gem", null, "Exotic");
           }
         } else {
-          if (Game.Ennemy[1] == 1 || Game.Ennemy[1] == 2 || Game.Ennemy[1] == 3) { newItem("Gem", null, "Uncommon"); }
-          if (Game.Ennemy[1] == 4) { newItem("Gem", null, "Rare"); }
-          if (Game.Ennemy[1] == 5) { newItem("Gem", null, "Epic"); }
-          if (Game.Ennemy[1] == 6) { newItem("Gem", null, "Exotic"); }
-          if (Game.Ennemy[1] == 7) { newItem("Gem", null, "Divine"); }
+          if (Game.Ennemy[1] == 1 || Game.Ennemy[1] == 2 || Game.Ennemy[1] == 3) newItem("Gem", null, "Uncommon");
+          if (Game.Ennemy[1] == 4) newItem("Gem", null, "Rare");
+          if (Game.Ennemy[1] == 5) newItem("Gem", null, "Epic");
+          if (Game.Ennemy[1] == 6) newItem("Gem", null, "Exotic");
+          if (Game.Ennemy[1] == 7) newItem("Gem", null, "Divine");
         }
       }
       var IF3 = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
-      if (Game.Armors[1][5] >= Game.MaxUPC[0] && Game.Armors[1][0] == true) {
-        CoreButton1B = "<div class='ui disabled button'>No Helmet gem slots left.</div>";
-      }
-      if (Game.Armors[2][5] >= Game.MaxUPC[1] && Game.Armors[2][0] == true) {
-        CoreButton2B = "<div class='ui disabled button'>No Armor gem slots left.</div>";
-      }
-      if (Game.Armors[3][5] >= Game.MaxUPC[2] && Game.Armors[3][0] == true) {
-        CoreButton3B = "<div class='ui disabled button'>No Shield gem slots left.</div>";
-      }
-      if (Game.Armors[4][5] >= Game.MaxUPC[3] && Game.Armors[4][0] == true) {
-        CoreButton4B = "<div class='ui disabled button'>No Boots gem slots left.</div>";
-      }
+      if (Game.Armors[1][5] >= Game.MaxUPC[0] && Game.Armors[1][0] == true) CoreButton1B = "<div class='ui disabled button'>No Helmet gem slots left.</div>";
+      if (Game.Armors[2][5] >= Game.MaxUPC[1] && Game.Armors[2][0] == true) CoreButton2B = "<div class='ui disabled button'>No Armor gem slots left.</div>";
+      if (Game.Armors[3][5] >= Game.MaxUPC[2] && Game.Armors[3][0] == true) CoreButton3B = "<div class='ui disabled button'>No Shield gem slots left.</div>";
+      if (Game.Armors[4][5] >= Game.MaxUPC[3] && Game.Armors[4][0] == true) CoreButton4B = "<div class='ui disabled button'>No Boots gem slots left.</div>";
       if (Game.inventory[IF3].object > 0 && Game.inventory[IF3].object < 3) {
-        if (Game.inventory[IF3].object == 1) {
-          descitem = "+<i class='rouge fas fa-heart nomargin'></i>" + fix(Game.inventory[IF3].life, 5) + "<br>";
-        }
-        if (Game.inventory[IF3].object == 2) {
-          descitem = "+<i class='bleu fas fa-sword nomargin'></i>" + fix(Game.inventory[IF3].power, 5) + "<br>";
-        }
+        if (Game.inventory[IF3].object == 1) descitem = "+<i class='rouge fas fa-heart nomargin'></i>" + fix(Game.inventory[IF3].life, 5) + "<br>";
+        if (Game.inventory[IF3].object == 2) descitem = "+<i class='bleu fas fa-sword nomargin'></i>" + fix(Game.inventory[IF3].power, 5) + "<br>";
         if (IF3 < Game.MaxInv) { $("#rewards-loot").append("<div class='ui comments'><div class='comment CoreClass" + Game.inventory[IF3].type + "'><div class='classBar" + Game.inventory[IF3].type + "'></div>" + Game.inventory[IF3].name + "<br><span class='" + Game.inventory[IF3].class + "'>" + Game.inventory[IF3].class + "</span><br>" + descitem + "</div></div>"); }
       }
     }
     var INVENTORYFULL = (Game.inventory.length - 1) < Game.MaxInv ? "" : "Inventory full, you can\'t recover any new item.";
     $("#rewards-loot").append(INVENTORYFULL);
-    if (THEREISLOOT == 0) { $("#rewards-loot").html(REWARDTEXT + "<br>" + INVENTORYFULL); }
+    if (THEREISLOOT == 0) $("#rewards-loot").html(REWARDTEXT + "<br>" + INVENTORYFULL);
     Game.isInFight = 2;
     var ToAddCash = Math.floor(random(1 * (Game.Ennemy[2] - 5), Game.Ennemy[1] * Game.Ennemy[2]));
-    if (ToAddCash < 1) { ToAddCash = 1; }
+    if (ToAddCash < 1) ToAddCash = 1;
     Game.Cash += ToAddCash;
 
     if (Game.Ennemy[1] == 1) { Class = "Ennemy1"; ThreatLevel = "NORMAL"; }
@@ -1592,10 +1270,8 @@ function WinFight() {
     $("#rewards-desc").html("<br>You have defeated " + fix(Game.Defeated[Game.Ennemy[1]], 3) + " <div class='ui small " + Class + " basic label'><span class='" + Class + "'>" + ThreatLevel + "</span></div><br> " + LEVELUP + "+<i class='green dollar icon'></i>" + ToAddCash);
     if (ScoreModeEnabled == 0) {
       $("#rewards-text").html("+<span class='vert bold'>" + fix(Math.floor(expGain), 5) + "</span> EXP " + EMP);
-      //IF NOT IN MISSION & LEVEL EQUAL/SUPERIOR TO ACTUAL MAXIMUM LOCATION LEVEL
-      if (Game.Level >= POS[Game.Location][2]) { $("#rewards-text").html("<span class='rouge'>No more EXP in this area, start the next mission.</span>" + EMP); }
-      //IF IN MISSION & LEVEL EQUAL/SUPERIOR TO ACTUAL MAXIMUM LOCATION LEVEL
-      if (Game.MissionStarted[0] == true && Game.Level >= POS[Missions[Game.MissionStarted[1]][8]][2]) { $("#rewards-text").html(EMP); }
+      if (Game.Level >= POS[Game.Location][2]) $("#rewards-text").html("<span class='rouge'>No more EXP in this area, start the next mission.</span>" + EMP);
+      if (Game.MissionStarted[0] == true && Game.Level >= POS[Missions[Game.MissionStarted[1]][8]][2]) $("#rewards-text").html(EMP);
     }
     else { $("#rewards-text").html(EMP); }
     $("#rewards").show();
@@ -1608,35 +1284,16 @@ function LoseFight() {
   Game.isInFight = 2;
   Game.Loses++;
   $("#EnnemyDesc").html("<br><br>");
-  if (Game.Ennemy[1] == 1) {
-    Class = "Ennemy1";
-    ThreatLevel = "NORMAL";
-  }
-  if (Game.Ennemy[1] == 2) {
-    Class = "Ennemy2";
-    ThreatLevel = "ADVANCED";
-  }
-  if (Game.Ennemy[1] == 3) {
-    Class = "Ennemy3";
-    ThreatLevel = "SUPERIOR";
-  }
-  if (Game.Ennemy[1] == 4) {
-    Class = "Ennemy4";
-    ThreatLevel = "VETERAN";
-  }
-  if (Game.Ennemy[1] == 5) {
-    Class = "Ennemy5";
-    ThreatLevel = "ELITE";
-  }
-  if (Game.Ennemy[1] == 6) {
-    Class = "Ennemy6";
-    ThreatLevel = "BOSS";
-  }
-  if (Game.Ennemy[1] == 7) {
-    Class = "Ennemy7";
-    ThreatLevel = "GOD";
-  }
-  $("#rewards-title").html("<span class='rouge'>" + Ennemies[Game.Location][Game.Ennemy[0]] + " has killed you !</span>");
+  if (Game.Ennemy[1] == 1) ThreatLevel = "NORMAL";
+  if (Game.Ennemy[1] == 2) ThreatLevel = "ADVANCED";
+  if (Game.Ennemy[1] == 3) ThreatLevel = "SUPERIOR";
+  if (Game.Ennemy[1] == 4) ThreatLevel = "VETERAN";
+  if (Game.Ennemy[1] == 5) ThreatLevel = "ELITE";
+  if (Game.Ennemy[1] == 6) ThreatLevel = "BOSS";
+  if (Game.Ennemy[1] == 7) ThreatLevel = "GOD";
+  var TLC = "<span class='Ennemy" + Game.Ennemy[1] + "'>";
+  var TC = "Ennemy" + Game.Ennemy[1];
+  $("#rewards-title").html("<div class='ui " + TC + " basic label'>" + TLC + ThreatLevel + "</div> " + Ennemies[Game.Location][Game.Ennemy[0]] + " has killed you !");
   $("#rewards-desc").html("");
   var DEATHS = Game.Loses == 0 ? 1 : Game.Loses;
   if (ScoreModeEnabled == 0) {
@@ -1661,50 +1318,19 @@ function LoseFight() {
 }
 
 function UpdateCombat() {
-  TC = "Ennemy1";
-  TLC = "<span class='Ennemy1'>";
-  ThreatLevel = "NORMAL";
-  EnnemyText = "";
-  lifetext = "";
-  lifetext = CoreLife <= Game.Ennemy[3] ? " rouge" : " ";
-  EnnemyText = Game.Ennemy[5] < Game.Ennemy[4] / 2 ? " rouge" : " ";
-  if (Game.Ennemy[1] == 2) {
-    TC = "Ennemy2";
-    TLC = "<span class='Ennemy2'>";
-    ThreatLevel = "ADVANCED";
-  }
-  if (Game.Ennemy[1] == 3) {
-    TC = "Ennemy3";
-    TLC = "<span class='Ennemy3'>";
-    ThreatLevel = "SUPERIOR";
-  }
-  if (Game.Ennemy[1] == 4) {
-    TC = "Ennemy4";
-    TLC = "<span class='Ennemy4'>";
-    ThreatLevel = "VETERAN";
-  }
-  if (Game.Ennemy[1] == 5) {
-    TC = "Ennemy5";
-    TLC = "<span class='Ennemy5'>";
-    ThreatLevel = "ELITE";
-  }
-  if (Game.Ennemy[1] == 6) {
-    TC = "Ennemy6";
-    TLC = "<span class='Ennemy6'>";
-    ThreatLevel = "BOSS";
-  }
-  if (Game.Ennemy[1] == 7) {
-    TC = "Ennemy7";
-    TLC = "<span class='Ennemy7'>";
-    ThreatLevel = "GOD";
-  }
-  if (ScoreModeEnabled == 0) {
-    LVLTEXT = " Level ";
-    TIERTEXT = Math.round(Game.Ennemy[2]);
-  } else {
-    LVLTEXT = " Score <i class='fad fa-dice-d20'></i>";
-    TIERTEXT = Math.floor(Game.Ennemy[2] * 10);
-  }
+  var ThreatLevel = "NORMAL";
+  var lifetext = CoreLife <= Game.Ennemy[3] ? " rouge" : " ";
+  var EnnemyText = Game.Ennemy[5] < Game.Ennemy[4] / 2 ? " rouge" : " ";
+  if (Game.Ennemy[1] == 2) ThreatLevel = "ADVANCED";
+  if (Game.Ennemy[1] == 3) ThreatLevel = "SUPERIOR";
+  if (Game.Ennemy[1] == 4) ThreatLevel = "VETERAN";
+  if (Game.Ennemy[1] == 5) ThreatLevel = "ELITE";
+  if (Game.Ennemy[1] == 6) ThreatLevel = "BOSS";
+  if (Game.Ennemy[1] == 7) ThreatLevel = "GOD";
+  var TLC = "<span class='Ennemy" + Game.Ennemy[1] + "'>";
+  var TC = "Ennemy" + Game.Ennemy[1];
+  var LVLTEXT = ScoreModeEnabled == 0 ? " Level " : " Score <i class='fad fa-dice-d20'></i>";
+  var TIERTEXT = ScoreModeEnabled == 0 ? Math.round(Game.Ennemy[2]) : Math.floor(Game.Ennemy[2] * 10);
   var EnnemyName = Game.Ennemy[1] > 5 ? BossNames[Game.Location] : Ennemies[Game.Location][Game.Ennemy[0]];
   $("#EnnemyTitle").html("<div class='ui " + TC + " basic label'>" + TLC + ThreatLevel + "</span></div><br>" + TLC + EnnemyName + "<div class='ui horizontal label'>" + LVLTEXT + fix(TIERTEXT, 4) + "</div></span>");
   $("#EnnemyPower").html("<i class='bleu fas fa-sword'></i>" + fix(Game.Ennemy[3], 5));
@@ -1715,11 +1341,7 @@ function UpdateCombat() {
   if (Game.Emp > 0) {
     $("#emp-btn").show();
     $("#emp-btn").html("<i class='fas fa-swords'></i>" + fix(Game.Emp, 4) + " Special Attack");
-    if (url.match(/mobile/gi)) {
-      $("#emp-btn").attr("class", "ui big orange button alphaSDW");
-    } else {
-      $("#emp-btn").attr("class", "ui huge orange button alphaSDW");
-    }
+    if (url.match(/mobile/gi)) $("#emp-btn").attr("class", "ui big orange button alphaSDW"); else $("#emp-btn").attr("class", "ui huge orange button alphaSDW");
   } else {
     $("#emp-btn").hide();
     $("#emp-btn").attr("class", "");
@@ -1744,17 +1366,15 @@ function NewCore(id, n) {
   OldCore = Game.Armors[id];
 
   if (Game.config[0] == 1) {
-
     var olevelcolor = Game.inventory[n].level <= OldCore[4] ? "ShadowReset green" : "ShadowReset rouge";
     var oupscolor = Game.inventory[n].ups <= (Game.MaxUPC[id - 1] - OldCore[5]) ? "green" : "rouge";
     var olifecolor = Game.inventory[n].life <= OldCore[3] ? "green" : "rouge";
     var levelcolor = Game.inventory[n].level >= OldCore[4] ? "ShadowReset green" : "ShadowReset rouge";
     var upscolor = Game.inventory[n].ups >= (Game.MaxUPC[id - 1] - OldCore[5]) ? "green" : "rouge";
     var lifecolor = Game.inventory[n].life >= OldCore[3] ? "green" : "rouge";
-
-    if (Game.inventory[n].level == Math.floor(OldCore[4])) { olevelcolor = ""; levelcolor = ""; }
-    if (Game.inventory[n].ups == (Game.MaxUPC[id - 1] - OldCore[5])) { upscolor = ""; oupscolor = ""; }
-    if (Game.inventory[n].life == OldCore[2]) { olifecolor = ""; lifecolor = ""; }
+    if (Game.inventory[n].level == Math.floor(OldCore[4])) olevelcolor = ""; levelcolor = "";
+    if (Game.inventory[n].ups == (Game.MaxUPC[id - 1] - OldCore[5])) upscolor = ""; oupscolor = "";
+    if (Game.inventory[n].life == OldCore[2]) olifecolor = ""; lifecolor = "";
 
     if (ScoreModeEnabled == 0) {
       TIER = "Level ";
@@ -1766,7 +1386,7 @@ function NewCore(id, n) {
       OLDTIERRANK = Math.floor(OldCore[4] * 10);
     }
 
-    if (url.match(/mobile/gi)) { BR = " "; } else { BR = "<br>"; }
+    if (url.match(/mobile/gi)) BR = " "; else BR = "<br>";
 
     $("#OldCore-text").html("<span class='" + OldCore[2] + "'>" + OldCore[1] + BR + "<span class='" + olevelcolor + "'>" + TIER + OLDTIERRANK + "</span></span><br>" +
       "<span class='desc'>Relic Slots : " + "<span class='" + oupscolor + "'>" + (Game.MaxUPC[id - 1] - OldCore[5]) + "<i class='jaune fas fa-stars'></i></span></span><br>" +
@@ -1776,19 +1396,15 @@ function NewCore(id, n) {
       "<span class='desc'>Relic Slots : <span class='" + upscolor + "'>" + Game.inventory[n].ups + "<i class='jaune fas fa-stars'></i></span></span><br>" +
       "<i class='rouge fas fa-heart'></i><span class='" + lifecolor + "'>" + Game.inventory[n].life + "</span>");
 
-    if (url.match(/mobile/gi)) {
-      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i></div>");
-    }
-    else {
-      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace Armor " + id + " <span class='vert'>(Y)</span></div>");
-    }
+    if (url.match(/mobile/gi)) $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i></div>");
+    else $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineCore(" + id + ", " + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace Armor " + id + " <span class='vert'>(Y)</span></div>");
     $("#modal-4").modal("show");
     $("#confirm3-title").html("Use a new armor");
   } else {
-    if (id == 1) { DefineCore(1, n); }
-    if (id == 2) { DefineCore(2, n); }
-    if (id == 3) { DefineCore(3, n); }
-    if (id == 4) { DefineCore(4, n); }
+    if (id == 1) DefineCore(1, n);
+    if (id == 2) DefineCore(2, n);
+    if (id == 3) DefineCore(3, n);
+    if (id == 4) DefineCore(4, n);
   }
 }
 
@@ -1801,7 +1417,6 @@ function NewWeapon(id, n) {
   OldCore = Game.Weapons[type];
 
   if (Game.config[0] == 1) {
-
     var olevelcolor = Game.inventory[n].level <= OldCore[3] ? "ShadowReset green" : "ShadowReset rouge";
     var oupscolor = Game.inventory[n].ups <= (Game.MaxUPC[id - 1] - OldCore[2]) ? "green" : "rouge";
     var opowercolor = Game.inventory[n].power <= OldCore[4] ? "green" : "rouge";
@@ -1809,18 +1424,9 @@ function NewWeapon(id, n) {
     var upscolor = Game.inventory[n].ups >= (Game.MaxUPC[id - 1] - OldCore[2]) ? "green" : "rouge";
     var powercolor = Game.inventory[n].power >= OldCore[4] ? "green" : "rouge";
 
-    if (Game.inventory[n].level == Math.floor(OldCore[4])) {
-      olevelcolor = "";
-      levelcolor = "";
-    }
-    if (Game.inventory[n].ups == (Game.MaxUPC[id - 1] - OldCore[5])) {
-      upscolor = "";
-      oupscolor = "";
-    }
-    if (Game.inventory[n].power == OldCore[3]) {
-      opowercolor = "";
-      powercolor = "";
-    }
+    if (Game.inventory[n].level == Math.floor(OldCore[4])) { olevelcolor = ""; levelcolor = ""; }
+    if (Game.inventory[n].ups == (Game.MaxUPC[id - 1] - OldCore[5])) { upscolor = ""; oupscolor = ""; }
+    if (Game.inventory[n].power == OldCore[3]) { opowercolor = ""; powercolor = ""; }
 
     if (ScoreModeEnabled == 0) {
       TIER = "Level ";
@@ -1832,7 +1438,7 @@ function NewWeapon(id, n) {
       OLDTIERRANK = Math.floor(OldCore[3] * 10);
     }
 
-    if (url.match(/mobile/gi)) { BR = " "; } else { BR = "<br>"; }
+    if (url.match(/mobile/gi)) BR = " "; else BR = "<br>";
 
     $("#OldCore-text").html("<span class='" + OldCore[1] + "'>" + OldCore[0] + BR + "<span class='" + olevelcolor + "'>" + TIER + OLDTIERRANK + "</span></span><br>" +
       "<span class='desc'>Relic Slots : " + "<span class='" + oupscolor + "'>" + (Game.MaxUPC[id - 1] - OldCore[2]) + "<i class='jaune fas fa-stars'></i></span></span><br>" +
@@ -1842,117 +1448,52 @@ function NewWeapon(id, n) {
       "<span class='desc'>Relic Slots: <span class='" + upscolor + "'>" + Game.inventory[n].ups + "<i class='jaune fas fa-stars'></i></span></span><br>" +
       "<i class='bleu fas fa-sword'></i><span class='" + powercolor + "'>" + Game.inventory[n].power + "</span>");
 
-    if (url.match(/mobile/gi)) {
-      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineWeapon(" + id + "," + n + ");' class='ui rainbow button'><i class='green check icon'></i></div>");
-    }
-    else {
-      $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineWeapon(" + id + "," + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace " + type + " Weapon <span class='vert'>(Y)</span></div>");
-    }
+    if (url.match(/mobile/gi)) $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineWeapon(" + id + "," + n + ");' class='ui rainbow button'><i class='green check icon'></i></div>");
+    else $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineWeapon(" + id + "," + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace " + type + " Weapon <span class='vert'>(Y)</span></div>");
     $("#modal-4").modal("show");
     $("#confirm3-title").html("Use a new weapon");
-  } else {
-    DefineWeapon(id, n);
-  }
+  } else DefineWeapon(id, n);
 }
 
 function ConfirmRelic(R, id) {
-  //Relic NAME, CLASS, TYPE1, VALUE1
   Game.isInFight = 8;
-  var Bcolor0 = "";
-  if (Game.RLS[R][1] == Game.inventory[id].object) {
-    if (Game.RLS[R][2] > Game.inventory[id].bonus) {
-      Bcolor0 = "green";
-    }
-    else { Bcolor0 = "rouge"; }
-  }
-  if (Game.RLS[R][1] == 0) {
-    CDESC = "-";
-  }
-  if (Game.RLS[R][1] == 1) {
-    CDESC = "Power bonus of <span class='" + Bcolor0 + "'>" + fix(Game.RLS[R][2], 9) + "</span>";
-  }
-  if (Game.RLS[R][1] == 2) {
-    CDESC = "Life bonus of <span class='" + Bcolor0 + "'>" + fix(Game.RLS[R][2], 9) + "</span>";
-  }
-  if (Game.RLS[R][1] == 3) {
-    CDESC = "Max Score +<span class='" + Bcolor0 + "'>" + fix(Game.RLS[R][2], 3) + "</span>";
-  }
-  if (Game.RLS[R][1] == 4) {
-    CDESC = "Minimal drop quality <span class='" + Game.RLS[R][2] + "'>" + Game.RLS[R][2] + "</span>";
-  }
-  var Bcolor = "";
-  if (Game.RLS[R][1] == Game.inventory[id].object) {
-    if (Game.RLS[R][2] < Game.inventory[id].bonus) { Bcolor = "green"; }
-    else { Bcolor = "rouge"; }
-  }
+  var IRCOLOR = "rouge";
+  var IRCOLOR2 = "rouge";
+  if (Game.RLS[R][1] == Game.inventory[id].object && Game.RLS[R][2] > Game.inventory[id].bonus) IRCOLOR = "green";
+  if (Game.RLS[R][1] == 0) CDESC = "-";
+  if (Game.RLS[R][1] == 1) CDESC = "Power bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RLS[R][2], 9) + "</span>";
+  if (Game.RLS[R][1] == 2) CDESC = "Life bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RLS[R][2], 9) + "</span>";
+  if (Game.RLS[R][1] == 3) CDESC = "Max Score +<span class='" + IRCOLOR + "'>" + fix(Game.RLS[R][2], 3) + "</span>";
+  if (Game.RLS[R][1] == 4) CDESC = "Minimal drop quality <span class='" + Game.RLS[R][2] + "'>" + Game.RLS[R][2] + "</span>";
+  if (Game.RLS[R][1] == Game.inventory[id].object && Game.RLS[R][2] < Game.inventory[id].bonus) IRCOLOR2 = "green";
   if (Game.inventory[id].object == 0) { CDESC2 = "-"; }
-  if (Game.inventory[id].object == 1) { CDESC2 = "Power bonus of <span class='" + Bcolor + "'>" + fix(Game.inventory[id].bonus, 9) + "</span>"; }
-  if (Game.inventory[id].object == 2) { CDESC2 = "Life bonus of <span class='" + Bcolor + "'>" + fix(Game.inventory[id].bonus, 9) + "</span>"; }
-  if (Game.inventory[id].object == 3) { CDESC2 = "Max Score +<span class='" + Bcolor + "'>" + fix(Game.inventory[id].bonus, 3) + "</span>"; }
+  if (Game.inventory[id].object == 1) { CDESC2 = "Power bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[id].bonus, 9) + "</span>"; }
+  if (Game.inventory[id].object == 2) { CDESC2 = "Life bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[id].bonus, 9) + "</span>"; }
+  if (Game.inventory[id].object == 3) { CDESC2 = "Max Score +<span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[id].bonus, 3) + "</span>"; }
   if (Game.inventory[id].object == 4) { CDESC2 = "Minimal drop quality <span class='" + Game.inventory[id].bonus + "'>" + Game.inventory[id].bonus + "</span>"; }
 
   if (Game.config[1] == 1) {
-    if (url.match(/mobile/gi)) { BR = " "; }
-    else { BR = "<br>"; }
-
+    if (url.match(/mobile/gi)) BR = " "; else BR = "<br>";
     $("#OldRelic-text").html("<span class='" + Game.RLS[R][0] + "'>" + Game.RLS[R][0] + "</span><br>" + CDESC);
-
     $("#NewRelic-text").html(Game.inventory[id].name + "<br><span class='" + Game.inventory[id].class + "'>" + Game.inventory[id].class + "</span><br>" + CDESC2);
-
-    if (url.match(/mobile/gi)) {
-      $("#confirm2-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div id='replace-btn' onclick='InstallRelic(" + R + ", " + id + ");' class='ui rainbow button'><i class='green check icon'></i> Replace Relic <span class='vert'>(Y)</span></div>");
-    } else {
-      $("#confirm2-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'> Cancel</div><div id='replace-btn' onclick='InstallRelic(" + R + ", " + id + ");' class='ui rainbow button'> Replace Relic </div>");
-    }
+    if (url.match(/mobile/gi)) $("#confirm2-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel<span class='vert'> (N)</span></div><div id='replace-btn' onclick='InstallRelic(" + R + ", " + id + ");' class='ui rainbow button'><i class='green check icon'></i> Replace Relic <span class='vert'>(Y)</span></div>");
+    else $("#confirm2-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'> Cancel</div><div id='replace-btn' onclick='InstallRelic(" + R + ", " + id + ");' class='ui rainbow button'> Replace Relic </div>");
     $("#modal-3").modal("show");
   }
-  else { InstallRelic(R, id); }
+  else InstallRelic(R, id);
 }
 
 function InstallRelic(R, id) {
-  for (var RL in Game.RLS) {
-    if (Game.RLS[RL][1] == 3) {
-      if (Game.Armors[1][4] > MaxScore - (Game.RLS[RL][2] / 10)) {
-        Game.Armors[1][4] = MaxScore - (Game.RLS[RL][2] / 10);
-      }
-      if (Game.Armors[2][4] > MaxScore - (Game.RLS[RL][2] / 10)) {
-        Game.Armors[2][4] = MaxScore - (Game.RLS[RL][2] / 10);
-      }
-      if (Game.Armors[3][4] > MaxScore - (Game.RLS[RL][2] / 10)) {
-        Game.Armors[3][4] = MaxScore - (Game.RLS[RL][2] / 10);
-      }
-      if (Game.Armors[4][4] > MaxScore - (Game.RLS[RL][2] / 10)) {
-        Game.Armors[4][4] = MaxScore - (Game.RLS[RL][2] / 10);
-      }
-    }
-  }
-  Game.RLS[R][0] = Game.inventory[id].class;
-  Game.RLS[R][1] = Game.inventory[id].object;
-  Game.RLS[R][2] = Game.inventory[id].bonus;
-  if (id <= Game.MaxInv) {
-    RemoveItem(id);
-  }
-  if (Game.Armors[UPC][2] == 2) {
-    Game.isInFight = 0;
-  }
-  if ($('#inventory').is(":visible")) {
-    hideModals();
-  }
-  else { hideRewards(); }
-  if (Game.config[1] == 1) {
-    $('#modal-3').modal('hide');
-  }
+  Game.RLS[R] = [Game.inventory[id].class, Game.inventory[id].object, Game.inventory[id].bonus];
+  if (id <= Game.MaxInv) RemoveItem(id);
+  if ($('#inventory').is(":visible")) hideModals(); else hideRewards();
+  if (Game.config[1] == 1) $('#modal-3').modal('hide');
 }
 
 function ConfirmDestroy(core) {
   DCore = Game.Armors[core];
-  if (ScoreModeEnabled == 0) {
-    TIER = "Level ";
-    DTIERRANK = Math.round(DCore[4]);
-  } else {
-    TIER = "Score <i class='fad fa-dice-d20'></i>";
-    DTIERRANK = Math.floor(DCore[4] * 10);
-  }
+  var TIER = ScoreModeEnabled == 0 ? "Level " : "Score <i class='fad fa-dice-d20'></i>";
+  var DTIERRANK = ScoreModeEnabled == 0 ? Math.round(DCore[4]) : Math.floor(DCore[4] * 10);
   var Names = ["", "Helmet", "Armor", "Shield", "Boots"];
   $("#Destroy-Title").html("Throw your current " + Names[core] + " ?");
   $("#Destroy-text").html("<span class='" + DCore[2] + "'>" + DCore[2] + " " + DCore[1] + "<div class='ui horizontal label'>" + TIER + "" + DTIERRANK + "</div></span><br>" +
@@ -1968,14 +1509,8 @@ function ConfirmDestroy(core) {
 
 function ConfirmDestroyWeapon(weapon) {
   WeaponToDelete = Game.Weapons[weapon];
-  if (ScoreModeEnabled == 0) {
-    TIER = "Level ";
-    DTIERRANK = Math.round(WeaponToDelete[3]);
-  } else {
-    TIER = "Score <i class='fad fa-dice-d20'></i>";
-    DTIERRANK = Math.floor(WeaponToDelete[3] * 10);
-  }
-  //0NAME, 1CLASS, 2GemS, 3LEVEL, 4POWER
+  var TIER = ScoreModeEnabled == 0 ? "Level " : "Score <i class='fad fa-dice-d20'></i>";
+  var DTIERRANK = ScoreModeEnabled == 0 ? Math.round(DCore[4]) : Math.floor(DCore[4] * 10);
   $("#Destroy-Title").html("Throw your current " + weapon + " weapon ?");
   $("#Destroy-text").html("<span class='" + WeaponToDelete[1] + "'>" + WeaponToDelete[1] + " " + WeaponToDelete[0] + "<div class='ui horizontal label'>" + TIER + "" + DTIERRANK + "</div></span><br>" +
     "<i class='bleu fas fa-sword'></i>" + WeaponToDelete[4] + "<br>");
@@ -1989,11 +1524,8 @@ function ConfirmDestroyWeapon(weapon) {
 }
 
 function DestroyWeapon(type) {
-  if (type == 1) {
-    Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10 + (Game.Simulation * 1)];
-  } else {
-    Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10 + (Game.Simulation * 1)];
-  }
+  if (type == 1) Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10 + (Game.Simulation * 1)];
+  else Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10 + (Game.Simulation * 1)];
   $('#modal-2').modal('hide');
   UpdateGame();
 }
@@ -2013,22 +1545,14 @@ function Cancelconfirm() {
 }
 
 function DefineCore(core, selected) {
-
-  if (Game.config[0] == 1) { $("#modal-4").modal("hide"); }
+  if (Game.config[0] == 1) $("#modal-4").modal("hide");
   if (Game.inventory[selected].life !== undefined) {
-
     Game.Armors[core] = [true, Game.inventory[selected].name, Game.inventory[selected].class, Game.inventory[selected].life, Game.inventory[selected].level, 0];
     Game.MaxUPC[core - 1] = Game.inventory[selected].ups;
     Game.ArmorUpgrades[core] = [0, 0];
   }
-  if (selected <= Game.MaxInv) {
-    RemoveItem(selected);
-  }
-  if ($('#inventory').is(":visible")) {
-    hideModals();
-  } else {
-    hideRewards();
-  }
+  if (selected <= Game.MaxInv) RemoveItem(selected);
+  if ($('#inventory').is(":visible")) hideModals(); else hideRewards();
   Game.isInFight = 0;
   UpdateGame();
 }
@@ -2036,21 +1560,14 @@ function DefineCore(core, selected) {
 function DefineWeapon(type, selected) {
   var weapon = "Main";
   if (type == 2) weapon = "Special";
-
   if (Game.config[0] == 1) $("#modal-4").modal("hide");
   if (Game.inventory[selected].power !== undefined) {
-
     Game.Weapons[weapon] = [Game.inventory[selected].name, Game.inventory[selected].class, 0, Game.inventory[selected].level, Game.inventory[selected].power];
     Game.MaxUPC[type + 3] = Game.inventory[selected].ups;
     //Game.WeaponUpgrades[weapon] = [0, 0];
   }
   if (selected <= Game.MaxInv) RemoveItem(selected);
-
-  if ($('#inventory').is(":visible")) {
-    hideModals();
-  } else {
-    hideRewards();
-  }
+  if ($('#inventory').is(":visible")) hideModals(); else hideRewards();
   Game.isInFight = 0;
   UpdateGame();
 }
@@ -2077,83 +1594,23 @@ function GetMaxLevel(type) {
 
 function UPCore(core, type, nb) {
   if (Game.Armors[core][5] < Game.MaxUPC[core - 1]) {
-
-    if (type == 2) {
-      Game.Weapons[core][4] += Game.inventory[nb].power;
-    }
-    if (type == 1) {
-      Game.Armors[core][3] += Game.inventory[nb].life;
-    }
+    if (type == 2) Game.Weapons[core][4] += Game.inventory[nb].power;
+    if (type == 1) Game.Armors[core][3] += Game.inventory[nb].life;
     Game.Armors[core][5]++;
-
     if (ScoreModeEnabled == 1) {
-      if (Game.inventory[nb].type == 1) {
-        if ((Game.Armors[core][4] + 0.1) <= MaxScore) {
-          Game.Armors[core][4] += 0.1;
-        } else {
-          Game.Armors[core][4] = MaxScore;
-        }
-      }
-      if (Game.inventory[nb].type == 2) {
-        if ((Game.Armors[core][4] + 0.2) <= MaxScore) {
-          Game.Armors[core][4] += 0.2;
-        } else {
-          Game.Armors[core][4] = MaxScore;
-        }
-      }
-      if (Game.inventory[nb].type == 3) {
-        if ((Game.Armors[core][4] + 0.3) <= MaxScore) {
-          Game.Armors[core][4] += 0.3;
-        } else {
-          Game.Armors[core][4] = MaxScore;
-        }
-      }
-      if (Game.inventory[nb].type == 4) {
-        if ((Game.Armors[core][4] + 0.4) <= MaxScore) {
-          Game.Armors[core][4] += 0.4;
-        } else {
-          Game.Armors[core][4] = MaxScore;
-        }
-      }
-
-      if (Game.inventory[nb].type == 5) {
-        if ((Game.Armors[core][4] + 0.5) <= MaxScore) {
-          Game.Armors[core][4] += 0.5;
-        } else {
-          Game.Armors[core][4] = MaxScore;
-        }
-      }
-
-      if (Game.inventory[nb].type == 6) {
-        if ((Game.Armors[core][4] + 0.6) <= MaxScore) {
-          Game.Armors[core][4] += 0.6;
-        } else {
-          Game.Armors[core][4] = MaxScore;
-        }
-      }
-      if (Game.inventory[nb].type == 7) {
-        if ((Game.Armors[core][4] + 0.7) <= MaxScore) {
-          Game.Armors[core][4] += 0.7;
-        } else {
-          Game.Armors[core][4] = MaxScore;
-        }
-      }
+      if (Game.inventory[nb].type == 1) if ((Game.Armors[core][4] + 0.1) <= MaxScore) Game.Armors[core][4] += 0.1; else Game.Armors[core][4] = MaxScore;
+      if (Game.inventory[nb].type == 2) if ((Game.Armors[core][4] + 0.2) <= MaxScore) Game.Armors[core][4] += 0.2; else Game.Armors[core][4] = MaxScore;
+      if (Game.inventory[nb].type == 3) if ((Game.Armors[core][4] + 0.3) <= MaxScore) Game.Armors[core][4] += 0.3; else Game.Armors[core][4] = MaxScore;
+      if (Game.inventory[nb].type == 4) if ((Game.Armors[core][4] + 0.4) <= MaxScore) Game.Armors[core][4] += 0.4; else Game.Armors[core][4] = MaxScore;
+      if (Game.inventory[nb].type == 5) if ((Game.Armors[core][4] + 0.5) <= MaxScore) Game.Armors[core][4] += 0.5; else Game.Armors[core][4] = MaxScore;
+      if (Game.inventory[nb].type == 6) if ((Game.Armors[core][4] + 0.6) <= MaxScore) Game.Armors[core][4] += 0.6; else Game.Armors[core][4] = MaxScore;
+      if (Game.inventory[nb].type == 7) if ((Game.Armors[core][4] + 0.7) <= MaxScore) Game.Armors[core][4] += 0.7; else Game.Armors[core][4] = MaxScore;
     }
-    if (type == 1) {
-      Game.ArmorUpgrades[core][1] += Game.inventory[nb].life;
-    }
-    if (type == 2) {
-      Game.ArmorUpgrades[core][0] += Game.inventory[nb].power;
-    }
+    if (type == 1) Game.ArmorUpgrades[core][1] += Game.inventory[nb].life;
+    if (type == 2) Game.ArmorUpgrades[core][0] += Game.inventory[nb].power;
   }
-  if (nb < Game.MaxInv) {
-    RemoveItem(nb);
-  }
-  if ($('#inventory').is(":visible")) {
-    hideModals();
-  } else {
-    hideRewards();
-  }
+  if (nb < Game.MaxInv) RemoveItem(nb);
+  if ($('#inventory').is(":visible")) hideModals(); else hideRewards();
   UpdateGame();
 }
 
@@ -2194,28 +1651,25 @@ function BuyInvSlot() {
 }
 
 function GetMultPrice(id) {
-  if (Game.Upgrades[id] == null) { Game.Upgrades[id] = 0; }
+  if (Game.Upgrades[id] == null) Game.Upgrades[id] = 0;
   var price = 2;
-  if (Game.Upgrades[id] >= 10) { price = 3; }
-  if (Game.Upgrades[id] >= 20) { price = 4; }
-  if (Game.Upgrades[id] >= 30) { price = 5; }
-  if (Game.Upgrades[id] >= 40) { price = 6; }
-  if (Game.Upgrades[id] >= 50) { price = 8; }
-  if (Game.Upgrades[id] >= 60) { price = 10; }
-  if (Game.Upgrades[id] >= 70) { price = 12; }
-  if (Game.Upgrades[id] >= 80) { price = 15; }
-  if (Game.Upgrades[id] >= 90) { price = 25; }
-
-  if (id == 0 && Game.Upgrades[id] >= 200) { price = 999999999; }
-  if (id == 1 && Game.Upgrades[id] >= 100) { price = 999999999; }
-  if (id == 2 && Game.Upgrades[id] >= 100) { price = 999999999; }
-  if (id == 3 && Game.Upgrades[id] >= 50) { price = 999999999; }
+  if (Game.Upgrades[id] >= 10) price = 3;
+  if (Game.Upgrades[id] >= 20) price = 4;
+  if (Game.Upgrades[id] >= 30) price = 5;
+  if (Game.Upgrades[id] >= 40) price = 6;
+  if (Game.Upgrades[id] >= 50) price = 8;
+  if (Game.Upgrades[id] >= 60) price = 10;
+  if (Game.Upgrades[id] >= 70) price = 12;
+  if (Game.Upgrades[id] >= 80) price = 15;
+  if (Game.Upgrades[id] >= 90) rice = 25;
+  if (id == 0 && Game.Upgrades[id] >= 200) price = 999999999;
+  if (id == 1 && Game.Upgrades[id] >= 100) price = 999999999;
+  if (id == 2 && Game.Upgrades[id] >= 100) price = 999999999;
+  if (id == 3 && Game.Upgrades[id] >= 50) price = 999999999;
   return price;
 }
 
-function ChangeWT() {
-  $("#modal-7").modal("show");
-}
+function ChangeWT() { $("#modal-7").modal("show"); }
 
 function ConfirmWT() {
   if (Game.Level >= MaxLevel && Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && LastMission >= TotalMissions) {
@@ -2272,7 +1726,7 @@ function newItem(type, level, rarity) {
   var Mult = [random(100, 105) / 100, random(115, 120) / 100, random(125, 130) / 100, random(135, 140) / 100, random(150, 160) / 100, random(175, 185) / 100, random(195, 210) / 100];
   var Rarities = ["Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Divine"];
   if (level < 1) { level = 1; }
-  if (type == 0) { var AHJ = random(0, 100); if (AHJ > 45) { type = "Weapon"; } else { type = "Armor"; } }
+  if (type == 0) { var AHJ = random(0, 100); if (AHJ > 45) type = "Weapon"; else type = "Armor"; }
 
   if (rarity == "Normal") luck = 1;
   if (rarity == "Common") luck = 2000;
@@ -2285,13 +1739,13 @@ function newItem(type, level, rarity) {
   //IF PLAYER HAVE A MINIMAL RARITY RELIC THEN USE IT HERE
   for (var R in Game.RLS) {
     if (Game.RLS[R][1] == 4) {
-      if (Game.RLS[R][2] == "Normal" && 1 > luck) { luck = 1; }
-      if (Game.RLS[R][2] == "Common" && 2000 > luck) { luck = 2000; }
-      if (Game.RLS[R][2] == "Uncommon" && 5000 > luck) { luck = 5000; }
-      if (Game.RLS[R][2] == "Rare" && 7000 > luck) { luck = 7000; }
-      if (Game.RLS[R][2] == "Epic" && 8500 > luck) { luck = 8500; }
-      if (Game.RLS[R][2] == "Exotic" && 9500 > luck) { luck = 9500; }
-      if (Game.RLS[R][2] == "Divine" && 9850 > luck) { luck = 9850; }
+      if (Game.RLS[R][2] == "Normal" && 1 > luck) luck = 1;
+      if (Game.RLS[R][2] == "Common" && 2000 > luck) luck = 2000;
+      if (Game.RLS[R][2] == "Uncommon" && 5000 > luck) luck = 5000;
+      if (Game.RLS[R][2] == "Rare" && 7000 > luck) luck = 7000;
+      if (Game.RLS[R][2] == "Epic" && 8500 > luck) luck = 8500;
+      if (Game.RLS[R][2] == "Exotic" && 9500 > luck) luck = 9500;
+      if (Game.RLS[R][2] == "Divine" && 9850 > luck) luck = 9850;
     }
   }
 
@@ -2306,8 +1760,8 @@ function newItem(type, level, rarity) {
     if (level > MaxScore) { level = MaxScore; }
   } else { //DETECT IF RARITY OR LEVEL IS HIGHER THAN THE ACTUAL MAXIMUM
     if (item.type > POS[Game.Location][3]) { item.type = POS[Game.Location][3]; item.class = Rarities[POS[Game.Location][3]]; }
-    if (level > Game.Level) { level = Game.Level; }
-    if (level > POS[Game.Location][2]) { level = POS[Game.Location][2]; }
+    if (level > Game.Level) level = Game.Level;
+    if (level > POS[Game.Location][2]) level = POS[Game.Location][2];
   }
 
   var chance = random(luck, 10000);
@@ -2380,30 +1834,22 @@ function newItem(type, level, rarity) {
 
   if (type == "Armor") { //GENERATE AN ARMOR
     item.name = CoreNames[[item.class]][Math.floor(Math.random() * CoreNames[item.class].length)] + " Armor";
-    if (level > MaxScore) { level = MaxScore; }
+    if (level > MaxScore) level = MaxScore;
     item.level = level;
     item.object = 0;
     item.ups = GetMaxLevel(item.class);
-    if (ScoreModeEnabled == 1) {
-      item.life = Math.floor(random((level * 10) * (Mult[item.type] * 0.75) + 100, (level * 10) * Mult[item.type] + 100));
-    } else {
-      item.life = Math.floor(random((level * 10) * (Mult[item.type] * 0.9) + 100, (level * 10) * Mult[item.type] + 100));
-    }
+    if (ScoreModeEnabled == 1) item.life = Math.floor(random((level * 10) * (Mult[item.type] * 0.75) + 100, (level * 10) * Mult[item.type] + 100)); else item.life = Math.floor(random((level * 10) * (Mult[item.type] * 0.9) + 100, (level * 10) * Mult[item.type] + 100));
     item.id = 1; //SET AS ARMOR
 
   }
 
   if (type == "Weapon") { //GENERATE A WEAPON
     item.name = CoreNames[[item.class]][Math.floor(Math.random() * CoreNames[item.class].length)] + " Weapon";
-    if (level > MaxScore) { level = MaxScore; }
+    if (level > MaxScore) level = MaxScore;
     item.level = level;
     item.object = 0;
     item.ups = GetMaxLevel(item.class);
-    if (ScoreModeEnabled == 1) {
-      item.power = Math.floor(random((level * 3) * (Mult[item.type] * 0.75), (level * 3) * Mult[item.type] + 5));
-    } else {
-      item.power = Math.floor(random((level * 3) * (Mult[item.type] * 0.9), (level * 3) * Mult[item.type] + 5));
-    }
+    if (ScoreModeEnabled == 1) item.power = Math.floor(random((level * 3) * (Mult[item.type] * 0.75), (level * 3) * Mult[item.type] + 5)); else item.power = Math.floor(random((level * 3) * (Mult[item.type] * 0.9), (level * 3) * Mult[item.type] + 5));
     item.id = 4; //SET AS WEAPON
   }
 
@@ -2411,7 +1857,7 @@ function newItem(type, level, rarity) {
     var baseluck = 1;
     if (item.class == "Normal") luck = 3000;
     if (item.class == "Common") luck = 7500;
-    if (item.class == "Uncommon") { luck = 15000; }
+    if (item.class == "Uncommon") luck = 15000;
     if (item.class == "Rare") { baseluck = 15000; luck = 19500; }
     if (item.class == "Epic") { baseluck = 19500; luck = 22500; }
     if (item.class == "Exotic") { baseluck = 22500; luck = 24000; }
@@ -2421,7 +1867,7 @@ function newItem(type, level, rarity) {
     var type2 = random(1, 100);
     if (type2 > 0 && type2 <= 35) { //GENERATE A POWER GEM
       item.power = Math.floor((multiplier / 10000) * ((WeaponsPower / (PowerMult + Game.WTMult[0])) * 0.01) + item.type);
-      if (item.power < 1) { item.power = 1; }
+      if (item.power < 1) item.power = 1;
       item.life = 0;
       item.name = "Power Gem";
       item.level = item.type;
@@ -2430,7 +1876,7 @@ function newItem(type, level, rarity) {
     }
     if (type2 > 35 && type2 <= 100) { //GENERATE A LIFE GEM
       item.life = Math.floor((multiplier / 10000) * ((CoreBaseLife / (LifeMult + Game.WTMult[1])) * 0.01) + item.type);
-      if (item.life < 1) { item.life = 1; }
+      if (item.life < 1) item.life = 1;
       item.power = 0;
       item.name = "Life Gem";
       item.level = item.type;
@@ -2445,8 +1891,8 @@ function newItem(type, level, rarity) {
     var MultDrop = ["Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Divine"];
 
     var RelicType = random(1, 2);
-    if (Game.Level > 10) { RelicType = random(1, 3); }
-    if (ScoreModeEnabled == 1) { RelicType = random(1, 4); }
+    if (Game.Level > 10) RelicType = random(1, 3);
+    if (ScoreModeEnabled == 1) RelicType = random(1, 4);
 
     if (RelicType == 1) {
       item.name = Relicname[0];
@@ -2462,12 +1908,9 @@ function newItem(type, level, rarity) {
       item.name = Relicname[3];
       item.object = 4;
       item.bonus = MultDrop[random(0, item.type)];
-      if (item.type > 1) {
-        item.bonus = MultDrop[random(item.type - 2, item.type)];
-      }
-      if (item.type > 2) {
-        item.bonus = MultDrop[random(item.type - 3, item.type)];
-      }
+      if (item.type > 1) item.bonus = MultDrop[random(item.type - 2, item.type)];
+      if (item.type > 2) item.bonus = MultDrop[random(item.type - 3, item.type)];
+
     }
     if (RelicType == 4) {
       item.name = Relicname[2];
@@ -2478,9 +1921,7 @@ function newItem(type, level, rarity) {
   }
 
   //PLACE IN INVENTORY
-  if ((Game.inventory.length - 1) < Game.MaxInv && item != Game.inventory[Game.inventory.length - 1]) {
-    Game.inventory[Game.inventory.length] = item;
-  }
+  if ((Game.inventory.length - 1) < Game.MaxInv && item != Game.inventory[Game.inventory.length - 1]) Game.inventory[Game.inventory.length] = item;
 }
 
 
@@ -2493,43 +1934,16 @@ function UPWeapon(core, nb) {
     Game.Weapons[weapon][2]++;
 
     if (ScoreModeEnabled == 1) {
-      if (Game.inventory[nb].type == 1) {
-        if ((Game.Weapons[weapon][3] + 0.1) <= MaxScore) { Game.Weapons[weapon][3] += 0.1; }
-        else { Game.Weapons[weapon][3] = MaxScore; }
-      }
-      if (Game.inventory[nb].type == 2) {
-        if ((Game.Weapons[weapon][3] + 0.2) <= MaxScore) { Game.Weapons[weapon][3] += 0.2; }
-        else { Game.Weapons[weapon][3] = MaxScore; }
-      }
-      if (Game.inventory[nb].type == 3) {
-        if ((Game.Weapons[weapon][3] + 0.3) <= MaxScore) { Game.Weapons[weapon][3] += 0.3; }
-        else { Game.Weapons[weapon][3] = MaxScore; }
-      }
-      if (Game.inventory[nb].type == 4) {
-        if ((Game.Weapons[weapon][3] + 0.4) <= MaxScore) { Game.Weapons[weapon][3] += 0.4; }
-        else { Game.Weapons[weapon][3] = MaxScore; }
-      }
-      if (Game.inventory[nb].type == 5) {
-        if ((Game.Weapons[weapon][3] + 0.5) <= MaxScore) { Game.Weapons[weapon][3] += 0.5; }
-        else { Game.Weapons[weapon][3] = MaxScore; }
-      }
-      if (Game.inventory[nb].type == 6) {
-        if ((Game.Weapons[weapon][3] + 0.6) <= MaxScore) { Game.Weapons[weapon][3] += 0.6; }
-        else { Game.Weapons[weapon][3] = MaxScore; }
-      }
-      if (Game.inventory[nb].type == 7) {
-        if ((Game.Weapons[weapon][3] + 0.7) <= MaxScore) { Game.Weapons[weapon][3] += 0.7; }
-        else { Game.Weapons[weapon][3] = MaxScore; }
-      }
-    }
-    if (nb < Game.MaxInv) {
-      RemoveItem(nb);
+      if (Game.inventory[nb].type == 1 && (Game.Weapons[weapon][3] + 0.1) <= MaxScore) Game.Weapons[weapon][3] += 0.1; else Game.Weapons[weapon][3] = MaxScore;
+      if (Game.inventory[nb].type == 2 && (Game.Weapons[weapon][3] + 0.2) <= MaxScore) Game.Weapons[weapon][3] += 0.2; else Game.Weapons[weapon][3] = MaxScore;
+      if (Game.inventory[nb].type == 3 && (Game.Weapons[weapon][3] + 0.3) <= MaxScore) Game.Weapons[weapon][3] += 0.3; else Game.Weapons[weapon][3] = MaxScore;
+      if (Game.inventory[nb].type == 4 && (Game.Weapons[weapon][3] + 0.4) <= MaxScore) Game.Weapons[weapon][3] += 0.4; else Game.Weapons[weapon][3] = MaxScore;
+      if (Game.inventory[nb].type == 5 && (Game.Weapons[weapon][3] + 0.5) <= MaxScore) Game.Weapons[weapon][3] += 0.5; else Game.Weapons[weapon][3] = MaxScore;
+      if (Game.inventory[nb].type == 6 && (Game.Weapons[weapon][3] + 0.6) <= MaxScore) Game.Weapons[weapon][3] += 0.6; else Game.Weapons[weapon][3] = MaxScore;
+      if (Game.inventory[nb].type == 7 && (Game.Weapons[weapon][3] + 0.7) <= MaxScore) Game.Weapons[weapon][3] += 0.7; else Game.Weapons[weapon][3] = MaxScore;
     }
   }
-  if ($('#inventory').is(":visible")) {
-    hideModals();
-  } else {
-    hideRewards();
-  }
+  if (nb < Game.MaxInv) RemoveItem(nb);
+  if ($('#inventory').is(":visible")) hideModals(); else hideRewards();
   UpdateGame();
 }
