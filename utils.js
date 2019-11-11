@@ -96,7 +96,6 @@ function Reset() {
 function confirmReset() {
   canSave = 0;
   localStorage.clear();
-  Backup = "Default";
   location.reload();
 }
 
@@ -208,6 +207,7 @@ function login() {
     Email = user.email;
     $("#modal-5").modal("hide");
     isTabActive = "None";
+    Game.isInFight = 0;
   });
   LoggedIn = 1;
   SendStats();
@@ -432,6 +432,7 @@ function ClickEvents() {
     $("#modal-5").modal("hide");
     $("#modal-5").modal("hide");
     isTabActive = "None";
+    Game.isInFight = 0;
   });
   $("#LOGIN-BTN").on("click", function () {
     $("#modal-5").modal("hide");
@@ -516,92 +517,48 @@ function ClickEvents() {
     window.open('https://discordapp.com/invite/SBuYeHh', '_blank');
   });
   $("#AlertToggle").on("click", function () {
-    if (Game.config[0] == 0) {
-      Game.config[0] = 1;
-    } else {
-      Game.config[0] = 0;
-    }
+    if (Game.config[0] == 0) Game.config[0] = 1; else Game.config[0] = 0;
     UpdateGame();
   });
   $("#AlertToggle2").on("click", function () {
-    if (Game.config[1] == 0) {
-      Game.config[1] = 1;
-    } else {
-      Game.config[1] = 0;
-    }
+    if (Game.config[1] == 0) Game.config[1] = 1; else Game.config[1] = 0;
     UpdateGame();
   });
   $("#SkipRewards").on("click", function () {
-    if (Game.config[2] == 0) {
-      Game.config[2] = 1;
-    } else {
-      Game.config[2] = 0;
-    }
+    if (Game.config[2] == 0) Game.config[2] = 1; else Game.config[2] = 0;
     UpdateGame();
   });
   $("#AutoMissions").on("click", function () {
-    if (Game.config[3] == 0) {
-      Game.config[3] = 1;
-    } else {
-      Game.config[3] = 0;
-    }
+    if (Game.config[3] == 0) Game.config[3] = 1; else Game.config[3] = 0;
     UpdateGame();
   });
   $("#OnlyMyVersion").on("click", function () {
-    if (Game.config[4] == 0) {
-      Game.config[4] = 1;
-    } else {
-      Game.config[4] = 0;
-    }
+    if (Game.config[4] == 0) Game.config[4] = 1; else Game.config[4] = 0;
     ReadDB();
     UpdateGame();
   });
   $("#RM1").on("click", function () {
-    if (Game.AutoRemove[0] == 0) {
-      Game.AutoRemove[0] = 1;
-    } else {
-      Game.AutoRemove[0] = 0;
-    }
+    if (Game.AutoRemove[0] == 0) Game.AutoRemove[0] = 1; else Game.AutoRemove[0] = 0;
     UpdateUI();
   });
   $("#RM2").on("click", function () {
-    if (Game.AutoRemove[1] == 0) {
-      Game.AutoRemove[1] = 1;
-    } else {
-      Game.AutoRemove[1] = 0;
-    }
+    if (Game.AutoRemove[1] == 0) Game.AutoRemove[1] = 1; else Game.AutoRemove[1] = 0;
     UpdateUI();
   });
   $("#RM3").on("click", function () {
-    if (Game.AutoRemove[2] == 0) {
-      Game.AutoRemove[2] = 1;
-    } else {
-      Game.AutoRemove[2] = 0;
-    }
+    if (Game.AutoRemove[2] == 0) Game.AutoRemove[2] = 1; else Game.AutoRemove[2] = 0;
     UpdateUI();
   });
   $("#RM4").on("click", function () {
-    if (Game.AutoRemove[3] == 0) {
-      Game.AutoRemove[3] = 1;
-    } else {
-      Game.AutoRemove[3] = 0;
-    }
+    if (Game.AutoRemove[3] == 0) Game.AutoRemove[3] = 1; else Game.AutoRemove[3] = 0;
     UpdateUI();
   });
   $("#RM5").on("click", function () {
-    if (Game.AutoRemove[4] == 0) {
-      Game.AutoRemove[4] = 1;
-    } else {
-      Game.AutoRemove[4] = 0;
-    }
+    if (Game.AutoRemove[4] == 0) Game.AutoRemove[4] = 1; else Game.AutoRemove[4] = 0;
     UpdateUI();
   });
   $("#RM6").on("click", function () {
-    if (Game.AutoRemove[5] == 0) {
-      Game.AutoRemove[5] = 1;
-    } else {
-      Game.AutoRemove[5] = 0;
-    }
+    if (Game.AutoRemove[5] == 0) Game.AutoRemove[5] = 1; else Game.AutoRemove[5] = 0;
     UpdateUI();
   });
   $("#redNum").change(function () {
@@ -644,7 +601,6 @@ function hideModals() {
   for (var id = 1; id < 10; id++) {
     ReadDB();
     $("#modal-" + id).modal("hide");
-    $("#PirateAttackDesc").html("");
   }
 }
 
@@ -655,45 +611,31 @@ function showmessage(title, message) {
 }
 
 function GetEnnemyHPPercent() {
-  value = (100 / Game.Ennemy[4]) * Game.Ennemy[5];
-  if (value < 1) {
-    value = 1;
-  }
-  if (value > 100) {
-    value = 100;
-  }
+  var value = (100 / Game.Ennemy[4]) * Game.Ennemy[5];
+  if (value < 1) value = 1;
+  if (value > 100) value = 100;
   return value;
 }
 
 function GetPlayerHPPercent() {
-  value = (100 / CoreBaseLife) * CoreLife;
-  if (value < 1) {
-    value = 1;
-  }
-  if (value > 100) {
-    value = 100;
-  }
+  var value = (100 / CoreBaseLife) * CoreLife;
+  if (value < 1) value = 1;
+  if (value > 100) value = 100;
   return value;
 }
 
 function GetEXPPercent() {
   value = (100 * (Game.xp[0] - CalcEXP(Game.Level - 1))) / (CalcEXP(Game.Level) - CalcEXP(Game.Level - 1));
-  if (value < 1) {
-    value = 1;
-  }
-  if (value > 100) {
-    value = 100;
-  }
-  if (value > 99 && Game.xp[0] < Game.xp[1]) { value = 99; }
+  if (value < 1) value = 1;
+  if (value > 100) value = 100;
+  if (value > 99 && Game.xp[0] < Game.xp[1]) value = 99;
   return value;
 }
 
 //THEME FUNCTIONS
 
 function ResetTheme(code) {
-  if (code != 2) {
-    Game.Theme = ["#00ffff", "#87005d", "#002e96", "#ffffff", "#373c3fa6", "#232323", "#101115"];
-  }
+  if (code != 2) Game.Theme = ["#00ffff", "#87005d", "#002e96", "#ffffff", "#373c3fa6", "#232323", "#101115"];
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
   document.documentElement.style.setProperty('--bg2', Game.Theme[1]);
   document.documentElement.style.setProperty('--bg3', Game.Theme[2]);
@@ -701,7 +643,7 @@ function ResetTheme(code) {
   document.documentElement.style.setProperty('--darkgrey5', Game.Theme[4]);
   document.documentElement.style.setProperty('--darkgrey', Game.Theme[5]);
   document.documentElement.style.setProperty('--black', Game.Theme[6]);
-  if (code == 1) { save(); }
+  if (code == 1) save();
 }
 
 function ThemeDefine(id) {
@@ -734,8 +676,7 @@ function ThemeDefine(id) {
 //GAME FUNCTIONS
 
 function ChangeAvatar() {
-  if (Game.Avatar < 39) {Game.Avatar++; } 
-  else { Game.Avatar = 1;}
+  if (Game.Avatar < 39) Game.Avatar++; else Game.Avatar = 1;
   UpdateUI();
 }
 
@@ -1294,13 +1235,11 @@ function CalcEXP(level) {
 function ErrorArmor(ARM) {
   if (ARM < 5) {
   Game.Armors[ARM] = [true, "Error", "Error", 100, 1, 0];
-  Game.ArmorUpgrades[ARM] = [0, 0];
+  Game.ArmorUpgrades[ARM] = 0;
   Game.MaxUPC[ARM - 1] = 0;
   } else {
-    if (ARM == 5) {
-      Game.Weapons.Main = ["Error", "Error", 0, 1, 10];
-      Game.Weapons.Special = ["Error", "Error", 0, 1, 10];
-    }
+    if (ARM == 5) Game.Weapons.Main = ["Error", "Error", 0, 1, 10];
+    if (ARM == 6) Game.Weapons.Special = ["Error", "Error", 0, 1, 10];
   }
   UpdateGame();
 }
@@ -1310,7 +1249,7 @@ function UpdateLoadingText(statu) {
   var texts = ["Hi", "Welcome", "To", "AlphaRPG"];
 
   $(".loading-text").html(texts[statu]);
-  if (statu < 3) { statu++; } else { statu = 0; }
+  if (statu < 3) statu++; else statu = 0;
 
   if (loadState == 0) {
     setTimeout(function () {
@@ -1325,13 +1264,8 @@ function UpdateLoadingText(statu) {
 
 function ChangeStep(type) {
   //0 = BACK & 1 = NEXT
-  if (type == 0 && WelcomeData[0] > 1) {
-    WelcomeData[0]--;
-  }
-
-  if (type == 1) {
-    WelcomeData[0]++;
-  }
+  if (type == 0 && WelcomeData[0] > 1) WelcomeData[0]--;
+  if (type == 1) WelcomeData[0]++;
 
   for (var L = 1; L < 6; L++) {
     $("#step" + L).attr("class", "step");
@@ -1374,9 +1308,7 @@ function WelcomeNext() {
     }
   }
 
-  if (WelcomeData[0] == 3) {
-    ChangeStep(1);
-  }
+  if (WelcomeData[0] == 3) ChangeStep(1);
 
   if (WelcomeData[0] == 2) {
     NICKNAME = $("#PlayerName").val();
@@ -1385,9 +1317,7 @@ function WelcomeNext() {
         ErrorName();
       } else {
         NICKNAME = NICKNAME.replace(/[^a-zA-Z0-9]/g, '_');
-        if (NICKNAME == "Neo" || NICKNAME == "NEO" || NICKNAME == "neo" || NICKNAME == "GoldenLys") {
-          NICKNAME = "Adventurer" + random(10000, 999999);
-        }
+        if (NICKNAME == "Neo" || NICKNAME == "NEO" || NICKNAME == "neo" || NICKNAME == "GoldenLys" || NICKNAME == "Purpy" || NICKNAME == "Purple" || NICKNAME == "Purple_Wizard") NICKNAME = "Adventurer" + random(10000, 999999);
         Backup = WelcomeData[1] = NICKNAME;
         ChangeStep(1);
         $("#namehelp").html("");
@@ -1397,9 +1327,7 @@ function WelcomeNext() {
     }
   }
 
-  if (WelcomeData[0] == 1) {
-    ChangeStep(1);
-  }
+  if (WelcomeData[0] == 1) ChangeStep(1);
 }
 
 function ErrorName() {

@@ -63,12 +63,7 @@ var Game = {
     3: ["Normal", 0, 0],
     4: ["Normal", 0, 0],
   },
-  ArmorUpgrades: {
-    1: [0, 0],
-    2: [0, 0],
-    3: [0, 0],
-    4: [0, 0],
-  },
+  ArmorUpgrades: [null, 0, 0 ,0 ,0],
   MaxUPC: [0, 0, 0, 0, 0, 0],
   xp: [0, 100, 1],
   Level: 1,
@@ -374,12 +369,12 @@ function UpdateEngine() {
       $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     }
 
-    if ($('#combat').is(":visible") && Game.isInFight != 0) {
-      Game.isInFight = 1;
+    if ($('#combat').is(":visible") && Game.isInFight == 1) {
       $("#btn-CRW").hide();
       $("#btn-ACT").show();
     }
-    if ($('#rewards').is(":visible") && Game.isInFight == 2) {
+    if ($('#rewards').is(":visible")) {
+      Game.isInFight = 2;
       $("#btn-CRW").show();
       $("#btn-ACT").hide();
     }
@@ -635,10 +630,10 @@ function UpdateUI() {
   $("#fortressstat").html(Game.FP);
   $("#lifestat").html("<i class='rouge fas fa-heart'></i>" + fix(Math.round(CoreBaseLife / (LifeMult + Game.WTMult[1])), 3) + " (+" + fix(CoreBaseLife - Math.round(CoreBaseLife / (LifeMult + Game.WTMult[1])), 3) + ")");
   $("#powerstat").html("<i class='bleu fas fa-sword'></i>" + fix(Math.round(WeaponsPower / (PowerMult + Game.WTMult[0])), 3) + " (+" + fix(WeaponsPower - Math.round(WeaponsPower / (PowerMult + Game.WTMult[0])), 3) + ")");
-  $("#core1stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[1][3] - Game.ArmorUpgrades[1][1]) + "(+" + Game.ArmorUpgrades[1][1] + ")");
-  if (Game.Armors[2][0] == true) $("#core2stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[2][3] - Game.ArmorUpgrades[2][1]) + "(+" + Game.ArmorUpgrades[2][1] + ")");
-  if (Game.Armors[3][0] == true) $("#core3stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[3][3] - Game.ArmorUpgrades[3][1]) + "(+" + Game.ArmorUpgrades[3][1] + ")");
-  if (Game.Armors[4][0] == true) $("#core4stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[4][3] - Game.ArmorUpgrades[4][1]) + "(+" + Game.ArmorUpgrades[4][1] + ")");
+  $("#core1stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[1][3] - Game.ArmorUpgrades[1]) + "(+" + Game.ArmorUpgrades[1] + ")");
+  if (Game.Armors[2][0] == true) $("#core2stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[2][3] - Game.ArmorUpgrades[2]) + "(+" + Game.ArmorUpgrades[2] + ")");
+  if (Game.Armors[3][0] == true) $("#core3stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[3][3] - Game.ArmorUpgrades[3]) + "(+" + Game.ArmorUpgrades[3] + ")");
+  if (Game.Armors[4][0] == true) $("#core4stat").html("<i class='rouge fas fa-heart revertmargin'></i>" + (Game.Armors[4][3] - Game.ArmorUpgrades[4]) + "(+" + Game.ArmorUpgrades[4] + ")");
   if (((Game.Level - 5) * 10) >= Ranking) $("#LowScore").html("Using low level armor, upgrade your equipment."); else $("#LowScore").html("");
   var CompletedMissions = 0;
   for (var M in Missions) if (Missions[M][3] != 2 && Game.MissionsCompleted[M] == 1) CompletedMissions++;
@@ -955,26 +950,24 @@ function GenEnnemy() {
   var EnnemyLifeMult = 1;
   var EnnemyPowerMult = 1;
   var BasePower = WeaponsPower / (PowerMult + Game.WTMult[0]);
-  if (ScoreModeEnabled == 0) {
+  var LifeMult = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
+  var EPowerMult = [0.95, 1, 1, 1, 1, 1, 1];
+  var MaxPowerMult = [1.1, 1.25, 1.35, 1.5, 1.75, 2, 2.5];
+    if (ScoreModeEnabled == 0) {
     if (Game.Level < 30) {
       LifeMult = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
-      PowerMult = [0.75, 0.85, 1, 1, 1, 1, 1];
+      EPowerMult = [0.75, 0.85, 1, 1, 1, 1, 1];
       MaxPowerMult = [0.85, 1, 1, 1.10, 1.15, 1.15, 1.15];
-    } else {
-      LifeMult = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
-      PowerMult = [0.95, 1, 1, 1, 1, 1, 1];
-      MaxPowerMult = [1.1, 1.25, 1.35, 1.5, 1.75, 2, 2.5];
+    }
+    if (Missions[Game.MissionStarted[1]][3] == 2) {
+      LifeMult = [0, 0, 6, 7, 8, 15, random(15, 20)];
+      EPowerMult = [1, 1, 1, 1, 1, 1, 1];
+      MaxPowerMult = [1, 1, 1.1, 1.15, 1.2, 1.25, 1.5];
     }
   } else {
     LifeMult = [2, 2.75, 3.5, 4, 6, 10, 15];
-    PowerMult = [1, 1, 1, 1, 1, 1, 1];
+    EPowerMult = [1, 1, 1, 1, 1, 1, 1];
     MaxPowerMult = [1, 1, 1.10, 1.15, 1.20, 1.25, 1.5];
-  }
-
-  if (Missions[Game.MissionStarted[1]][3] == 2) {
-    LifeMult = [0, 0, 6, 7, 8, 15, random(15, 20)];
-    PowerMult = [1, 1, 1, 1, 1, 1, 1];
-    MaxPowerMult = [1, 1, 1.1, 1.15, 1.2, 1.25, 1.5];
   }
 
   TIER = Ranking;
@@ -989,7 +982,7 @@ function GenEnnemy() {
     if (EChance >= 0 && EChance < 300) {
       Game.Ennemy[1] = 1;
       EnnemyLifeMult = LifeMult[0];
-      EnnemyPowerMult = PowerMult[0];
+      EnnemyPowerMult = EPowerMult[0];
       EnnemyPowerMultMax = MaxPowerMult[0];
       if (Ranking > 0) EnnemyLevel = random((Ranking * 0.85), Ranking);
       if (ScoreModeEnabled == 1) EnnemyLevel = random(TIER - 5, TIER);
@@ -999,7 +992,7 @@ function GenEnnemy() {
     if (EChance >= 300 && EChance < 450) {
       Game.Ennemy[1] = 2;
       EnnemyLifeMult = LifeMult[1];
-      EnnemyPowerMult = PowerMult[1];
+      EnnemyPowerMult = EPowerMult[1];
       EnnemyPowerMultMax = MaxPowerMult[1];
       if (Ranking > 0) EnnemyLevel = Ranking;
       if (Ranking > 1) EnnemyLevel = random((Ranking * 0.95), Ranking);
@@ -1010,7 +1003,7 @@ function GenEnnemy() {
     if (EChance >= 450 && EChance < 600) {
       Game.Ennemy[1] = 3;
       EnnemyLifeMult = LifeMult[2];
-      EnnemyPowerMult = PowerMult[2];
+      EnnemyPowerMult = EPowerMult[2];
       EnnemyPowerMultMax = MaxPowerMult[2];
       if (Ranking > 0) EnnemyLevel = Ranking;
       if (Ranking > 1) EnnemyLevel = random(Ranking, Ranking + 1);
@@ -1021,24 +1014,24 @@ function GenEnnemy() {
     if (EChance >= 600 && EChance < 650) {
       Game.Ennemy[1] = 4;
       EnnemyLifeMult = LifeMult[3];
-      EnnemyPowerMult = PowerMult[3];
+      EnnemyPowerMult = EPowerMult[3];
       EnnemyPowerMultMax = MaxPowerMult[3];
       if (Ranking > 0) EnnemyLevel = Ranking;
       if (Ranking > 1) EnnemyLevel = random(Ranking + 1, Ranking + 2);
       if (ScoreModeEnabled == 1) EnnemyLevel = random(TIER + 5, TIER + 15);
-      if (Game.Level < 10) EnnemyPowerMult = PowerMult[2];
+      if (Game.Level < 10) EnnemyPowerMult = EPowerMult[2];
     }
 
     //CLASS ELITE
     if (EChance >= 650) {
       Game.Ennemy[1] = 5;
       EnnemyLifeMult = LifeMult[4];
-      EnnemyPowerMult = PowerMult[4];
+      EnnemyPowerMult = EPowerMult[4];
       EnnemyPowerMultMax = MaxPowerMult[4];
       if (Ranking > 0) EnnemyLevel = Ranking;
       if (Ranking > 1) EnnemyLevel = random(Ranking + 2, Ranking + 4);
       if (ScoreModeEnabled == 1) EnnemyLevel = random(TIER + 15, TIER + 30);
-      if (Game.Level < 10) EnnemyPowerMult = PowerMult[2];
+      if (Game.Level < 10) EnnemyPowerMult = EPowerMult[2];
     }
 
     if (Game.MissionStarted[2] == Missions[Game.MissionStarted[1]][4] - 1) EChance = 700;
@@ -1048,18 +1041,18 @@ function GenEnnemy() {
       if (Missions[Game.MissionStarted[1]][3] == 2 || Game.MissionStarted[2] > Missions[Game.MissionStarted[1]][4] - 2) {
         Game.Ennemy[1] = 6;
         EnnemyLifeMult = LifeMult[5];
-        EnnemyPowerMult = PowerMult[5];
+        EnnemyPowerMult = EPowerMult[5];
         EnnemyPowerMultMax = MaxPowerMult[5];
         if (Ranking > 0) EnnemyLevel = Ranking + 1;
         if (Ranking > 1) EnnemyLevel = random(Ranking + 4, Ranking + 6);
-        if (Game.Level < 10) EnnemyPowerMult = PowerMult[2];
+        if (Game.Level < 10) EnnemyPowerMult = EPowerMult[2];
         if (ScoreModeEnabled == 1) {
           EnnemyLevel = random(TIER + 20, TIER + 40);
           randomluck = random(1, 5);
           if (randomluck >= 4) {
             Game.Ennemy[1] = 7;
             EnnemyLifeMult = LifeMult[6];
-            EnnemyPowerMult = PowerMult[6];
+            EnnemyPowerMult = EPowerMult[6];
             EnnemyPowerMultMax = MaxPowerMult[6];
           }
         }
@@ -1460,6 +1453,7 @@ function ConfirmRelic(R, id) {
   var IRCOLOR = "rouge";
   var IRCOLOR2 = "rouge";
   if (Game.RLS[R][1] == Game.inventory[id].object && Game.RLS[R][2] > Game.inventory[id].bonus) IRCOLOR = "green";
+  if (Game.RLS[R][1] == 0) { IRCOLOR = "green"; IRCOLOR2 = "green"; }
   if (Game.RLS[R][1] == 0) CDESC = "-";
   if (Game.RLS[R][1] == 1) CDESC = "Power bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RLS[R][2], 9) + "</span>";
   if (Game.RLS[R][1] == 2) CDESC = "Life bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RLS[R][2], 9) + "</span>";
@@ -1533,7 +1527,7 @@ function DestroyWeapon(type) {
 function DestroyCore(core) {
   Game.Armors[core] = [true, "Basic Armor", "Normal", 100, 1, 0];
   Game.MaxUPC[core - 1] = 0;
-  Game.ArmorUpgrades[core] = [0, 0];
+  Game.ArmorUpgrades[core] = 0;
   $('#modal-2').modal('hide');
   UpdateGame();
 }
@@ -1549,7 +1543,7 @@ function DefineCore(core, selected) {
   if (Game.inventory[selected].life !== undefined) {
     Game.Armors[core] = [true, Game.inventory[selected].name, Game.inventory[selected].class, Game.inventory[selected].life, Game.inventory[selected].level, 0];
     Game.MaxUPC[core - 1] = Game.inventory[selected].ups;
-    Game.ArmorUpgrades[core] = [0, 0];
+    Game.ArmorUpgrades[core] = 0;
   }
   if (selected <= Game.MaxInv) RemoveItem(selected);
   if ($('#inventory').is(":visible")) hideModals(); else hideRewards();
@@ -1593,24 +1587,27 @@ function GetMaxLevel(type) {
 }
 
 function UPCore(core, type, nb) {
-  if (Game.Armors[core][5] < Game.MaxUPC[core - 1]) {
-    if (type == 2) Game.Weapons[core][4] += Game.inventory[nb].power;
+  if (Game.Armors[core][5] < Game.MaxUPC[core]) {
     if (type == 1) Game.Armors[core][3] += Game.inventory[nb].life;
     Game.Armors[core][5]++;
-    if (ScoreModeEnabled == 1) {
-      if (Game.inventory[nb].type == 1) if ((Game.Armors[core][4] + 0.1) <= MaxScore) Game.Armors[core][4] += 0.1; else Game.Armors[core][4] = MaxScore;
-      if (Game.inventory[nb].type == 2) if ((Game.Armors[core][4] + 0.2) <= MaxScore) Game.Armors[core][4] += 0.2; else Game.Armors[core][4] = MaxScore;
-      if (Game.inventory[nb].type == 3) if ((Game.Armors[core][4] + 0.3) <= MaxScore) Game.Armors[core][4] += 0.3; else Game.Armors[core][4] = MaxScore;
-      if (Game.inventory[nb].type == 4) if ((Game.Armors[core][4] + 0.4) <= MaxScore) Game.Armors[core][4] += 0.4; else Game.Armors[core][4] = MaxScore;
-      if (Game.inventory[nb].type == 5) if ((Game.Armors[core][4] + 0.5) <= MaxScore) Game.Armors[core][4] += 0.5; else Game.Armors[core][4] = MaxScore;
-      if (Game.inventory[nb].type == 6) if ((Game.Armors[core][4] + 0.6) <= MaxScore) Game.Armors[core][4] += 0.6; else Game.Armors[core][4] = MaxScore;
-      if (Game.inventory[nb].type == 7) if ((Game.Armors[core][4] + 0.7) <= MaxScore) Game.Armors[core][4] += 0.7; else Game.Armors[core][4] = MaxScore;
-    }
-    if (type == 1) Game.ArmorUpgrades[core][1] += Game.inventory[nb].life;
-    if (type == 2) Game.ArmorUpgrades[core][0] += Game.inventory[nb].power;
+    if (ScoreModeEnabled == 1 && Game.Armors[core][4] + (Game.inventory[nb].type / 10) <= MaxScore) {  Game.Armors[core][4] += (Game.inventory[nb].type / 10); } else { Game.Armors[core][4] = MaxScore; }
+    Game.ArmorUpgrades[core] += Game.inventory[nb].life;
+    if (nb < Game.MaxInv) RemoveItem(nb);
   }
-  if (nb < Game.MaxInv) RemoveItem(nb);
-  if ($('#inventory').is(":visible")) hideModals(); else hideRewards();
+  if ($('#inventory').is(":visible")) { hideModals(); } else { hideRewards(); }
+  UpdateGame();
+}
+
+function UPWeapon(core, nb) {
+  var weapon = "Main";
+  if (core == 2) weapon = "Special";
+  if (Game.Weapons[weapon][2] < Game.MaxUPC[core + 3]) {
+    Game.Weapons[weapon][4] += Game.inventory[nb].power;
+    Game.Weapons[weapon][2]++;
+    if (ScoreModeEnabled == 1 && Game.Weapons[weapon][3] + (Game.inventory[nb].type / 10) <= MaxScore) Game.Weapons[weapon][3] += (Game.inventory[nb].type / 10); else Game.Weapons[weapon][3] = MaxScore;
+    if (nb < Game.MaxInv) RemoveItem(nb);
+  }
+  if ($('#inventory').is(":visible")) { hideModals(); } else { hideRewards(); }
   UpdateGame();
 }
 
@@ -1686,10 +1683,7 @@ function ConfirmWT() {
     Game.Armors[2] = [false, "Basic Armor", "Normal", 100, 1];
     Game.Armors[3] = [false, "Basic Armor", "Normal", 100, 1];
     Game.Armors[4] = [false, "Basic Armor", "Normal", 100, 1];
-    Game.ArmorUpgrades[1] = [0, 0];
-    Game.ArmorUpgrades[2] = [0, 0];
-    Game.ArmorUpgrades[3] = [0, 0];
-    Game.ArmorUpgrades[4] = [0, 0];
+    Game.ArmorUpgrades = [null, 0, 0 ,0 ,0];
     Game.RLS[1] = ["Normal", 0, 0];
     Game.RLS[2] = ["Normal", 0, 0];
     Game.RLS[3] = ["Normal", 0, 0];
@@ -1922,28 +1916,4 @@ function newItem(type, level, rarity) {
 
   //PLACE IN INVENTORY
   if ((Game.inventory.length - 1) < Game.MaxInv && item != Game.inventory[Game.inventory.length - 1]) Game.inventory[Game.inventory.length] = item;
-}
-
-
-function UPWeapon(core, nb) {
-  var weapon = "Main";
-  if (core == 2) weapon = "Special";
-
-  if (Game.Weapons[weapon][2] < Game.MaxUPC[core + 3]) {
-    Game.Weapons[weapon][4] += Game.inventory[nb].power;
-    Game.Weapons[weapon][2]++;
-
-    if (ScoreModeEnabled == 1) {
-      if (Game.inventory[nb].type == 1 && (Game.Weapons[weapon][3] + 0.1) <= MaxScore) Game.Weapons[weapon][3] += 0.1; else Game.Weapons[weapon][3] = MaxScore;
-      if (Game.inventory[nb].type == 2 && (Game.Weapons[weapon][3] + 0.2) <= MaxScore) Game.Weapons[weapon][3] += 0.2; else Game.Weapons[weapon][3] = MaxScore;
-      if (Game.inventory[nb].type == 3 && (Game.Weapons[weapon][3] + 0.3) <= MaxScore) Game.Weapons[weapon][3] += 0.3; else Game.Weapons[weapon][3] = MaxScore;
-      if (Game.inventory[nb].type == 4 && (Game.Weapons[weapon][3] + 0.4) <= MaxScore) Game.Weapons[weapon][3] += 0.4; else Game.Weapons[weapon][3] = MaxScore;
-      if (Game.inventory[nb].type == 5 && (Game.Weapons[weapon][3] + 0.5) <= MaxScore) Game.Weapons[weapon][3] += 0.5; else Game.Weapons[weapon][3] = MaxScore;
-      if (Game.inventory[nb].type == 6 && (Game.Weapons[weapon][3] + 0.6) <= MaxScore) Game.Weapons[weapon][3] += 0.6; else Game.Weapons[weapon][3] = MaxScore;
-      if (Game.inventory[nb].type == 7 && (Game.Weapons[weapon][3] + 0.7) <= MaxScore) Game.Weapons[weapon][3] += 0.7; else Game.Weapons[weapon][3] = MaxScore;
-    }
-  }
-  if (nb < Game.MaxInv) RemoveItem(nb);
-  if ($('#inventory').is(":visible")) hideModals(); else hideRewards();
-  UpdateGame();
 }
