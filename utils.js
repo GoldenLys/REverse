@@ -211,6 +211,7 @@ function login() {
   });
   LoggedIn = 1;
   SendStats();
+  UpdateGame();
 }
 
 var PAGE = 1;
@@ -433,6 +434,7 @@ function ClickEvents() {
     $("#modal-5").modal("hide");
     isTabActive = "None";
     Game.isInFight = 0;
+    UpdateGame();
   });
   $("#LOGIN-BTN").on("click", function () {
     $("#modal-5").modal("hide");
@@ -1063,7 +1065,7 @@ function CompleteMission() {
   var TIER = "";
   var TIERRANK = "";
   var LEVELUP = "";
-  if (Game.MissionStarted[0] == true && Game.isInFight != 2) {
+  if (Game.MissionStarted[0] == true && Game.isInFight == 1) {
     if (Missions[Game.MissionStarted[1]][3] == 1 || Missions[Game.MissionStarted[1]][3] == 2) {
       if (Game.MissionStarted[2] >= Missions[Game.MissionStarted[1]][4]) {
         Game.isInFight = 2;
