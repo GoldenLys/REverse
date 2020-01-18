@@ -1729,7 +1729,7 @@ function newItem(type, level, rarity) {
     item.class = 'Epic';
     item.type = 4;
   }
-  if (chance >= 9500 && chance < 10000) {
+  if (chance >= 9500 && chance < 9850) {
     item.class = 'Exotic';
     item.type = 5;
   }

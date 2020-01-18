@@ -1035,6 +1035,7 @@ div#C5.active {
 .customA {
   margin: 0 0 !important;
   background: linear-gradient(to bottom, var(--black8) 0%, var(--black2) 75%, transparent 100%) !important;
+  background: -webkit-linear-gradient(to bottom, var(--black8) 0%, var(--black2) 75%, transparent 100%) !important;
   color: var(--white) !important;
   border-radius: 0% !important;
   -webkit-box-shadow: none !important;
