@@ -747,7 +747,6 @@ function CheckCode(debug) {
         Game.Weapons.Special[3] = MaxScore;
         Game.MissionStarted = [false, 0, 0, 0];
         for (var Mission in Missions) { Game.MissionsCompleted[Mission] = 1; }
-  
       }
       if (code === codes[10]) {
         $("#codereturn").html("Code Accepted, Reset save.");
@@ -1236,9 +1235,9 @@ function CalcEXP(level) {
 
 function ErrorArmor(ARM) {
   if (ARM < 5) {
-  Game.Armors[ARM] = [true, "Error", "Error", 100, 1, 0];
-  Game.ArmorUpgrades[ARM] = 0;
-  Game.MaxUPC[ARM - 1] = 0;
+    Game.Armors[ARM] = [true, "Error", "Error", 100, 1, 0];
+    Game.ArmorUpgrades[ARM] = 0;
+    Game.MaxUPC[ARM - 1] = 0;
   } else {
     if (ARM == 5) Game.Weapons.Main = ["Error", "Error", 0, 1, 10];
     if (ARM == 6) Game.Weapons.Special = ["Error", "Error", 0, 1, 10];
