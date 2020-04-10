@@ -11,7 +11,7 @@
 // prestige classes / upgraded classes after beating the game the 1st time
 
 var url = window.location.href;
-var version = "1.9"; //!\ ONLY 1.X /!\\
+const version = "1.9"; //!\ ONLY 1.X /!\\
 var loadState = 0;
 var WelcomeData = [1, "Neo", "None"];
 var codes = {};
@@ -295,6 +295,7 @@ function UpdateEngine() {
   if (loadState == 5) {
     Game.PlayTime++;
     if (Game.Level >= MaxLevel && LastMission >= TotalMissions) { ScoreModeEnabled = 1; } else { ScoreModeEnabled = 0; }
+    if (Ennemies[Game.Location][Game.Ennemy[0]] == undefined) Game.Ennemy[0] = 0;
     if (Game.Level == 1 && Game.MissionStarted[0] == false && Game.MissionsCompleted[0] == 0 && isTabActive == "None" && Game.config[3] == 1) {
       mission(0);
     }
@@ -439,12 +440,12 @@ function UpdateGame() {
       Game.xp[1] = CalcEXP(Game.Level);
       if (Game.xp[0] > Game.xp[1] && Game.Level == POS[Game.Location][2]) { Game.xp[0] = CalcEXP(Game.Level - 1); }
       if (Game.xp[0] < CalcEXP(Game.Level - 1) && Game.Level > 1) { Game.xp[0] = CalcEXP(Game.Level - 1); }
-      if (Game.Armors[1][4] > Game.Level) { ErrorArmor(1); }
-      if (Game.Armors[2][4] > Game.Level) { ErrorArmor(2); }
-      if (Game.Armors[3][4] > Game.Level) { ErrorArmor(3); }
-      if (Game.Armors[4][4] > Game.Level) { ErrorArmor(4); }
-      if (Game.Weapons.Main[3] > Game.Level) { ErrorArmor(5); }
-      if (Game.Weapons.Special[3] > Game.Level) { ErrorArmor(6); }
+      //if (Game.Armors[1][4] > Game.Level) { ErrorArmor(1); }
+      //if (Game.Armors[2][4] > Game.Level) { ErrorArmor(2); }
+      //if (Game.Armors[3][4] > Game.Level) { ErrorArmor(3); }
+      //if (Game.Armors[4][4] > Game.Level) { ErrorArmor(4); }
+      //if (Game.Weapons.Main[3] > Game.Level) { ErrorArmor(5); }
+      //if (Game.Weapons.Special[3] > Game.Level) { ErrorArmor(6); }
     } else {
       if (Game.Armors[1][4] > MaxScore) { ErrorArmor(1); }
       if (Game.Armors[2][4] > MaxScore) { ErrorArmor(2); }
@@ -633,31 +634,33 @@ function GenInventory() {
   $("#inv4").html("");
 
   for (var IV in Game.inventory) {
-    var TIER = ScoreModeEnabled == 0 ? "Level " : "Score <i class='fad fa-dice-d20'></i>";
-    var TIERRANK = ScoreModeEnabled == 0 ? Game.inventory[IV].level : "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IV].level * 10);
-    var BTN = url.match(/mobile/gi) ? "<div class='ui right floated vertical buttons'><div onclick='EquipItem(" + IV + ", " + Game.inventory[IV].id + ")' class='green ui button'>Equip</div><div onclick='RemoveItem(" + IV + ")' class='red ui button'>Remove</div></div>" : "<div class='ui right floated buttons'><div onclick='EquipItem(" + IV + ", " + Game.inventory[IV].id + ")' class='green ui button'>Equip</div><div onclick='RemoveItem(" + IV + ")' class='red ui button'>Remove</div></div>";
-    var BR = url.match(/mobile/gi) ? " " : "<br>";
-    var UPS = Game.inventory[IV].ups > 0 ? " " + (Game.inventory[IV].ups) + "<i class='orange fad fa-gem'></i>" : "";
-    if (Game.inventory[IV].id == 1) { //SHOW ARMOR IN INVENTORY
-      $("#inv1").append("<div class='ui gren segment'>" + BTN + "<div class='invL'>" + TIER + BR + TIERRANK + "</div><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + Game.inventory[IV].name + UPS + "<br><i class='rouge fas fa-heart revertmargin'></i>" + (Game.inventory[IV].life) + "</div>");
-    }
+    if (Game.inventory[IV] != undefined) {
+      var TIER = ScoreModeEnabled == 0 ? "Level " : "Score <i class='fad fa-dice-d20'></i>";
+      var TIERRANK = ScoreModeEnabled == 0 ? Game.inventory[IV].level : "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IV].level * 10);
+      var BTN = url.match(/mobile/gi) ? "<div class='ui right floated vertical buttons'><div onclick='EquipItem(" + IV + ", " + Game.inventory[IV].id + ")' class='green ui button'>Equip</div><div onclick='RemoveItem(" + IV + ")' class='red ui button'>Remove</div></div>" : "<div class='ui right floated buttons'><div onclick='EquipItem(" + IV + ", " + Game.inventory[IV].id + ")' class='green ui button'>Equip</div><div onclick='RemoveItem(" + IV + ")' class='red ui button'>Remove</div></div>";
+      var BR = url.match(/mobile/gi) ? " " : "<br>";
+      var UPS = Game.inventory[IV].ups > 0 ? " " + (Game.inventory[IV].ups) + "<i class='orange fad fa-gem'></i>" : "";
+      if (Game.inventory[IV].id == 1) { //SHOW ARMOR IN INVENTORY
+        $("#inv1").append("<div class='ui gren segment'>" + BTN + "<div class='invL'>" + TIER + BR + TIERRANK + "</div><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + Game.inventory[IV].name + UPS + "<br><i class='rouge fas fa-heart revertmargin'></i>" + (Game.inventory[IV].life) + "</div>");
+      }
 
-    if (Game.inventory[IV].id == 4) { //SHOW WEAPONS IN INVENTORY
-      $("#inv4").append("<div class='ui gren segment'>" + BTN + "<div class='invL'>" + TIER + BR + TIERRANK + "</div><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + Game.inventory[IV].name + UPS + "<br><i class='bleu fas fa-sword revertmargin'></i>" + (Game.inventory[IV].power) + "</div>");
-    }
+      if (Game.inventory[IV].id == 4) { //SHOW WEAPONS IN INVENTORY
+        $("#inv4").append("<div class='ui gren segment'>" + BTN + "<div class='invL'>" + TIER + BR + TIERRANK + "</div><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + Game.inventory[IV].name + UPS + "<br><i class='bleu fas fa-sword revertmargin'></i>" + (Game.inventory[IV].power) + "</div>");
+      }
 
-    if (Game.inventory[IV].id == 2 || Game.inventory[IV].id == 5) { //SHOW Gem IN INVENTORY 
-      var BONUS = Game.inventory[IV].object == 1 ? "<i class='rouge fas fa-heart'></i>" + Game.inventory[IV].life : "<i class='bleu fas fa-sword'></i>" + Game.inventory[IV].power;
-      $("#inv2").append("<div class='ui gren segment'>" + BTN + "<span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + Game.inventory[IV].name + "<br>" + BONUS + "</div>");
-    }
+      if (Game.inventory[IV].id == 2 || Game.inventory[IV].id == 5) { //SHOW Gem IN INVENTORY 
+        var BONUS = Game.inventory[IV].object == 1 ? "<i class='rouge fas fa-heart'></i>" + Game.inventory[IV].life : "<i class='bleu fas fa-sword'></i>" + Game.inventory[IV].power;
+        $("#inv2").append("<div class='ui gren segment'>" + BTN + "<span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + Game.inventory[IV].name + "<br>" + BONUS + "</div>");
+      }
 
-    if (Game.inventory[IV].id == 3) { //SHOW RELIC IN INVENTORY
-      if (Game.inventory[IV].object == 0) DESC = "-";
-      if (Game.inventory[IV].object == 1) DESC = "Power bonus of " + fix(Game.inventory[IV].bonus, 9);
-      if (Game.inventory[IV].object == 2) DESC = "Life bonus of " + fix(Game.inventory[IV].bonus, 9);
-      if (Game.inventory[IV].object == 3) DESC = "Max Score +" + fix(Game.inventory[IV].bonus, 3);
-      if (Game.inventory[IV].object == 4) DESC = "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>";
-      $("#inv3").append("<div class='ui gren segment'><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + BTN + Game.inventory[IV].name + "<br>" + DESC + "</div>");
+      if (Game.inventory[IV].id == 3) { //SHOW RELIC IN INVENTORY
+        if (Game.inventory[IV].object == 0) DESC = "-";
+        if (Game.inventory[IV].object == 1) DESC = "Power bonus of " + fix(Game.inventory[IV].bonus, 9);
+        if (Game.inventory[IV].object == 2) DESC = "Life bonus of " + fix(Game.inventory[IV].bonus, 9);
+        if (Game.inventory[IV].object == 3) DESC = "Max Score +" + fix(Game.inventory[IV].bonus, 3);
+        if (Game.inventory[IV].object == 4) DESC = "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>";
+        $("#inv3").append("<div class='ui gren segment'><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span> " + BTN + Game.inventory[IV].name + "<br>" + DESC + "</div>");
+      }
     }
   }
 }
@@ -759,11 +762,11 @@ function GenWeapons() {
 }
 
 function GenArmors() {
-  var Class = 0;
-  var RLSTXT = "";
-  var Names = ["", "Helmet", "Armor", "Shield", "Boots"];
+  let Names = ["", "Helmet", "Armor", "Shield", "Boots"];
   for (var UPC = 1; UPC < 5; UPC++) {
-    var core = "core" + UPC;
+    let Class = 0;
+    let RLSTXT = "";
+    let core = "core" + UPC;
     Game.Armors[UPC][1] = Game.Armors[UPC][1].replace(/Armor/gi, Names[UPC]);
     if (Game.Armors[UPC][2] == "Common") Class = "1";
     if (Game.Armors[UPC][2] == "Uncommon") Class = "2";
@@ -782,7 +785,6 @@ function GenArmors() {
     if (Game.RLS[UPC][1] == 3) RLSTXT = "Max Score +" + fix(Game.RLS[UPC][2], 3);
     if (Game.RLS[UPC][1] == 4) RLSTXT = "Minimal drop quality <span class='" + Game.RLS[UPC][2] + "'>" + Game.RLS[UPC][2] + "</span>";
     if (Game.RLS[UPC][1] != 0) RLSTXT = "<i class='jaune fas fa-stars'></i>" + RLSTXT;
-
     var LEVELICON = ScoreModeEnabled == 0 ? "Level" : "Score";
     var LEVELTEXT = ScoreModeEnabled == 0 ? fix(Math.floor(Game.Armors[UPC][4]), 4) : "<i class='fad fa-dice-d20'></i>" + fix(Math.floor(Game.Armors[UPC][4] * 10), 4);
     $("#core" + UPC + "-level").html(LEVELICON + " " + LEVELTEXT);
@@ -1059,7 +1061,7 @@ function WinFight() {
     Game.DefeatedByLocation[Game.Location]++;
     if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 1) {
       Game.MissionStarted[2]++;
-      CORELOOT = 0; RELICLOOT = 10; KEYLOOT = 10;
+      CORELOOT = 5; RELICLOOT = 7.5; KEYLOOT = 10;
     } else if (Game.MissionStarted[0] == true && Missions[Game.MissionStarted[1]][3] == 2) {
       Game.MissionStarted[2]++;
       CORELOOT = 40; RELICLOOT = 20; KEYLOOT = 30;
@@ -1426,6 +1428,7 @@ function ConfirmRelic(R, id) {
 }
 
 function InstallRelic(R, id) {
+  console.log("install to relic id:" + R);
   Game.RLS[R] = [Game.inventory[id].class, Game.inventory[id].object, Game.inventory[id].bonus];
   if (id <= Game.MaxInv) RemoveItem(id);
   if ($('#inventory').is(":visible")) hideModals(); else hideRewards();
@@ -1535,10 +1538,13 @@ function GetMaxLevel(type) {
 }
 
 function UPCore(core, type, nb) {
-  if (Game.Armors[core][5] < Game.MaxUPC[core]) {
+  if (Game.Armors[core][5] < Game.MaxUPC[core - 1]) {
     if (type == 1) Game.Armors[core][3] += Game.inventory[nb].life;
     Game.Armors[core][5]++;
-    if (ScoreModeEnabled == 1 && Game.Armors[core][4] + (Game.inventory[nb].type / 10) <= MaxScore) { Game.Armors[core][4] += (Game.inventory[nb].type / 10); } else { Game.Armors[core][4] = MaxScore; }
+    if (ScoreModeEnabled === 1) {
+      if (Game.Armors[core][4] + (Game.inventory[nb].type / 10) <= MaxScore) { Game.Armors[core][4] += (Game.inventory[nb].type / 10); }
+      else { Game.Armors[core][4] = MaxScore; }
+    }
     Game.ArmorUpgrades[core] += Game.inventory[nb].life;
     if (nb < Game.MaxInv) RemoveItem(nb);
   }
@@ -1552,7 +1558,10 @@ function UPWeapon(core, nb) {
   if (Game.Weapons[weapon][2] < Game.MaxUPC[core + 3]) {
     Game.Weapons[weapon][4] += Game.inventory[nb].power;
     Game.Weapons[weapon][2]++;
-    if (ScoreModeEnabled == 1 && Game.Weapons[weapon][3] + (Game.inventory[nb].type / 10) <= MaxScore) Game.Weapons[weapon][3] += (Game.inventory[nb].type / 10); else Game.Weapons[weapon][3] = MaxScore;
+    if (ScoreModeEnabled == 1) {
+      if (Game.Weapons[weapon][3] + (Game.inventory[nb].type / 10) <= MaxScore) Game.Weapons[weapon][3] += (Game.inventory[nb].type / 10); 
+      else Game.Weapons[weapon][3] = MaxScore;
+    }
     if (nb < Game.MaxInv) RemoveItem(nb);
   }
   if ($('#inventory').is(":visible")) { hideModals(); } else { hideRewards(); }

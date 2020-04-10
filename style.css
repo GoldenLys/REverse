@@ -1607,17 +1607,17 @@ i.discord.icon {
 }
 
 .leftbar {
-  position: absolute !important;
-  left: 70% !important;
-  top: 6em !important;
-  right: -475% !important;
+  position: absolute;
+  left: 85%;
+  top: 6em;
+  width: 75vw;
 }
 
 .rightbar {
-  position: absolute !important;
-  right: -5.25% !important;
-  top: 2.25em !important;
-  left: 15% !important;
+  position: absolute;
+  right: 85%;
+  top: 2.25em;
+  width: 75vw;
 }
 
 @keyframes glitch-text {
