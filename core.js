@@ -11,7 +11,7 @@
 // prestige classes / upgraded classes after beating the game the 1st time
 
 var url = window.location.href;
-const version = "1.9"; //!\ ONLY 1.X /!\\
+const version = "1.92"; //!\ ONLY 1.X /!\\
 var loadState = 0;
 var WelcomeData = [1, "Neo", "None"];
 var codes = {};
@@ -440,12 +440,12 @@ function UpdateGame() {
       Game.xp[1] = CalcEXP(Game.Level);
       if (Game.xp[0] > Game.xp[1] && Game.Level == POS[Game.Location][2]) { Game.xp[0] = CalcEXP(Game.Level - 1); }
       if (Game.xp[0] < CalcEXP(Game.Level - 1) && Game.Level > 1) { Game.xp[0] = CalcEXP(Game.Level - 1); }
-      //if (Game.Armors[1][4] > Game.Level) { ErrorArmor(1); }
-      //if (Game.Armors[2][4] > Game.Level) { ErrorArmor(2); }
-      //if (Game.Armors[3][4] > Game.Level) { ErrorArmor(3); }
-      //if (Game.Armors[4][4] > Game.Level) { ErrorArmor(4); }
-      //if (Game.Weapons.Main[3] > Game.Level) { ErrorArmor(5); }
-      //if (Game.Weapons.Special[3] > Game.Level) { ErrorArmor(6); }
+      if (Game.Armors[1][4] > Game.Level) { ErrorArmor(1); }
+      if (Game.Armors[2][4] > Game.Level) { ErrorArmor(2); }
+      if (Game.Armors[3][4] > Game.Level) { ErrorArmor(3); }
+      if (Game.Armors[4][4] > Game.Level) { ErrorArmor(4); }
+      if (Game.Weapons.Main[3] > Game.Level) { ErrorArmor(5); }
+      if (Game.Weapons.Special[3] > Game.Level) { ErrorArmor(6); }
     } else {
       if (Game.Armors[1][4] > MaxScore) { ErrorArmor(1); }
       if (Game.Armors[2][4] > MaxScore) { ErrorArmor(2); }
