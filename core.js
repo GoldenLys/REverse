@@ -495,11 +495,11 @@ function UpdateGame() {
     if (IV >= Game.MaxInv) RemoveItem(IV);
     if (Game.inventory[IV] != undefined) {
       if (Game.AutoRemove[0] == 1 && Game.inventory[IV].class == "Normal") RemoveItem(IV);
-      if (Game.AutoRemove[1] == 1 && Game.inventory[IV].class == "Common") RemoveItem(IV);
-      if (Game.AutoRemove[2] == 1 && Game.inventory[IV].class == "Uncommon") RemoveItem(IV);
-      if (Game.AutoRemove[3] == 1 && Game.inventory[IV].class == "Rare") RemoveItem(IV);
-      if (Game.AutoRemove[4] == 1 && Game.inventory[IV].class == "Epic") RemoveItem(IV);
-      if (Game.AutoRemove[5] == 1 && Game.inventory[IV].class == "Exotic") RemoveItem(IV);
+      else if (Game.AutoRemove[1] == 1 && Game.inventory[IV].class == "Common") RemoveItem(IV);
+      else if (Game.AutoRemove[2] == 1 && Game.inventory[IV].class == "Uncommon") RemoveItem(IV);
+      else if (Game.AutoRemove[3] == 1 && Game.inventory[IV].class == "Rare") RemoveItem(IV);
+      else if (Game.AutoRemove[4] == 1 && Game.inventory[IV].class == "Epic") RemoveItem(IV);
+      else if (Game.AutoRemove[5] == 1 && Game.inventory[IV].class == "Exotic") RemoveItem(IV);
     }
   }
   if (Game.MissionStarted[0] == false) {
@@ -1559,7 +1559,7 @@ function UPWeapon(core, nb) {
     Game.Weapons[weapon][4] += Game.inventory[nb].power;
     Game.Weapons[weapon][2]++;
     if (ScoreModeEnabled == 1) {
-      if (Game.Weapons[weapon][3] + (Game.inventory[nb].type / 10) <= MaxScore) Game.Weapons[weapon][3] += (Game.inventory[nb].type / 10); 
+      if (Game.Weapons[weapon][3] + (Game.inventory[nb].type / 10) <= MaxScore) Game.Weapons[weapon][3] += (Game.inventory[nb].type / 10);
       else Game.Weapons[weapon][3] = MaxScore;
     }
     if (nb < Game.MaxInv) RemoveItem(nb);
