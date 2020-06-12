@@ -11,8 +11,8 @@
 // prestige classes / upgraded classes after beating the game the 1st time
 
 var url = window.location.href;
-const version = "1.92"; //!\ ONLY 1.X /!\\
-var loadState = 0;
+const version = "2.0"; //!\ ONLY 1.X /!\\
+var loadState = 3;
 var WelcomeData = [1, "Neo", "None"];
 var codes = {};
 var isTabActive = "Login";
@@ -299,7 +299,7 @@ function UpdateEngine() {
     if (Game.Level == 1 && Game.MissionStarted[0] == false && Game.MissionsCompleted[0] == 0 && isTabActive == "None" && Game.config[3] == 1) {
       mission(0);
     }
-    if (Game.isInFight == 1) $("#EnnemySprite").html("<img class='ui circular middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Ennemy[0] + ".png'>");
+    if (Game.isInFight == 1) $("#EnnemySprite").html("<img class='ui rounded middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Ennemy[0] + ".png'>");
     $("#color-display").css("background-color", "rgb(" + $(red).val() + ", " + $(green).val() + ", " + $(blue).val() + ")");
     if (CoreLife > CoreBaseLife) {
       CoreLife = CoreBaseLife;
@@ -359,13 +359,13 @@ function UpdateEngine() {
     if (Game.username != "Default" && location.href.match(/(goldenlys.github.io).*/) && Game.username != "Default" && Game.username != null && LoggedIn == 1 && Email != "none") { ONLINEICON = "<i class='vert fas fa-circle'></i>"; } else { ONLINEICON = "<i class='rouge far fa-circle'></i>"; }
 
     if (url.match(/mobile/gi)) {
-      $("#PlayerID").html("<div class='vert text2'>" + ONLINEICON + "<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "<br><div class='ui horizontal label'>" + LEVEL + "</div></span></div><img class='ui circular middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
+      $("#PlayerID").html("<div class='vert text2'>" + ONLINEICON + "<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "<br><div class='ui horizontal label'>" + LEVEL + "</div></span></div><img class='ui rounded middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
       $("#Equipment-Title").html("Equipment " + SCORE);
       $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
       $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     } else {
       $("#Equipment-Title").html("Equipment " + SCORE);
-      $("#PlayerID").html("<div class='vert text2'>" + ONLINEICON + "<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "<br><div class='ui horizontal label'>" + LEVEL + "</div></span></div><img class='ui circular middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
+      $("#PlayerID").html("<div class='vert text2'>" + ONLINEICON + "<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "<br><div class='ui horizontal label'>" + LEVEL + "</div></span></div><img class='ui rounded middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
       $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
       $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     }
@@ -566,7 +566,7 @@ function UpdateUI() {
     }
   }
   var shards = Game.Level < MaxLevel ? "0" : Math.round(Ranking / 10 / 5 - 6);
-  var completedstory = LastMission == TotalMissions ? "<span class='vert'>Yes</span>" : "<span class='rouge'>No</span>";
+  var completedstory = LastMission == TotalMissions ? "<span class='vert'>Yes</span>" : "<span class='rouge'>Not Yet</span>";
   $("#WTShards").html("Score Required : <span class='vert'><i class='fad fa-dice-d20'></i>" + (((30 + (Game.Simulation * 5)) * 10) - 5) + "</span><br>Story completed : " + completedstory + "<br>Fragments reward : <span class='vert'>" + shards + "<i class='dna icon'></i></span>");
   $("#CurrWT").html("Current Dimension : <span class='vert'><i class='globe icon'></i>" + Game.Simulation + "</span>");
   for (var D in Game.Defeated) { if (D != 0) { $("#Defeat" + D).html(fix(Game.Defeated[D], 5)); } }

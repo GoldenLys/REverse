@@ -1,0 +1,349 @@
+:root {
+    --white: rgb(255, 255, 255);
+    --green: rgb(0, 255, 255);
+    --green2: rgb(0, 150, 180);
+    --red: rgb(255, 0, 0);
+    --orange: #ff9800;
+    --yellow: rgb(255, 255, 0);
+    --blue: rgb(0, 120, 255);
+    --pink: rgb(237, 34, 255);
+    --purple: rgb(137, 47, 255);
+    --borders: rgb(46, 46, 61);
+    --grey: rgb(28, 28, 36);
+    --grey5: rgba(28, 28, 36, .75);
+    --borders: rgb(46, 46, 61);
+    --darkgrey: rgb(38, 38, 48);
+    --darkgrey5: rgba(38, 38, 48, .75);
+    --black: rgb(40, 43, 52);
+    --black8: rgba(40, 43, 52, 0.8);
+    --black6: rgba(40, 43, 52, 0.6);
+    --black4: rgba(40, 43, 52, 0.4);
+    --black2: rgba(40, 43, 52, 0.25);
+    --black1: rgba(40, 43, 52, 0.15);
+    --locked: rgb(64, 64, 64);
+    --normal2: rgba(255, 255, 255, 0.5);
+    --common: #37a915;
+    --common2: #37a91580;
+    --uncommon: #5580f3;
+    --uncommon2: #5580f380;
+    --rare: #a74192;
+    --rare2: #a7419280;
+    --epic: #ffb00f;
+    --epic2: #ffb00f80;
+    --Exotic: #ff6337;
+    --Exotic2: #ff633780;
+    --Divine: #f44336;
+    --Divine2: #f4433680;
+    --Error: rgb(255, 0, 0);
+    --Error2: rgba(255, 0, 0, 0.5);
+    --E1: rgb(164, 164, 164);
+    --E2: rgb(0, 164, 0);
+    --E3: rgb(0, 169, 114);
+    --E4: rgba(0, 164, 182, 1);
+    --E5: rgb(164, 0, 167);
+    --E6: rgba(164, 0, 0, 1);
+    --E7: #ffaaed;
+    --close: rgb(150, 3, 3);
+    --temp1: rgb(0, 0, 0);
+    --temp2: rgb(0, 0, 0);
+    --temp3: rgb(0, 0, 0);
+}
+
+.Ennemy1 {
+    color: var(--E1) !important;
+    text-shadow: 0px 0px 3px var(--E1) !important;
+    border-color: var(--E1) !important;
+}
+
+.Ennemy2 {
+    color: var(--E2) !important;
+    text-shadow: 0px 0px 3px var(--E2) !important;
+    border-color: var(--E2) !important;
+}
+
+.Ennemy3 {
+    color: var(--E3) !important;
+    text-shadow: 0px 0px 3px var(--E3) !important;
+    border-color: var(--E3) !important;
+}
+
+.Ennemy4 {
+    color: var(--E4) !important;
+    text-shadow: 0px 0px 3px var(--E4) !important;
+    border-color: var(--E4) !important;
+}
+
+.Ennemy5 {
+    color: var(--E5) !important;
+    text-shadow: 0px 0px 3px var(--E5) !important;
+    border-color: var(--E5) !important;
+}
+
+.Ennemy6 {
+    color: var(--E6) !important;
+    text-shadow: 0px 0px 3px var(--E6) !important;
+    border-color: var(--E6) !important;
+}
+
+.Ennemy7 {
+    color: var(--E7) !important;
+    text-shadow: 0px 0px 3px var(--E7) !important;
+    border-color: var(--E7) !important;
+}
+
+.Error {
+    color: var(--red) !important;
+    text-shadow: 0px 0px 3px var(--red) !important;
+    border-color: var(--red) !important;
+}
+
+.Normal {
+    color: var(--white) !important;
+    text-shadow: 0px 0px 3px var(--white) !important;
+    border-color: var(--white) !important;
+}
+
+.Common {
+    color: var(--common) !important;
+    text-shadow: 0px 0px 3px var(--common) !important;
+    border-color: var(--common) !important;
+}
+
+.Uncommon {
+    color: var(--uncommon) !important;
+    text-shadow: 0px 0px 3px var(--uncommon) !important;
+    border-color: var(--uncommon) !important;
+}
+
+.Rare {
+    color: var(--rare) !important;
+    text-shadow: 0px 0px 3px var(--rare) !important;
+    border-color: var(--rare) !important;
+}
+
+.Epic {
+    color: var(--epic) !important;
+    text-shadow: 0px 0px 3px var(--epic) !important;
+    border-color: var(--epic) !important;
+}
+
+.Exotic {
+    color: var(--Exotic) !important;
+    text-shadow: 0px 0px 3px var(--Exotic) !important;
+    border-color: var(--Exotic) !important;
+}
+
+.Divine {
+    color: var(--Divine) !important;
+    text-shadow: 0px 0px 3px var(--Divine) !important;
+    border-color: var(--Divine) !important;
+}
+
+.green {
+    color: var(--common);
+}
+
+.menucolor {
+    color: var(--darkgrey);
+}
+
+.bleu {
+    color: var(--blue);
+}
+
+.rose {
+    color: var(--pink);
+}
+
+.violet {
+    color: var(--purple);
+}
+
+.vert {
+    color: var(--green) !important;
+    font-weight: bold;
+    text-shadow: 0px 0px .75rem var(--green) !important;
+    border-color: var(--green) !important;
+}
+
+.gris {
+    color: var(--grey);
+}
+
+.locked {
+    color: var(--green) !important;
+}
+
+.rouge {
+    color: var(--red) !important;
+    border-color: var(--red) !important;
+}
+
+.jaune {
+    color: var(--yellow);
+}
+
+.orange {
+    color: var(--orange);
+}
+
+.blanc {
+    color: var(--white) ! important;
+}
+
+.noir {
+    color: var(--black);
+}
+
+.noir1 {
+    color: var(--black1);
+}
+
+.ShadowReset {
+    text-shadow: 0px 0px 0px transparent !important;
+}
+
+.classBar0 {
+    position: absolute;
+    width: .5em;
+    top: 0;
+    bottom: 0;
+    float: left;
+    background: var(--white) !important;
+}
+
+.classBar1 {
+    position: absolute;
+    width: .5em;
+    top: 0;
+    bottom: 0;
+    float: left;
+    background: var(--common) !important;
+}
+
+.classBar2 {
+    position: absolute;
+    width: .5em;
+    top: 0;
+    bottom: 0;
+    float: left;
+    background: var(--uncommon) !important;
+}
+
+.classBar3 {
+    position: absolute;
+    width: .5em;
+    top: 0;
+    bottom: 0;
+    float: left;
+    background: var(--rare) !important;
+}
+
+.classBar4 {
+    position: absolute;
+    width: .5em;
+    top: 0;
+    bottom: 0;
+    float: left;
+    background: var(--epic) !important;
+}
+
+.classBar5 {
+    position: absolute;
+    width: .5em;
+    top: 0;
+    bottom: 0;
+    float: left;
+    background: var(--Exotic) !important;
+}
+
+.classBar6 {
+    position: absolute;
+    width: .5em;
+    top: 0;
+    bottom: 0;
+    float: left;
+    background: var(--Divine) !important;
+}
+
+.classBarU {
+    position: absolute;
+    width: .5em;
+    top: 0;
+    bottom: 0;
+    float: left;
+    background: var(--green) !important;
+}
+
+.classBarE {
+    position: absolute;
+    width: .5em;
+    top: 0;
+    bottom: 0;
+    float: left;
+    background: var(--Error) !important;
+}
+
+.CoreClass0 {
+    background: linear-gradient(to right, var(--black) 0%, var(--normal2) 1em, var(--normal2) 25%, transparent 90%) !important;
+}
+
+.CoreClass1 {
+    background: linear-gradient(to right, var(--black) 0%, var(--common) 1em, var(--common2) 25%, transparent 90%) !important;
+}
+
+.CoreClass2 {
+    background: linear-gradient(to right, var(--black) 0%, var(--uncommon) 1em, var(--uncommon2) 25%, transparent 90%) !important;
+}
+
+.CoreClass3 {
+    background: linear-gradient(to right, var(--black) 0%, var(--rare) 1em, var(--rare2) 25%, transparent 90%) !important;
+}
+
+.CoreClass4 {
+    background: linear-gradient(to right, var(--black) 0%, var(--epic) 1em, var(--epic2) 25%, transparent 90%) !important;
+}
+
+.CoreClass5 {
+    background: linear-gradient(to right, var(--black) 0%, var(--Exotic) 1em, var(--Exotic2) 25%, transparent 90%) !important;
+}
+
+.CoreClass6 {
+    background: linear-gradient(to right, var(--black) 0%, var(--Divine) 1em, var(--Divine2) 25%, transparent 90%) !important;
+}
+
+.CoreClassE {
+    background: linear-gradient(to right, var(--black) 0%, var(--Error) 1em, var(--Error2) 25%, transparent 90%) !important;
+}
+
+.CoreShadow0 {
+    box-shadow: 0 1px 2rem 0 var(--normal2), 0rem 0rem 0rem 0.1rem var(--normal2) !important;
+}
+
+.CoreShadow1 {
+    box-shadow: 0 1px 2rem 0 var(--common), 0rem 0rem 0rem 0.1rem var(--common) !important;
+}
+
+.CoreShadow2 {
+    box-shadow: 0 1px 2rem 0 var(--uncommon), 0rem 0rem 0rem 0.1rem var(--uncommon) !important;
+}
+
+.CoreShadow3 {
+    box-shadow: 0 1px 2rem 0 var(--rare), 0rem 0rem 0rem 0.1rem var(--rare) !important;
+}
+
+.CoreShadow4 {
+    box-shadow: 0 1px 2rem 0 var(--epic), 0rem 0rem 0rem 0.1rem var(--epic) !important;
+}
+
+.CoreShadow5 {
+    box-shadow: 0 1px 2rem 0 var(--Exotic), 0rem 0rem 0rem 0.1rem var(--Exotic) !important;
+}
+
+.CoreShadow6 {
+    box-shadow: 0 1px 2rem 0 var(--Divine), 0rem 0rem 0rem 0.1rem var(--Divine) !important;
+}
+
+.CoreShadowE {
+    box-shadow: 0 1px 2rem 0 var(--Error), 0rem 0rem 0rem 0.1rem var(--Error) !important;
+}

@@ -637,14 +637,12 @@ function GetEXPPercent() {
 //THEME FUNCTIONS
 
 function ResetTheme(code) {
-  if (code != 2) Game.Theme = ["#00ffff", "#87005d", "#002e96", "#ffffff", "#373c3fa6", "#232323", "#101115"];
+  if (code != 2) Game.Theme = ["#00ffff", "#ffffff", "#262630bf", "#262630", "#101115"];
   document.documentElement.style.setProperty('--green', Game.Theme[0]);
-  document.documentElement.style.setProperty('--bg2', Game.Theme[1]);
-  document.documentElement.style.setProperty('--bg3', Game.Theme[2]);
-  document.documentElement.style.setProperty('--white', Game.Theme[3]);
-  document.documentElement.style.setProperty('--darkgrey5', Game.Theme[4]);
-  document.documentElement.style.setProperty('--darkgrey', Game.Theme[5]);
-  document.documentElement.style.setProperty('--black', Game.Theme[6]);
+  document.documentElement.style.setProperty('--white', Game.Theme[1]);
+  document.documentElement.style.setProperty('--darkgrey5', Game.Theme[2]);
+  document.documentElement.style.setProperty('--darkgrey', Game.Theme[3]);
+  document.documentElement.style.setProperty('--black', Game.Theme[4]);
   if (code == 1) save();
 }
 
@@ -654,23 +652,14 @@ function ThemeDefine(id) {
     document.documentElement.style.setProperty('--green', Game.Theme[0]);
   }
   if (id == 2) {
-    Game.Theme[1] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    Game.Theme[6] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--bg2', Game.Theme[1]);
+    Game.Theme[3] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
+    document.documentElement.style.setProperty('--white', Game.Theme[1]);
   }
   if (id == 3) {
-    Game.Theme[2] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--bg3', Game.Theme[2]);
-  }
-  if (id == 4) {
-    Game.Theme[3] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--white', Game.Theme[3]);
-  }
-  if (id == 5) {
     Game.Theme[4] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val()) + "a6";
     Game.Theme[5] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--darkgrey5', Game.Theme[4]);
-    document.documentElement.style.setProperty('--darkgrey', Game.Theme[5]);
+    document.documentElement.style.setProperty('--darkgrey5', Game.Theme[2]);
+    document.documentElement.style.setProperty('--darkgrey', Game.Theme[3]);
   }
   UpdateGame();
 }
@@ -950,7 +939,7 @@ function GenExplorationMenu() {
 
     if (POS[E][1] < Game.Level + 1 && E != 11 && E != 17) {
       $("#exploration").append(
-        "<div class='ui segment'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + POS[E][0] + "</h3>" +
+        "<div class='ui segment AL-M'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + POS[E][0] + "</h3>" +
         "<div class='ui clearing divider'></div><div class='ui horizontal segments'><div class='ui segment'>" +
         "Mission required : " + UNLOCKTEXT + "<br>" +
         "Ennemy level : " + LEVEL + "<br>Highest loot quality : <span class='" + QUALITY + "'>" + QUALITY + "</span></div><div class='ui segment'>" + BTN + "</div>" +
@@ -996,9 +985,9 @@ function GenMissions() {
 
     if (Missions[M][3] != 2) {
       if (Game.MissionsCompleted[Missions[M][9]] == 1 || Missions[M][9] == -1) {
-        var DESCRIPTION = Game.MissionsCompleted[M] == 0 ? "<div class='ui segment'>" + "Level Required : " + REQLEVEL + "<br>Rewards : <br>- <span class='jaune'>" + fix(Missions[M][5], 3) + "</span> EXP<br> - " + QUALITY + " " + TYPE + LEVEL + "</div>" : "<div class='ui segment'>Level : " + REQLEVEL + "</div>";
+        var DESCRIPTION = Game.MissionsCompleted[M] == 0 ? "<div class='ui segment'>" + "Level Required : " + REQLEVEL + "<br><div class='ui green label'><span class='jaune'>" + fix(Missions[M][5], 3) + "</span> EXP<br>" + QUALITY + " " + TYPE + LEVEL + "</div></div>" : "<div class='ui segment'>Level : " + REQLEVEL + "</div>";
         var CONTENT = (
-          "<div class='ui segment'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + Missions[M][0] + "</h3>" +
+          "<div class='ui segment AL-M'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + Missions[M][0] + "</h3>" +
           "<div class='ui clearing divider'></div><div class='ui horizontal segments'>" + DESCRIPTION + "<div class='ui segment'>Status : " + Status + BTN + "</div>" +
           "</div></div>"
         );
@@ -1019,7 +1008,7 @@ function GenMissions() {
       if (Game.MissionsCompleted[Missions[M][9]] == 1 || Missions[M][9] == -1) {
         var CNTENT = ("<div class='ui segment'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + Missions[M][0] + "</h3>" +
           "<div class='ui clearing divider'></div><div class='ui horizontal segments'><div class='ui segment'>" +
-          "Level Required : " + REQLEVEL + "<br>Rewards : " + FRG + " <br> - " + QUALITY + " " + TYPE + LEVEL + "</div><div class='ui segment'>" + BTN + "</div>" +
+          "Level Required : " + REQLEVEL + "<br><div class='ui green label'> " + FRG + " <br> - " + QUALITY + " " + TYPE + LEVEL + "</div></div><div class='ui segment'>" + BTN + "</div>" +
           "</div></div>");
 
         $("#MissionsList2").append(CNTENT);
@@ -1218,8 +1207,7 @@ function fullColorHex(r, g, b) {
 }
 
 function CalcEXP(level) {
-  var exp = 0;
-  exp = (level * 25) + (500 * (level / 3.5));
+  let exp = (level * 25) + (500 * (level / 3.5));
 
   for (T = 0; T < (level + 1); T++) {
     if (T < 30) {
@@ -1228,8 +1216,8 @@ function CalcEXP(level) {
       exp += exp * (25 / 100);
     }
   }
-  if (level == 0) { exp = 0; }
-  if (level == 1) { exp = 100; }
+  if (level == 0) exp = 0;
+  if (level == 1) exp = 100;
   return Math.round(exp);
 }
 
