@@ -11,7 +11,7 @@
 // prestige classes / upgraded classes after beating the game the 1st time
 
 var url = window.location.href;
-const version = "2.0"; //!\ ONLY 1.X /!\\
+const version = "2.01"; //!\ ONLY 1.X /!\\
 var loadState = 3;
 var WelcomeData = [1, "Neo", "None"];
 var codes = {};
@@ -96,7 +96,7 @@ var Game = {
   class: "none",
 };
 var Missions = {
-  0: ["White Light", 'You woke up in an unknown world where a white light dazzles you..<br> this place seems weird, you want to leave it as quick as possible.', 1, 1, 10, 200, 0, "Normal", 0, -1],
+  0: ["White Light", 'You wake up in an unknown world where a white light dazzles you..<br> this place seems weird, you want to leave it as quick as possible.', 1, 1, 10, 200, 0, "Normal", 0, -1],
   1: ["Lost Path", 'You discovered a little path hidden in the shadows<br> and decided to explore it in the hope of finding informations to return in your world.', 4, 1, 10, 250, 0, "Common", 1, 0],
   2: ["Shadow Forest", 'You arrive at the end of the path and now enter a dark forest..<br>There seems to be light in the distance.', 7, 1, 10, 500, 0, "Common", 2, 1],
   3: ["Galarius City", 'You reach a city with a lot of different races.<br>You can see humans, elves and even dwarves.<br>Maybe you will find help here or just someone that can explain you how to get back to your world.', 9, 1, 10, 750, 0, "Uncommon", 3, 2],
@@ -180,10 +180,8 @@ function test() {
 (function () {
   if (location.href.match(/(goldenlys.github.io).*/)) window.oncontextmenu = (e) => { e.preventDefault(); };
   ResetTheme(0);
-  if (localStorage.getItem("Alpha") != null) { load(); }
-  if (localStorage.getItem("Alpha-Backup") != null) {
-    loadBackup();
-  }
+  if (localStorage.getItem("Alpha") != null) load();
+  if (localStorage.getItem("Alpha-Backup") != null) loadBackup();
   if (Game.username != "Default") {
     $("#menu").show();
     $('.ui.sidebar').sidebar({ dimPage: false, mobileTransition: 'scale down', transition: 'scale down' }).sidebar('hide');
@@ -288,7 +286,8 @@ function UpdateEngine() {
     $("#loading").hide();
     $("#main").show();
     $("#q").show();
-    if (Game.username != "Default") GetWBcontent("retour");
+    if (Game.username != "Default" && location.href.match(/(goldenlys.github.io).*/)) GetWBcontent("retour");
+    else { isTabActive = "None"; Game.isInFight = 0; UpdateGame(); }
     loadState++;
     UpdateGame();
   }
@@ -313,11 +312,9 @@ function UpdateEngine() {
       Game.Level = POS[Missions[Game.MissionStarted[1]][8]][2];
       UpdateGame();
     }
-    if (lastCloudSave < 180) { lastCloudSave++; }
-    else { SendStats(); }
+    if (lastCloudSave < 180) lastCloudSave++; else SendStats();
     if (Game.LastEscape > 0) { Game.LastEscape--; $("#NextRetreat").html("Next retreat in " + toHHMMSS(Game.LastEscape) + "."); }
     else { $("#NextRetreat").html(""); }
-    $("#CloudTimer").html("Last cloud save " + toHHMMSS(lastCloudSave) + " ago, as <span class='vert'>" + Game.username + "</span>.");
     if (Game.xp[0] < 0) { Game.xp[0] = 0; }
     for (UPC = 0; UPC < 4; UPC++) {
       if (Game.MaxUPC[UPC] == undefined) { Game.MaxUPC[UPC] = 0; }
@@ -607,6 +604,7 @@ function UpdateUI() {
     $("#MDTL").html("<div class='detail'>Exploration</div><span class='vert'>" + POS[Game.Location][0] + "</span>");
   }
   if ($('#combat').is(":visible")) $("#rewards").hide();
+  $("#CloudTimer").html("Last cloud save " + toHHMMSS(lastCloudSave) + " ago, as <span class='vert'>" + Game.username + "</span>.");
   $("#islots").html("<i class='fas fa-sack'></i>" + (Game.inventory.length) + "/" + Game.MaxInv);
   $("#cash").html(fix(Game.Cash, 3));
   $("#mcount").html("<i class='dropdown icon'></i> " + "Missions completed (" + CompletedMissions + "/" + TotalMissions + ")");
@@ -753,7 +751,11 @@ function GenWeapons() {
     var WEAPONUPC = Game.Weapons[TYPE][2] == Game.MaxUPC[UPWSELECTOR] ? "" : "green";
     var UPWTEXT = Game.MaxUPC[UPWSELECTOR] > 0 ? "<i class='orange fad fa-gem'></i><span class='" + WEAPONUPC + "'>" + Game.Weapons[TYPE][2] + "</span>/" + Game.MaxUPC[UPWSELECTOR] + " Gems incrusted" : "";
     $("#" + TYPE + "WeaponGems").html(UPWTEXT);
-    $("#" + TYPE + "WeaponSprite").html("<img class='ui middle aligned tiny circular image' style='height: 100px; width: auto;' src='DATA/Weapons/" + TYPE + "-" + Class + ".png'></img>");
+
+    if (Class == "E") { $("#" + TYPE + "WeaponSprite").html("<div class='error-img'></div>"); }
+    else {
+      $("#" + TYPE + "WeaponSprite").html("<img class='ui middle aligned tiny circular image' src='DATA/Weapons/" + TYPE + "-" + Class + ".png'></img>");
+    }
     $("#" + TYPE + "WeaponLevel").html(LEVELTEXT);
     $("#" + TYPE + "WeaponText").html(Game.Weapons[TYPE][4]);
     $("#" + TYPE + "WeaponTitle").html("<span class='" + Game.Weapons[TYPE][1] + "'>" + Game.Weapons[TYPE][1] + "</span> " + Game.Weapons[TYPE][0]);
@@ -794,8 +796,12 @@ function GenArmors() {
     $("#" + core + "-life").html(fix(Game.Armors[UPC][3], 3));
     $("#" + core + "-rarity").html(RLSTXT);
     $("#" + core + "-keys").html(UPCTEXT);
-    $("#" + core + "-image").html("<img class='ui middle aligned tiny circular image' style='height: 100px; width: auto;' src='DATA/Armors/" + core + "-" + Class + ".png'></img>");
 
+    if (Class == "E") { $("#" + core + "-image").html("<div class='error-img'></div>"); }
+    else {
+      $("#" + core + "-image").html("<img class='ui middle aligned tiny circular image' style='margin-top: 1em; height: 100px; width: auto;' src='DATA/Armors/" + core + "-" + Class + ".png'></div>");
+
+    }
     $("#" + core + "-title").html("<span class='" + Game.Armors[UPC][2] + "'>" + Game.Armors[UPC][2] + "</span> " + Game.Armors[UPC][1]);
     if (Game.Armors[UPC][0] == false) {
       $("#" + core).hide();
@@ -1066,6 +1072,7 @@ function WinFight() {
       Game.MissionStarted[2]++;
       CORELOOT = 40; RELICLOOT = 20; KEYLOOT = 30;
     }
+    if (Game.Level >= POS[Game.Location][2]) expGain = 0;
     Game.xp[0] += Math.round(expGain);
     if (Game.Level < MaxLevel) {
       Game.xp[0] += Math.round(expGain);

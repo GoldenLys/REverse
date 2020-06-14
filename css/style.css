@@ -4,7 +4,7 @@ body {
   font-size: 100%;
   font-family: 'Electrolize', sans-serif !important;
   cursor: crosshair;
-  background: var(--grey) url(/bg_mosaic.png);
+  background: var(--grey) url(../DATA/bg_mosaic.png);
 }
 
 @keyframes bganim {
@@ -537,7 +537,6 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
 }
 
 .ui.basic.label {
-  /*margin: 0.5rem;*/
   background-color: transparent !important;
   font-weight: 600 !important;
 }
@@ -556,6 +555,15 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
 
 .ui.card>.extra, .ui.cards>.card>.extra {
   color: var(--white);
+  height: 40px;
+}
+
+.ui.card>.extra .fluid.ui.icon.rainbow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  max-height: 40px;
+  bottom: 0;
 }
 
 .ui.card>.image>img, .ui.cards>.card>.image>img {
@@ -571,8 +579,7 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
   vertical-align: middle !important;
   background: var(--black8);
   color: var(--white);
-  margin: 2px;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 #PlayerName {
@@ -647,7 +654,7 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
 }
 
 .ui.card>.content, .ui.cards>.card>.content {
-  padding: 0em 1em;
+  padding: 0 10px;
 }
 
 .ui.inverted.table {
@@ -1108,7 +1115,7 @@ i.discord.icon {
   color: var(--white) !important;
   margin: 1% !important;
   display: inline-grid !important;
-  border-radius: 0.5rem !important;
+  border-radius: 5px !important;
 }
 
 .fa, .fas, .fal, .far, .fad {
@@ -1487,15 +1494,64 @@ i.discord.icon {
 
 #MDTL {
   height: 40px;
+  font-size: 16px;
+  line-height: 40px;
   font-weight: 500;
   width: 100% !important;
+  margin: 5px 0 0 0;
+  padding: 0;
 }
 
 .ui.image.label .detail {
-  margin: 0em -.833em -.5833em .0em;
+  font-size: 12px;
+  margin: 0;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   line-height: 2;
+}
+
+#rewards {
+  margin: 5px 10px;
+}
+
+img[src*="E.png"], .error-img {
+  display: inline-block;
+  vertical-align: middle;
+  border: none;
+  background: linear-gradient(to right, var(--darkgrey), var(--grey));
+  width: 100px !important;
+  border-radius: 5px !important;
+}
+
+img[src*="E.png"]:before, .error-img:before {
+  content: "?" !important;
+  font-size: 50px;
+  line-height: 100px;
+  color: var(--red);
+  text-shadow: 0 0 5px;
+}
+
+.fullwidth-header {
+  border-bottom: 1px solid var(--borders) !important;
+  height: 31px;
+  width: calc(100% + 20px);
+  margin-left: -10px;
+  padding: 5px 10px;
+  text-align: left;
+  border-radius: 5px 5px 0 0;
+  background: var(--darkgrey);
+  margin-bottom: 10px;
+}
+
+.customcard .ui.label:not(.basic) {
+  background-color: var(--grey5) !important;
+  border-radius: 0;
+}
+
+.ui.card>.image:not(.ui)>img {
+  margin-top: 1em;
+  height: 100px;
+  width: auto;
 }
