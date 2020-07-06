@@ -203,7 +203,7 @@
     text-shadow: 0px 0px 0px transparent !important;
 }
 
-.classBar0 {
+.Bar-Normal {
     position: absolute;
     width: .5em;
     top: 0;
@@ -212,7 +212,7 @@
     background: var(--white) !important;
 }
 
-.classBar1 {
+.Bar-Common {
     position: absolute;
     width: .5em;
     top: 0;
@@ -221,7 +221,7 @@
     background: var(--common) !important;
 }
 
-.classBar2 {
+.Bar-Uncommon {
     position: absolute;
     width: .5em;
     top: 0;
@@ -230,7 +230,7 @@
     background: var(--uncommon) !important;
 }
 
-.classBar3 {
+.Bar-Rare {
     position: absolute;
     width: .5em;
     top: 0;
@@ -239,7 +239,7 @@
     background: var(--rare) !important;
 }
 
-.classBar4 {
+.Bar-Epic {
     position: absolute;
     width: .5em;
     top: 0;
@@ -248,7 +248,7 @@
     background: var(--epic) !important;
 }
 
-.classBar5 {
+.Bar-Exotic {
     position: absolute;
     width: .5em;
     top: 0;
@@ -257,7 +257,7 @@
     background: var(--Exotic) !important;
 }
 
-.classBar6 {
+.Bar-Divine {
     position: absolute;
     width: .5em;
     top: 0;
@@ -266,7 +266,7 @@
     background: var(--Divine) !important;
 }
 
-.classBarU {
+.Bar-U {
     position: absolute;
     width: .5em;
     top: 0;
@@ -275,7 +275,7 @@
     background: var(--green) !important;
 }
 
-.classBarE {
+.Bar-E {
     position: absolute;
     width: .5em;
     top: 0;
@@ -284,31 +284,31 @@
     background: var(--Error) !important;
 }
 
-.CoreClass0 {
+.Normal-Core {
     background: linear-gradient(to right, var(--black) 0%, var(--normal2) 1em, var(--normal2) 25%, transparent 90%) !important;
 }
 
-.CoreClass1 {
+.Common-Core {
     background: linear-gradient(to right, var(--black) 0%, var(--common) 1em, var(--common2) 25%, transparent 90%) !important;
 }
 
-.CoreClass2 {
+.Uncommon-Core {
     background: linear-gradient(to right, var(--black) 0%, var(--uncommon) 1em, var(--uncommon2) 25%, transparent 90%) !important;
 }
 
-.CoreClass3 {
+.Rare-Core {
     background: linear-gradient(to right, var(--black) 0%, var(--rare) 1em, var(--rare2) 25%, transparent 90%) !important;
 }
 
-.CoreClass4 {
+.Epic-Core {
     background: linear-gradient(to right, var(--black) 0%, var(--epic) 1em, var(--epic2) 25%, transparent 90%) !important;
 }
 
-.CoreClass5 {
+.Exotic-Core {
     background: linear-gradient(to right, var(--black) 0%, var(--Exotic) 1em, var(--Exotic2) 25%, transparent 90%) !important;
 }
 
-.CoreClass6 {
+.Divine-Core {
     background: linear-gradient(to right, var(--black) 0%, var(--Divine) 1em, var(--Divine2) 25%, transparent 90%) !important;
 }
 

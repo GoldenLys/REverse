@@ -300,20 +300,20 @@ h1, h2, h3, h4, h5 {
   border-bottom: 1px solid var(--darkgrey);
 }
 
-.glitched {
-  animation: glitch-text .1s steps(1) 6 alternate forwards, glitch-blink .3s steps(1) 2
-}
-
 .rainbow7.active:hover {
   background: var(--darkgrey) !important;
   color: var(--green) !important;
-  border-bottom: 1px solid var(--darkgrey);
+  border-bottom: 1px solid var(--green) !important;
 }
 
 .rainbow7.active {
   background: var(--darkgrey5) !important;
   color: var(--green) !important;
   border-bottom: 1px solid var(--green);
+}
+
+.glitched {
+  animation: glitch-text .1s steps(1) 6 alternate forwards, glitch-blink .3s steps(1) 2
 }
 
 .ui.attached.segment {
