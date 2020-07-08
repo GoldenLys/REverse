@@ -246,7 +246,7 @@ function writeUserData() {
       Avatar: Game.Avatar,
       Defeated: Game.Defeated,
       Version: version,
-      Theme: Game.Theme[0],
+      Theme: Game.Theme,
     });
   }
 }

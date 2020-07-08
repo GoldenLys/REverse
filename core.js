@@ -299,13 +299,13 @@ function UpdateEngine() {
   if (Game.username != "Default" && location.href.match(/(goldenlys.github.io).*/) && Game.username != "Default" && Game.username != null && LoggedIn == 1 && Email != "none") { ONLINEICON = "<i class='vert fas fa-circle'></i>"; } else { ONLINEICON = "<i class='rouge far fa-circle'></i>"; }
 
   if (url.match(/mobile/gi)) {
-    $("#PlayerID").html("<div class='vert text2'>" + ONLINEICON + "<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "<br><div class='ui horizontal label'>" + LEVEL + "</div></span></div><img class='ui rounded middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
+    $("#PlayerID").html("<div class='vert text2'>" + ONLINEICON + "<span style='color:" + Game.Theme + ";'>" + Game.username + "<br><div class='ui horizontal label'>" + LEVEL + "</div></span></div><img class='ui rounded middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
     $("#Equipment-Title").html("Equipment " + SCORE);
     $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
   } else {
     $("#Equipment-Title").html("Equipment " + SCORE);
-    $("#PlayerID").html("<div class='vert text2'>" + ONLINEICON + "<span style='color:" + Game.Theme[0] + ";'>" + Game.username + "<br><div class='ui horizontal label'>" + LEVEL + "</div></span></div><img class='ui rounded middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
+    $("#PlayerID").html("<div class='vert text2'>" + ONLINEICON + "<span style='color:" + Game.Theme + ";'>" + Game.username + "<br><div class='ui horizontal label'>" + LEVEL + "</div></span></div><img class='ui rounded middle aligned medium image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg' style='background-color: var(--darkgrey);z-index: 19;'>");
     $("#avatar2").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
     $("#avatar3").html("<img class='' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'>");
   }
@@ -498,7 +498,7 @@ function UpdateUI() {
   $("#TOPPREVIOUS").html("<i class='large arrow alternate circle left outline icon'></i> PAGE " + (PAGE - 1) + "");
   if (MAXVIEW + 1 <= LastId) $("#TOPNEXT").attr('class', 'ui rainbow5 button'); else $("#TOPNEXT").attr('class', 'ui rainbow5 button dis');
   if (PAGE == 1) $("#TOPPREVIOUS").attr('class', 'ui rainbow5 button dis'); else $("#TOPPREVIOUS").attr('class', 'ui rainbow5 button');
-  $("#namestat").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span style='color:" + Game.Theme[0] + ";'>" + Game.username + "</span>");
+  $("#namestat").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span style='color:" + Game.Theme + ";'>" + Game.username + "</span>");
   $("#playtimestat").html(toHHMMSS(Game.PlayTime));
   $("#Killstat").html(Game.Wins);
   $("#Deathstat").html(Game.Loses);
