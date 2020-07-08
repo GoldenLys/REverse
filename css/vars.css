@@ -12,8 +12,8 @@
     --grey: rgb(28, 28, 36);
     --grey5: rgba(28, 28, 36, .75);
     --borders: rgb(46, 46, 61);
-    --darkgrey: rgb(38, 38, 48);
-    --darkgrey5: rgba(38, 38, 48, .75);
+    --darkgrey: rgb(50, 47, 56);
+    --darkgrey5: rgba(50, 47, 56, .75); 
     --black: rgb(40, 43, 52);
     --black8: rgba(40, 43, 52, 0.8);
     --black6: rgba(40, 43, 52, 0.6);
@@ -49,43 +49,43 @@
     --temp3: rgb(0, 0, 0);
 }
 
-.Ennemy1 {
+.Enemy1 {
     color: var(--E1) !important;
     text-shadow: 0px 0px 3px var(--E1) !important;
     border-color: var(--E1) !important;
 }
 
-.Ennemy2 {
+.Enemy2 {
     color: var(--E2) !important;
     text-shadow: 0px 0px 3px var(--E2) !important;
     border-color: var(--E2) !important;
 }
 
-.Ennemy3 {
+.Enemy3 {
     color: var(--E3) !important;
     text-shadow: 0px 0px 3px var(--E3) !important;
     border-color: var(--E3) !important;
 }
 
-.Ennemy4 {
+.Enemy4 {
     color: var(--E4) !important;
     text-shadow: 0px 0px 3px var(--E4) !important;
     border-color: var(--E4) !important;
 }
 
-.Ennemy5 {
+.Enemy5 {
     color: var(--E5) !important;
     text-shadow: 0px 0px 3px var(--E5) !important;
     border-color: var(--E5) !important;
 }
 
-.Ennemy6 {
+.Enemy6 {
     color: var(--E6) !important;
     text-shadow: 0px 0px 3px var(--E6) !important;
     border-color: var(--E6) !important;
 }
 
-.Ennemy7 {
+.Enemy7 {
     color: var(--E7) !important;
     text-shadow: 0px 0px 3px var(--E7) !important;
     border-color: var(--E7) !important;

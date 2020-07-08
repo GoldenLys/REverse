@@ -357,7 +357,11 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
   border: 0px solid;
   -webkit-animation: matrix3 50ms infinite !important;
   animation: matrix3 50ms infinite !important;
-  background: var(--black2);
+  background: var(--darkgrey5);
+  color: var(--green) !important;
+}
+
+.ui.rainbow.button:hover .icon {
   color: var(--green) !important;
 }
 
@@ -498,7 +502,7 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
 }
 
 .ui.form input[type=text]:active, .ui.form input[type=text]:focus {
-  background: var(--black8);
+  background: var(--darkgrey5);
   color: var(--green);
   border-color: var(--green) !important;
 }
@@ -557,7 +561,7 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
   color: var(--white);
   height: 40px;
 }
-
+.ui.card>.extra .fluid.ui.buttons,
 .ui.card>.extra .fluid.ui.icon.rainbow {
   position: absolute;
   left: 0;
@@ -577,7 +581,7 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
 
 .ui.label, .ui.image.label {
   vertical-align: middle !important;
-  background: var(--black8);
+  background: var(--darkgrey5);
   color: var(--white);
   border-radius: 5px;
 }
@@ -623,17 +627,7 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
   margin: 1% 1% 1% 1% !important
 }
 
-.customA {
-  margin: 0 0 !important;
-  background: linear-gradient(to bottom, var(--black8) 0%, var(--black2) 75%, transparent 100%) !important;
-  background: -webkit-linear-gradient(to bottom, var(--black8) 0%, var(--black2) 75%, transparent 100%) !important;
-  color: var(--white) !important;
-  border-radius: 0% !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-}
-
-.customB {
+.BUTTONS_ACTIONS {
   position: relative;
   width: 95.5%;
   left: 2%;
@@ -1195,7 +1189,7 @@ i.discord.icon {
   border-radius: 5px !important;
 }
 
-#EnnemySprite {
+#EnemySprite {
   background-color: var(--darkgrey);
   width: 100px;
   height: 100px;
@@ -1483,7 +1477,7 @@ i.discord.icon {
   border-radius: 10px !important;
 }
 
-#MissionsList, #exploration, #miscs {
+#MissionsList, #DIV-EXPLORE, #DIV-MENU {
   padding: 5px 10px;
 }
 
@@ -1512,8 +1506,9 @@ i.discord.icon {
   line-height: 2;
 }
 
-#rewards {
+#DIV-REWARDS {
   margin: 5px 10px;
+  padding: 10px 5px;
 }
 
 img[src*="E.png"], .error-img {
@@ -1547,11 +1542,28 @@ img[src*="E.png"]:before, .error-img:before {
 
 .customcard .ui.label:not(.basic) {
   background-color: var(--grey5) !important;
-  border-radius: 0;
+  border-radius: 0 5px 0 0;
 }
 
 .ui.card>.image:not(.ui)>img {
-  margin-top: 1em;
+  margin-top: 0!important;
   height: 100px;
   width: auto;
+}
+
+.EQUIPMENT-TITLE {
+  min-height: 45px;
+}
+
+.ui.card.customcard>.content {
+  padding: 0 10px;
+  min-height: 75px;
+}
+
+#core5.locked {
+  margin: 15px 0;
+}
+
+#DIV-STATS .ui.horizontal.segments:hover {
+  background-color: var(--darkgrey5);
 }

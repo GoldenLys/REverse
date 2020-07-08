@@ -351,19 +351,7 @@ function ClickEvents() {
     TOP10();
   });
   $("#themeBTN1").on("click", function () {
-    ThemeDefine(1);
-  });
-  $("#themeBTN2").on("click", function () {
-    ThemeDefine(2);
-  });
-  $("#themeBTN3").on("click", function () {
-    ThemeDefine(3);
-  });
-  $("#themeBTN4").on("click", function () {
-    ThemeDefine(4);
-  });
-  $("#themeBTN5").on("click", function () {
-    ThemeDefine(5);
+    ThemeDefine();
   });
   $("#themeBTNR").on("click", function () {
     ResetTheme(1);
@@ -487,8 +475,8 @@ function ClickEvents() {
   $("#importt-btn").on("click", function () {
     importTheme();
   });
-  $("#miscs-btn").on("click", function () {
-    ShowMiscsMenu();
+  $("#menu-btn").on("click", function () {
+    ShowMainMenu();
   });
   $("#prestige-btn").on("click", function () {
     ShowScoreMenu();
@@ -500,6 +488,7 @@ function ClickEvents() {
     ShowExplorationMenu();
   });
   $("#inventory-btn").on("click", function () {
+    GenInventory();
     ShowInventoryMenu();
   });
   $("#stats-btn").on("click", function () {
@@ -611,8 +600,8 @@ function showmessage(title, message) {
   $("#modal-1").modal("setting", "closable", false).modal("show");
 }
 
-function GetEnnemyHPPercent() {
-  var value = (100 / Game.Ennemy[4]) * Game.Ennemy[5];
+function GetEnemyHPPercent() {
+  var value = (100 / Game.Enemy[4]) * Game.Enemy[5];
   if (value < 1) value = 1;
   if (value > 100) value = 100;
   return value;
@@ -636,30 +625,14 @@ function GetEXPPercent() {
 //THEME FUNCTIONS
 
 function ResetTheme(code) {
-  if (code != 2) Game.Theme = ["#00ffff", "#ffffff", "#262630bf", "#262630", "#101115"];
-  document.documentElement.style.setProperty('--green', Game.Theme[0]);
-  document.documentElement.style.setProperty('--white', Game.Theme[1]);
-  document.documentElement.style.setProperty('--darkgrey5', Game.Theme[2]);
-  document.documentElement.style.setProperty('--darkgrey', Game.Theme[3]);
-  document.documentElement.style.setProperty('--black', Game.Theme[4]);
+  if (code != 2) Game.Theme = "#00ffff";
+  document.documentElement.style.setProperty('--green', Game.Theme);
   if (code == 1) save();
 }
 
 function ThemeDefine(id) {
-  if (id == 1) {
-    Game.Theme[0] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--green', Game.Theme[0]);
-  }
-  if (id == 2) {
-    Game.Theme[3] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--white', Game.Theme[1]);
-  }
-  if (id == 3) {
-    Game.Theme[4] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val()) + "a6";
-    Game.Theme[5] = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--darkgrey5', Game.Theme[2]);
-    document.documentElement.style.setProperty('--darkgrey', Game.Theme[3]);
-  }
+    Game.Theme = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
+    document.documentElement.style.setProperty('--green', Game.Theme);
   UpdateGame();
 }
 
@@ -801,28 +774,28 @@ function DCancel() {
 }
 
 function hideMenus() {
-  $("#combat").hide();
+  $("#DIV-COMBAT").hide();
   $("#gamemenu").hide();
-  $("#prestige").hide();
-  $("#statistics").hide();
-  $("#leaderboard1").hide();
-  $("#settings").hide();
+  $("#DIV-MISSIONS").hide();
+  $("#DIV-STATS").hide();
+  $("#DIV-LEADERBOARD").hide();
+  $("#DIV-SETTINGS").hide();
   $("#cores").hide();
-  $(".customB").hide();
+  $(".BUTTONS_ACTIONS").hide();
 }
 
 function closeTabs() {
   hideMenus();
-  $("#missions").hide();
-  $("#exploration").hide();
-  $("#inventory").hide();
-  $("#miscs").hide();
+  $("#DIV-MISSIONS").hide();
+  $("#DIV-EXPLORE").hide();
+  $("#DIV-INVENTORY").hide();
+  $("#DIV-MENU").hide();
   if (isTabActive == "None") {
-    $("#combat").show();
-    $(".customB").show();
+    $("#DIV-COMBAT").show();
+    $(".BUTTONS_ACTIONS").show();
   } else {
-    $("#combat").hide();
-    $(".customB").hide();
+    $("#DIV-COMBAT").hide();
+    $(".BUTTONS_ACTIONS").hide();
   }
   if (Game.isInFight == 2) {
     hideRewards();
@@ -830,64 +803,64 @@ function closeTabs() {
   $("#missions-btn").removeClass("active");
   $("#exploration-btn").removeClass("active");
   $("#inventory-btn").removeClass("active");
-  $("#miscs-btn").removeClass("active");
+  $("#menu-btn").removeClass("active");
 }
 
 function ShowMissionsMenu() {
-  if (isTabActive != "Missions") { isTabActive = "Missions"; closeTabs(); $("#missions-btn").addClass("active"); $("#missions").show(); GenMissions(); }
+  if (isTabActive != "Missions") { isTabActive = "Missions"; closeTabs(); $("#missions-btn").addClass("active"); $("#DIV-MISSIONS").show(); GenMissions(); }
   else { isTabActive = "None"; closeTabs(); }
 }
 
 function ShowExplorationMenu() {
-  if (isTabActive != "Exploration") { isTabActive = "Exploration"; closeTabs(); $("#exploration-btn").addClass("active"); $("#exploration").show(); GenExplorationMenu(); }
+  if (isTabActive != "Exploration") { isTabActive = "Exploration"; closeTabs(); $("#exploration-btn").addClass("active"); $("#DIV-EXPLORE").show(); GenExplorationMenu(); }
   else { isTabActive = "None"; closeTabs(); }
 }
 
 function ShowInventoryMenu() {
-  if (isTabActive != "Inventory") { isTabActive = "Inventory"; closeTabs(); $("#inventory-btn").addClass("active"); $("#inventory").show(); }
+  if (isTabActive != "Inventory") { isTabActive = "Inventory"; closeTabs(); $("#inventory-btn").addClass("active"); $("#DIV-INVENTORY").show(); }
   else { isTabActive = "None"; closeTabs(); }
   UpdateUI();
 }
 
-function ShowMiscsMenu() {
-  if (isTabActive == "Miscs" || isTabActive == "Dimension" || isTabActive == "Stats" || isTabActive == "Leaderboard" || isTabActive == "Settings") { isTabActive = "None"; closeTabs(); }
-  else { isTabActive = "Miscs"; closeTabs(); $("#miscs-btn").addClass("active"); $("#miscs").show(); }
+function ShowMainMenu() {
+  if (isTabActive == "Menu" || isTabActive == "Dimension" || isTabActive == "Stats" || isTabActive == "Leaderboard" || isTabActive == "Settings") { isTabActive = "None"; closeTabs(); }
+  else { isTabActive = "Menu"; closeTabs(); $("#menu-btn").addClass("active"); $("#DIV-MENU").show(); }
 }
 
 function ShowScoreMenu() {
   closeTabs();
-  $("#miscs-btn").addClass("active");
+  $("#menu-btn").addClass("active");
   isTabActive = "Dimension";
-  $("#prestige").show();
+  $("#DIV-MISSIONS").show();
 }
 
 function ShowStatsMenu() {
   UpdateGame();
   closeTabs();
-  $("#miscs-btn").addClass("active");
+  $("#menu-btn").addClass("active");
   isTabActive = "Stats";
-  $("#statistics").show();
+  $("#DIV-STATS").show();
 }
 
 function ShowLeaderboard() {
   TOP10();
   UpdateGame();
   closeTabs();
-  $("#miscs-btn").addClass("active");
+  $("#menu-btn").addClass("active");
   isTabActive = "Leaderboard";
-  $("#leaderboard1").show();
+  $("#DIV-LEADERBOARD").show();
 }
 
 function ShowSettings() {
   UpdateGame();
   closeTabs();
-  $("#miscs-btn").addClass("active");
+  $("#menu-btn").addClass("active");
   isTabActive = "Settings";
-  $("#settings").show();
+  $("#DIV-SETTINGS").show();
 }
 
 function GenExplorationMenu() {
-  $("#exploration").html("");
+  $("#DIV-EXPLORE").html("");
   let QUALITIES = ["Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Divine"];
   let BTN = "";
   let LEVEL = "";
@@ -911,11 +884,11 @@ function GenExplorationMenu() {
     if (Game.Location == E) BTN = "";
 
     if (POS[E][1] < Game.Level + 1 && E != 11 && E != 17) {
-      $("#exploration").append(
+      $("#DIV-EXPLORE").append(
         "<div class='ui segment AL-M'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + POS[E][0] + "</h3>" +
         "<div class='ui clearing divider'></div><div class='ui horizontal segments'><div class='ui segment'>" +
         "Mission required : " + UNLOCKTEXT + "<br>" +
-        "Ennemy level : " + LEVEL + "<br>Highest loot quality : <span class='" + QUALITY + "'>" + QUALITY + "</span></div><div class='ui segment'>" + BTN + "</div>" +
+        "Enemy level : " + LEVEL + "<br>Highest loot quality : <span class='" + QUALITY + "'>" + QUALITY + "</span></div><div class='ui segment'>" + BTN + "</div>" +
         "</div></div>");
     }
   }
@@ -984,8 +957,8 @@ function GenMissions() {
 function ResetMission() {
   if (Game.MissionStarted[0] == true) {
     Game.MissionStarted = [false, 0, 0, 0, 0];
-    $("#combat").show();
-    $("#missions").hide();
+    $("#DIV-COMBAT").show();
+    $("#DIV-MISSIONS").hide();
     Game.config[3] = 0;
     $("#AutoMissions").checkbox("uncheck");
     showmessage("Mission Canceled", "You can restart this mission in the 'mission' menu.<br>- Auto start mission <span class='rouge'>disabled</span>.");
@@ -1079,10 +1052,10 @@ function CompleteMission() {
         if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP + FRAGMENTS_REWARDS); } else {
           $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP ");
         }
-        $("#combat").hide();
+        $("#DIV-COMBAT").hide();
         $("#btn-CRW").show();
         $("#btn-ACT").hide();
-        $("#rewards").show();
+        $("#DIV-REWARDS").show();
       }
     }
   }
@@ -1097,16 +1070,16 @@ function hideMissionRewards() {
     TSK = 0;
   }
   Game.isInFight = 0;
-  $("#rewards").hide();
-  $("#combat").show();
+  $("#DIV-REWARDS").hide();
+  $("#DIV-COMBAT").show();
   UpdateGame();
 }
 
 function hideRewards() {
   if (Game.config[0] == 1) $("#modal-4").modal("hide");
   Game.isInFight = 0;
-  $("#rewards").hide();
-  if (isTabActive == "None") $("#combat").show();
+  $("#DIV-REWARDS").hide();
+  if (isTabActive == "None") $("#DIV-COMBAT").show();
   UpdateGame();
   CompleteMission();
 }
@@ -1146,7 +1119,7 @@ function CalcEXP(level) {
   for (T = 0; T < (level + 1); T++) {
     if (T < 30) exp += exp * (15 / 100); else exp += exp * (25 / 100);
   }
-  if (level == 0) exp = 0;
+  if (level <= 0) exp = 0;
   if (level == 1) exp = 100;
   return Math.round(exp);
 }
@@ -1185,8 +1158,8 @@ function WelcomeNext() {
   isTabActive = "Login";
 
   if (WelcomeData[0] == 5) {
-    $("#CATEGORIE-1").show();
-    $("#begin").hide();
+    $("#GAME").show();
+    $("#STARTING-DIV").hide();
     $(".footer").show();
     if (Game.username == "Default") Game.username = WelcomeData[1];
     Game.isInFight = 0;
@@ -1195,9 +1168,9 @@ function WelcomeNext() {
   }
 
   if (WelcomeData[0] == 4) {
-    if (WelcomeData[2] == "Warrior") { Game.Upgrades = [0, 5, 0]; }
-    if (WelcomeData[2] == "Paladin") { Game.Upgrades = [0, 0, 5]; }
-    if (WelcomeData[2] == "Ninja") { Game.Upgrades = [5, 0, 0]; }
+    if (WelcomeData[2] == "Warrior") Game.Upgrades = [0, 5, 0];
+    if (WelcomeData[2] == "Paladin") Game.Upgrades = [0, 0, 5];
+    if (WelcomeData[2] == "Ninja") Game.Upgrades = [5, 0, 0];
     if (WelcomeData[2] != "Warrior" && WelcomeData[2] != "Paladin" && WelcomeData[2] != "Ninja") { $("#namehelp").html("You need to select a class !"); } else {
       ChangeStep(1);
       Game.class = WelcomeData[2];
@@ -1227,10 +1200,32 @@ function WelcomeNext() {
       ErrorName();
     }
   }
-
   if (WelcomeData[0] == 1) ChangeStep(1);
 }
 
 function ErrorName() {
   $("#namehelp").html("You need to write a username !");
+}
+
+function GetLevelRequired() {
+  if (Game.Level >= 1 && Game.Level < 10) value = 10;
+  if (Game.Level >= 10 && Game.Level < 20) value = 20;
+  if (Game.Level >= 20 && Game.Level < 30) value = 30;
+  if (Game.Level >= 30) value = 0;
+  return value;
+}
+
+function RemoveItem(id) {
+  if (id < Game.MaxInv) {
+    Game.inventory[id].id = 0;
+    if (id >= Game.inventory.length) Game.inventory.splice(id - 1, 1); else Game.inventory.splice(id, 1);
+  } else Game.inventory.splice(id, 1);
+  GenInventory();
+  UpdateGame();
+}
+
+function SendStats() {
+  save();
+  if (LoggedIn == 1) writeUserData();
+  lastCloudSave = 0;
 }
