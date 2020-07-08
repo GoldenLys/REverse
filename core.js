@@ -1689,5 +1689,5 @@ function newItem(type, level, rarity) {
     item.id = 3; //SET AS RELIC
   }
 
-  if ((Game.inventory.length - 1) < Game.MaxInv && item != Game.inventory[Game.inventory.length - 1]) Game.inventory[Game.inventory.length] = item;
+  if (type == 'Armor' || type == 'Weapon' || type == 'Gem' || type == 'Relic') if ((Game.inventory.length - 1) < Game.MaxInv && item != Game.inventory[Game.inventory.length - 1]) Game.inventory[Game.inventory.length] = item;
 }
