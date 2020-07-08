@@ -232,7 +232,7 @@ function GetWBcontent(reason) {
 }
 
 function UpdateEngine() {
-  if (Game.username != "Default" && location.href.match(/(goldenlys.github.io).*/)) GetWBcontent("retour");
+  if (Game.username != "Default" && location.href.match(/(goldenlys.github.io).*/) && LoggedIn == 0 && isTabActive == "Login") GetWBcontent("retour");
   else if (isTabActive == "Login") { isTabActive = "None"; Game.isInFight = 0; closeTabs(); UpdateGame(); }
   UpdateGame();
   Game.PlayTime++;
