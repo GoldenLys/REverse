@@ -1186,6 +1186,20 @@ function NewCore(id, n) {
   } else DefineCore(id, n);
 }
 
+function DefineCore(core, selected) {
+  if (Game.config[0] == 1) $("#modal-4").modal("hide");
+  if (Game.inventory[selected].life !== undefined) {
+    Game.Armors[core] = [true, Game.inventory[selected].name, Game.inventory[selected].class, Game.inventory[selected].life, Game.inventory[selected].level, 0];
+    Game.MaxUPC[core - 1] = Game.inventory[selected].ups;
+    Game.ArmorUpgrades[core] = 0;
+  }
+  if (selected <= Game.MaxInv) RemoveItem(selected);
+  if ($('#DIV-INVENTORY').is(":visible")) hideModals(); else hideRewards();
+  Game.isInFight = 0;
+  GenInventory();
+  UpdateGame();
+}
+
 function NewWeapon(id, n) {
   Game.isInFight = 6;
   let type = ["Main", "Special"];
@@ -1222,10 +1236,25 @@ function NewWeapon(id, n) {
       "<span class='desc'>Relic Slots: <span class='" + UPGRADES + "'>" + Game.inventory[n].ups + "<i class='jaune fas fa-stars'></i></span></span><br>" +
       "<i class='bleu fas fa-sword'></i><span class='" + POWER + "'>" + Game.inventory[n].power + "</span>");
 
-    $("#confirm-btn").html("<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel</div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineWeapon(" + id + "," + n + ");' class='ui rainbow button'><i class='green check icon'></i> Replace " + type + " Weapon</div>");
+    $("#confirm-btn").html(`<div onclick='Cancelconfirm();' class='ui rainbow button'><i class='red remove icon'></i> Cancel</div><div class='alphadivider'></div><div id='replace-btn' onclick='DefineWeapon("` + type[id] + `",` + n + `);' class='ui rainbow button'><i class='green check icon'></i> Replace ` + type[id] + ` Weapon</div>`);
     $("#modal-4").modal("show");
     $("#confirm3-title").html("Use a new weapon");
-  } else DefineWeapon(id, n);
+  } else DefineWeapon(type[id], n);
+}
+
+function DefineWeapon(type, selected) {
+  let UPC_TYPE = {Main: 1, Special: 2};
+  if (Game.config[0] == 1) $("#modal-4").modal("hide");
+  if (Game.inventory[selected].power !== undefined) {
+    Game.Weapons[type] = [Game.inventory[selected].name, Game.inventory[selected].class, 0, Game.inventory[selected].level, Game.inventory[selected].power];
+    Game.MaxUPC[UPC_TYPE[type] + 3] = Game.inventory[selected].ups;
+  }
+  console.log(Game.MaxUPC[UPC_TYPE[type] + 3]);
+  if (selected <= Game.MaxInv) RemoveItem(selected);
+  if ($('#DIV-INVENTORY').is(":visible")) hideModals(); else hideRewards();
+  Game.isInFight = 0;
+  GenInventory();
+  UpdateGame();
 }
 
 function ConfirmRelic(R, id) {
@@ -1319,36 +1348,6 @@ function Cancelconfirm() {
   GenInventory();
   $('#modal-3').modal('hide');
   $('#modal-4').modal('hide');
-}
-
-function DefineCore(core, selected) {
-  if (Game.config[0] == 1) $("#modal-4").modal("hide");
-  if (Game.inventory[selected].life !== undefined) {
-    Game.Armors[core] = [true, Game.inventory[selected].name, Game.inventory[selected].class, Game.inventory[selected].life, Game.inventory[selected].level, 0];
-    Game.MaxUPC[core - 1] = Game.inventory[selected].ups;
-    Game.ArmorUpgrades[core] = 0;
-  }
-  if (selected <= Game.MaxInv) RemoveItem(selected);
-  if ($('#DIV-INVENTORY').is(":visible")) hideModals(); else hideRewards();
-  Game.isInFight = 0;
-  GenInventory();
-  UpdateGame();
-}
-
-function DefineWeapon(type, selected) {
-  var weapon = "Main";
-  if (type == 2) weapon = "Special";
-  if (Game.config[0] == 1) $("#modal-4").modal("hide");
-  if (Game.inventory[selected].power !== undefined) {
-    Game.Weapons[weapon] = [Game.inventory[selected].name, Game.inventory[selected].class, 0, Game.inventory[selected].level, Game.inventory[selected].power];
-    Game.MaxUPC[type + 3] = Game.inventory[selected].ups;
-    //Game.WeaponUpgrades[weapon] = [0, 0];
-  }
-  if (selected <= Game.MaxInv) RemoveItem(selected);
-  if ($('#DIV-INVENTORY').is(":visible")) hideModals(); else hideRewards();
-  Game.isInFight = 0;
-  GenInventory();
-  UpdateGame();
 }
 
 function GET_MAX_UPGRADES(type) {
