@@ -28,7 +28,7 @@ function load() {
 
 function exportSave() {
   window.getSelection().removeAllRanges();
-  showmessage("Save exported", "Your save is now copied in your clipboard.");
+  NOTIFY("Save exported", "Your save is now copied in your clipboard.");
   $("#exportBody").html("<textarea id='saveCode'>" + btoa(JSON.stringify(Game)) + "</textarea>");
   var textField = document.getElementById("saveCode");
   textField.select();
@@ -39,7 +39,7 @@ function exportSave() {
 
 function exportTheme() {
   window.getSelection().removeAllRanges();
-  showmessage("Theme exported", "This theme is now copied in your clipboard.");
+  NOTIFY("Theme exported", "This theme is now copied in your clipboard.");
   $("#exportBody").html("<textarea id='saveCode'>" + btoa(JSON.stringify(Game.Theme)) + "</textarea>");
   var textField = document.getElementById("saveCode");
   textField.select();
@@ -417,7 +417,8 @@ function ClickEvents() {
     $("#ninja").attr("class", "ui fluid custom card");
   });
   $("#WB-BTN").on("click", function () {
-    $("#modal-5").modal("hide");
+    $("#DIV-COMBAT").show();
+    $(".BUTTONS_ACTIONS").show();
     $("#modal-5").modal("hide");
     isTabActive = "None";
     Game.isInFight = 0;
@@ -594,7 +595,7 @@ function hideModals() {
   }
 }
 
-function showmessage(title, message) {
+function NOTIFY(title, message) {
   $("#message-title").html(title);
   $("#message-text").html(message);
   $("#modal-1").modal("setting", "closable", false).modal("show");
@@ -766,7 +767,7 @@ function TOPNEXT() {
 }
 
 function helpScore() {
-  showmessage("Score Tutorial", "1) It's worked out from the Armors you have, so try to pick the Armors that gets you the highest score possible. That way you'll progress through the Dimensions much faster, even if you take a slight hit on your stats. <br><br>2) Your total armor dictates the score for the loot that drops.<br><br>3) Your score is limited by your actual dimension and the maximum score can be seen in the statistics.");
+  NOTIFY("Score Tutorial", "1) It's worked out from the Armors you have, so try to pick the Armors that gets you the highest score possible. That way you'll progress through the Dimensions much faster, even if you take a slight hit on your stats. <br><br>2) Your total armor dictates the score for the loot that drops.<br><br>3) Your score is limited by your actual dimension and the maximum score can be seen in the statistics.");
 }
 
 function DCancel() {
@@ -776,7 +777,7 @@ function DCancel() {
 function hideMenus() {
   $("#DIV-COMBAT").hide();
   $("#gamemenu").hide();
-  $("#DIV-MISSIONS").hide();
+  $("#DIV-PRESTIGE").hide();
   $("#DIV-STATS").hide();
   $("#DIV-LEADERBOARD").hide();
   $("#DIV-SETTINGS").hide();
@@ -831,7 +832,7 @@ function ShowScoreMenu() {
   closeTabs();
   $("#menu-btn").addClass("active");
   isTabActive = "Dimension";
-  $("#DIV-MISSIONS").show();
+  $("#DIV-PRESTIGE").show();
 }
 
 function ShowStatsMenu() {
@@ -961,14 +962,14 @@ function ResetMission() {
     $("#DIV-MISSIONS").hide();
     Game.config[3] = 0;
     $("#AutoMissions").checkbox("uncheck");
-    showmessage("Mission Canceled", "You can restart this mission in the 'mission' menu.<br>- Auto start mission <span class='rouge'>disabled</span>.");
+    NOTIFY("Mission Canceled", "You can restart this mission in the 'mission' menu.<br>- Auto start mission <span class='rouge'>disabled</span>.");
     if (Game.Location > 0) Game.Location--;
     UpdateGame();
   }
 }
 
 function MissionStory(id) {
-  showmessage("Mission Story", Missions[id][1]);
+  NOTIFY("Mission Story", Missions[id][1]);
 }
 
 function mission(id) {
@@ -977,7 +978,7 @@ function mission(id) {
     Game.isInFight = 0;
     isTabActive = "None";
     closeTabs();
-    showmessage("Mission Story", Missions[id][1]);
+    NOTIFY("Mission Story", Missions[id][1]);
     UpdateGame();
   }
 }
@@ -1047,14 +1048,14 @@ function CompleteMission() {
         if (Missions[Game.MissionStarted[1]][3] == 1) $("#rewards-title").html("<span class='vert'>Successfully completed the mission !</span>");
         else $("#rewards-title").html("<span class='vert'>Fortress cleared !</span>");
         let FRAGMENTS_REWARDS = Missions[Game.MissionStarted[1]][5] > 0 ? "+<i class='bleu dna icon'></i><span class='bleu bold'>" + fix(Missions[Game.MissionStarted[1]][5], 3) + "</span> Fragments " : "";
-        $("#btn-CRW").html("<div onclick='hideMissionRewards();' class='fluid ui closing button'><i class='times icon'></i>Finish</div>");
+        $("#CLOSE_REWARDS").html("<div onclick='hideMissionRewards();' class='fluid ui closing button'><i class='times icon'></i>Finish</div>");
         $("#rewards-desc").html("");
         if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP + FRAGMENTS_REWARDS); } else {
           $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP ");
         }
         $("#DIV-COMBAT").hide();
-        $("#btn-CRW").show();
-        $("#btn-ACT").hide();
+        $("#CLOSE_REWARDS").show();
+        $("#BUTTONS_COMBAT").hide();
         $("#DIV-REWARDS").show();
       }
     }
