@@ -400,19 +400,11 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
   border-color: var(--green);
 }
 
-.noselect {
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Chrome and Opera */
+.noselect, .ui.modal {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
 }
 
 .ui.buttons .or:before {
@@ -430,7 +422,7 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
 }
 
 .ui.message {
-  background-color: var(--black2);
+  background-color: var(--darkgrey5);
   padding: 0em 0em !important;
   color: var(--white) !important;
 }
@@ -561,8 +553,8 @@ div#C1.active, div#C2.active, div#C3.active, div#C4.active, div#C5.active {
   color: var(--white);
   height: 40px;
 }
-.ui.card>.extra .fluid.ui.buttons,
-.ui.card>.extra .fluid.ui.icon.rainbow {
+
+.ui.card>.extra .fluid.ui.buttons, .ui.card>.extra .fluid.ui.icon.rainbow {
   position: absolute;
   left: 0;
   right: 0;
@@ -1449,15 +1441,10 @@ i.discord.icon {
   box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 var(--darkgrey5) inset;
 }
 
-.AL-M {
-  position: relative !important;
+.AL-M, .ui.grid.modified {
   background: linear-gradient(to right, var(--darkgrey), transparent) !important;
-  box-shadow: none !important;
-  border-radius: 10px !important;
-}
-
-#MissionsList, #DIV-EXPLORE, #DIV-MENU {
-  padding: 5px 10px;
+  border-radius: 5px !important;
+  margin: 5px 0 !important;
 }
 
 .ui.green.label, .ui.green.labels .label {
@@ -1471,7 +1458,6 @@ i.discord.icon {
   line-height: 40px;
   font-weight: 500;
   width: 100% !important;
-  margin: 5px 0 0 0;
   padding: 0;
 }
 
@@ -1547,17 +1533,19 @@ img[src*="E.png"]:before, .error-img:before {
   background-color: var(--darkgrey5);
 }
 
-#EnemyTitle .ui.basic.label { padding: 5px 3.5px; border: none; }
+#EnemyTitle .ui.basic.label {
+  padding: 5px 3.5px;
+  border: none;
+}
 
 .column.type_card .card {
   margin: 0 auto;
   position: relative;
-  width: 250px;
   background: var(--darkgrey5);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 300px;
+  min-height: 300px;
   border-radius: 5px;
   overflow: hidden;
   transition: 0.5s;
@@ -1673,4 +1661,65 @@ img[src*="E.png"]:before, .error-img:before {
 
 .ui.modal:not(.basic)>.content {
   border-radius: 0 0 5px 5px;
+}
+
+#GAME {
+  margin-bottom: 30px;
+}
+
+.fa, .fas {
+  font-family: "Font Awesome 5 Pro" !important;
+  font-weight: 900 !important;
+}
+
+.ui.labeled.icon.button, .ui.labeled.icon.buttons .button {
+  padding-left: 2.55em!important;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+#DIV-EXPLORE .AL-M .ui.segments {
+  background-color: var(--grey5) !important;
+} 
+
+#GAME>.row>.three.wide.column .rainbow7.active, #GAME>.row>.three.wide.column .rainbow7:hover, #GAME>.row>.three.wide.column .rainbow7.active:hover {
+  border-bottom: none!important;
+  border-right: 1px solid var(--green)!important;
+}
+
+#INVENTORY-VIEWS .column:not(.row) {
+  padding: 5px;
+  background-color: var(--grey5);
+  border: 1px solid var(--borders);
+}
+
+#INVENTORY-VIEWS .column:not(.row):nth-child(1) {
+  border-width: 0px 1px 1px 0px;
+}
+
+#INVENTORY-VIEWS .column:not(.row):nth-child(2) {
+  border-width: 0px 0px 1px 0px;
+}
+
+#INVENTORY-VIEWS .column:not(.row):nth-child(3) {
+  border-width: 0px 1px 0px 0px;
+}
+
+#INVENTORY-VIEWS .column:not(.row):nth-child(4) {
+  border-width: 0px 0px 0px 0px;
+}
+
+.ui.card.customcard>.content, .ui.card.customcard>.image {
+  background: var(--grey5);
+}
+
+#CREDITS {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  right: 15px;
+}
+
+#GAME>.row>.three.wide.column {
+  height: calc(100vh - 50px);
 }

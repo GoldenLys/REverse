@@ -203,12 +203,11 @@ function login() {
   firebase.auth().signInWithPopup(provider).then(function (result) {
     var token = result.credential.accessToken;
     var user = result.user;
-    Email = user.email;
+    APP.Email = user.email;
     $("#modal-5").modal("hide");
-    isTabActive = "None";
     Game.isInFight = 0;
   });
-  LoggedIn = 1;
+  APP.LoggedIn = 1;
   SendStats();
   UpdateGame();
 }
@@ -230,22 +229,22 @@ function ResetLeaderBoard() {
 }
 
 function writeUserData() {
-  if (location.href.match(/(goldenlys.github.io).*/) && Game.username != "Default" && Game.username != null && LoggedIn == 1) {
+  if (location.href.match(/(goldenlys.github.io).*/) && Game.username != "Default" && Game.username != null && APP.LoggedIn == 1) {
     firebase.database().ref('users/' + Game.username).set({
       Name: Game.username,
-      Email: Email,
+      Email: APP.Email,
       Order: (-1 * Ranking) - (100000 * Game.Simulation),
       Order2: -1 * Ranking,
       Level: Game.Level,
-      Ranking: Ranking,
+      Ranking: APP.Ranking,
       WT: Game.Simulation,
-      CorePower: WeaponsPower,
-      CoreLife: CoreBaseLife,
+      CorePower: APP.WeaponsPower,
+      CoreLife: APP.CoreBaseLife,
       Kills: Game.Wins,
       Deaths: Game.Loses,
       Avatar: Game.Avatar,
       Defeated: Game.Defeated,
-      Version: version,
+      Version: APP.VERSION,
       Theme: Game.Theme,
     });
   }
@@ -273,7 +272,7 @@ function ReadDB() {
       if (Game.config[4] == 0) {
         UpdateDB(snapshot);
       } else {
-        if (snapshot.val().Version >= version) {
+        if (snapshot.val().Version >= APP.VERSION) {
           UpdateDB(snapshot);
         }
       }
@@ -284,7 +283,7 @@ function ReadDB() {
         if (Game.config[4] == 0) {
           UpdateDB(snapshot);
         } else {
-          if (snapshot.val().Version >= version) {
+          if (snapshot.val().Version >= APP.VERSION) {
             UpdateDB(snapshot);
           }
         }
@@ -420,8 +419,8 @@ function ClickEvents() {
     $("#DIV-COMBAT").show();
     $(".BUTTONS_ACTIONS").show();
     $("#modal-5").modal("hide");
-    isTabActive = "None";
     Game.isInFight = 0;
+    APP.Email = "DoNotLogin";
     UpdateGame();
   });
   $("#LOGIN-BTN").on("click", function () {
@@ -476,30 +475,29 @@ function ClickEvents() {
   $("#importt-btn").on("click", function () {
     importTheme();
   });
-  $("#menu-btn").on("click", function () {
-    ShowMainMenu();
-  });
-  $("#prestige-btn").on("click", function () {
-    ShowScoreMenu();
-  });
   $("#missions-btn").on("click", function () {
-    ShowMissionsMenu();
+    GenMissions();
+    SelectTAB("MISSIONS");
   });
   $("#exploration-btn").on("click", function () {
-    ShowExplorationMenu();
+    GenExplorationMenu();
+    SelectTAB("EXPLORE");
   });
   $("#inventory-btn").on("click", function () {
     GenInventory();
-    ShowInventoryMenu();
+    OPEN_MENU("INVENTORY");
+  });
+  $("#prestige-btn").on("click", function () {
+    OPEN_MENU("PRESTIGE");
   });
   $("#stats-btn").on("click", function () {
-    ShowStatsMenu();
+    OPEN_MENU("STATS");
   });
   $("#leaderboard-btn").on("click", function () {
-    ShowLeaderboard();
+    OPEN_MENU("LEADERBOARD");
   });
   $("#settings-btn").on("click", function () {
-    ShowSettings();
+    OPEN_MENU("SETTINGS");
   });
   $("#discord-btn").on("click", function () {
     window.open('https://discordapp.com/invite/SBuYeHh', '_blank');
@@ -609,7 +607,7 @@ function GetEnemyHPPercent() {
 }
 
 function GetPlayerHPPercent() {
-  var value = (100 / CoreBaseLife) * CoreLife;
+  var value = (100 / APP.CoreBaseLife) * APP.CoreLife;
   if (value < 1) value = 1;
   if (value > 100) value = 100;
   return value;
@@ -632,8 +630,8 @@ function ResetTheme(code) {
 }
 
 function ThemeDefine(id) {
-    Game.Theme = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
-    document.documentElement.style.setProperty('--green', Game.Theme);
+  Game.Theme = "#" + fullColorHex($(red).val(), $(green).val(), $(blue).val());
+  document.documentElement.style.setProperty('--green', Game.Theme);
   UpdateGame();
 }
 
@@ -647,37 +645,37 @@ function ChangeAvatar() {
 function CheckCode(debug) {
   CXD = firebase.database().ref("codes");
   CXD.on("child_added", function (code) {
-    codes[code.key] = code.val();
+    APP.codes[code.key] = code.val();
   });
   var code = $("#promocode").val();
   if (code != null) {
-    if (code === codes[1] || code === codes[2] || code === codes[3] || code === codes[4] || code === codes[5] || code === codes[6] || code === codes[7] || code === codes[8] || code === codes[9] || code === codes[10]) {
-      if (code === codes[1]) {
+    if (code === APP.codes[1] || code === APP.codes[2] || code === APP.codes[3] || code === APP.codes[4] || code === APP.codes[5] || code === APP.codes[6] || code === APP.codes[7] || code === APP.codes[8] || code === APP.codes[9] || code === APP.codes[10]) {
+      if (code === APP.codes[1]) {
         $("#codereturn").html("Code Accepted, name change.");
         NewUserData(Game.username);
       }
-      if (code === codes[2]) {
+      if (code === APP.codes[2]) {
         $("#codereturn").html("Code Accepted, raising all Armor slots by 1.");
         for (var UPC = 0; UPC < 4; UPC++) {
           Game.MaxUPC[UPC]++;
         }
       }
-      if (code === codes[3]) {
+      if (code === APP.codes[3]) {
         $("#codereturn").html("Code Accepted, you are now at max level.");
-        Game.Level = MaxLevel;
+        Game.Level = APP.MaxLevel;
       }
-      if (code === codes[4]) {
+      if (code === APP.codes[4]) {
         $("#codereturn").html("Code Accepted, you just advanced to </i> <i class='globe icon'></i>" + (Game.Simulation + 1));
-        Game.Level = MaxLevel;
-        Game.Armors[1][4] = MaxScore;
-        Game.Armors[2][4] = MaxScore;
-        Game.Armors[3][4] = MaxScore;
-        Game.Armors[4][4] = MaxScore;
-        Game.Weapons.Main[3] = MaxScore;
-        Game.Weapons.Special[3] = MaxScore;
+        Game.Level = APP.MaxLevel;
+        Game.Armors[1][4] = APP.MaxScore;
+        Game.Armors[2][4] = APP.MaxScore;
+        Game.Armors[3][4] = APP.MaxScore;
+        Game.Armors[4][4] = APP.MaxScore;
+        Game.Weapons.Main[3] = APP.MaxScore;
+        Game.Weapons.Special[3] = APP.MaxScore;
         ChangeWT();
       }
-      if (code === codes[5]) {
+      if (code === APP.codes[5]) {
         if (Game.Simulation > 1) {
           $("#codereturn").html("Code Accepted, you just lowered to <i class='globe icon'></i> " + (Game.Simulation - 1));
           Game.Simulation--;
@@ -685,32 +683,32 @@ function CheckCode(debug) {
           invalidCode(3);
         }
       }
-      if (code === codes[6]) {
+      if (code === APP.codes[6]) {
         $("#codereturn").html("Code Accepted, save exported to your clipboard.");
         exportSave();
       }
-      if (code === codes[7]) {
+      if (code === APP.codes[7]) {
         $("#codereturn").html("Code Accepted, external save imported to your current save.");
         importSave();
       }
-      if (code === codes[8]) {
+      if (code === APP.codes[8]) {
         $("#codereturn").html("Code Accepted, cloud save done.");
         writeUserData();
-        lastCloudSave = 0;
+        APP.lastCloudSave = 0;
       }
-      if (code === codes[9]) {
+      if (code === APP.codes[9]) {
         $("#codereturn").html("Code Accepted, Finished the story.");
-        Game.Level = MaxLevel;
-        Game.Armors[1][4] = MaxScore;
-        Game.Armors[2][4] = MaxScore;
-        Game.Armors[3][4] = MaxScore;
-        Game.Armors[4][4] = MaxScore;
-        Game.Weapons.Main[3] = MaxScore;
-        Game.Weapons.Special[3] = MaxScore;
+        Game.Level = APP.MaxLevel;
+        Game.Armors[1][4] = APP.MaxScore;
+        Game.Armors[2][4] = APP.MaxScore;
+        Game.Armors[3][4] = APP.MaxScore;
+        Game.Armors[4][4] = APP.MaxScore;
+        Game.Weapons.Main[3] = APP.MaxScore;
+        Game.Weapons.Special[3] = APP.MaxScore;
         Game.MissionStarted = [false, 0, 0, 0];
         for (var Mission in Missions) { Game.MissionsCompleted[Mission] = 1; }
       }
-      if (code === codes[10]) {
+      if (code === APP.codes[10]) {
         $("#codereturn").html("Code Accepted, Reset save.");
         Game.username = "Default";
         Backup = "Default";
@@ -726,7 +724,7 @@ function CheckCode(debug) {
   } else {
     invalidCode(2);
   }
-  codes = [];
+  APP.codes = [];
   UpdateGame();
 }
 
@@ -776,88 +774,56 @@ function DCancel() {
 
 function hideMenus() {
   $("#DIV-COMBAT").hide();
-  $("#gamemenu").hide();
   $("#DIV-PRESTIGE").hide();
   $("#DIV-STATS").hide();
   $("#DIV-LEADERBOARD").hide();
   $("#DIV-SETTINGS").hide();
-  $("#cores").hide();
   $(".BUTTONS_ACTIONS").hide();
 }
 
-function closeTabs() {
-  hideMenus();
-  $("#DIV-MISSIONS").hide();
-  $("#DIV-EXPLORE").hide();
-  $("#DIV-INVENTORY").hide();
-  $("#DIV-MENU").hide();
-  if (isTabActive == "None") {
-    $("#DIV-COMBAT").show();
-    $(".BUTTONS_ACTIONS").show();
-  } else {
-    $("#DIV-COMBAT").hide();
-    $(".BUTTONS_ACTIONS").hide();
+function SelectTAB(TAB) {
+  let TABS = [["EXPLORE", "exploration-btn"], ["MISSIONS", "missions-btn"]];
+  for (let T in TABS) {
+    if (TABS[T][0] != TAB) { $("#DIV-" + TABS[T][0]).hide(); $("#" + TABS[T][1]).removeClass("active"); }
+    else { $("#DIV-" + TABS[T][0]).show(); $("#" + TABS[T][1]).addClass("active"); }
   }
-  if (Game.isInFight == 2) {
-    hideRewards();
+}
+
+function OPEN_MENU(MENU) {
+  let MENUS = ["INVENTORY", "PRESTIGE", "STATS", "LEADERBOARD", "SETTINGS"];
+  let BUTTONS = ["inventory-btn", "prestige-btn", "stats-btn", "leaderboard-btn", "settings-btn"];
+
+  for (let M in MENUS) {
+    if (MENUS[M] != MENU) {
+      $("#DIV-" + MENUS[M]).hide();
+      $("#" + BUTTONS[M]).removeClass("active");
+    } else {
+      if ($("#DIV-" + MENU).is(":visible")) {
+        $("#DIV-" + MENU).hide();
+        $("#" + BUTTONS[M]).removeClass("active");
+        $("#DIV-COMBAT").show();
+        $(".BUTTONS_ACTIONS").show();
+      } else {
+        $("#DIV-" + MENU).show();
+        $("#" + BUTTONS[M]).addClass("active");
+        $("#DIV-COMBAT").hide();
+        $(".BUTTONS_ACTIONS").hide();
+      }
+    }
   }
-  $("#missions-btn").removeClass("active");
-  $("#exploration-btn").removeClass("active");
-  $("#inventory-btn").removeClass("active");
-  $("#menu-btn").removeClass("active");
-}
-
-function ShowMissionsMenu() {
-  if (isTabActive != "Missions") { isTabActive = "Missions"; closeTabs(); $("#missions-btn").addClass("active"); $("#DIV-MISSIONS").show(); GenMissions(); }
-  else { isTabActive = "None"; closeTabs(); }
-}
-
-function ShowExplorationMenu() {
-  if (isTabActive != "Exploration") { isTabActive = "Exploration"; closeTabs(); $("#exploration-btn").addClass("active"); $("#DIV-EXPLORE").show(); GenExplorationMenu(); }
-  else { isTabActive = "None"; closeTabs(); }
-}
-
-function ShowInventoryMenu() {
-  if (isTabActive != "Inventory") { isTabActive = "Inventory"; closeTabs(); $("#inventory-btn").addClass("active"); $("#DIV-INVENTORY").show(); }
-  else { isTabActive = "None"; closeTabs(); }
-  UpdateUI();
-}
-
-function ShowMainMenu() {
-  if (isTabActive == "Menu" || isTabActive == "Dimension" || isTabActive == "Stats" || isTabActive == "Leaderboard" || isTabActive == "Settings") { isTabActive = "None"; closeTabs(); }
-  else { isTabActive = "Menu"; closeTabs(); $("#menu-btn").addClass("active"); $("#DIV-MENU").show(); }
-}
-
-function ShowScoreMenu() {
-  closeTabs();
-  $("#menu-btn").addClass("active");
-  isTabActive = "Dimension";
-  $("#DIV-PRESTIGE").show();
-}
-
-function ShowStatsMenu() {
-  UpdateGame();
-  closeTabs();
-  $("#menu-btn").addClass("active");
-  isTabActive = "Stats";
-  $("#DIV-STATS").show();
-}
-
-function ShowLeaderboard() {
   TOP10();
   UpdateGame();
-  closeTabs();
-  $("#menu-btn").addClass("active");
-  isTabActive = "Leaderboard";
-  $("#DIV-LEADERBOARD").show();
 }
 
-function ShowSettings() {
-  UpdateGame();
-  closeTabs();
-  $("#menu-btn").addClass("active");
-  isTabActive = "Settings";
-  $("#DIV-SETTINGS").show();
+function CLOSE_MENUS() {
+  let MENUS = ["INVENTORY", "PRESTIGE", "STATS", "LEADERBOARD", "SETTINGS"];
+  let BUTTONS = ["inventory-btn", "prestige-btn", "stats-btn", "leaderboard-btn", "settings-btn"];
+  for (let M in MENUS) {
+    $("#DIV-" + MENUS[M]).hide();
+    $("#" + BUTTONS[M]).removeClass("active");
+  }
+  $("#DIV-COMBAT").show();
+  $(".BUTTONS_ACTIONS").show();
 }
 
 function GenExplorationMenu() {
@@ -869,28 +835,28 @@ function GenExplorationMenu() {
     let QUALITY = QUALITIES[POS[E][3]];
     var MINLEVEL = Game.Level >= POS[E][1] ? "<span class='green'>" + POS[E][1] + "</span>" : "<span class='rouge'>" + POS[E][1] + "</span>";
     var MAXLEVEL = Game.Level >= POS[E][2] ? "<span class='green'>" + POS[E][2] + "</span>" : "<span class='rouge'>" + POS[E][2] + "</span>";
-    var UNLOCKED = Game.Level >= POS[E][1] ? "green" : "red";
+    var UNLOCKED = Game.Level >= POS[E][1] ? "bold" : "rouge bold";
+    if(Game.MissionsCompleted[POS[E][4]] == 0) UNLOCKED = "rouge bold";
     var UNLOCKTEXT = Game.MissionsCompleted[POS[E][4]] == 1 ? "<span class='green'>" + Missions[POS[E][4]][0] + " - Finished</span>" : "<span class='rouge'>" + Missions[POS[E][4]][0] + " - Unfinished</span>";
 
 
-    if (ScoreModeEnabled == 0) {
+    if (APP.ScoreModeEnabled == 0) {
       LEVEL = MINLEVEL + "-" + MAXLEVEL;
     } else {
-      LEVEL = "<span class='green'>" + 30 + "</span>";
+      LEVEL = "<span class='green'>" + APP.MaxLevel + "</span>";
       QUALITY = "Divine";
     }
     if (Game.MissionsCompleted[POS[E][4]] == 1) BTN = "<div class='fluid ui right floated icon rainbow button' onclick='explore(" + E + ");' >Travel <i class='" + UNLOCKED + " right arrow icon'></i></div>"; else BTN = "";
-
-    if (Game.MissionStarted[0]) BTN = "";
-    if (Game.Location == E) BTN = "";
+    if (Game.MissionStarted[0] || Game.Location == E) BTN = "";
 
     if (POS[E][1] < Game.Level + 1 && E != 11 && E != 17) {
-      $("#DIV-EXPLORE").append(
-        "<div class='ui segment AL-M'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + POS[E][0] + "</h3>" +
-        "<div class='ui clearing divider'></div><div class='ui horizontal segments'><div class='ui segment'>" +
-        "Mission required : " + UNLOCKTEXT + "<br>" +
-        "Enemy level : " + LEVEL + "<br>Highest loot quality : <span class='" + QUALITY + "'>" + QUALITY + "</span></div><div class='ui segment'>" + BTN + "</div>" +
-        "</div></div>");
+
+      let CONTENT = ("<div class='ui grid modified'><div class='sixteen wide column'><h3 class='ui left floated header text2'><span class='" + UNLOCKED + "'>" + POS[E][0] + "</span> - Lv. " + LEVEL + "</h3></div>\
+<div class='eight wide column'><i class='fas fa-ballot-check icon'></i> " + UNLOCKTEXT + "<br>\
+<i class='fas fa-sack icon'></i> <span class='" + QUALITY + "'>" + QUALITY + "</span>\
+</div><div class='eight wide column'>" + BTN + "</div></div></div>");
+
+      $("#DIV-EXPLORE").append(CONTENT);
     }
   }
 }
@@ -930,11 +896,10 @@ function GenMissions() {
     if (Missions[M][3] != 2) {
       if (Game.MissionsCompleted[Missions[M][9]] == 1 || Missions[M][9] == -1) {
         var DESCRIPTION = Game.MissionsCompleted[M] == 0 ? "<div class='ui segment'>" + "Level Required : " + REQLEVEL + "<br><div class='ui green label'><span class='jaune'>" + fix(Missions[M][5], 3) + "</span> EXP<br>" + QUALITY + " " + TYPE + LEVEL + "</div></div>" : "<div class='ui segment'>Level : " + REQLEVEL + "</div>";
-        var CONTENT = (
-          "<div class='ui segment AL-M'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + Missions[M][0] + "</h3>" +
-          "<div class='ui clearing divider'></div><div class='ui horizontal segments'>" + DESCRIPTION + "<div class='ui segment'>Status : " + Status + BTN + "</div>" +
-          "</div></div>"
-        );
+        let CONTENT = 
+          "<div class='ui grid modified'><div class='sixteen wide column'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + Missions[M][0] + "</h3></div>\
+          <div class='eight wide column'>" + DESCRIPTION + "</div>\
+          <div class='eight wide column'>Status : " + Status + BTN + "</div></div>";
 
         if (Game.MissionsCompleted[M] == 0) $("#MissionsList").append(CONTENT);
         if (Game.MissionsCompleted[M] == 1) $("#MissionsCPL").append(CONTENT);
@@ -944,12 +909,11 @@ function GenMissions() {
     if (Missions[M][2] <= Game.Level && Missions[M][3] == 2) {
       let FRG = Missions[M][5] > 0 ? "<br> - <i class='bleu dna icon'></i>" + fix(Missions[M][5], 3) + " Fragments" : "";
       if (Game.MissionsCompleted[Missions[M][9]] == 1 || Missions[M][9] == -1) {
-        let CNTENT = ("<div class='ui segment'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + Missions[M][0] + "</h3>" +
-          "<div class='ui clearing divider'></div><div class='ui horizontal segments'><div class='ui segment'>" +
-          "Level Required : " + REQLEVEL + "<br><div class='ui green label'> " + FRG + " <br> - " + QUALITY + " " + TYPE + LEVEL + "</div></div><div class='ui segment'>" + BTN + "</div>" +
-          "</div></div>");
+        let CONTENT = "<div class='ui grid modified'><div class='sixteen wide column'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + Missions[M][0] + "</h3></div>\
+          <div class='eight wide column'>Level Required : " + REQLEVEL + "<br><div class='ui green label'> " + FRG + " <br> - " + QUALITY + " " + TYPE + LEVEL + "</div></div>\
+          <div class='eight wide column'>" + BTN + "</div></div>";
 
-        $("#MissionsList2").append(CNTENT);
+        $("#MissionsList2").append(CONTENT);
       }
     }
   }
@@ -976,8 +940,7 @@ function mission(id) {
   if (!Game.MissionStarted[0] && Game.Level >= Missions[id][2]) {
     Game.MissionStarted = [true, id, 0, 0, 0];
     Game.isInFight = 0;
-    isTabActive = "None";
-    closeTabs();
+    CLOSE_MENUS();
     NOTIFY("Mission Story", Missions[id][1]);
     UpdateGame();
   }
@@ -994,7 +957,7 @@ function CompleteMission() {
         Game.MissionStarted[4] = 1;
         TSK = 1;
 
-        if (Game.Level < MaxLevel) {
+        if (Game.Level < APP.MaxLevel) {
           Game.xp[0] += Missions[Game.MissionStarted[1]][5];
           if (Game.xp[0] >= Game.xp[1]) {
             Game.xp[0] -= Game.xp[1];
@@ -1014,7 +977,7 @@ function CompleteMission() {
               Game.MissionStarted[3] = 1;
             }
           }
-          if (ScoreModeEnabled == 0) {
+          if (APP.ScoreModeEnabled == 0) {
             TIER = "Level";
             TIERRANK = Game.inventory[Game.inventory.length - 1].level;
           } else {
@@ -1071,16 +1034,12 @@ function hideMissionRewards() {
     TSK = 0;
   }
   Game.isInFight = 0;
-  $("#DIV-REWARDS").hide();
-  $("#DIV-COMBAT").show();
   UpdateGame();
 }
 
 function hideRewards() {
   if (Game.config[0] == 1) $("#modal-4").modal("hide");
   Game.isInFight = 0;
-  $("#DIV-REWARDS").hide();
-  if (isTabActive == "None") $("#DIV-COMBAT").show();
   UpdateGame();
   CompleteMission();
 }
@@ -1090,8 +1049,8 @@ function explore(loc) {
     if (Game.MissionsCompleted[POS[loc][4]] == 1) {
       Game.Location = loc;
       Game.isInFight = 0;
-      isTabActive = "None";
-      closeTabs();
+      Game.LastEscape=30;
+      GenExplorationMenu();
       UpdateGame();
     }
   }
@@ -1139,53 +1098,52 @@ function ErrorArmor(ARM) {
 
 function ChangeStep(type) {
   //0 = BACK & 1 = NEXT
-  if (type == 0 && WelcomeData[0] > 1) WelcomeData[0]--;
-  if (type == 1) WelcomeData[0]++;
+  if (type == 0 && APP.WelcomeData[0] > 1) APP.WelcomeData[0]--;
+  if (type == 1) APP.WelcomeData[0]++;
 
   for (var L = 1; L < 6; L++) {
     $("#step" + L).attr("class", "step");
     $("#tutorial-" + L).hide();
   }
 
-  for (var L2 = 1; L2 < WelcomeData[0] + 1; L2++) {
+  for (var L2 = 1; L2 < APP.WelcomeData[0] + 1; L2++) {
     $("#step" + L2).attr("class", "completed step");
   }
-  $("#step" + WelcomeData[0]).attr("class", "active step");
-  $("#tutorial-" + WelcomeData[0]).show();
-  if (WelcomeData[0] > 1) { $("#WelcomePrevious").show(); } else { $("#WelcomePrevious").hide(); }
+  $("#step" + APP.WelcomeData[0]).attr("class", "active step");
+  $("#tutorial-" + APP.WelcomeData[0]).show();
+  if (APP.WelcomeData[0] > 1) { $("#WelcomePrevious").show(); } else { $("#WelcomePrevious").hide(); }
 }
 
 function WelcomeNext() {
-  isTabActive = "Login";
 
-  if (WelcomeData[0] == 5) {
+  if (APP.WelcomeData[0] == 5) {
     $("#GAME").show();
     $("#STARTING-DIV").hide();
     $(".footer").show();
-    if (Game.username == "Default") Game.username = WelcomeData[1];
+    if (Game.username == "Default") Game.username = APP.WelcomeData[1];
     Game.isInFight = 0;
     GetWBcontent("firstlogin");
     save();
   }
 
-  if (WelcomeData[0] == 4) {
-    if (WelcomeData[2] == "Warrior") Game.Upgrades = [0, 5, 0];
-    if (WelcomeData[2] == "Paladin") Game.Upgrades = [0, 0, 5];
-    if (WelcomeData[2] == "Ninja") Game.Upgrades = [5, 0, 0];
-    if (WelcomeData[2] != "Warrior" && WelcomeData[2] != "Paladin" && WelcomeData[2] != "Ninja") { $("#namehelp").html("You need to select a class !"); } else {
+  if (APP.WelcomeData[0] == 4) {
+    if (APP.WelcomeData[2] == "Warrior") Game.Upgrades = [0, 5, 0];
+    if (APP.WelcomeData[2] == "Paladin") Game.Upgrades = [0, 0, 5];
+    if (APP.WelcomeData[2] == "Ninja") Game.Upgrades = [5, 0, 0];
+    if (APP.WelcomeData[2] != "Warrior" && APP.WelcomeData[2] != "Paladin" && APP.WelcomeData[2] != "Ninja") { $("#namehelp").html("You need to select a class !"); } else {
       ChangeStep(1);
-      Game.class = WelcomeData[2];
+      Game.class = APP.WelcomeData[2];
       $("#namehelp").html("");
-      $("#WelcomeName").html(WelcomeData[1]);
-      $("#WelcomeName").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span>" + WelcomeData[1] + "<div class='ui horizontal label'>Level 1</div></span>");
-      $("#WelcomeClass").html("Class : " + WelcomeData[2]);
+      $("#WelcomeName").html(APP.WelcomeData[1]);
+      $("#WelcomeName").html("<img class='ui avatar image' src='DATA/avatars/avatar" + Game.Avatar + ".jpg'><span>" + APP.WelcomeData[1] + "<div class='ui horizontal label'>Level 1</div></span>");
+      $("#WelcomeClass").html("Class : " + APP.WelcomeData[2]);
       $("#WelcomeNext").html("Start <i class='right arrow icon'></i>");
     }
   }
 
-  if (WelcomeData[0] == 3) ChangeStep(1);
+  if (APP.WelcomeData[0] == 3) ChangeStep(1);
 
-  if (WelcomeData[0] == 2) {
+  if (APP.WelcomeData[0] == 2) {
     NICKNAME = $("#PlayerName").val();
     if (NICKNAME != null) {
       if (NICKNAME == null || NICKNAME == "" || NICKNAME == " " || NICKNAME == "_" || NICKNAME.length < 3 || NICKNAME == "null") {
@@ -1193,7 +1151,7 @@ function WelcomeNext() {
       } else {
         NICKNAME = NICKNAME.replace(/[^a-zA-Z0-9]/g, '_');
         if (NICKNAME == "Neo" || NICKNAME == "NEO" || NICKNAME == "neo" || NICKNAME == "GoldenLys" || NICKNAME == "Purpy" || NICKNAME == "Purple" || NICKNAME == "Purple_Wizard") NICKNAME = "Adventurer" + random(10000, 999999);
-        Backup = WelcomeData[1] = NICKNAME;
+        Backup = APP.WelcomeData[1] = NICKNAME;
         ChangeStep(1);
         $("#namehelp").html("");
       }
@@ -1201,7 +1159,7 @@ function WelcomeNext() {
       ErrorName();
     }
   }
-  if (WelcomeData[0] == 1) ChangeStep(1);
+  if (APP.WelcomeData[0] == 1) ChangeStep(1);
 }
 
 function ErrorName() {
@@ -1227,6 +1185,6 @@ function RemoveItem(id) {
 
 function SendStats() {
   save();
-  if (LoggedIn == 1) writeUserData();
-  lastCloudSave = 0;
+  if (APP.LoggedIn == 1) writeUserData();
+  APP.lastCloudSave = 0;
 }
