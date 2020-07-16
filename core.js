@@ -221,12 +221,12 @@ function GetWBcontent(reason) {
 }
 
 function UpdateEngine() {
-  if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin" && location.href.match(/(goldenlys.github.io).*/)) GetWBcontent("retour");
+  if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin") GetWBcontent("retour");
   UpdateGame();
   Game.PlayTime++;
   if (Game.Level >= APP.MaxLevel && APP.LastMission >= APP.TotalMissions) APP.ScoreModeEnabled = 1; else APP.ScoreModeEnabled = 0;
   if (Ennemies[Game.Location][Game.Enemy[0]] == undefined) Game.Enemy[0] = 0;
-  if (Game.Level == 1 && !Game.MissionStarted[0] && Game.MissionsCompleted[0] == 0 && Game.config[3] == 1) mission(0);
+  if (Game.Level == 1 && !Game.MissionStarted[0] && Game.MissionsCompleted[0] == 0 && Game.config[3] == 1 && $("#STARTING-DIV").is(":hidden") && $("#modal-5").is(":hidden")) mission(0);
   if (Game.isInFight == 1) $("#EnemySprite").html("<img class='ui rounded middle aligned medium image' src='DATA/Monsters/" + Game.Location + "-" + Game.Enemy[0] + ".png'>");
   $("#color-display").css("background-color", "rgb(" + $(red).val() + ", " + $(green).val() + ", " + $(blue).val() + ")");
   if (APP.CoreLife > APP.CoreBaseLife) {
@@ -453,8 +453,8 @@ function UpdateUI() {
   var LIFEMCOL = GetMultPrice(2) > Game.Shards ? "rouge" : "green";
   var INVCOL = GetMultPrice(3) > Game.Shards ? "rouge" : "green";
   $("#XPMULTPRICE").html("<span class='" + XPMCOL + "'><i class='dna icon'></i>" + GetMultPrice(0) + "</span>");
-  $("#APP.PowerMultPRICE").html("<span class='" + POWMCOL + "'><i class='dna icon'></i>" + GetMultPrice(1) + "</span>");
-  $("#APP.LifeMultPRICE").html("<span class='" + LIFEMCOL + "'><i class='dna icon'></i>" + GetMultPrice(2) + "</span>");
+  $("#POWERMULTPRICE").html("<span class='" + POWMCOL + "'><i class='dna icon'></i>" + GetMultPrice(1) + "</span>");
+  $("#LIFEMULTPRICE").html("<span class='" + LIFEMCOL + "'><i class='dna icon'></i>" + GetMultPrice(2) + "</span>");
   $("#INVUPGPRICE").html("<span class='" + INVCOL + "'><i class='dna icon'></i>" + GetMultPrice(3) + "</span>");
   for (var i = 0; i < 4; i++) {
     if (GetMultPrice(i) == 999999999) {
@@ -1224,7 +1224,6 @@ function DefineWeapon(type, selected) {
 }
 
 function ConfirmRelic(R, id) {
-  Game.isInFight = 8;
   var IRCOLOR = "rouge";
   var IRCOLOR2 = "rouge";
   if (Game.RLS[R][1] == Game.inventory[id].object && Game.RLS[R][2] > Game.inventory[id].bonus) IRCOLOR = "green";

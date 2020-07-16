@@ -233,8 +233,8 @@ function writeUserData() {
     firebase.database().ref('users/' + Game.username).set({
       Name: Game.username,
       Email: APP.Email,
-      Order: (-1 * Ranking) - (100000 * Game.Simulation),
-      Order2: -1 * Ranking,
+      Order: (-1 * APP.Ranking) - (100000 * Game.Simulation),
+      Order2: -1 * APP.Ranking,
       Level: Game.Level,
       Ranking: APP.Ranking,
       WT: Game.Simulation,
@@ -296,7 +296,7 @@ function UpdateDB(snapshot) {
   id++;
   var isPlayer = "";
   if (snapshot.key === Game.username + " " || snapshot.key === Game.username) {
-    Leader = id;
+    APP.Leader = id;
   }
   if (id >= MINVIEW && id <= MAXVIEW) {
     if (snapshot.val().Version > 1.09) {
@@ -310,7 +310,7 @@ function UpdateDB(snapshot) {
       } else {
         Theme = snapshot.val().Theme;
       }
-      if (id == Leader) { isPlayer = "fight"; }
+      if (id == APP.Leader) { isPlayer = "fight"; }
       var DEATHS = snapshot.val().Deaths == 0 ? 1 : snapshot.val().Deaths;
       $("#LEADERBOARD").append("<tr id='leader-" + id + "' class='" + isPlayer + "'>" +
         "<td class='center aligned'>#" + id + "</td>" +
@@ -327,7 +327,7 @@ function UpdateDB(snapshot) {
   }
   LastId = id;
   if (Leader == 0) {
-    Leader = "Unranked";
+    APP.Leader = "Unranked";
   }
 }
 
@@ -398,19 +398,19 @@ function ClickEvents() {
     ChangeAvatar();
   });
   $("#ChooseWarrior").on("click", function () {
-    WelcomeData[2] = "Warrior";
+    APP.WelcomeData[2] = "Warrior";
     $("#warrior").attr("class", "ui fluid custom card");
     $("#paladin").attr("class", "ui fluid card");
     $("#ninja").attr("class", "ui fluid card");
   });
   $("#ChoosePaladin").on("click", function () {
-    WelcomeData[2] = "Paladin";
+    APP.WelcomeData[2] = "Paladin";
     $("#warrior").attr("class", "ui fluid card");
     $("#paladin").attr("class", "ui fluid custom card");
     $("#ninja").attr("class", "ui fluid card");
   });
   $("#ChooseNinja").on("click", function () {
-    WelcomeData[2] = "Ninja";
+    APP.WelcomeData[2] = "Ninja";
     $("#warrior").attr("class", "ui fluid card");
     $("#paladin").attr("class", "ui fluid card");
     $("#ninja").attr("class", "ui fluid custom card");
@@ -836,7 +836,7 @@ function GenExplorationMenu() {
     var MINLEVEL = Game.Level >= POS[E][1] ? "<span class='green'>" + POS[E][1] + "</span>" : "<span class='rouge'>" + POS[E][1] + "</span>";
     var MAXLEVEL = Game.Level >= POS[E][2] ? "<span class='green'>" + POS[E][2] + "</span>" : "<span class='rouge'>" + POS[E][2] + "</span>";
     var UNLOCKED = Game.Level >= POS[E][1] ? "bold" : "rouge bold";
-    if(Game.MissionsCompleted[POS[E][4]] == 0) UNLOCKED = "rouge bold";
+    if (Game.MissionsCompleted[POS[E][4]] == 0) UNLOCKED = "rouge bold";
     var UNLOCKTEXT = Game.MissionsCompleted[POS[E][4]] == 1 ? "<span class='green'>" + Missions[POS[E][4]][0] + " - Finished</span>" : "<span class='rouge'>" + Missions[POS[E][4]][0] + " - Unfinished</span>";
 
 
@@ -868,6 +868,7 @@ function GenMissions() {
   let TYPE = "";
   let LEVEL = "";
   let BTN = "";
+  let Status = Game.MissionsCompleted[M] == 1 ? "<span class='green'>Complete</span>" : "<span class='rouge'>Incomplete</span>";
   for (var M in Missions) {
     if (Missions[M][6] == 0) { TYPE = "Armor or Weapon"; LEVEL = ""; }
     if (Missions[M][6] == 1) { TYPE = "Gem"; LEVEL = ""; }
@@ -882,8 +883,6 @@ function GenMissions() {
       }
     }
     else { BTN = "<br><div class='fluid ui icon rainbow button' onclick='mission(" + M + ");' >Launch <i class='" + UNLOCKED + " right arrow icon'></i></div>"; }
-
-    var Status = Game.MissionsCompleted[M] == 1 ? "<span class='green'>Complete</span>" : "<span class='rouge'>Incomplete</span>";
     if (Game.MissionStarted[0] == true && Game.MissionStarted[1] == M && Game.MissionsCompleted[M] == 0) {
       Status = "<span class='jaune'>In Progress</span>";
       BTN = "<br><div class='fluid ui icon rainbow button' onclick='ResetMission();' >Cancel mission <i class='green right arrow icon'></i></div>";
@@ -896,7 +895,7 @@ function GenMissions() {
     if (Missions[M][3] != 2) {
       if (Game.MissionsCompleted[Missions[M][9]] == 1 || Missions[M][9] == -1) {
         var DESCRIPTION = Game.MissionsCompleted[M] == 0 ? "<div class='ui segment'>" + "Level Required : " + REQLEVEL + "<br><div class='ui green label'><span class='jaune'>" + fix(Missions[M][5], 3) + "</span> EXP<br>" + QUALITY + " " + TYPE + LEVEL + "</div></div>" : "<div class='ui segment'>Level : " + REQLEVEL + "</div>";
-        let CONTENT = 
+        let CONTENT =
           "<div class='ui grid modified'><div class='sixteen wide column'><h3 class='ui left floated header text2 " + UNLOCKED + "'>" + Missions[M][0] + "</h3></div>\
           <div class='eight wide column'>" + DESCRIPTION + "</div>\
           <div class='eight wide column'>Status : " + Status + BTN + "</div></div>";
@@ -929,6 +928,7 @@ function ResetMission() {
     NOTIFY("Mission Canceled", "You can restart this mission in the 'mission' menu.<br>- Auto start mission <span class='rouge'>disabled</span>.");
     if (Game.Location > 0) Game.Location--;
     UpdateGame();
+    GenMissions();
   }
 }
 
@@ -941,6 +941,7 @@ function mission(id) {
     Game.MissionStarted = [true, id, 0, 0, 0];
     Game.isInFight = 0;
     CLOSE_MENUS();
+    GenMissions();
     NOTIFY("Mission Story", Missions[id][1]);
     UpdateGame();
   }
@@ -950,6 +951,7 @@ function CompleteMission() {
   var TIER = "";
   var TIERRANK = "";
   var LEVELUP = "";
+  let LOOTS = "";
   if (Game.MissionStarted[0] == true && Game.isInFight == 1) {
     if (Missions[Game.MissionStarted[1]][3] == 1 || Missions[Game.MissionStarted[1]][3] == 2) {
       if (Game.MissionStarted[2] >= Missions[Game.MissionStarted[1]][4]) {
@@ -970,7 +972,7 @@ function CompleteMission() {
         if (Missions[Game.MissionStarted[1]][6] == 0) {//CORE REWARD
           if (Game.MissionStarted[3] == 0) {
             if (Game.MissionStarted[0] == true) {
-              newItem(0, Ranking, Missions[Game.MissionStarted[1]][7]);
+              newItem(0, APP.Ranking, Missions[Game.MissionStarted[1]][7]);
               Game.MissionStarted[3] = 1;
             } else {
               newItem(0, Game.Level, Missions[Game.MissionStarted[1]][7]);
@@ -986,7 +988,7 @@ function CompleteMission() {
           }
           let UPS = Game.inventory[Game.inventory.length - 1].ups > 0 ? "" + Game.inventory[Game.inventory.length - 1].ups + "<i class='orange fad fa-gem'></i>" : "";
           let LOOTCONTENT = Game.inventory[Game.inventory.length - 1].id == 4 ? "<i class='bleu fas fa-sword revertmargin'></i>" + fix(Game.inventory[Game.inventory.length - 1].power, 5) : "<i class='rouge fas fa-heart revertmargin'></i>" + fix(Game.inventory[Game.inventory.length - 1].life, 5);
-          $("#rewards-loot").html("<div class='ui comments'><div class='comment " + Game.inventory[Game.inventory.length - 1].class + "-Core'><div class='Bar-" + Game.inventory[Game.inventory.length - 1].class + "'></div><div class='statistic GS'><div class='value'>" + TIER + "</div><div class='label'> " + TIERRANK + "</div></div>" + Game.inventory[Game.inventory.length - 1].name + "<span class='" + Game.inventory[Game.inventory.length - 1].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[Game.inventory.length - 1].class + "'> " + Game.inventory[Game.inventory.length - 1].class + " </span><br>" + LOOTCONTENT + "</div></div>");
+          LOOTS = "<div class='ui comments'><div class='comment " + Game.inventory[Game.inventory.length - 1].class + "-Core'><div class='Bar-" + Game.inventory[Game.inventory.length - 1].class + "'></div><div class='statistic GS'><div class='value'>" + TIER + "</div><div class='label'> " + TIERRANK + "</div></div>" + Game.inventory[Game.inventory.length - 1].name + "<span class='" + Game.inventory[Game.inventory.length - 1].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[Game.inventory.length - 1].class + "'> " + Game.inventory[Game.inventory.length - 1].class + " </span><br>" + LOOTCONTENT + "</div></div>";
         }
         if (Missions[Game.MissionStarted[1]][6] == 2) {//RELIC REWARD 
           if (Game.MissionStarted[3] == 0) {
@@ -999,27 +1001,20 @@ function CompleteMission() {
             }
           }
         }
-        if (Missions[Game.MissionStarted[1]][6] == 2) {
-          let IV = Game.inventory.length - 1;
-          if (Game.inventory[IV].object == 0) DESC = "-";
-          if (Game.inventory[IV].object == 1) DESC = "Power bonus of " + fix(Game.inventory[IV].bonus, 9);
-          if (Game.inventory[IV].object == 2) DESC = "Life bonus of " + fix(Game.inventory[IV].bonus, 9);
-          if (Game.inventory[IV].object == 3) DESC = "Max Score increased by " + fix(Game.inventory[IV].bonus, 3);
-          if (Game.inventory[IV].object == 4) DESC = "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>";
-          $("#rewards-loot").append("<div class='ui comments'><div class='comment " + Game.inventory[IV].class + "-Core'><div class='Bar-" + Game.inventory[IV].class + "'></div>" + Game.inventory[IV].name + "<br><span class='" + (Game.inventory[IV].class) + "' id='" + IV + "'> " + (Game.inventory[IV].class) + "</span><br>" + DESC + "</div></div>");
-        }
-        if (Missions[Game.MissionStarted[1]][3] == 1) $("#rewards-title").html("<span class='vert'>Successfully completed the mission !</span>");
-        else $("#rewards-title").html("<span class='vert'>Fortress cleared !</span>");
+
+        let TITLE = Missions[Game.MissionStarted[1]][3] == 2 ? "<span class='vert'>Fortress cleared !</span>" : "<span class='vert'>Successfully completed the mission !</span>";
         let FRAGMENTS_REWARDS = Missions[Game.MissionStarted[1]][5] > 0 ? "+<i class='bleu dna icon'></i><span class='bleu bold'>" + fix(Missions[Game.MissionStarted[1]][5], 3) + "</span> Fragments " : "";
-        $("#CLOSE_REWARDS").html("<div onclick='hideMissionRewards();' class='fluid ui closing button'><i class='times icon'></i>Finish</div>");
-        $("#rewards-desc").html("");
-        if (Missions[Game.MissionStarted[1]][3] == 2) { $("#rewards-text").html(LEVELUP + FRAGMENTS_REWARDS); } else {
-          $("#rewards-text").html(LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP ");
+        let DESCRIPTION = Missions[Game.MissionStarted[1]][3] == 2 ? LEVELUP + FRAGMENTS_REWARDS : LEVELUP + "+<span class='vert bold'>" + fix(Math.floor(Missions[Game.MissionStarted[1]][5]), 5) + "</span> EXP ";
+
+        if (Missions[Game.MissionStarted[1]][6] == 2) {
+          let ITEMID = Game.inventory.length - 1;
+          let DESCRIPTIONS = ["-", "Power bonus of " + fix(Game.inventory[ITEMID].bonus, 9), "Life bonus of " + fix(Game.inventory[ITEMID].bonus, 9), "Max Score +" + fix(Game.inventory[ITEMID].bonus, 3), "Minimal drop quality <span class='" + Game.inventory[ITEMID].bonus + "'>" + Game.inventory[ITEMID].bonus + "</span>"];
+          LOOTS = "<div class='ui comments'><div class='comment " + Game.inventory[ITEMID].class + "-Core'><div class='Bar-" + Game.inventory[ITEMID].class + "'></div>" + Game.inventory[ITEMID].name + "<br><span class='" + (Game.inventory[ITEMID].class) + "' id='" + ITEMID + "'> " + (Game.inventory[ITEMID].class) + "</span><br>" + DESCRIPTIONS[Game.inventory[ITEMID].object] + "</div></div>";
         }
-        $("#DIV-COMBAT").hide();
-        $("#CLOSE_REWARDS").show();
-        $("#BUTTONS_COMBAT").hide();
-        $("#DIV-REWARDS").show();
+
+        NOTIFY(TITLE, DESCRIPTION + LOOTS);
+        hideMissionRewards();
+
       }
     }
   }
@@ -1049,7 +1044,7 @@ function explore(loc) {
     if (Game.MissionsCompleted[POS[loc][4]] == 1) {
       Game.Location = loc;
       Game.isInFight = 0;
-      Game.LastEscape=30;
+      Game.LastEscape = 30;
       GenExplorationMenu();
       UpdateGame();
     }
