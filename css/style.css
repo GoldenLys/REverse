@@ -1723,3 +1723,16 @@ img[src*="E.png"]:before, .error-img:before {
 #GAME>.row>.three.wide.column {
   height: calc(100vh - 50px);
 }
+
+.ui.themed.label, .ui.themed.labels .label {
+  background-color: var(--green)!important;
+  border-color: var(--green)!important;
+  color: #fff!important;
+  text-shadow: 0 0 13px black;
+}
+
+.ui.darkgreen.label, .ui.darkgreen.labels .label {
+  background-color: #1f801f!important;
+  border-color: #1f801f!important;
+  color: #fff!important;
+}
