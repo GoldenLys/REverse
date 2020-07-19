@@ -12,18 +12,18 @@ function BackupData() {
   localStorage.setItem("Alpha-Backup", JSON.stringify(Game.username));
 }
 
-function loadBackup() {
-  let Backup = JSON.parse(localStorage.getItem("Alpha-Backup"));
-  Game.username = Backup;
-  UpdateGame();
-}
-
 function load() {
   let savegame = JSON.parse(localStorage.getItem("Alpha"));
   for (var property in savegame) {
     if (typeof savegame[property] !== "undefined")
       Game[property] = savegame[property];
   }
+  loadBackup();
+}
+
+function loadBackup() {
+  let Backup = JSON.parse(localStorage.getItem("Alpha-Backup"));
+  Game.username = Backup;
 }
 
 function exportSave() {
@@ -922,7 +922,6 @@ function ResetMission() {
   if (Game.MissionStarted[0] == true) {
     Game.MissionStarted = [false, 0, 0, 0, 0];
     $("#DIV-COMBAT").show();
-    $("#DIV-MISSIONS").hide();
     Game.config[3] = 0;
     $("#AutoMissions").checkbox("uncheck");
     NOTIFY("Mission Canceled", "You can restart this mission in the 'mission' menu.<br>- Auto start mission <span class='rouge'>disabled</span>.");

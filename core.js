@@ -173,7 +173,6 @@ function test() {
   if (location.href.match(/(goldenlys.github.io).*/)) window.oncontextmenu = (e) => { e.preventDefault(); };
   ResetTheme(0);
   if (localStorage.getItem("Alpha") != null) load();
-  if (localStorage.getItem("Alpha-Backup") != null) loadBackup();
   if (Game.username != "Default") {
     $("#GAME").show();
     $("#STARTING-DIV").hide();
@@ -188,12 +187,9 @@ function test() {
   $('.ui.checkbox').checkbox();
   if (Game.config[0] == 1) $("#AlertToggle").checkbox("check"); else $("#AlertToggle").checkbox("uncheck");
   if (Game.config[1] == 1) $("#AlertToggle2").checkbox("check"); else $("#AlertToggle2").checkbox("uncheck");
-  if (Game.AutoRemove[0] == 1) $("#RM1").checkbox("check"); else $("#RM1").checkbox("uncheck");
-  if (Game.AutoRemove[1] == 1) $("#RM2").checkbox("check"); else $("#RM2").checkbox("uncheck");
-  if (Game.AutoRemove[2] == 1) $("#RM3").checkbox("check"); else $("#RM3").checkbox("uncheck");
-  if (Game.AutoRemove[3] == 1) $("#RM4").checkbox("check"); else $("#RM4").checkbox("uncheck");
-  if (Game.AutoRemove[4] == 1) $("#RM5").checkbox("check"); else $("#RM5").checkbox("uncheck");
-  if (Game.AutoRemove[5] == 1) $("#RM6").checkbox("check"); else $("#RM6").checkbox("uncheck");
+  for (let AUTO_REMOVE in Game.AutoRemove) {
+    if (Game.AutoRemove[AUTO_REMOVE] == 1) $("#RM" + AUTO_REMOVE).checkbox("check"); else $("#RM" + AUTO_REMOVE).checkbox("uncheck");
+  }
   if (Game.config[2] == 1) $("#SkipRewards").checkbox("check"); else $("#SkipRewards").checkbox("uncheck");
   if (Game.config[3] == 1) $("#AutoMissions").checkbox("check"); else $("#AutoMissions").checkbox("uncheck");
   if (Game.config[4] == 1) $("#OnlyMyVersion").checkbox("check"); else $("#OnlyMyVersion").checkbox("uncheck");
@@ -1033,7 +1029,7 @@ function WinFight() {
     if (ToAddCash < 1) ToAddCash = 1;
     Game.Cash += ToAddCash;
 
-    let THREATS = ["NORMAL", "ADVANCED", "SUPERIOR", "VETERAN", "ELITE", "BOSS", "GOD"];
+    let THREATS = ["", "NORMAL", "ADVANCED", "SUPERIOR", "VETERAN", "ELITE", "BOSS", "GOD"];
     let ThreatLevel = THREATS[Game.Enemy[1]];
     let DEATHS = Game.Loses == 0 ? 1 : Game.Loses;
     let EXP_TEXT = APP.ScoreModeEnabled == 0 ? "<div class='ui themed label'>" + fix(Math.floor(expGain), 5) + " EXP</div>" : "";
