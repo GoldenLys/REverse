@@ -93,7 +93,7 @@ function DYNAMICS() {
     CLOSE_MENUS();
     $("#DIV-COMBAT").show();
     $(".BUTTONS_ACTIONS").show();
-    $("#LOGIN-NOTICE").attr("class", "popup transition");
+    $("#LOGIN-NOTICE").attr("class", "popup");
     $("#wb-title").html("");
     $("#wb-text").html("");
     APP.Email = "DoNotLogin";
@@ -101,7 +101,7 @@ function DYNAMICS() {
   });
 
   $("#LOGIN-BTN").on("click", function () {
-    $("#LOGIN-NOTICE").attr("class", "popup transition");
+    $("#LOGIN-NOTICE").attr("class", "popup");
     $("#wb-title").html("");
     $("#wb-text").html("");
     login();

@@ -235,20 +235,20 @@ const UpdateGame = function() {
   for (var M2 in GLOBALS.MISSIONS) { if (Game.MissionsCompleted[M2] == null) Game.MissionsCompleted[M2] = 0; }
   if (Game.MissionStarted[0]) { Game.Location = GLOBALS.MISSIONS[Game.MissionStarted[1]][8]; }
   for (var IV in Game.inventory) {
-    if (typeof Game.inventory[IV].name === "undefined" || typeof Game.inventory[IV].class === "undefined"|| typeof Game.inventory[IV].id === "undefined" || typeof Game.inventory[IV].object === "undefined") RemoveItem(IV);
-    if (Game.Level < 10 && Game.inventory[IV].class == 'Uncommon')  RemoveItem(IV); 
-    if (Game.Level < 15 && Game.inventory[IV].class == 'Rare')  RemoveItem(IV); 
-    if (Game.Level < 20 && Game.inventory[IV].class == 'Epic') RemoveItem(IV); 
-    if (Game.Level < 30 && Game.inventory[IV].class == 'Exotic' || Game.inventory[IV].class == 'Divine') RemoveItem(IV); 
-    if (Game.inventory[IV].id == 0) RemoveItem(IV);
-    if (IV >= Game.MaxInv) RemoveItem(IV);
+    if (typeof Game.inventory[IV].name === "undefined" || typeof Game.inventory[IV].class === "undefined"|| typeof Game.inventory[IV].id === "undefined" || typeof Game.inventory[IV].object === "undefined") { RemoveItem(IV); console.log("ERROR 007"); } 
+    if (Game.Level < 10 && Game.inventory[IV].class == 'Uncommon')  { RemoveItem(IV); console.log("ERROR 008"); } 
+    if (Game.Level < 15 && Game.inventory[IV].class == 'Rare')  { RemoveItem(IV); console.log("ERROR 009"); } 
+    if (Game.Level < 20 && Game.inventory[IV].class == 'Epic') { RemoveItem(IV); console.log("ERROR 010"); } 
+    if (Game.Level < 30 && Game.inventory[IV].class == 'Exotic' || Game.Level < 30 && Game.inventory[IV].class == 'Divine') { RemoveItem(IV); console.log("ERROR 011"); } 
+    if (Game.inventory[IV].id == 0) { RemoveItem(IV); console.log("ERROR 012"); } 
+    if (IV >= Game.MaxInv) { RemoveItem(IV); console.log("ERROR 013"); } 
     if (typeof Game.inventory[IV] !== 'undefined') {
-      if (Game.AutoRemove[0] == 1 && Game.inventory[IV].class == "Normal") RemoveItem(IV);
-      else if (Game.AutoRemove[1] == 1 && Game.inventory[IV].class == "Common") RemoveItem(IV);
-      else if (Game.AutoRemove[2] == 1 && Game.inventory[IV].class == "Uncommon") RemoveItem(IV);
-      else if (Game.AutoRemove[3] == 1 && Game.inventory[IV].class == "Rare") RemoveItem(IV);
-      else if (Game.AutoRemove[4] == 1 && Game.inventory[IV].class == "Epic") RemoveItem(IV);
-      else if (Game.AutoRemove[5] == 1 && Game.inventory[IV].class == "Exotic") RemoveItem(IV);
+      if (Game.AutoRemove[0] == 1 && Game.inventory[IV].class == "Normal") { RemoveItem(IV); console.log("ERROR 014"); } 
+      else if (Game.AutoRemove[1] == 1 && Game.inventory[IV].class == "Common") { RemoveItem(IV); console.log("ERROR 015"); } 
+      else if (Game.AutoRemove[2] == 1 && Game.inventory[IV].class == "Uncommon") { RemoveItem(IV); console.log("ERROR 016"); } 
+      else if (Game.AutoRemove[3] == 1 && Game.inventory[IV].class == "Rare") { RemoveItem(IV); console.log("ERROR 017"); } 
+      else if (Game.AutoRemove[4] == 1 && Game.inventory[IV].class == "Epic") { RemoveItem(IV); console.log("ERROR 018"); } 
+      else if (Game.AutoRemove[5] == 1 && Game.inventory[IV].class == "Exotic") { RemoveItem(IV); console.log("ERROR 019"); } 
     }
   }
   if (!Game.MissionStarted[0]) {

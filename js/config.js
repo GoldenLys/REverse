@@ -1,6 +1,6 @@
 const GLOBALS = {
     NAME: "AlphaRPG",
-    VERSION: "3.0 BETA8",
+    VERSION: "3.0 BETA10",
     RELICS_NAMES: ["Ares Relic", "Yggdrasil Relic", "Vulcan Relic", "Recon Relic", "No Relic"],
     ARMORS_NAMES:
     {
@@ -41,7 +41,7 @@ const GLOBALS = {
         20: ["The New World", 'The city is now in peace, you follow the Red River to continue the exploration of this new world.', 33, 1, 10, 125000, 0, "Exotic", 15, 19],
         21: ["The Red River", 'During your daily hunt you find a merchant who keeps saying that the vampire attack in the city was only the beginning.<br> He also tells you that a rumor says that the castle is hidden in the mountains.<br> You will investigate on the spot to finally lead a quiet life', 33, 1, 10, 150000, 0, "Exotic", 15, 20],
         22: ["The mountains", "After searching for 5 days in the mountains, you find a bridge filled with corpses ..<br>Without any hesitation you enter the territory of vampires.", 34, 1, 10, 175000, 0, "Exotic", 16, 21],
-        23: ["The Immortal Bridge", "These vampires seems a more difficult to kill than the ones in the city but you keep fighting and see a huge castle at the end of the bridge.", 34, 1, 10, 175000, 0, "Exotic", 16, 22],
+        23: ["The Immortal Bridge", "These vampires seems a more difficult to kill than the ones in the city but you keep on fighting them as you see a huge castle at the end of the bridge.", 34, 1, 10, 175000, 0, "Exotic", 16, 22],
         24: ["Vampire Castle", 'This is it. The Vampire Castle.<br>Now that you have arrived here you take on the opportunity to clean this filthy place.', 35, 2, 10, 0, 0, "Exotic", 17, 23],
         25: ["Vampire Castle - Tower", 'You discover that one of the tower in the castle hides many powerful vampires, you may head there and clean this up.', 35, 2, 25, 1, 2, "Divine", 17, 24],
         26: ["Vampire Castle - Core", 'You have reached the heart of the castle, by destroying the heart, the world will finally be at peace.<br> But before this happy end, you will need to kill the remaining vampires.', 35, 2, 50, 2, 0, "Divine", 17, 25],

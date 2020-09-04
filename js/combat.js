@@ -302,7 +302,7 @@ function UpdateCombat() {
     $("#PlayerLife").html("<i class='pw red fas fa-heart'></i> <span class='" + PLAYER_LIFE_COLOR + "'>" + fix(APP.CoreLife, "auto") + "</span>/" + fix(APP.CoreBaseLife, "auto") + " ");
     $("#PlayerPower").html("<i class='pw blue fas fa-sword'></i> " + fix(APP.WeaponsPower, "auto") + " <span class='sub'>(<i class='pw yellow fas fa-swords'></i> " + fix(APP.SpecialPower, "auto") + ")</span>");
     $("#emp-btn").html("<i class='fas fa-swords'></i> " + fix(Game.Emp, 0) + " Special Attack");
-    if (Game.Emp < 1 || Game.MissionStarted[0] && GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) $("#emp-btn").attr("class", "pw darkgrey button transparent");
+    if (Game.Emp < 1) $("#emp-btn").attr("class", "pw darkgrey button transparent");
     else $("#emp-btn").attr("class", "pw yellow button");
     $("#PLAYER_PERCENT").attr("style", "stroke-dashoffset: calc(455 - (455 * " + GetPlayerHPPercent() + ") / 100)");
     $("#ENEMY_PERCENT").attr("style", "stroke-dashoffset: calc(455 - (455 * " + GetEnemyHPPercent() + ") / 100)");

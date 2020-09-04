@@ -44,7 +44,7 @@ function restoreSave(save) {
     JSON.parse(decoded);
     if (decoded) {
       localStorage.setItem("Alpha", decoded);
-      location.reload();
+      load();
     } else {
       $("#codereturn").html("ERROR: Invalid Save Data");
     }

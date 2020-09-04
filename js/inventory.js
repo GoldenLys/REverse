@@ -148,23 +148,22 @@ function newItem(type, level, rarity) {
         if (level > GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0) level = GLOBALS.LOCATIONS[Game.Location][2];
     }
     let MAX_LUCK = ITEM_CONFIG.RARITIES[CLASSES[GLOBALS.LOCATIONS[Game.Location][3]]][1]; //DEFINE THE MAXIMUM DROP QUALITY TO LOCATION MAX
-    if (Game.MissionStarted[0] && GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) MAX_LUCK = BASE_LUCK; //IF IN A FORTRESS GENERATE AN EXOTIC OR BETTER
-    if (_.inRange(Game.Level, 0, 5) && GLOBALS.LOCATIONS[Game.Location][3] > 0) MAX_LUCK = 1999;
-    if (_.inRange(Game.Level, 6, 10) && GLOBALS.LOCATIONS[Game.Location][3] > 1) MAX_LUCK = 4999;
-    if (_.inRange(Game.Level, 9, 15) && GLOBALS.LOCATIONS[Game.Location][3] > 2) MAX_LUCK = 6999;
-    if (_.inRange(Game.Level, 14, 50) && GLOBALS.LOCATIONS[Game.Location][3] > 3) MAX_LUCK = 8499;
-    if (_.inRange(Game.Level, 19, 30) && GLOBALS.LOCATIONS[Game.Location][3] > 4) MAX_LUCK = 9499;
-    if (_.inRange(Game.Level, 29, 40) && GLOBALS.LOCATIONS[Game.Location][3] > 5) MAX_LUCK = 9849;
-    if (_.inRange(Game.Level, 39, 41) && GLOBALS.LOCATIONS[Game.Location][3] > 6) MAX_LUCK = 10000;
+    if (_.inRange(Game.Level, 0, 5) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 0) MAX_LUCK = 1999; // NORMAL
+    if (_.inRange(Game.Level, 5, 10) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 1) MAX_LUCK = 4999; // COMMON
+    if (_.inRange(Game.Level, 10, 15) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 2) MAX_LUCK = 6999; // UNCOMMON
+    if (_.inRange(Game.Level, 15, 20) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 3) MAX_LUCK = 8499; // RARE
+    if (_.inRange(Game.Level, 20, 30) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 4) MAX_LUCK = 9499; // EPIC
+    if (_.inRange(Game.Level, 30, 35) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 5) MAX_LUCK = 9849; // EXOTIC
+    if (_.inRange(Game.Level, 35, 36) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 5) MAX_LUCK = 10000; // DIVINE
     if (BASE_LUCK > MAX_LUCK) BASE_LUCK = MAX_LUCK;
     let LUCK = _.random(BASE_LUCK, MAX_LUCK);
     item.class = "Normal";
-    if (_.inRange(LUCK, 1999, 5000)) item.class = "Common";
-    if (_.inRange(LUCK, 4999, 7000)) item.class = "Uncommon";
-    if (_.inRange(LUCK, 6999, 8500)) item.class = "Rare";
-    if (_.inRange(LUCK, 8499, 9500)) item.class = "Epic";
-    if (_.inRange(LUCK, 9499, 9850)) item.class = "Exotic";
-    if (_.inRange(LUCK, 9849, 10001)) item.class = "Divine";
+    if (_.inRange(LUCK, 2000, 5001)) item.class = "Common";
+    if (_.inRange(LUCK, 5000, 7001)) item.class = "Uncommon";
+    if (_.inRange(LUCK, 7000, 8501)) item.class = "Rare";
+    if (_.inRange(LUCK, 8500, 9501)) item.class = "Epic";
+    if (_.inRange(LUCK, 9500, 9851)) item.class = "Exotic";
+    if (_.inRange(LUCK, 9850, 10001)) item.class = "Divine";
 
     if (type == "Armor") { //GENERATE AN ARMOR
         item.name = GLOBALS.ARMORS_NAMES[[item.class]][Math.floor(Math.random() * GLOBALS.ARMORS_NAMES[item.class].length)] + " Armor";
@@ -172,8 +171,8 @@ function newItem(type, level, rarity) {
         item.level = level;
         item.object = 0;
         item.ups = GET_MAX_UPGRADES(item.class);
-        if (APP.ScoreModeEnabled == 1) item.life = Math.floor(random((level * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]] * 0.75) + 100, (level * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]] + 100));
-        else item.life = Math.floor(random((level * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]] * 0.9) + 100, (level * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]] + 100));
+        if (APP.ScoreModeEnabled == 1) item.life = Math.floor(random((level * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] * 0.75) + 100, (level * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] + 100));
+        else item.life = Math.floor(random((level * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] * 0.9) + 100, (level * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] + 100));
         item.id = 1; //SET AS ARMOR
     }
 
@@ -183,8 +182,8 @@ function newItem(type, level, rarity) {
         item.level = level;
         item.object = 0;
         item.ups = GET_MAX_UPGRADES(item.class);
-        if (APP.ScoreModeEnabled == 1) item.power = Math.floor(random((level * 3) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]] * 0.75), (level * 3) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]] + 5));
-        else item.power = Math.floor(random((level * 3) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]] * 0.9), (level * 3) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]] + 5));
+        if (APP.ScoreModeEnabled == 1) item.power = Math.floor(random((level * 3) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] * 0.75), (level * 3) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] + 5));
+        else item.power = Math.floor(random((level * 3) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1 ] * 0.9), (level * 3) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] + 5));
         item.id = 4; //SET AS WEAPON
     }
 
@@ -515,9 +514,9 @@ function ErrorArmor(ARM) {
 
 const NEXT_ARMOR_PIECE = function () {
     let LEVEL = 0;
-    if (_.inRange(Game.Level, 0, 11)) LEVEL = 10;
-    if (_.inRange(Game.Level, 10, 21)) LEVEL = 20;
-    if (_.inRange(Game.Level, 20, 31)) LEVEL = 30;
+    if (_.inRange(Game.Level, 0, 10)) LEVEL = 10;
+    if (_.inRange(Game.Level, 10, 20)) LEVEL = 20;
+    if (_.inRange(Game.Level, 20, 30)) LEVEL = 30;
     return LEVEL;
 };
 
@@ -534,7 +533,7 @@ const CHECK_MAX_LIFE = function () {
 
     let MAX_QUALITY = APP.ScoreModeEnabled == 1 ? "Divine" : QUALITIES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]];
     for (let ARMOR in Game.Armors) {
-        let MAX_VALUE = (Game.Armors[ARMOR][4] * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0]] + 100;
+        let MAX_VALUE = (Game.Armors[ARMOR][4] * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1 ] + 100;
         if ((Game.Armors[ARMOR][3] - Game.ArmorUpgrades[ARMOR]) > MAX_VALUE) {
             Game.Armors[ARMOR][3] = (MAX_VALUE + Game.ArmorUpgrades[ARMOR]);
             console.log("CHEAT DETECTED ON ARMOR " + ARMOR);
@@ -543,5 +542,5 @@ const CHECK_MAX_LIFE = function () {
 };
 
 function test() {
-    return GLOBALS.LOCATIONS[Game.Location][5].lootables[Math.floor(Math.random() * GLOBALS.LOCATIONS[Game.Location][5].lootables.length)];
+    return _.sample(GLOBALS.LOCATIONS[Game.Location][5].lootables);
 }
