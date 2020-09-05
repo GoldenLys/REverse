@@ -10,7 +10,7 @@ function GenInventory() {
             BOX_SHADOW: { Normal: 0, Common: 1, Uncommon: 2, Rare: 3, Epic: 4, Exotic: 5, Divine: 6, },
             ITEM_TYPES: ["", "Armor", "Gem", "Relic", "Weapon", "Gem"],
             LEVEL_TYPE: ["Level " + Game.inventory[IV].level, "Score <i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IV].level * 10)],
-            RELICS_DESC: ["-", "Power bonus of " + fix(Game.inventory[IV].bonus, 2), "Life bonus of " + fix(Game.inventory[IV].bonus, 2), "Max Score +" + fix(Game.inventory[IV].bonus, 1), "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>"],
+            RELICS_DESC: ["-", "Power bonus of " + fix(Game.inventory[IV].bonus, 2), "Life bonus of " + fix(Game.inventory[IV].bonus, 2), "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>",  "Max Score +" + fix(Game.inventory[IV].bonus, 1)],
         };
         let ITEM = { DESC: "", LEVEL: "" };
         if (Game.inventory[IV] != undefined) {
@@ -90,13 +90,11 @@ function GenArmors() {
 
         $("#" + armor).attr("class", "pw segment");
         $("#" + armor).attr("style", `--QUALITY:var(--${Game.Armors[UPC][2]});`);
-        $("#" + armor + "-icon").attr("class", "classBar" + Class);
-        $("#" + armor + "-title").attr("class", "text-center");
         $("#D" + armor).attr("onclick", "ConfirmDestroy(" + UPC + ");");
         if (Game.RELICS[UPC][1] == 1) RLSTXT = "Power bonus of " + fix(Game.RELICS[UPC][2], 2);
         if (Game.RELICS[UPC][1] == 2) RLSTXT = "Life bonus of " + fix(Game.RELICS[UPC][2], 2);
-        if (Game.RELICS[UPC][1] == 3) RLSTXT = "Max Score +" + fix(Game.RELICS[UPC][2], 1);
-        if (Game.RELICS[UPC][1] == 4) RLSTXT = "Minimal drop quality <span class='" + Game.RELICS[UPC][2] + "'>" + Game.RELICS[UPC][2] + "</span>";
+        if (Game.RELICS[UPC][1] == 3) RLSTXT = "Minimal drop quality <span class='" + Game.RELICS[UPC][2] + "'>" + Game.RELICS[UPC][2] + "</span>";
+        if (Game.RELICS[UPC][1] == 4) RLSTXT = "Max Score +" + fix(Game.RELICS[UPC][2], 1);
         if (Game.RELICS[UPC][1] != 5) RLSTXT = "<i class='pw yellow fas fa-stars'></i> " + RLSTXT;
         var LEVELICON = APP.ScoreModeEnabled == 0 ? "Level" : "Score";
         var LEVELTEXT = APP.ScoreModeEnabled == 0 ? fix(Math.floor(Game.Armors[UPC][4]), 0) : "<i class='fad fa-dice-d20'></i>" + fix(Math.floor(Game.Armors[UPC][4] * 10), 0);
@@ -126,7 +124,7 @@ function newItem(type, level, rarity) {
         MULTIPLIERS: [_.random(1.00, 1.05), _.random(1.15, 1.20), _.random(1.25, 1.30), _.random(1.35, 1.40), _.random(1.50, 1.60), _.random(1.75, 1.85), _.random(1.95, 2.10)],
         RARITIES: { Normal: [1, 1], Common: [2, 2000], Uncommon: [3, 5000], Rare: [4, 7000], Epic: [5, 8500], Exotic: [6, 9500], Divine: [7, 9850] },
         RELIC_MULTIPLIERS: [_.random(0.01, 0.03), _.random(0.03, 0.05), _.random(0.05, 0.09), _.random(0.10, 0.14), _.random(0.15, 0.19), _.random(0.20, 0.24), _.random(0.25, 0.30)],
-        RELIC_SCORE_MUTLIPLIERS: [_.random(1, 5), _.random(1, 10), _.random(5, 14), _.random(5, 19), _.random(10, 24), _.random(15, 49), _.random(20, 100)],
+        RELIC_SCORE_MUTLIPLIERS: [_.random(1, 5), _.random(6, 10), _.random(11, 15), _.random(16, 20), _.random(21, 25), _.random(26, 50), _.random(51, 100)],
         GEMS_MULTIPLIERS: { Normal: [0.01, 0.30], Common: [0.01, 0.75], Uncommon: [0.01, 1.50], Rare: [1.5, 1.95], Epic: [1.95, 2.25], Exotic: [2.25, 2.40], Divine: [2.40, 3.00] },
     };
     let CLASSES = Object.keys(ITEM_CONFIG.RARITIES);
@@ -136,7 +134,7 @@ function newItem(type, level, rarity) {
     let BASE_LUCK = ITEM_CONFIG.RARITIES[rarity][1];
 
     for (var R in Game.RELICS) {//IF PLAYER HAVE A MINIMAL RARITY RELIC THEN USE IT HERE
-        if (Game.RELICS[R][1] == 4 && BASE_LUCK < ITEM_CONFIG.RARITIES[Game.RELICS[R][2]][1]) BASE_LUCK = ITEM_CONFIG.RARITIES[Game.RELICS[R][2]][1];
+        if (Game.RELICS[R][1] == 3 && BASE_LUCK < ITEM_CONFIG.RARITIES[Game.RELICS[R][2]][1]) BASE_LUCK = ITEM_CONFIG.RARITIES[Game.RELICS[R][2]][1];
     }
     if (APP.ScoreModeEnabled == 1 && BASE_LUCK < 7000) {//IF IN SCORE MODE REPLACE ALL LOW CLASS ITEMS WITH HIGH CLASS ONES
         let LUCK_PER_TYPES = { 0: 7000, 1: 7000, 2: 7000, 3: 7000, 4: 7000, 5: 8500, 6: 8500, 7: 9850, };
@@ -147,7 +145,7 @@ function newItem(type, level, rarity) {
         if (level > Game.Level && APP.ScoreModeEnabled == 0) level = Game.Level;
         if (level > GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0) level = GLOBALS.LOCATIONS[Game.Location][2];
     }
-    let MAX_LUCK = ITEM_CONFIG.RARITIES[CLASSES[GLOBALS.LOCATIONS[Game.Location][3]]][1]; //DEFINE THE MAXIMUM DROP QUALITY TO LOCATION MAX
+    let MAX_LUCK = ITEM_CONFIG.RARITIES[CLASSES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]]][1]; //DEFINE THE MAXIMUM DROP QUALITY TO LOCATION MAX
     if (_.inRange(Game.Level, 0, 5) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 0) MAX_LUCK = 1999; // NORMAL
     if (_.inRange(Game.Level, 5, 10) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 1) MAX_LUCK = 4999; // COMMON
     if (_.inRange(Game.Level, 10, 15) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 2) MAX_LUCK = 6999; // UNCOMMON
@@ -158,11 +156,11 @@ function newItem(type, level, rarity) {
     if (BASE_LUCK > MAX_LUCK) BASE_LUCK = MAX_LUCK;
     let LUCK = _.random(BASE_LUCK, MAX_LUCK);
     item.class = "Normal";
-    if (_.inRange(LUCK, 2000, 5001)) item.class = "Common";
-    if (_.inRange(LUCK, 5000, 7001)) item.class = "Uncommon";
-    if (_.inRange(LUCK, 7000, 8501)) item.class = "Rare";
-    if (_.inRange(LUCK, 8500, 9501)) item.class = "Epic";
-    if (_.inRange(LUCK, 9500, 9851)) item.class = "Exotic";
+    if (_.inRange(LUCK, 2000, 5000)) item.class = "Common";
+    if (_.inRange(LUCK, 5000, 7000)) item.class = "Uncommon";
+    if (_.inRange(LUCK, 7000, 8500)) item.class = "Rare";
+    if (_.inRange(LUCK, 8500, 9500)) item.class = "Epic";
+    if (_.inRange(LUCK, 9500, 9850)) item.class = "Exotic";
     if (_.inRange(LUCK, 9850, 10001)) item.class = "Divine";
 
     if (type == "Armor") { //GENERATE AN ARMOR
@@ -171,8 +169,8 @@ function newItem(type, level, rarity) {
         item.level = level;
         item.object = 0;
         item.ups = GET_MAX_UPGRADES(item.class);
-        if (APP.ScoreModeEnabled == 1) item.life = Math.floor(random((level * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] * 0.75) + 100, (level * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] + 100));
-        else item.life = Math.floor(random((level * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] * 0.9) + 100, (level * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] + 100));
+        if (APP.ScoreModeEnabled == 1) item.life = Math.floor(random((level * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1] * 0.75) + 100, (level * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1] + 100));
+        else item.life = Math.floor(random((level * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1] * 0.9) + 100, (level * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1] + 100));
         item.id = 1; //SET AS ARMOR
     }
 
@@ -182,8 +180,8 @@ function newItem(type, level, rarity) {
         item.level = level;
         item.object = 0;
         item.ups = GET_MAX_UPGRADES(item.class);
-        if (APP.ScoreModeEnabled == 1) item.power = Math.floor(random((level * 3) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] * 0.75), (level * 3) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] + 5));
-        else item.power = Math.floor(random((level * 3) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1 ] * 0.9), (level * 3) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]  - 1 ] + 5));
+        if (APP.ScoreModeEnabled == 1) item.power = Math.floor(random((level * 3) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1] * 0.75), (level * 3) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1] + 5));
+        else item.power = Math.floor(random((level * 3) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1] * 0.9), (level * 3) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1] + 5));
         item.id = 4; //SET AS WEAPON
     }
 
@@ -191,10 +189,10 @@ function newItem(type, level, rarity) {
         let MULTIPLIER = _.random(ITEM_CONFIG.GEMS_MULTIPLIERS[item.class][0], ITEM_CONFIG.GEMS_MULTIPLIERS[item.class][1]); //Random number between 0.1% - 2.5%
         let GEMTYPE = _.random(1, 100);
 
-        let GEMS_DROP_RATES = APP.ScoreModeEnabled == 1 ? { MIN: [0, 35], MAX: [36, 101] } : { MIN: [0, 50], MAX: [51, 101] };
+        let GEMS_DROP_RATES = APP.ScoreModeEnabled == 1 ? { MIN: [0, 45], MAX: [46, 101] } : { MIN: [0, 50], MAX: [51, 101] };
 
         if (_.inRange(GEMTYPE, GEMS_DROP_RATES.MIN[0], GEMS_DROP_RATES.MAX[0])) { //GENERATE A POWER GEM
-            item.power = Math.floor(MULTIPLIER * ((APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) * 0.01) + ITEM_CONFIG.RARITIES[item.class][0]);
+            item.power = Math.floor(MULTIPLIER * ((APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) * 0.01) + ITEM_CONFIG.RARITIES[item.class][0] - 1);
             if (item.power < 1) item.power = 1;
             item.life = 0;
             item.name = "Power Gem";
@@ -203,7 +201,7 @@ function newItem(type, level, rarity) {
             item.id = 5; //SET AS POWER GEM
         }
         if (_.inRange(GEMTYPE, GEMS_DROP_RATES.MIN[1], GEMS_DROP_RATES.MAX[1])) { //GENERATE A LIFE GEM
-            item.life = Math.floor(MULTIPLIER * ((APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) * 0.01) + ITEM_CONFIG.RARITIES[item.class][0]);
+            item.life = Math.floor(MULTIPLIER * ((APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) * 0.01) + ITEM_CONFIG.RARITIES[item.class][0] - 1);
             if (item.life < 1) item.life = 1;
             item.power = 0;
             item.name = "Life Gem";
@@ -214,18 +212,25 @@ function newItem(type, level, rarity) {
     }
 
     if (type == "Relic") { //GENERATE A RELIC
-        let RelicType = APP.ScoreModeEnabled == 1 ? _.random(0, 3) : _.random(0, 1);
-        if (Game.Level > 10 && APP.ScoreModeEnabled == 0) RelicType = _.random(0, 2);
+        let RelicType = Game.Level > 10 ? _.random(0, 2) : _.random(0, 1);
+        if (APP.ScoreModeEnabled == 1) RelicType = _.random(0, 3);
 
-        if (RelicType == 0) item.bonus = ITEM_CONFIG.RELIC_MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]];
-        if (RelicType == 1) item.bonus = ITEM_CONFIG.RELIC_MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]];
-        if (RelicType == 2) item.bonus = ITEM_CONFIG.RELIC_SCORE_MUTLIPLIERS[ITEM_CONFIG.RARITIES[item.class][0]];
+        //ARES - POWER BONUS
+        if (RelicType == 0) item.bonus = ITEM_CONFIG.RELIC_MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1];
 
-        if (RelicType == 3) {
-            item.bonus = CLASSES[_.random(0, ITEM_CONFIG.RARITIES[item.class][0])];
-            if (ITEM_CONFIG.RARITIES[item.class][0] > 1) item.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[item.class][0] - 2, ITEM_CONFIG.RARITIES[item.class][0])];
-            if (ITEM_CONFIG.RARITIES[item.class][0] > 2) item.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[item.class][0] - 3, ITEM_CONFIG.RARITIES[item.class][0])];
+        //YGGDRASIL - LIFE BONUS
+        if (RelicType == 1) item.bonus = ITEM_CONFIG.RELIC_MULTIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1];
+
+        //HERMES - MINIMAL RARITY
+        if (RelicType == 2) {
+            item.bonus = CLASSES[_.random(0, ITEM_CONFIG.RARITIES[item.class][0]) - 1];
+            if (ITEM_CONFIG.RARITIES[item.class][0] > 1) item.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[item.class][0] - 3, ITEM_CONFIG.RARITIES[item.class][0] - 1)];
+            if (ITEM_CONFIG.RARITIES[item.class][0] > 2) item.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[item.class][0] - 4, ITEM_CONFIG.RARITIES[item.class][0] - 1)];
         }
+
+        //VULCAN - MAX SCORE 
+        if (RelicType == 3) item.bonus = ITEM_CONFIG.RELIC_SCORE_MUTLIPLIERS[ITEM_CONFIG.RARITIES[item.class][0] - 1];
+
         item.object = RelicType + 1;
         item.name = GLOBALS.RELICS_NAMES[RelicType];
         item.id = 3; //SET AS RELIC
@@ -364,6 +369,7 @@ function DefineWeapon(type, selected) {
     if (typeof (Game.inventory[selected].power) !== 'undefined') {
         Game.Weapons[type] = [Game.inventory[selected].name, Game.inventory[selected].class, 0, Game.inventory[selected].level, Game.inventory[selected].power];
         Game.MaxUPC[UPC_TYPE[type] + 3] = Game.inventory[selected].ups;
+        Game.WeaponUpgrades[type] = 0;
     }
     if (selected <= Game.MaxInv) RemoveItem(selected);
     Game.isInFight = 0;
@@ -382,16 +388,16 @@ function ConfirmRelic(R, id) {
     let DESCS = ["-",
         "Power bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RELICS[R][2], 2) + "</span>",
         "Life bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RELICS[R][2], 2) + "</span>",
-        "Max Score +<span class='" + IRCOLOR + "'>" + fix(Game.RELICS[R][2], 1) + "</span>",
         "Minimal drop quality <span class='" + Game.RELICS[R][2] + "'>" + Game.RELICS[R][2] + "</span>",
+        "Max Score +<span class='" + IRCOLOR + "'>" + fix(Game.RELICS[R][2], 1) + "</span>",
         "-"
     ];
 
     let DESCS2 = ["-",
         "Power bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[id].bonus, 2) + "</span>",
         "Life bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[id].bonus, 2) + "</span>",
-        "Max Score +<span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[id].bonus, 1) + "</span>",
         "Minimal drop quality <span class='" + Game.inventory[id].bonus + "'>" + Game.inventory[id].bonus + "</span>",
+        "Max Score +<span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[id].bonus, 1) + "</span>",
         "-"
     ];
 
@@ -444,6 +450,7 @@ function UPWeapon(WEAPON, ITEM) {
             if (Game.Weapons[WEAPON][3] + (BONUSES[Game.inventory[ITEM].class] / 10) <= APP.MaxScore) Game.Weapons[WEAPON][3] += (BONUSES[Game.inventory[ITEM].class] / 10);
             else Game.Weapons[WEAPON][3] = APP.MaxScore;
         }
+        Game.WeaponUpgrades[WEAPON] += Game.inventory[ITEM].power;
         if (ITEM < Game.MaxInv) RemoveItem(ITEM);
     }
     POPUP_CLOSE();
@@ -533,7 +540,7 @@ const CHECK_MAX_LIFE = function () {
 
     let MAX_QUALITY = APP.ScoreModeEnabled == 1 ? "Divine" : QUALITIES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]];
     for (let ARMOR in Game.Armors) {
-        let MAX_VALUE = (Game.Armors[ARMOR][4] * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1 ] + 100;
+        let MAX_VALUE = (Game.Armors[ARMOR][4] * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 100;
         if ((Game.Armors[ARMOR][3] - Game.ArmorUpgrades[ARMOR]) > MAX_VALUE) {
             Game.Armors[ARMOR][3] = (MAX_VALUE + Game.ArmorUpgrades[ARMOR]);
             console.log("CHEAT DETECTED ON ARMOR " + ARMOR);

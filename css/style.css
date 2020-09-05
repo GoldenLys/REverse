@@ -255,7 +255,7 @@ a:-webkit-any-link {
 	width: 10px;
 	border-radius: 5px;
 	border: 2px solid rgb(17 15 31);
-	background: rgb(255 255 255 / 100%);
+	background: rgb(var(--ALPHA));
 }
 
 ::-webkit-scrollbar-thumb:window-inactive {
@@ -1050,6 +1050,10 @@ input[type="text"] {
 	padding: .10em .25em;
 }
 
+#DIV-STATS .pw.segment.text-right>.pw.inline.label {
+	display: inline;
+}
+
 .pw.button.disabled {
 	max-width: 0;
 	font-size: 0;
@@ -1063,6 +1067,12 @@ input[type="text"] {
 	margin-right: 5px;
 	transition: all 250ms linear;
 	-webkit-transition: all 250ms linear;
+}
+
+.pw.dropdown>.name {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 .pw.dropdown[data-open="open"]>.name:before {
@@ -1226,7 +1236,7 @@ input[type="text"] {
 .type_card .card {
 	position: relative;
 	display: flex;
-	background: rgb(18, 19, 31);
+	background: rgb(18 19 31 / 65%);
 	justify-content: center;
 	align-items: center;
 	min-height: 260px;
@@ -1400,7 +1410,7 @@ img[src*="E.png"]:before, .error-img:before {
 .equipment .pw.segment[id="SpecialWeapon"] {
 	--QUALITY: var(--Error);
 	margin: .5em;
-	background: rgb(18 19 31);
+	background: rgb(18 19 31 / 65%);
 	padding: 0;
 	border-radius: 5px;
 	box-shadow: 0 0 10px 0 var(--QUALITY), 0 0 0 1.5px var(--QUALITY), inset 0 0 5px 1.5px var(--QUALITY) !important;
@@ -1558,4 +1568,25 @@ img[src*="E.png"]:before, .error-img:before {
 
 .pw.grey.button>.pw.yellow {
 	text-shadow: 0 0 2.5px #0c0a15;
+}
+
+.location-bg {
+	position: fixed;
+	top: 0;
+	left: 20%;
+	right: 30%;
+	bottom: 0;
+	background: center / cover no-repeat;
+}
+
+.location-bg:after {
+	content: "";
+	background: center / cover no-repeat linear-gradient(to bottom, rgb(17 15 31 / 90%) 50%, transparent);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#DIV-COMBAT>.pw.message {
+	background: rgb(18 19 31 / 65%);
 }

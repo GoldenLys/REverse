@@ -12,14 +12,18 @@ const UPDATE_STATS = function () {
     $("#Ratiostat").html(fix(Game.Wins / DEATHS, 4));
     $("#Versionstat").html("v" + GLOBALS.VERSION);
     $("#fortressstat").html(Game.FortressesCleared);
-    $("#lifestat").html("<i class='pw red fas fa-heart'></i>" + fix(Math.round(APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])), 1) + " (+" + fix(APP.CoreBaseLife - Math.round(APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])), 1) + ")");
-    $("#powerstat").html("<i class='pw blue fas fa-sword'></i>" + fix(Math.round(APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])), 1) + " (+" + fix(APP.WeaponsPower - Math.round(APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])), 1) + ")");
+    $("#lifestat").html("<i class='pw red fas fa-heart'></i>" + fix(Math.round(APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])), 1) + " <span class='pw inline label'>+" + fix(APP.CoreBaseLife - Math.round(APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])), 1) + "</span>");
+    $("#powerstat").html("<i class='pw blue fas fa-sword'></i>" + fix(Math.round(APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])), 1) + " <span class='pw inline label'>+" + fix(APP.WeaponsPower - Math.round(APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])), 1) + "</span>");
 
+    //WEAPONS
+    $("#mainweaponstat").html("<i class='pw blue fas fa-sword'></i>" + (Game.Weapons.Main[4] - Game.WeaponUpgrades.Main) + "<span class='pw inline label'>+" + Game.WeaponUpgrades.Main + "</span>");
+    $("#specialweaponstat").html("<i class='pw blue fas fa-sword'></i>" + (Game.Weapons.Special[4] - Game.WeaponUpgrades.Special) + "<span class='pw inline label'>+" + Game.WeaponUpgrades.Special + "</span>");
+    
     //ARMORS
-    $("#armor1stat").html("<i class='pw red fas fa-heart revertmargin'></i>" + (Game.Armors[1][3] - Game.ArmorUpgrades[1]) + "(+" + Game.ArmorUpgrades[1] + ")");
-    if (Game.Armors[2][0]) $("#armor2stat").html("<i class='pw red fas fa-heart revertmargin'></i>" + (Game.Armors[2][3] - Game.ArmorUpgrades[2]) + "(+" + Game.ArmorUpgrades[2] + ")"); else $("#armor2stat").html("Not yet unlocked.");
-    if (Game.Armors[3][0]) $("#armor3stat").html("<i class='pw red fas fa-heart revertmargin'></i>" + (Game.Armors[3][3] - Game.ArmorUpgrades[3]) + "(+" + Game.ArmorUpgrades[3] + ")"); else $("#armor3stat").html("Not yet unlocked.");
-    if (Game.Armors[4][0]) $("#armor4stat").html("<i class='pw red fas fa-heart revertmargin'></i>" + (Game.Armors[4][3] - Game.ArmorUpgrades[4]) + "(+" + Game.ArmorUpgrades[4] + ")"); else $("#armor4stat").html("Not yet unlocked.");
+    $("#armor1stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[1][3] - Game.ArmorUpgrades[1]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[1] + "</span>");
+    if (Game.Armors[2][0]) $("#armor2stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[2][3] - Game.ArmorUpgrades[2]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[2] + "</span>"); else $("#armor2stat").html("Not yet unlocked.");
+    if (Game.Armors[3][0]) $("#armor3stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[3][3] - Game.ArmorUpgrades[3]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[3] + "</span>"); else $("#armor3stat").html("Not yet unlocked.");
+    if (Game.Armors[4][0]) $("#armor4stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[4][3] - Game.ArmorUpgrades[4]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[4] + "</span>"); else $("#armor4stat").html("Not yet unlocked.");
 
     //LOCATIONS
     $("#locations-stats").html("");
@@ -177,7 +181,7 @@ function SendStats() {
     save();
     if (APP.LoggedIn == 1) writeUserData();
     APP.lastCloudSave = 0;
-  }
+}
 
 function TOP10() {
     APP.LEADERBOARD.RANGES[1] = 10;

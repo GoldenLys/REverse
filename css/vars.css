@@ -235,8 +235,8 @@
 
 .notice .content {
 	box-shadow: 0 0 5px #0a0a10, inset -2.5px -2.5px 5px #0a0a10;
-	min-width: 20%;
-	max-width: 50%;
+	min-width: 15%;
+    max-width: calc(30% - 30px);
 	text-align: center;
 	border-radius: 5px;
 	background: linear-gradient(to right, rgb(5 5 20 / 1), rgb(18 19 31), rgb(5 5 20 / 1));

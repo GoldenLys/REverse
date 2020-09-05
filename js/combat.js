@@ -15,7 +15,7 @@ const HEALING = function () {
         if (_.inRange(LUCK, 0, 16)) CONFIG.DEFAULT = CONFIG.HEALS[0];
         let HEAL_VALUE = random((APP.WeaponsPower * CONFIG.DEFAULT[0]), (APP.WeaponsPower * CONFIG.DEFAULT[1])) / 100;
         APP.CoreLife = Math.round(APP.CoreLife + HEAL_VALUE);
-        CONFIG.TEXT = HEAL_VALUE > 65 ?  `+ <span class="pw green">${fix(HEAL_VALUE, 0)}</span>` : `+ ${fix(HEAL_VALUE, 0)}`;
+        CONFIG.TEXT = LUCK <= 15 ?  `+ <span class="pw green">${fix(HEAL_VALUE, 0)}</span>` : `+ ${fix(HEAL_VALUE, 0)}`;
         if (HEAL_VALUE < 1) CONFIG.TEXT = "MISSED";
     }
     $("#EnemyDamage").html("").hide();
@@ -155,7 +155,7 @@ function WinFight() {
         if (Game.Enemy[1] >= 6 && !Game.MissionStarted[0]) LOOT_RATES[0] = 1;
 
         //CORE LOOT CHANCE
-        var LOOTCHANCE1 = random(1, 100);
+        var LOOTCHANCE1 = random(0, 100);
         if (LOOTCHANCE1 > 0 && LOOTCHANCE1 <= LOOT_RATES[0] && Game.isInFight != 2) {
             COUNTED_LOOTS++;
             if (APP.ScoreModeEnabled == 0) {
@@ -179,8 +179,8 @@ function WinFight() {
             let TIER = APP.ScoreModeEnabled == 0 ? "Level" : "Score";
             let TIERRANK = APP.ScoreModeEnabled == 0 ? Game.inventory[ITEMID].level : "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[ITEMID].level * 10);
 
-            var UPS = Game.inventory[ITEMID].ups > 0 ? "" + Game.inventory[ITEMID].ups + "<i class='pw orange fad fa-gem revertmargin'></i>" : "";
-            var LOOTCONTENT = Game.inventory[ITEMID].id == 4 ? "<i class='pw blue fas fa-sword revertmargin'></i>" + fix(Game.inventory[ITEMID].power, "auto") : "<i class='pw red fas fa-heart revertmargin'></i>" + fix(Game.inventory[ITEMID].life, "auto");
+            var UPS = Game.inventory[ITEMID].ups > 0 ? "" + Game.inventory[ITEMID].ups + "<i class='pw orange fad fa-gem'></i>" : "";
+            var LOOTCONTENT = Game.inventory[ITEMID].id == 4 ? "<i class='pw blue fas fa-sword'></i>" + fix(Game.inventory[ITEMID].power, "auto") : "<i class='pw red fas fa-heart'></i>" + fix(Game.inventory[ITEMID].life, "auto");
             if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'><div class='pw inline label'>" + TIER + " " + TIERRANK + "</div>" + Game.inventory[ITEMID].name + "<span class='" + Game.inventory[ITEMID].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[ITEMID].class + "'> " + Game.inventory[ITEMID].class + " </span><br>" + LOOTCONTENT + "</div></div>";
         }
 
@@ -201,7 +201,7 @@ function WinFight() {
                 }
             }
             let ITEMID = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
-            let DESCRIPTIONS = ["-", "Power bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Life bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Max Score +" + fix(Game.inventory[ITEMID].bonus, 1), "Minimal drop quality <span class='" + Game.inventory[ITEMID].bonus + "'>" + Game.inventory[ITEMID].bonus + "</span>"];
+            let DESCRIPTIONS = ["-", "Power bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Life bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Minimal drop quality <span class='" + Game.inventory[ITEMID].bonus + "'>" + Game.inventory[ITEMID].bonus + "</span>", "Max Score +" + fix(Game.inventory[ITEMID].bonus, 1)];
             if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].name + "<br><span class='" + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].class + "</span><br>" + DESCRIPTIONS[Game.inventory[ITEMID].object] + "</div></div>";
         }
         //KEY LOOT CHANCE

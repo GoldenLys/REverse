@@ -38,7 +38,7 @@ var APP = {
 };
 
 $(document).ready(function(){
-  if (location.href.match(/(192.168.1.141).*/)) GLOBALS.VERSION = "dev";
+  if (location.href.match(/(:5500).*/)) GLOBALS.VERSION = "dev";
   document.title = GLOBALS.NAME;
   $("#site-name").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
   if (location.href.match(/(goldenlys.github.io).*/)) window.oncontextmenu = (e) => { e.preventDefault(); };
@@ -190,7 +190,7 @@ const UpdateGame = function() {
     else { Game.DIMENSION_MULTIPLIERS[0] += 0; }
     if (Game.RELICS[R][1] == 2) { Game.DIMENSION_MULTIPLIERS[1] += Game.RELICS[R][2]; }
     else { Game.DIMENSION_MULTIPLIERS[1] += 0; }
-    if (Game.RELICS[R][1] == 3) { APP.MaxScore += (Game.RELICS[R][2] / 10); }
+    if (Game.RELICS[R][1] == 4) { APP.MaxScore += (Game.RELICS[R][2] / 10); }
   }
   if (Game.isInFight == 1 && Game.class == "none") {
     Game.username = "Default";
@@ -335,6 +335,7 @@ const UpdateUI = function() {
     $("#BUTTONS_COMBAT").show();
     UpdateCombat();
   }
+  $("#LOCATION_BACKGROUND").attr("style", `background-image: url("../images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
   if ($('#DIV-STATS').is(":visible")) UPDATE_STATS();
   GenArmors();
   GenWeapons();
