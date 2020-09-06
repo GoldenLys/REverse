@@ -1,10 +1,6 @@
 function DYNAMICS() {
   $("#menu").on("click", "div", function () {
-    var id = $(this).data("id");
     hideMenuTabs();
-    $("#CATEGORIE-" + id).show();
-    $("#C" + id).addClass("active");
-    $("#C" + id).removeClass("");
     TOP10();
   });
 
@@ -138,6 +134,7 @@ function DYNAMICS() {
   $(".menu li").bind("click", function (e) {
     e.preventDefault();
     let TOGGLE = $(this).hasClass("active") ? "" : "active";
+    CLOSE_MENUS();
     $('.link.active').each(function () { $(this).attr("class", "link"); });
     if ($(this).data("menu") != "#") {
       $(this).attr("class", "link " + TOGGLE);

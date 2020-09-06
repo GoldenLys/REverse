@@ -1,7 +1,6 @@
 /*
   TODO LIST :
     • Adding the RGB picker
-    • A better anti-cheat
     • Bug testing
 
   IDEAS :
@@ -46,7 +45,7 @@ $(document).ready(function () {
   if (location.href.match(/(:5500).*/)) GLOBALS.VERSION = "dev";
   document.title = GLOBALS.NAME;
   $("#site-name").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
-  if (location.href.match(/(goldenlys.github.io).*/)) window.oncontextmenu = (e) => { e.preventDefault(); };
+  if (location.href.match(/(alpha.purplewizard.space).*/)) window.oncontextmenu = (e) => { e.preventDefault(); };
   ResetTheme(0);
   if (localStorage.getItem("Alpha") != null) load();
   if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin" && !$("#LOGIN-NOTICE").hasClass("active") && GLOBALS.VERSION != "dev") LOGIN("RETURN");
@@ -56,6 +55,7 @@ $(document).ready(function () {
     $(".footer").show();
     UpdateEngine();
     GenMissions();
+    CHECK_EQUIPMENT();
     GenEnemy();
   }
   Game.isInFight = 0;
@@ -142,9 +142,8 @@ const UpdateEngine = function () {
     }
   }
   if (Game.Emp > 50) Game.Emp = 50;
-  Game.Shards = Math.round(Game.Shards);
   let ONLINEICON = "<i class='pw red far fa-circle'></i>";
-  if (Game.username != "Default" && location.href.match(/(goldenlys.github.io).*/) && Game.username != "Default" && Game.username != null && APP.LoggedIn == 1 && APP.Email != "none") ONLINEICON = "<i class='pw alpha fas fa-circle'></i>";
+  if (Game.username != "Default" && location.href.match(/(alpha.purplewizard.space).*/) && Game.username != "Default" && Game.username != null && APP.LoggedIn == 1 && APP.Email != "none") ONLINEICON = "<i class='pw alpha fas fa-circle'></i>";
   $("#Equipment-Title").html("Equipment " + SCORE);
   $("#PlayerID").html("<div class='pw alpha'>" + ONLINEICON + Game.username + " <span class='pw white inline label'>" + LEVEL + "</span></div>");
   $("#PlayerSprite").html("<img class='pw small image' src='images/avatars/avatar" + Game.Avatar + ".jpg'>");
@@ -272,7 +271,7 @@ const UpdateUI = function () {
   if (((APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]) - Math.floor(APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) < 1) $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%"); else $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%");
   if (((APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1]) - Math.floor(APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) < 1) $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%"); else $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%");
   $("#INVUPGVAL").html(Game.MaxInv);
-  $("#ShardsNumber").html("<i class='pw blue fal fa-dna'></i>" + fix(Game.Shards, "auto") + "</span> Dimensional Fragments");
+  $("#ShardsNumber").html("<i class='pw blue fal fa-dna'></i>" + fix(Game.Shards, "auto-round") + "</span> Dimensional Fragments");
   if (Game.username == "Default") {
     $("#menu").hide();
     $("#GAME").hide();
@@ -303,18 +302,19 @@ const UpdateUI = function () {
   var completedstory = APP.LastMission == APP.TotalMissions ? "<span class='pw alpha'>Yes</span>" : "<span class='pw red'>Not Yet</span>";
   $("#WTShards").html("Score Required : <span class='pw alpha'><i class='fad fa-dice-d20'></i>" + (((30 + (Game.Simulation * 5)) * 10) - 5) + "</span><br>Story completed : " + completedstory + "<br>Fragments reward : <span class='pw alpha'><i class='fal fa-dna'></i>" + shards + "</span>");
   $("#CurrWT").html("Current Dimension : <span class='pw alpha'><i class='globe icon'></i>" + Game.Simulation + "</span>");
-  var XPMCOL = GetMultPrice(0) > Game.Shards ? "pw red" : "pw green";
-  var POWMCOL = GetMultPrice(1) > Game.Shards ? "pw red" : "pw green";
-  var LIFEMCOL = GetMultPrice(2) > Game.Shards ? "pw red" : "pw green";
-  var INVCOL = GetMultPrice(3) > Game.Shards ? "pw red" : "pw green";
-  let XP_UPG_TEXT = GetMultPrice(0) === Infinity ? "MAXED OUT" : `<i class='fal fa-dna'></i>${GetMultPrice(0)}`;
-  let POWER_UPG_TEXT = GetMultPrice(1) === Infinity ? "MAXED OUT" : `<i class='fal fa-dna'></i>${GetMultPrice(1)}`;
-  let LIFE_UPG_TEXT = GetMultPrice(2) === Infinity ? "MAXED OUT" : `<i class='fal fa-dna'></i>${GetMultPrice(2)}`;
-  let INV_UPG_TEXT = GetMultPrice(3) === Infinity ? "MAXED OUT" : `<i class='fal fa-dna'></i>${GetMultPrice(3)}`;
-  $("#XPMULTPRICE").html("<span class='" + XPMCOL + "'>" + XP_UPG_TEXT + "</span>");
-  $("#POWERMULTPRICE").html("<span class='" + POWMCOL + "'>" + POWER_UPG_TEXT + "</span>");
-  $("#LIFEMULTPRICE").html("<span class='" + LIFEMCOL + "'>" + LIFE_UPG_TEXT + "</span>");
-  $("#INVUPGPRICE").html("<span class='" + INVCOL + "'>" + INV_UPG_TEXT + "</span>");
+  let UPGRADES_IDs = ["XPMULTPRICE", "POWERMULTPRICE", "LIFEMULTPRICE", "INVUPGPRICE"];
+  let UPGRADE_TEXT = [];
+  let CAN_AFFORD_UPGRADE = [];
+  for (let UPGRADE = 0; UPGRADE < 4; UPGRADE++) {
+    CAN_AFFORD_UPGRADE[UPGRADE] = GetMultPrice(UPGRADE) > Game.Shards ? "pw red" : "pw green";
+    if (GetMultPrice(UPGRADE)>Game.Shards) $(`#UPGRADE_${UPGRADE}`).hide(); else $(`#UPGRADE_${UPGRADE}`).show();
+    if (GetMultPrice(UPGRADE) === Infinity) {
+      UPGRADE_TEXT[UPGRADE] = "MAXED OUT";
+    } else {
+      UPGRADE_TEXT[UPGRADE] = `<i class='fal fa-dna'></i>${GetMultPrice(UPGRADE)}`;
+    }
+    $(`#${UPGRADES_IDs[UPGRADE]}`).html(`<span class="${CAN_AFFORD_UPGRADE[UPGRADE]}">${UPGRADE_TEXT[UPGRADE]}</span>`);
+  }
   $("#TOPNEXT").html((APP.LEADERBOARD.PAGE + 1) + " <i class='large arrow alternate circle right outline icon'></i>");
   $("#TOPPREVIOUS").html("<i class='large arrow alternate circle left outline icon'></i> " + (APP.LEADERBOARD.PAGE - 1));
   if (APP.LEADERBOARD.RANGES[1] + 1 <= APP.LastId) $("#TOPNEXT").attr('class', 'pw button'); else $("#TOPNEXT").attr('class', 'pw button disabled');
@@ -330,7 +330,8 @@ const UpdateUI = function () {
     $("#PLAYER-ETA").html("<div class='pw inline label'><i class='fas fa-map-marked-alt icon'></i> Exploration</div>of " + GLOBALS.LOCATIONS[Game.Location][0]);
   }
   if ($('#DIV-COMBAT').is(":visible")) $("#DIV-REWARDS").hide();
-  $("#CloudTimer").html("Last cloud sync " + toHHMMSS(APP.lastCloudSave) + " ago, as <span class='pw alpha'>" + Game.username + "</span>.");
+  
+  if (APP.LoggedIn == 1) $("#CloudTimer").html("Last cloud sync " + toHHMMSS(APP.lastCloudSave) + " ago, as <span class='pw alpha'>" + Game.username + "</span>."); else $("#CloudTimer").html("Cloud sync disabled.");
   $("#LABEL_INVENTORY").html("<i class='fas fa-sack'></i> " + (Game.inventory.length) + "/" + Game.MaxInv);
   $("#LABEL_CASH").html(fix(Game.Cash, 1));
   $("#mcount").html("Missions completed (" + CompletedMissions + "/" + APP.TotalMissions + ")");

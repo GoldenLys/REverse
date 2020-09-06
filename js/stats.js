@@ -18,7 +18,7 @@ const UPDATE_STATS = function () {
     //WEAPONS
     $("#mainweaponstat").html("<i class='pw blue fas fa-sword'></i>" + (Game.Weapons.Main[4] - Game.WeaponUpgrades.Main) + "<span class='pw inline label'>+" + Game.WeaponUpgrades.Main + "</span>");
     $("#specialweaponstat").html("<i class='pw blue fas fa-sword'></i>" + (Game.Weapons.Special[4] - Game.WeaponUpgrades.Special) + "<span class='pw inline label'>+" + Game.WeaponUpgrades.Special + "</span>");
-    
+
     //ARMORS
     $("#armor1stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[1][3] - Game.ArmorUpgrades[1]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[1] + "</span>");
     if (Game.Armors[2][0]) $("#armor2stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[2][3] - Game.ArmorUpgrades[2]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[2] + "</span>"); else $("#armor2stat").html("Not yet unlocked.");
@@ -35,7 +35,7 @@ const UPDATE_STATS = function () {
     $("#Deathstat").html(Game.Loses);
 };
 
-var config = {
+const firebaseConfig = {
     apiKey: "AIzaSyAsKlY89gHACvQHywLv04xtxPBvhRGoNYo",
     authDomain: "matrix-731a7.firebaseapp.com",
     databaseURL: "https://matrix-731a7.firebaseio.com",
@@ -46,15 +46,12 @@ var config = {
     measurementId: "G-FK9048JSDP"
 };
 
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 var provider = new firebase.auth.GoogleAuthProvider();
-
-(function () {
-    // Using a popup.
-    var provider = new firebase.auth.GoogleAuthProvider();
-    provider.addScope('profile');
-    provider.addScope('email');
-})();
+provider.addScope('profile');
+provider.addScope('email');
+var database = firebase.database();
 
 function login() {
     firebase.auth().signInWithPopup(provider).then(function (result) {
@@ -88,8 +85,8 @@ function ResetLeaderBoard() {
 }
 
 function writeUserData() {
-    if (location.href.match(/(goldenlys.github.io).*/) && Game.username != "Default" && Game.username != null && APP.LoggedIn == 1) {
-        firebase.database().ref('users/' + Game.username).set({
+    if (location.href.match(/(purplewizard.space).*/) && Game.username != "Default" && Game.username != null && APP.LoggedIn == 1) {
+        database.ref('users/' + Game.username).set({
             Name: Game.username,
             Email: APP.Email,
             Order: (-1 * APP.Ranking) - (100000 * Game.Simulation),
@@ -103,7 +100,7 @@ function writeUserData() {
             Deaths: Game.Loses,
             Avatar: Game.Avatar,
             Defeated: Game.Defeated,
-            Version: APP.VERSION,
+            Version: GLOBALS.VERSION.substring(0,3),
             Theme: Game.Theme,
         });
     }
@@ -111,7 +108,7 @@ function writeUserData() {
 
 function NewUserData(old) {
     if (old != "Default" && old == Game.username) {
-        firebase.database().ref('users/' + old).set(null);
+        database.ref('users/' + old).set(null);
         var newname = prompt("Please write a new name");
 
         Game.username = newname;
@@ -120,8 +117,8 @@ function NewUserData(old) {
 }
 
 function ReadDB() {
-    var ref = firebase.database().ref("users");
-    var CXD = firebase.database().ref("codes");
+    var ref = database.ref("users");
+    var CXD = database.ref("codes");
     CXD.on("child_added", function () { });
     APP.Leader = 0;
     id = 0;
@@ -131,7 +128,7 @@ function ReadDB() {
             if (Game.config[4] == 0) {
                 UpdateDB(snapshot);
             } else {
-                if (snapshot.val().Version >= APP.VERSION) {
+                if (snapshot.val().Version >= GLOBALS.VERSION.substring(0,3)) {
                     UpdateDB(snapshot);
                 }
             }
@@ -140,7 +137,7 @@ function ReadDB() {
         ref.orderByChild("Order2").limitToLast(100000).on("child_added", function (snapshot) {
             if (snapshot.val().Version > 1.15) {
                 if (Game.config[4] == 0) UpdateDB(snapshot);
-                else if (snapshot.val().Version >= APP.VERSION) UpdateDB(snapshot);
+                else if (snapshot.val().Version >= GLOBALS.VERSION.substring(0,3)) UpdateDB(snapshot);
             }
         });
     }
@@ -160,7 +157,7 @@ function UpdateDB(snapshot) {
             var DEATHS = snapshot.val().Deaths == 0 ? 1 : snapshot.val().Deaths;
             $("#LEADERBOARD").append("<div id='leader-" + id + "' class='pw horizontal segments " + isPlayer + "'>" +
                 `<div class='pw segment'>#${id}</div>` +
-                `<div class='pw segment avatar' style='color:${Theme};'><img class='pw mini centered image' src='images/avatars/avatar${Avatar}.jpg'>${snapshot.key}</div>` +
+                `<div class='pw segment avatar' style='color:rgb(${Theme});'><img class='pw mini centered image' src='images/avatars/avatar${Avatar}.jpg'>${snapshot.key}</div>` +
                 `<div class='pw segment'><i class='fad fa-dice-d20'></i>${fix(snapshot.val().Ranking, 0)} (${fix(snapshot.val().Level, 0)})</div>` +
                 `<div class='pw segment'>${fix(snapshot.val().WT, 1)}</div>` +
                 `<div class='pw segment'>${fix(snapshot.val().CorePower, "auto")}</div>` +

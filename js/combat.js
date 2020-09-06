@@ -55,7 +55,7 @@ const ClearProtect = function () {
 };
 
 const MAIN_ATTACK = function () {
-    CHECK_MAX_LIFE();
+    CHECK_EQUIPMENT();
     if (Game.isInFight != 1) Game.isInFight = 1;
     if (APP.isCovered) ClearProtect();
     var luck = random(1, 100);
@@ -74,7 +74,7 @@ const MAIN_ATTACK = function () {
 };
 
 const SPECIAL_ATTACK = function () {
-    CHECK_MAX_LIFE();
+    CHECK_EQUIPMENT();
     if (Game.isInFight != 1) Game.isInFight = 1;
     if (APP.isCovered) ClearProtect();
     if (Game.Emp > 0 && !$("#emp-btn").hasClass("transparent")) {
@@ -287,7 +287,7 @@ const UpdateCombat = function () {
     var LVLTEXT = APP.ScoreModeEnabled == 0 ? " Level " : " Score <i class='fad fa-dice-d20'></i>";
     var TIERTEXT = APP.ScoreModeEnabled == 0 ? Math.round(Game.Enemy[2]) : Math.floor(Game.Enemy[2] * 10);
     var EnemyName = Game.Enemy[1] > 5 ? GLOBALS.BOSSES_NAMES[Game.Location] : GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]];
-    $("#EnemyTitle").html("<span class='Enemy" + Game.Enemy[1] + ">" + THREATS[Game.Enemy[1]] + " " + EnemyName + "</span><span class='pw white inline label'>" + LVLTEXT + fix(TIERTEXT, 0) + "</span>");
+    $("#EnemyTitle").html("<span class='Enemy" + Game.Enemy[1] + "'>" + THREATS[Game.Enemy[1]] + " " + EnemyName + "</span><span class='pw white inline label'>" + LVLTEXT + fix(TIERTEXT, 0) + "</span>");
     $("#EnemyPower").html("<i class='pw blue fas fa-sword'></i> " + fix(Game.Enemy[3], "auto"));
     $("#EnemyLife").html("<i class='pw red fas fa-heart'></i> <span class='" + ENEMY_LIFE_COLOR + "'>" + fix(Game.Enemy[5], "auto") + "</span>");
     $("#PlayerLife").html("<i class='pw red fas fa-heart'></i> <span class='" + PLAYER_LIFE_COLOR + "'>" + fix(APP.CoreLife, "auto") + "</span>/" + fix(APP.CoreBaseLife, "auto") + " ");

@@ -21,10 +21,10 @@ const ConfirmWT = function () {
         Game.MaxUPC = [0, 0, 0, 0, 0, 0];
         Game.Armors = { 1: [true, "Basic Armor", "Normal", 100, 1, 0], 2: [false, "Basic Armor", "Normal", 100, 1, 0], 3: [false, "Basic Armor", "Normal", 100, 1, 0], 4: [false, "Basic Armor", "Normal", 100, 1, 0], };
         Game.ArmorUpgrades = [null, 0, 0, 0, 0];
-        Game.WeaponsUpgrades = {Main: 0, Special: 0};
+        Game.WeaponsUpgrades = { Main: 0, Special: 0 };
         Game.RELICS = [[], ["Normal", 5, 0], ["Normal", 5, 0], ["Normal", 5, 0], ["Normal", 5, 0]];
-        Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10 + (Game.Simulation * 1)];
-        Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10 + (Game.Simulation * 1)];
+        Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10];
+        Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10];
         Game.isInFight = 0;
         Game.MissionsCompleted = [];
         Game.Location = 0;
@@ -43,7 +43,7 @@ const ConfirmWT = function () {
     }
 };
 
-const GET_MAX_UPGRADES = function(CLASS) {
+const GET_MAX_UPGRADES = function (CLASS) {
     let CONFIG = [
         { Normal: 0, Common: _.random(0, 1), Uncommon: _.random(1, 2), Rare: _.random(2, 2), Epic: _.random(2, 3), Exotic: _.random(3, 4), Divine: _.random(4, 5) },
         { Normal: _.random(0, 1), Common: _.random(0, 2), Uncommon: _.random(1, 2), Rare: _.random(2, 3), Epic: _.random(3, 4), Exotic: _.random(3, 5), Divine: _.random(5, 6) },
@@ -60,22 +60,32 @@ const DIMENSIONAL_UPGRADE = function (TYPE) {
     }
 };
 
-const GetMultPrice = function (id) {
-    if (typeof Game.Upgrades[id] !== "number") Game.Upgrades[id] = 0;
-    let price = 2;
-    if (Game.Upgrades[id] >= 10) price = 3;
-    if (Game.Upgrades[id] >= 20) price = 4;
-    if (Game.Upgrades[id] >= 30) price = 5;
-    if (Game.Upgrades[id] >= 40) price = 6;
-    if (Game.Upgrades[id] >= 50) price = 8;
-    if (Game.Upgrades[id] >= 60) price = 10;
-    if (Game.Upgrades[id] >= 70) price = 12;
-    if (Game.Upgrades[id] >= 80) price = 15;
-    if (Game.Upgrades[id] >= 90) price = 25;
-    if (Game.Upgrades[id] >= 100) price = 50;
-    if (id === 0 && Game.Upgrades[id] >= 200) price = Infinity;
-    if (id === 1 && Game.Upgrades[id] >= 100) price = Infinity;
-    if (id === 2 && Game.Upgrades[id] >= 100) price = Infinity;
-    if (id === 3 && Game.Upgrades[id] >= 50) price = Infinity;
-    return price;
+const GetMultPrice = function (UPGRADE) {
+    if (typeof Game.Upgrades[UPGRADE] !== "number") Game.Upgrades[UPGRADE] = 0;
+    let SHARDS = Infinity;
+    let TIERS = {
+        // EXP Multiplier
+        0: {
+            0: 2, 10: 3, 20: 4, 30: 5, 40: 10, 50: 15, 60: 20, 70: 25, 80: 30, 90: 35, 100: 50,
+            110: 75, 120: 85, 130: 90, 140: 95, 150: 100, 160: 115, 170: 125, 180: 150, 190: 175, 200: Infinity,
+        },
+        // Damage Multiplier
+        1: {
+            0: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity,
+        },
+        // Armor Multiplier
+        2: {
+            0: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity,
+        },
+        // Inventory Slots
+        3: {
+            0: 10, 10: 15, 20: 20, 30: 25, 40: 30, 50: 35, 60: 40, 70: 50, 80: Infinity,
+        },
+    };
+
+    for (let TIER in TIERS[UPGRADE]) {
+        if (Game.Upgrades[UPGRADE] >= Number(Object.keys(TIERS[UPGRADE])[TIER])) SHARDS = TIERS[UPGRADE][TIER];
+    }
+
+    return SHARDS;
 };

@@ -75,6 +75,7 @@ function fix(x, type) {
     if (x > 1000) return numeral(x).format("0.0a");
     if (x > 10000) return numeral(x).format("0.00a");
   }
+  if (type == "auto-round") { if (x != Math.round(x)) return numeral(x).format("0.0a"); else return numeral(x).format("0a"); }
 }
 
 function getDate() {
@@ -110,7 +111,6 @@ const toHHMMSS = function (number) {
 //UI FUNCTIONS
 
 const OPEN_MENU = function (MENU, STATUS) {
-  CLOSE_MENUS();
   if (STATUS === "active") {
     $("#DIV-" + MENU).show();
     $("#DIV-COMBAT").hide();
@@ -128,6 +128,7 @@ const OPEN_MENU = function (MENU, STATUS) {
 
 const CLOSE_MENUS = function () {
   let MENUS = ["INVENTORY", "PRESTIGE", "STATS", "LEADERBOARD", "SETTINGS", "CREDITS"];
+  $('.link.active').each(function () { $(this).attr("class", "link"); });
   for (let M in MENUS) {
     $("#DIV-" + MENUS[M]).hide();
   }
@@ -277,7 +278,8 @@ function GenExplorationMenu() {
     let LEVEL = APP.ScoreModeEnabled == 0 ? `<span class="${MINLEVEL}">${GLOBALS.LOCATIONS[E][1]} </span>-<span class="${MAXLEVEL}"> ${GLOBALS.LOCATIONS[E][2]}</span>` : "<span class='pw green'>" + APP.MaxLevel + "</span>";
     var UNLOCKED = Game.Level >= GLOBALS.LOCATIONS[E][1] ? "pw green bold" : "pw red bold";
     if (Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 0) UNLOCKED = "pw red bold";
-    var UNLOCKTEXT = Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 1 ? "<span class='pw green'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Finished</span>" : "<span class='pw red'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Unfinished</span>";
+    let UNLOCKTEXT = Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 1 ? "<span class='pw green'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Finished</span>" : "<span class='pw red'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Unfinished</span>";
+    if (Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 0 && !Game.MissionStarted[0]) UNLOCKTEXT = "<span class='pw red'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Not Started</span>";
 
     let BTN = Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 1 ? "<div class='pw fluid darkgrey button' onclick='explore(" + E + ");' >Travel <i class='" + UNLOCKED + " fal fa-arrow-right'></i></div>" : "";
     if (Game.MissionStarted[0] || Game.Location == E) BTN = "";
