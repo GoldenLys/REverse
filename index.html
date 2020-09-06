@@ -13,8 +13,9 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.14.0/css/pro.min.css"
         async />
-    <link href="css/vars.css?v=3.017" rel="stylesheet" async />
-    <link href="css/style.css?v=3.017" rel="stylesheet" async />
+    <link href="css/vars.css?v=3.018" rel="stylesheet" async />
+    <link href="css/style.css?v=3.018" rel="stylesheet" async />
+    <link href="css/palette.css?v=3.018" rel="stylesheet" async />
 </head>
 
 <body>
@@ -689,13 +690,51 @@
                     <div class="pw segment">
                         <h3 class="pw horizontal divider"><i class="fal fa-terminal"></i> Promotional Codes</h3>
                         If you have a promotional code, write it here.
-                        <input id="promocode" placeholder="Abc123" type="text" maxlength="6"><br>
-                        <div id="CheckCode" class="pw fluid grey button">Check code</div><br><br>
+                        <input id="promocode" placeholder="Abc123" type="text" maxlength="6">
+                        <div id="CheckCode" class="pw fluid grey button">Check code</div>
                         <span id="codereturn"></span>
                     </div>
 
-                    <div class="pw horizontal divider"><i class="fas fa-paint brush "></i> Theme</div>
-                    <!--THEME SETTINGS HTML-->
+                    <div class="pw horizontal divider"><i class="fas fa-paint-brush "></i> Theme</div>
+                    <div class="color-picker">
+                        <div class="content">
+                            <div class="hex-color">
+                                <div class="text">#</div>
+                                <input id="color-name" type="text" placeholder="000000" value="" minlength="3"
+                                    maxlength="6" disabled>
+                            </div>
+
+                            <div class="divider"></div>
+                            <div class="selector red noselect" id="selector-red">
+                                <div class="container">
+                                    <div class="value">0</div>
+                                </div>
+                                <div class="button minus"><i class="fal fa-minus"></i></div>
+                                <input class="color-range red" id="range-red" value="0" type="range" min="0" max="255">
+                                <div class="button plus"><i class="fal fa-plus"></i></div>
+                            </div>
+
+                            <div class="selector green noselect" id="selector-green">
+                                <div class="container">
+                                    <div class="value">0</div>
+                                </div>
+                                <div class="button minus"><i class="fal fa-minus"></i></div>
+                                <input class="color-range green" id="range-green" value="0" type="range" min="0"
+                                    max="255">
+                                <div class="button plus"><i class="fal fa-plus"></i></div>
+                            </div>
+                            <div class="selector blue noselect" id="selector-blue">
+                                <div class="container">
+                                    <div class="value">0</div>
+                                </div>
+                                <div class="button minus"><i class="fal fa-minus"></i></div>
+                                <input class="color-range blue" id="range-blue" value="0" type="range" min="0"
+                                    max="255">
+                                <div class="button plus"><i class="fal fa-plus"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pw fluid alpha button" id="RESET_THEME">Reset Theme</div>
                 </div>
             </div>
 
@@ -916,15 +955,16 @@
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
-    <script type="text/javascript" src="js/functions.js?v=3.017"></script>
-    <script type="text/javascript" src="js/config.js?v=3.017"></script>
-    <script type="text/javascript" src="js/stats.js?v=3.017"></script>
-    <script type="text/javascript" src="js/combat.js?v=3.017"></script>
-    <script type="text/javascript" src="js/inventory.js?v=3.017"></script>
-    <script type="text/javascript" src="js/dimension.js?v=3.017"></script>
-    <script type="text/javascript" src="js/missions.js?v=3.017"></script>
-    <script type="text/javascript" src="js/events.js?v=3.017"></script>
-    <script type="text/javascript" src="js/app.js?v=3.017"></script>
+    <script type="text/javascript" src="js/functions.js?v=3.018"></script>
+    <script type="text/javascript" src="js/config.js?v=3.018"></script>
+    <script type="text/javascript" src="js/stats.js?v=3.018"></script>
+    <script type="text/javascript" src="js/combat.js?v=3.018"></script>
+    <script type="text/javascript" src="js/inventory.js?v=3.018"></script>
+    <script type="text/javascript" src="js/dimension.js?v=3.018"></script>
+    <script type="text/javascript" src="js/missions.js?v=3.018"></script>
+    <script type="text/javascript" src="js/events.js?v=3.018"></script>
+    <script type="text/javascript" src="js/app.js?v=3.018"></script>
+    <script type="text/javascript" src="js/palette.js?v=3.018"></script>
 </body>
 
 </html>

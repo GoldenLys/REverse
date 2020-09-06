@@ -39,13 +39,16 @@ var APP = {
   isCovered: false,
   LastCover: 0,
   NextHeal: 5,
+  TYPES: ["red", "green", "blue"],
+  VERSION: 0.1,
+  PICKER: [0, 0, 0],
+  SELECTION: "",
 };
 
 $(document).ready(function () {
   if (location.href.match(/(:5500).*/)) GLOBALS.VERSION = "dev";
   document.title = GLOBALS.NAME;
   $("#site-name").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
-  if (location.href.match(/(alpha.purplewizard.space).*/)) window.oncontextmenu = (e) => { e.preventDefault(); };
   ResetTheme(0);
   if (localStorage.getItem("Alpha") != null) load();
   if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin" && !$("#LOGIN-NOTICE").hasClass("active") && GLOBALS.VERSION != "dev") LOGIN("RETURN");
@@ -335,7 +338,7 @@ const UpdateUI = function () {
   $("#LABEL_INVENTORY").html("<i class='fas fa-sack'></i> " + (Game.inventory.length) + "/" + Game.MaxInv);
   $("#LABEL_CASH").html(fix(Game.Cash, 1));
   $("#mcount").html("Missions completed (" + CompletedMissions + "/" + APP.TotalMissions + ")");
-  if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0]) $("#MaxPOSLVL").html("You\'ve reached the maximum level for this area, please check the next available missions."); else $("#MaxGLOBALS.LOCATIONSLVL").html("");
+  if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0]) $("#MaxPOSLVL").html("You\'ve reached the maximum level for this area, please check the next available missions."); else $("#MaxPOSLVL").html("");
   if ($('#DIV-INVENTORY').is(":visible")) {
     $("#DIV-REWARDS").hide();
     $("#DIV-COMBAT").hide();

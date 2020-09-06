@@ -278,7 +278,7 @@ function GenExplorationMenu() {
     let LEVEL = APP.ScoreModeEnabled == 0 ? `<span class="${MINLEVEL}">${GLOBALS.LOCATIONS[E][1]} </span>-<span class="${MAXLEVEL}"> ${GLOBALS.LOCATIONS[E][2]}</span>` : "<span class='pw green'>" + APP.MaxLevel + "</span>";
     var UNLOCKED = Game.Level >= GLOBALS.LOCATIONS[E][1] ? "pw green bold" : "pw red bold";
     if (Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 0) UNLOCKED = "pw red bold";
-    let UNLOCKTEXT = Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 1 ? "<span class='pw green'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Finished</span>" : "<span class='pw red'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Unfinished</span>";
+    let UNLOCKTEXT = Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 1 ? "<span class='pw green'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Completed</span>" : "<span class='pw red'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Uncompleted</span>";
     if (Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 0 && !Game.MissionStarted[0]) UNLOCKTEXT = "<span class='pw red'>" + GLOBALS.MISSIONS[GLOBALS.LOCATIONS[E][4]][0] + " - Not Started</span>";
 
     let BTN = Game.MissionsCompleted[GLOBALS.LOCATIONS[E][4]] == 1 ? "<div class='pw fluid darkgrey button' onclick='explore(" + E + ");' >Travel <i class='" + UNLOCKED + " fal fa-arrow-right'></i></div>" : "";
@@ -316,20 +316,6 @@ function explore(loc) {
 
 function UpdatePage() {
   location.reload();
-}
-
-function rgbToHex(rgb) {
-  let hex = Number(rgb).toString(16);
-  if (hex.length < 2) hex = "0" + hex;
-  if (hex == 0) hex = "00";
-  return hex;
-}
-
-function fullColorHex(r, g, b) {
-  let red = rgbToHex(r);
-  let green = rgbToHex(g);
-  let blue = rgbToHex(b);
-  return red + green + blue;
 }
 
 function CalcEXP(level) {
@@ -472,19 +458,6 @@ const LOGIN = function (state) {
   $("#wb-text").html(text);
   $("#LOGIN-NOTICE").attr("class", "popup active");
 };
-
-//THEME FUNCTIONS
-
-function ResetTheme(code) {
-  if (code != 2) Game.Theme = "19 241 210";
-  $('body').attr("style", `--ALPHA: ${Game.Theme};`);
-  if (code == 1) save();
-}
-
-function ThemeDefine() {
-  $('body').attr("style", `--ALPHA: ${Game.Theme};`);
-  UpdateGame();
-}
 
 const LATEST_LOCATION_UNLOCKED = function () {
   let RESULT = 0;

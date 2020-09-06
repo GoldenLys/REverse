@@ -4,11 +4,7 @@ function DYNAMICS() {
     TOP10();
   });
 
-  $("#themeBTN1").on("click", function () {
-    ThemeDefine();
-  });
-
-  $("#themeBTNR").on("click", function () {
+  $("#RESET_THEME").on("click", function () {
     ResetTheme(1);
   });
 

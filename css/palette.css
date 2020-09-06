@@ -1,0 +1,175 @@
+:root {
+	--EDITOR_RED: 0;
+	--EDITOR_GREEN: 0;
+	--EDITOR_BLUE: 0;
+}
+
+.color-picker {
+	color: white;
+	padding: 0 0 .5em;
+	border-radius: 5px;
+}
+
+.color-picker .content {
+	color: white;
+	padding: .5em 1em;
+	border-radius: 5px;
+	background-color: rgb(18 19 31 / 65%);
+}
+
+.color-picker .selector {
+	position: relative;
+	display: flex;
+	margin: .5rem 0;
+	height: 3rem;
+}
+
+.color-picker .button {
+	height: 100%;
+	color: white;
+	cursor: pointer;
+	font-size: 1.35rem;
+	line-height: 3rem;
+	border-radius: 50%;
+	width: 3rem;
+	text-align: center;
+	transition: all .5s ease-out;
+}
+
+.color-picker .button:hover {
+	background-color: rgb(255 255 255 / 15%);
+	text-shadow: 0 0 5px;
+}
+
+.color-picker .color-range {
+	width: calc(100% - 6rem);
+	-webkit-appearance: none;
+	font-size: 1.35rem;
+	margin: 0 .5em;
+	line-height: 3rem;
+	height: 3rem;
+	margin: 0;
+	background: black;
+	border-radius: 25px;
+	outline: none;
+}
+
+.color-picker .button-validate {
+	height: 100%;
+	background: rgb(18 19 31 / 65%);
+	box-shadow: 2px 3px 5px 0 rgb(20 22 35 / 75%);
+	margin-top: 1rem;
+	padding: 5px 10px;
+	cursor: pointer;
+	color: white;
+	font-size: 1.25rem;
+	text-shadow: 0 0 5px;
+	line-height: 1.25rem;
+	border-radius: 10px;
+	text-align: center;
+	transition: all .5s ease-out;
+}
+
+.color-range.red {
+	background: center / cover no-repeat linear-gradient(to right, rgb(0 var(--EDITOR_GREEN) var(--EDITOR_BLUE)), rgb(255 var(--EDITOR_GREEN) var(--EDITOR_BLUE)));
+}
+
+.color-range.green {
+	background: center / cover no-repeat linear-gradient(to right, rgb(var(--EDITOR_RED) 0 var(--EDITOR_BLUE)), rgb(var(--EDITOR_RED) 255 var(--EDITOR_BLUE)));
+}
+
+.color-range.blue {
+	background: center / cover no-repeat linear-gradient(to right, rgb(var(--EDITOR_RED) var(--EDITOR_GREEN) 0), rgb(var(--EDITOR_RED) var(--EDITOR_GREEN) 255));
+}
+
+.color-picker .color-range::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	border-radius: 25px;
+	width: 3rem;
+	height: 3rem;
+	cursor: pointer;
+	background-color: transparent;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+.color-picker input::after {
+	content: var(--EDITOR_RED);
+	z-index: 2;
+	width: 100%;
+	float: left;
+	margin-left: 0%;
+}
+
+.color-picker .selector .container {
+	position: absolute;
+	top: 0;
+	left: 3rem;
+	right: 3rem;
+	bottom: 0;
+	line-height: 3rem;
+}
+
+.color-picker .selector .container .value {
+	color: black;
+	text-align: center;
+	width: 3rem;
+	background: rgb(255 255 255);
+	border-radius: 50%;
+}
+
+.color-picker input[type=text] {
+	background-color: transparent;
+	border: none;
+	color: white;
+	height: 3rem;
+	font-size: 1.25rem;
+	padding: 0 10px;
+	margin: 0 10px;
+	border-radius: 10px;
+	-webkit-transition: background-color 200ms ease;
+	transition: background-color 200ms ease;
+}
+
+.color-picker .hex-color {
+    display: flex;
+	align-items: center;
+	line-height: 3rem;
+	height: 3rem;
+	font-size: 1.25rem;
+}
+
+.color-picker .hex-color .text {
+	float: left;
+}
+
+.color-picker .hex-color .button {
+	float: right;
+}
+
+.color-picker input[type=text]::before {
+	content: "#";
+}
+
+.color-picker input[type="text"]:hover, input[type="text"]:active, input[type="text"]:focus {
+	background-color: rgba(255 255 255 / 30%);
+	border: none;
+	outline: none;
+	color: white;
+}
+
+.color-picker input[type="text"]::-webkit-input-placeholder {
+	text-transform: uppercase;
+	color: white;
+}
+
+.color-picker .divider {
+	margin: 0;
+	width: 100%;
+	height: 1px;
+	text-align: center;
+	background: rgb(119 119 119 / 25%);
+	display: inline-block;
+}

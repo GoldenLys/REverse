@@ -2,7 +2,7 @@ var HEALING_TIMER;
 var HEALING_ANIMATION;
 
 const HEALING = function () {
-    APP.NextHeal = Game.Enemy[1] >= 5 ? 3 : 5;
+    APP.NextHeal = Game.Enemy[1] >= 6 ? 3 : 5;
     let CONFIG = {
         HEALS: [[65, 85]],
         DEFAULT: [40, 65],

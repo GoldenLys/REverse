@@ -82,10 +82,8 @@ const GetMultPrice = function (UPGRADE) {
             0: 10, 10: 15, 20: 20, 30: 25, 40: 30, 50: 35, 60: 40, 70: 50, 80: Infinity,
         },
     };
-
-    for (let TIER in TIERS[UPGRADE]) {
-        if (Game.Upgrades[UPGRADE] >= Number(Object.keys(TIERS[UPGRADE])[TIER])) SHARDS = TIERS[UPGRADE][TIER];
+    for (let TIER = 0; TIER < _.size(TIERS[UPGRADE]); TIER++) {
+        if (Game.Upgrades[UPGRADE] >= Number(Object.keys(TIERS[UPGRADE])[TIER]))  SHARDS = TIERS[UPGRADE][Number(Object.keys(TIERS[UPGRADE])[TIER])];
     }
-
     return SHARDS;
 };
