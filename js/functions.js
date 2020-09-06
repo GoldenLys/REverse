@@ -487,7 +487,7 @@ function ThemeDefine() {
 const LATEST_LOCATION_UNLOCKED = function () {
   let RESULT = 0;
   for (let LOCATION in GLOBALS.LOCATIONS) {
-    if (GLOBALS.LOCATIONS[LOCATION][1] <= Game.Level && Game.MissionsCompleted[GLOBALS.LOCATIONS[LOCATION][4]] && GLOBALS.LOCATIONS[LOCATION][3] != 2) RESULT = LOCATION;
+    if (GLOBALS.LOCATIONS[LOCATION][1] <= Game.Level && Game.MissionsCompleted[GLOBALS.LOCATIONS[LOCATION][4]] == 1) RESULT = LOCATION;
   }
   return RESULT;
 };

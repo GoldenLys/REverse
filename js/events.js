@@ -17,19 +17,19 @@ function DYNAMICS() {
   });
 
   $("#attack-btn").on("click", function () {
-    Attack();
+    MAIN_ATTACK();
   });
 
   $("#emp-btn").on("click", function () {
-    LaunchEMP();
+    SPECIAL_ATTACK();
   });
 
   $("#cover-btn").on("click", function () {
-    Protect();
+    TAKE_COVER();
   });
 
   $("#run-btn").on("click", function () {
-    RunAway();
+    RUN_AWAY();
   });
 
   $("#WelcomeNext").on("click", function () {

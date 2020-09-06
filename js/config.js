@@ -1,6 +1,6 @@
 const GLOBALS = {
     NAME: "AlphaRPG",
-    VERSION: "3.0 BETA12",
+    VERSION: "3.0 BETA15",
     RELICS_NAMES: ["Ares Relic", "Yggdrasil Relic", "Hermes Relic", "Vulcan Relic", "No Relic"],
     ARMORS_NAMES:
     {
@@ -64,7 +64,7 @@ const GLOBALS = {
             "Jack-o'-lantern",
             'Vampire Lord',
             'Big Fish-Man',
-            'Noble Vampire',
+            'Vampire Lord',
             'Vampire King',
         ],
     ENEMIES_NAMES:
@@ -85,7 +85,7 @@ const GLOBALS = {
             ["Jack-o'-lantern", "Jack-o'-lantern"],
             ["Vampire"],
             ["Fish-Man", "Fish-Man", "Fish-Man"],
-            ["Vampire Lord", "Vampire"],
+            ["Vampire", "Noble Vampire"],
             ["Vampire Lord", "Noble Vampire"],
         ],
     LOCATIONS: {

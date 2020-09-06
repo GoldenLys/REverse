@@ -527,7 +527,7 @@ a:-webkit-any-link {
 	position: fixed;
 	top: 0;
 	bottom: 0;
-	background-color: rgb(18, 19, 31);
+	background: linear-gradient(to right, rgb(5 5 20 / 1), rgb(18 19 31));
 	width: 20%;
 	border-radius: 0;
 	padding: 0;
@@ -617,7 +617,7 @@ a:-webkit-any-link {
 	position: relative;
 	left: 20%;
 	width: 30%;
-	background: rgb(18, 19, 31);
+	background: linear-gradient(to right, rgb(18 19 31), rgb(5 5 20 / 1));
 }
 
 .pw.button {
@@ -1098,7 +1098,6 @@ input[type="text"] {
 
 .pw.buttons .pw.button.active>i {
 	color: rgb(var(--ALPHA));
-	background-color: rgb(125 125 155 / 25%);
 }
 
 .pw.buttons .pw.button.active:after {
@@ -1418,7 +1417,7 @@ img[src*="E.png"]:before, .error-img:before {
 
 .equipment .pw.segment[id="MainWeapon"] img,
 .equipment .pw.segment[id="SpecialWeapon"] img {
-	height: 100px;
+	height: 80px;
 	width: auto;
 }
 
@@ -1589,4 +1588,17 @@ img[src*="E.png"]:before, .error-img:before {
 
 #DIV-COMBAT>.pw.message {
 	background: rgb(18 19 31 / 65%);
+}
+
+.page-content div[id^="DIV-"]>.pw.message>.pw.horizontal.divider:first-child,
+.page-content div[id^="DIV-"].pw.message>.pw.horizontal.divider:first-child {
+	margin-top: 0
+}
+
+.page-content div[id^="DIV-"].pw.message {
+	background: rgb(18 19 31 / 65%);
+}
+
+.equipment .pw.red.button {
+	background-color: rgb(var(--red) / 35%);
 }

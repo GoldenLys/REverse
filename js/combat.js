@@ -15,7 +15,7 @@ const HEALING = function () {
         if (_.inRange(LUCK, 0, 16)) CONFIG.DEFAULT = CONFIG.HEALS[0];
         let HEAL_VALUE = random((APP.WeaponsPower * CONFIG.DEFAULT[0]), (APP.WeaponsPower * CONFIG.DEFAULT[1])) / 100;
         APP.CoreLife = Math.round(APP.CoreLife + HEAL_VALUE);
-        CONFIG.TEXT = LUCK <= 15 ?  `+ <span class="pw green">${fix(HEAL_VALUE, 0)}</span>` : `+ ${fix(HEAL_VALUE, 0)}`;
+        CONFIG.TEXT = LUCK <= 15 ? `+ <span class="pw green">${fix(HEAL_VALUE, 0)}</span>` : `+ ${fix(HEAL_VALUE, 0)}`;
         if (HEAL_VALUE < 1) CONFIG.TEXT = "MISSED";
     }
     $("#EnemyDamage").html("").hide();
@@ -32,7 +32,7 @@ const HEALING_TEXT = function () {
     if (APP.NextHeal > 0) APP.NextHeal--;
 };
 
-const Protect = function () {
+const TAKE_COVER = function () {
     if (!APP.isCovered && APP.CoreLife < APP.CoreBaseLife && APP.LastCover == 0) {
         APP.isCovered = true;
         $("#attack-btn").hide();
@@ -58,7 +58,7 @@ const ClearProtect = function () {
     }
 };
 
-function Attack() {
+const MAIN_ATTACK = function() {
     CHECK_MAX_LIFE();
     if (Game.isInFight != 1) Game.isInFight = 1;
     var luck = random(1, 100);
@@ -74,9 +74,9 @@ function Attack() {
     $("#PlayerDamage").html(DAMAGES).show();
     if (Game.isInFight == 1 && APP.CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Enemy[5] <= 0) WinFight();
     UpdateGame();
-}
+};
 
-function LaunchEMP() {
+const SPECIAL_ATTACK = function() {
     CHECK_MAX_LIFE();
     if (Game.isInFight != 1) Game.isInFight = 1;
     if (Game.Emp > 0 && !$("#emp-btn").hasClass("transparent")) {
@@ -93,9 +93,9 @@ function LaunchEMP() {
     }
     if (Game.isInFight == 1 && APP.CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Enemy[5] <= 0) WinFight();
     UpdateGame();
-}
+};
 
-function RunAway() {
+const RUN_AWAY = function() {
     if (Game.LastEscape == 0) {
         Game.LastEscape = 45;
         if (Game.Level <= 25) Game.LastEscape = 35;
@@ -108,10 +108,10 @@ function RunAway() {
         if (Game.isInFight == 1 && APP.CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Enemy[5] <= 0) WinFight();
         UpdateGame();
     }
-}
+};
 
 //WIN OR LOSE FIGHT
-function WinFight() {
+const WinFight = function() {
     if (Game.MissionStarted[4] == 0 && Game.isInFight == 1) {
         let LOOT_RATES = [50, 15, 45];
         if (Game.MissionStarted[0]) LOOT_RATES = GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 1 ? [5, 7.5, 10] : [40, 20, 30];
@@ -135,14 +135,12 @@ function WinFight() {
         Game.DefeatedByLocation[Game.Location]++;
         if (Game.MissionStarted[0]) Game.MissionStarted[2]++;
         if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2]) expGain = 0;
-        Game.xp[0] += Math.round(expGain);
         if (Game.Level < APP.MaxLevel) {
             Game.xp[0] += Math.round(expGain);
             if (Game.xp[0] >= Game.xp[1]) {
-                Game.Level++;
                 LEVELUP = "<div class='pw inline blue label'>LEVEL UP (" + Game.Level + ")</div>";
             }
-            UpdateGame();
+            UpdateEngine();
         }
         //EMP LOOT CHANCE
         var ELOOTCHANCE = random(1, 100);
@@ -177,10 +175,10 @@ function WinFight() {
             }
             let ITEMID = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
             let TIER = APP.ScoreModeEnabled == 0 ? "Level" : "Score";
-            let TIERRANK = APP.ScoreModeEnabled == 0 ? Game.inventory[ITEMID].level : "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[ITEMID].level * 10);
+            let TIERRANK = APP.ScoreModeEnabled == 0 ? Game.inventory[ITEMID].LEVEL : "<i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[ITEMID].LEVEL * 10);
 
             var UPS = Game.inventory[ITEMID].ups > 0 ? "" + Game.inventory[ITEMID].ups + "<i class='pw orange fad fa-gem'></i>" : "";
-            var LOOTCONTENT = Game.inventory[ITEMID].id == 4 ? "<i class='pw blue fas fa-sword'></i>" + fix(Game.inventory[ITEMID].power, "auto") : "<i class='pw red fas fa-heart'></i>" + fix(Game.inventory[ITEMID].life, "auto");
+            var LOOTCONTENT = Game.inventory[ITEMID].type == 4 ? "<i class='pw blue fas fa-sword'></i>" + fix(Game.inventory[ITEMID].power, "auto") : "<i class='pw red fas fa-heart'></i>" + fix(Game.inventory[ITEMID].life, "auto");
             if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'><div class='pw inline label'>" + TIER + " " + TIERRANK + "</div>" + Game.inventory[ITEMID].name + "<span class='" + Game.inventory[ITEMID].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[ITEMID].class + "'> " + Game.inventory[ITEMID].class + " </span><br>" + LOOTCONTENT + "</div></div>";
         }
 
@@ -202,7 +200,7 @@ function WinFight() {
             }
             let ITEMID = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
             let DESCRIPTIONS = ["-", "Power bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Life bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Minimal drop quality <span class='" + Game.inventory[ITEMID].bonus + "'>" + Game.inventory[ITEMID].bonus + "</span>", "Max Score +" + fix(Game.inventory[ITEMID].bonus, 1)];
-            if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].name + "<br><span class='" + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].class + "</span><br>" + DESCRIPTIONS[Game.inventory[ITEMID].object] + "</div></div>";
+            if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].name + "<br><span class='" + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].class + "</span><br>" + DESCRIPTIONS[Game.inventory[ITEMID].relictype] + "</div></div>";
         }
         //KEY LOOT CHANCE
         var LOOTCHANCE3 = random(0, 100);
@@ -223,9 +221,10 @@ function WinFight() {
             }
             let ITEMID = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
 
-            if (Game.inventory[ITEMID].object > 0 && Game.inventory[ITEMID].object < 3) {
-                if (Game.inventory[ITEMID].object == 1) descitem = "+<i class='pw red fas fa-heart nomargin'></i>" + fix(Game.inventory[ITEMID].life, "auto") + "<br>";
-                if (Game.inventory[ITEMID].object == 2) descitem = "+<i class='pw blue fas fa-sword nomargin'></i>" + fix(Game.inventory[ITEMID].power, "auto") + "<br>";
+            //IF ITEM IS A WEAPON OR AN ARMOR
+            if (Game.inventory[ITEMID].type == 1 || Game.inventory[ITEMID].type == 4) {
+                if (Game.inventory[ITEMID].type == 1) descitem = "+<i class='pw red fas fa-heart'></i>" + fix(Game.inventory[ITEMID].life, "auto") + "<br>";
+                if (Game.inventory[ITEMID].type == 4) descitem = "+<i class='pw blue fas fa-sword'></i>" + fix(Game.inventory[ITEMID].power, "auto") + "<br>";
                 if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].name + "<br><span class='" + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].class + "</span><br>" + descitem + "</div></div>";
             }
         }
@@ -247,8 +246,7 @@ function WinFight() {
                 "You have defeated " + fix(Game.Defeated[Game.Enemy[1]], 1) + " <span class='Enemy" + Game.Enemy[1] + "'>" + ThreatLevel + "</span> enemies.<br>Current Ratio " + fix(Game.Wins / DEATHS, 4) + "<br><br>" + EXP_TEXT + LEVELUP + EMP + "<div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>" + ToAddCash + "</div>" + LOOTS, 0);
         } else { hideRewards(); }
     }
-}
-
+};
 
 var RESPAWN_TIMER = [];
 const LoseFight = function () {
@@ -285,18 +283,16 @@ const RESPAWN_TIMING = function () {
     }
 };
 
-
-function UpdateCombat() {
+const UpdateCombat = function() {
     let THREATS = ["", "NORMAL", "ADVANCED", "SUPERIOR", "VETERAN", "ELITE", "BOSS", "GOD"];
     var PLAYER_LIFE_COLOR = APP.CoreLife <= APP.CoreBaseLife / 2 ? "pw orange" : " pw green";
     if (APP.CoreLife <= Game.Enemy[3]) PLAYER_LIFE_COLOR = " pw red";
     var ENEMY_LIFE_COLOR = Game.Enemy[5] < Game.Enemy[4] / 2 ? "pw orange" : " pw green";
     if (Game.Enemy[5] < Game.Enemy[4] / 3) ENEMY_LIFE_COLOR = " pw red";
-    let TLC = "<span class='Enemy" + Game.Enemy[1] + "'>";
     var LVLTEXT = APP.ScoreModeEnabled == 0 ? " Level " : " Score <i class='fad fa-dice-d20'></i>";
     var TIERTEXT = APP.ScoreModeEnabled == 0 ? Math.round(Game.Enemy[2]) : Math.floor(Game.Enemy[2] * 10);
     var EnemyName = Game.Enemy[1] > 5 ? GLOBALS.BOSSES_NAMES[Game.Location] : GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]];
-    $("#EnemyTitle").html("" + TLC + THREATS[Game.Enemy[1]] + " " + EnemyName + "</span><span class='pw white inline label'>" + LVLTEXT + fix(TIERTEXT, 0) + "</span>");
+    $("#EnemyTitle").html("<span class='Enemy" + Game.Enemy[1] + ">" + THREATS[Game.Enemy[1]] + " " + EnemyName + "</span><span class='pw white inline label'>" + LVLTEXT + fix(TIERTEXT, 0) + "</span>");
     $("#EnemyPower").html("<i class='pw blue fas fa-sword'></i> " + fix(Game.Enemy[3], "auto"));
     $("#EnemyLife").html("<i class='pw red fas fa-heart'></i> <span class='" + ENEMY_LIFE_COLOR + "'>" + fix(Game.Enemy[5], "auto") + "</span>");
     $("#PlayerLife").html("<i class='pw red fas fa-heart'></i> <span class='" + PLAYER_LIFE_COLOR + "'>" + fix(APP.CoreLife, "auto") + "</span>/" + fix(APP.CoreBaseLife, "auto") + " ");
@@ -310,18 +306,19 @@ function UpdateCombat() {
     $("#EnemySprite+h2").html(fix(GetEnemyHPPercent(), 1) + "<span>%</span>");
     $("#PlayerSprite+h2").attr("class", PLAYER_LIFE_COLOR);
     $("#EnemySprite+h2").attr("class", ENEMY_LIFE_COLOR);
-}
+};
 
 //ENEMY GENERATION FUNCTION
-function GenEnemy() {
+const GenEnemy = function() {
     let EnemyLevel = 1;
     let EnemyLifeMult = 1;
     let EnemyPowerMult = 1;
-    var BasePower = APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]);
+    let BasePower = Math.round((APP.WeaponsPower - Game.WeaponUpgrades.Main / 2) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
+    if (BasePower < 10) BasePower = 10;
 
     let ENEMY_LIFE_MULT = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
     let ENEMY_POWER_MULT = [0.95, 1, 1, 1, 1, 1, 1];
-    var ENEMY_POWER_MAXMULT = [1.1, 1.25, 1.35, 1.5, 1.75, 2, 2.5];
+    let ENEMY_POWER_MAXMULT = [1.1, 1.25, 1.35, 1.5, 1.75, 2, 2.5];
     if (APP.ScoreModeEnabled == 0) {
         if (Game.Level < 30) {
             ENEMY_LIFE_MULT = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
@@ -399,7 +396,7 @@ function GenEnemy() {
             EnemyPowerMultMax = ENEMY_POWER_MAXMULT[4];
             if (APP.Ranking > 0) EnemyLevel = APP.Ranking;
             if (APP.Ranking > 1) EnemyLevel = random(APP.Ranking + 2, APP.Ranking + 4);
-            if (APP.ScoreModeEnabled == 1) EnemyLevel = random(TIER + 15, TIER + 30);
+            if (APP.ScoreModeEnabled == 1) EnemyLevel = random(TIER + 15, TIER + 20);
             if (Game.Level < 10) EnemyPowerMult = ENEMY_POWER_MULT[2];
         }
 
@@ -416,7 +413,7 @@ function GenEnemy() {
                 if (APP.Ranking > 1) EnemyLevel = random(APP.Ranking + 4, APP.Ranking + 6);
                 if (Game.Level < 10) EnemyPowerMult = ENEMY_POWER_MULT[2];
                 if (APP.ScoreModeEnabled == 1) {
-                    EnemyLevel = random(TIER + 20, TIER + 40);
+                    EnemyLevel = random(TIER + 20, TIER + 30);
                     randomluck = random(1, 5);
                     if (randomluck >= 4) {
                         Game.Enemy[1] = 7;
@@ -444,13 +441,14 @@ function GenEnemy() {
         if (Game.Armors[2][0] == 1 && EnemyLevel > 9) Game.Enemy[4] += Math.floor(random((EnemyLevel * 10) * (EnemyLifeMult * 0.5) + 100, (EnemyLevel * 10) * (EnemyLifeMult * 1) + 100));
         if (Game.Armors[3][0] == 1 && EnemyLevel > 19) Game.Enemy[4] += Math.floor(random((EnemyLevel * 10) * (EnemyLifeMult * 0.5) + 100, (EnemyLevel * 10) * (EnemyLifeMult * 1) + 100));
         if (Game.Armors[4][0] == 1 && EnemyLevel > 29) Game.Enemy[4] += Math.floor(random((EnemyLevel * 10) * (EnemyLifeMult * 0.5) + 100, (EnemyLevel * 10) * (EnemyLifeMult * 1) + 100));
-        Game.Enemy[3] = random(BasePower * EnemyPowerMult, BasePower * EnemyPowerMultMax);
+        Game.Enemy[3] = Math.round(random(BasePower * EnemyPowerMult, BasePower * EnemyPowerMultMax));
         Game.Enemy[4] *= Game.DIMENSION_MULTIPLIERS[3];
         Game.Enemy[5] = Game.Enemy[4];
         if (Game.Enemy[1] >= 6) Game.Enemy[0] = "boss"; else Game.Enemy[0] = Math.floor(Math.random() * GLOBALS.ENEMIES_NAMES[Game.Location].length);
         if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined') Game.Enemy[0] = 0;
+        $("#EnemySprite").html("<img class='pw medium image' src='images/Monsters/" + Game.Location + "-" + Game.Enemy[0] + ".png'>");
         $("#EnemyDamage").html("").hide();
         $("#PlayerDamage").html("").hide();
         UpdateGame();
     }
-}
+};

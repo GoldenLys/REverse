@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.14.0/css/pro.min.css" />
-    <link href="css/vars.css?v=3.012" rel="stylesheet" />
-    <link href="css/style.css?v=3.012" rel="stylesheet" />
+    <link href="css/vars.css?v=3.015" rel="stylesheet" />
+    <link href="css/style.css?v=3.015" rel="stylesheet" />
 </head>
 
 <body>
@@ -66,11 +66,11 @@
         </div>
 
         <div class="page-content">
-<div id="LOCATION_BACKGROUND" class="location-bg"></div>
+            <div id="LOCATION_BACKGROUND" class="location-bg"></div>
 
             <div id="DIV-COMBAT">
                 <div class="pw message no-animation">
-                    <p class="text-center" id="PLAYER-ETA" style="margin: 0;"></p>
+                    <h3 class="pw horizontal divider" id="PLAYER-ETA"></h3>
                     <div class="pw horizontal sticked segments">
                         <div class="pw segment text-center" id="LABEL_EXP"></div>
                         <div class="pw segment text-center"><i class="fas fa-dollar-sign pw green"></i>
@@ -332,8 +332,13 @@
                 </div>
 
                 <div class="pw dropdown text-center" data-open="open">
-                    <h3 class="name">Gems</h3>
-                    <div class="content active" id="INVENTORY-Gem"></div>
+                    <h3 class="name">Power Gems</h3>
+                    <div class="content active" id="INVENTORY-Gem0"></div>
+                </div>
+
+                <div class="pw dropdown text-center" data-open="open">
+                    <h3 class="name">Life Gems</h3>
+                    <div class="content active" id="INVENTORY-Gem1"></div>
                 </div>
 
                 <div class="pw dropdown text-center" data-open="open">
@@ -493,7 +498,7 @@
                             <div class="pw segment text-right" id="fortressstat">
                             </div>
                         </div>
- 
+
                         <div class="pw horizontal dark segments">
                             <div class="pw segment text-left">Main weapon stats
                             </div>
@@ -706,7 +711,7 @@
         <div class="page-tabs">
             <div class="pw fluid buttons">
                 <div class="pw button active" id="missions" data-url="#">
-                    <i class="fas fa-ballot-check icon"></i> Missions
+                    <i class="far fa-dot-circle"></i> Missions
                 </div>
                 <div class="pw button" id="exploration" data-url="#">
                     <i class="fas fa-map-marked-alt icon"></i> Exploration
@@ -904,15 +909,15 @@
     <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
-    <script type="text/javascript" src="js/functions.js?v=3.012"></script>
-    <script type="text/javascript" src="js/config.js?v=3.012"></script>
-    <script type="text/javascript" src="js/stats.js?v=3.012"></script>
-    <script type="text/javascript" src="js/combat.js?v=3.012"></script>
-    <script type="text/javascript" src="js/inventory.js?v=3.012"></script>
-    <script type="text/javascript" src="js/dimension.js?v=3.012"></script>
-    <script type="text/javascript" src="js/missions.js?v=3.012"></script>
-    <script type="text/javascript" src="js/events.js?v=3.012"></script>
-    <script type="text/javascript" src="js/app.js?v=3.012"></script>
+    <script type="text/javascript" src="js/functions.js?v=3.015"></script>
+    <script type="text/javascript" src="js/config.js?v=3.015"></script>
+    <script type="text/javascript" src="js/stats.js?v=3.015"></script>
+    <script type="text/javascript" src="js/combat.js?v=3.015"></script>
+    <script type="text/javascript" src="js/inventory.js?v=3.015"></script>
+    <script type="text/javascript" src="js/dimension.js?v=3.015"></script>
+    <script type="text/javascript" src="js/missions.js?v=3.015"></script>
+    <script type="text/javascript" src="js/events.js?v=3.015"></script>
+    <script type="text/javascript" src="js/app.js?v=3.015"></script>
 </body>
 
 </html>

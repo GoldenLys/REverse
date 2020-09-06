@@ -4,7 +4,7 @@ const ChangeWT = function () {
   • +50 maximum tier score <br>
   • 3% more EXP <br>
   • +2 additional inventory slots <br>
-  • ${Math.round(APP.Ranking / 50 - 6)} Dimensional Fragments
+  • ${Math.round(APP.Ranking / 10 - 30)} Dimensional Fragments
   `, 2);
 };
 
@@ -13,7 +13,7 @@ const ConfirmWT = function () {
         Game.Simulation++;
         Game.xp = [0, 0, 0];
         Game.Level = 1;
-        Game.Shards += Math.round(APP.Ranking / 50 - 6);
+        Game.Shards += Math.round(APP.Ranking / 10 - 30);
         APP.LifeMult = 1;
         APP.PowerMult = 1;
         Game.Emp = 0;
@@ -21,6 +21,7 @@ const ConfirmWT = function () {
         Game.MaxUPC = [0, 0, 0, 0, 0, 0];
         Game.Armors = { 1: [true, "Basic Armor", "Normal", 100, 1, 0], 2: [false, "Basic Armor", "Normal", 100, 1, 0], 3: [false, "Basic Armor", "Normal", 100, 1, 0], 4: [false, "Basic Armor", "Normal", 100, 1, 0], };
         Game.ArmorUpgrades = [null, 0, 0, 0, 0];
+        Game.WeaponsUpgrades = {Main: 0, Special: 0};
         Game.RELICS = [[], ["Normal", 5, 0], ["Normal", 5, 0], ["Normal", 5, 0], ["Normal", 5, 0]];
         Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10 + (Game.Simulation * 1)];
         Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10 + (Game.Simulation * 1)];
@@ -71,6 +72,7 @@ const GetMultPrice = function (id) {
     if (Game.Upgrades[id] >= 70) price = 12;
     if (Game.Upgrades[id] >= 80) price = 15;
     if (Game.Upgrades[id] >= 90) price = 25;
+    if (Game.Upgrades[id] >= 100) price = 50;
     if (id === 0 && Game.Upgrades[id] >= 200) price = Infinity;
     if (id === 1 && Game.Upgrades[id] >= 100) price = Infinity;
     if (id === 2 && Game.Upgrades[id] >= 100) price = Infinity;
