@@ -2,7 +2,7 @@ var HEALING_TIMER;
 var HEALING_ANIMATION;
 
 const HEALING = function () {
-    if (Game.Enemy[1] >= 5) APP.NextHeal = 3; else APP.NextHeal = 5;
+    APP.NextHeal = Game.Enemy[1] >= 5 ? 3 : 5;
     let CONFIG = {
         HEALS: [[65, 85]],
         DEFAULT: [40, 65],
@@ -35,8 +35,6 @@ const HEALING_TEXT = function () {
 const TAKE_COVER = function () {
     if (!APP.isCovered && APP.CoreLife < APP.CoreBaseLife && APP.LastCover == 0) {
         APP.isCovered = true;
-        $("#attack-btn").hide();
-        $("#emp-btn").hide();
         HEALING();
         HEALING_TEXT();
         let HEALING_TIME = Game.Enemy[1] >= 5 ? 3000 : 5000;
@@ -51,16 +49,15 @@ const ClearProtect = function () {
         APP.LastCover = 5;
         clearInterval(HEALING_TIMER);
         clearInterval(HEALING_ANIMATION);
-        $("#attack-btn").show();
-        $("#emp-btn").show();
         $("#PlayerDamage").html("").hide();
         $("#cover-btn").html("<i class='fas fa-shield'></i> Take Cover");
     }
 };
 
-const MAIN_ATTACK = function() {
+const MAIN_ATTACK = function () {
     CHECK_MAX_LIFE();
     if (Game.isInFight != 1) Game.isInFight = 1;
+    if (APP.isCovered) ClearProtect();
     var luck = random(1, 100);
     var rPlayerPower = random((APP.WeaponsPower * 85), APP.WeaponsPower * 100) / 100;
     if (luck <= random(6, 10)) rPlayerPower = APP.WeaponsPower * 1.15;
@@ -76,9 +73,10 @@ const MAIN_ATTACK = function() {
     UpdateGame();
 };
 
-const SPECIAL_ATTACK = function() {
+const SPECIAL_ATTACK = function () {
     CHECK_MAX_LIFE();
     if (Game.isInFight != 1) Game.isInFight = 1;
+    if (APP.isCovered) ClearProtect();
     if (Game.Emp > 0 && !$("#emp-btn").hasClass("transparent")) {
         Game.Emp--;
         var luck = random(0, 100);
@@ -95,7 +93,8 @@ const SPECIAL_ATTACK = function() {
     UpdateGame();
 };
 
-const RUN_AWAY = function() {
+const RUN_AWAY = function () {
+    if (APP.isCovered) ClearProtect();
     if (Game.LastEscape == 0) {
         Game.LastEscape = 45;
         if (Game.Level <= 25) Game.LastEscape = 35;
@@ -105,13 +104,12 @@ const RUN_AWAY = function() {
         if (Game.Level <= 5) Game.LastEscape = 15;
         APP.CoreLife = APP.CoreBaseLife;
         Game.isInFight = 0;
-        if (Game.isInFight == 1 && APP.CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Enemy[5] <= 0) WinFight();
         UpdateGame();
     }
 };
 
 //WIN OR LOSE FIGHT
-const WinFight = function() {
+const WinFight = function () {
     if (Game.MissionStarted[4] == 0 && Game.isInFight == 1) {
         let LOOT_RATES = [50, 15, 45];
         if (Game.MissionStarted[0]) LOOT_RATES = GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 1 ? [5, 7.5, 10] : [40, 20, 30];
@@ -137,10 +135,7 @@ const WinFight = function() {
         if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2]) expGain = 0;
         if (Game.Level < APP.MaxLevel) {
             Game.xp[0] += Math.round(expGain);
-            if (Game.xp[0] >= Game.xp[1]) {
-                LEVELUP = "<div class='pw inline blue label'>LEVEL UP (" + Game.Level + ")</div>";
-            }
-            UpdateEngine();
+            if (Game.xp[0] >= Game.xp[1]) { LEVELUP = "<div class='pw inline blue label'>LEVEL UP (" + (Game.Level + 1) + ")</div>"; UpdateGame(); }
         }
         //EMP LOOT CHANCE
         var ELOOTCHANCE = random(1, 100);
@@ -283,7 +278,7 @@ const RESPAWN_TIMING = function () {
     }
 };
 
-const UpdateCombat = function() {
+const UpdateCombat = function () {
     let THREATS = ["", "NORMAL", "ADVANCED", "SUPERIOR", "VETERAN", "ELITE", "BOSS", "GOD"];
     var PLAYER_LIFE_COLOR = APP.CoreLife <= APP.CoreBaseLife / 2 ? "pw orange" : " pw green";
     if (APP.CoreLife <= Game.Enemy[3]) PLAYER_LIFE_COLOR = " pw red";
@@ -309,7 +304,7 @@ const UpdateCombat = function() {
 };
 
 //ENEMY GENERATION FUNCTION
-const GenEnemy = function() {
+const GenEnemy = function () {
     let EnemyLevel = 1;
     let EnemyLifeMult = 1;
     let EnemyPowerMult = 1;
