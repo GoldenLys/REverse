@@ -120,12 +120,12 @@ const WinFight = function () {
         let LEVELUP = "";
 
         if (!Game.MissionStarted[0]) {
-            expGain = (Game.Enemy[1] * Game.Enemy[2]) * 10 + (Game.Level * 2.5) * Game.xp[2];
-            expGain = _.random(expGain * 0.85, expGain);
+            expGain = Game.Enemy[1] * Game.Enemy[2] * 10 * Game.xp[2];
+            expGain = _.random(expGain * 0.65, expGain);
         } else {
-            expGain = Game.Enemy[2] + Game.Level * 15 * Game.xp[2];
-            if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) expGain = _.random(expGain * 0.9, expGain * 1.2);
-            else expGain = _.random(expGain * 0.9, expGain);
+            expGain = Game.Enemy[2] + Game.Enemy[2] * 10 * Game.xp[2];
+            if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) expGain = _.random(expGain * 0.85, expGain * 1.05);
+            else expGain = _.random(expGain * 0.85, expGain);
         }
         if (Game.MissionStarted[0] && Game.Level >= GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][2]) expGain = 0;
         Game.Wins++;
@@ -134,7 +134,7 @@ const WinFight = function () {
         if (Game.MissionStarted[0]) Game.MissionStarted[2]++;
         if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2]) expGain = 0;
         if (Game.Level < APP.MaxLevel) {
-            Game.xp[0] += Math.round(expGain);
+            Game.xp[0] += Math.floor(expGain);
             if (Game.xp[0] >= Game.xp[1]) { LEVELUP = "<div class='pw inline blue label'>LEVEL UP (" + (Game.Level + 1) + ")</div>"; UpdateGame(); }
         }
         //EMP LOOT CHANCE
@@ -197,7 +197,7 @@ const WinFight = function () {
             let DESCRIPTIONS = ["-", "Power bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Life bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Minimal drop quality <span class='" + Game.inventory[ITEMID].bonus + "'>" + Game.inventory[ITEMID].bonus + "</span>", "Max Score +" + fix(Game.inventory[ITEMID].bonus, 1)];
             if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].name + "<br><span class='" + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].class + "</span><br>" + DESCRIPTIONS[Game.inventory[ITEMID].relictype] + "</div></div>";
         }
-        //KEY LOOT CHANCE
+        //GEM LOOT CHANCE
         var LOOTCHANCE3 = random(0, 100);
         if (LOOTCHANCE3 > 0 && LOOTCHANCE3 <= LOOT_RATES[2] && Game.Level >= 10 && Game.isInFight != 2) {
             COUNTED_LOOTS++;
@@ -216,10 +216,10 @@ const WinFight = function () {
             }
             let ITEMID = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
 
-            //IF ITEM IS A WEAPON OR AN ARMOR
-            if (Game.inventory[ITEMID].type == 1 || Game.inventory[ITEMID].type == 4) {
-                if (Game.inventory[ITEMID].type == 1) descitem = "+<i class='pw red fas fa-heart'></i>" + fix(Game.inventory[ITEMID].life, "auto") + "<br>";
-                if (Game.inventory[ITEMID].type == 4) descitem = "+<i class='pw blue fas fa-sword'></i>" + fix(Game.inventory[ITEMID].power, "auto") + "<br>";
+            //IF GEM IS A WEAPON OR AN ARMOR
+            if (Game.inventory[ITEMID].type == 2 || Game.inventory[ITEMID].type == 5) {
+                if (Game.inventory[ITEMID].type == 2) descitem = "+<i class='pw red fas fa-heart'></i>" + fix(Game.inventory[ITEMID].life, "auto") + "<br>";
+                if (Game.inventory[ITEMID].type == 5) descitem = "+<i class='pw blue fas fa-sword'></i>" + fix(Game.inventory[ITEMID].power, "auto") + "<br>";
                 if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].name + "<br><span class='" + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].class + "</span><br>" + descitem + "</div></div>";
             }
         }

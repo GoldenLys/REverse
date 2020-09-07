@@ -10,7 +10,7 @@
 
 var APP = {
   WelcomeData: [1, "Neo", "None"],
-  code: {},
+  codes: {},
   WeaponsPower: 10,
   SpecialPower: 20,
   Ranking: 0,

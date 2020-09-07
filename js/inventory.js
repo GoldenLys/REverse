@@ -122,11 +122,11 @@ function GenArmors() {
 const newItem = function (OBJECT, LEVEL, CLASS) {
     if (APP.ScoreModeEnabled == 1) LEVEL /= 10;
     let ITEM_CONFIG = {
-        MULTIPLIERS: [_.random(1.00, 1.05), _.random(1.15, 1.20), _.random(1.25, 1.30), _.random(1.35, 1.40), _.random(1.50, 1.60), _.random(1.75, 1.85), _.random(1.95, 2.10)],
+        MULTIPLIERS: [_.random(1.00, 1.05, true), _.random(1.15, 1.20, true), _.random(1.25, 1.30, true), _.random(1.35, 1.40, true), _.random(1.50, 1.60, true), _.random(1.75, 1.85, true), _.random(1.95, 2.10, true)],
         RARITIES: { Normal: [1, 1], Common: [2, 2000], Uncommon: [3, 5000], Rare: [4, 7000], Epic: [5, 8500], Exotic: [6, 9500], Divine: [7, 9850] },
-        RELIC_MULTIPLIERS: [_.random(0.01, 0.03), _.random(0.03, 0.05), _.random(0.05, 0.09), _.random(0.10, 0.14), _.random(0.15, 0.19), _.random(0.20, 0.24), _.random(0.25, 0.30)],
+        RELIC_MULTIPLIERS: [_.random(0.01, 0.025, true), _.random(0.025, 0.05, true), _.random(0.05, 0.10, true), _.random(0.10, 0.15, true), _.random(0.15, 0.20, true), _.random(0.20, 0.25, true), _.random(0.25, 0.30, true)],
         RELIC_SCORE_MUTLIPLIERS: [_.random(1, 5), _.random(6, 10), _.random(11, 15), _.random(16, 20), _.random(21, 25), _.random(26, 50), _.random(51, 100)],
-        GEMS_MULTIPLIERS: { Normal: [0.10, 0.50], Common: [0.50, 1.00], Uncommon: [0.75, 1.50], Rare: [1.5, 2.0], Epic: [2.0, 2.5], Exotic: [2.5, 3.5], Divine: [4.0, 5.0] },
+        GEMS_MULTIPLIERS: { Normal: _.random(0.1, 0.5, true), Common: _.random(0.5, 1.0, true), Uncommon: _.random(0.75, 1.5, true), Rare: _.random(1.5, 2.0, true), Epic: _.random(2.0, 2.5, true), Exotic: _.random(2.5, 3.5, true), Divine: _.random(4.0, 5.0, true) },
     };
     let CLASSES = Object.keys(ITEM_CONFIG.RARITIES);
     let ITEM = {};
@@ -187,13 +187,11 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
     }
 
     if (OBJECT == "Gem") { //GENERATE A GEM
-        let MULTIPLIER = _.random(ITEM_CONFIG.GEMS_MULTIPLIERS[ITEM.class][0], ITEM_CONFIG.GEMS_MULTIPLIERS[ITEM.class][1]); //Random stats multiplier between 0.1% - 5%
         let GEMTYPE = _.random(1, 100);
-
         let GEMS_DROP_RATES = APP.ScoreModeEnabled == 1 ? { MIN: [0, 45], MAX: [46, 101] } : { MIN: [0, 50], MAX: [51, 101] };
 
         if (_.inRange(GEMTYPE, GEMS_DROP_RATES.MIN[0], GEMS_DROP_RATES.MAX[0])) { //GENERATE A POWER GEM
-            ITEM.power = Math.floor(MULTIPLIER * (((APP.WeaponsPower - APP.TotalWeaponsUpgrades) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) * 0.01) + ITEM_CONFIG.RARITIES[ITEM.class][0]);
+            ITEM.power = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIERS[ITEM.class] * (((APP.WeaponsPower - APP.TotalWeaponsUpgrades) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) * 0.01) + ITEM_CONFIG.RARITIES[ITEM.class][0]);
             if (ITEM.power < 1) ITEM.power = 1;
             ITEM.life = 0;
             ITEM.name = "Power Gem";
@@ -201,7 +199,7 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
             ITEM.type = 5; //SET AS POWER GEM
         }
         if (_.inRange(GEMTYPE, GEMS_DROP_RATES.MIN[1], GEMS_DROP_RATES.MAX[1])) { //GENERATE A LIFE GEM
-            ITEM.life = Math.floor(MULTIPLIER * (((APP.CoreBaseLife - APP.TotalArmorsUpgrades) / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) * 0.01) + ITEM_CONFIG.RARITIES[ITEM.class][0]);
+            ITEM.life = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIERS[ITEM.class] * (((APP.CoreBaseLife - APP.TotalArmorsUpgrades) / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) * 0.01) + ITEM_CONFIG.RARITIES[ITEM.class][0]);
             if (ITEM.life < 1) ITEM.life = 1;
             ITEM.power = 0;
             ITEM.name = "Life Gem";
@@ -223,8 +221,8 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
         //HERMES - MINIMAL RARITY
         if (RelicType == 2) {
             ITEM.bonus = CLASSES[_.random(0, ITEM_CONFIG.RARITIES[ITEM.class][0]) - 1];
-            if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 1) ITEM.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[ITEM.class][0] - 2, ITEM_CONFIG.RARITIES[ITEM.class][0])];
-            if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 2) ITEM.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[ITEM.class][0] - 3, ITEM_CONFIG.RARITIES[ITEM.class][0])];
+            if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 1) ITEM.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[ITEM.class][0] - 2, ITEM_CONFIG.RARITIES[ITEM.class][0] - 1)];
+            if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 2) ITEM.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[ITEM.class][0] - 3, ITEM_CONFIG.RARITIES[ITEM.class][0] - 1)];
         }
 
         //VULCAN - MAX SCORE 
@@ -534,11 +532,11 @@ const CHECK_EQUIPMENT = function () {
         RARITIES: { Normal: [1, 1], Common: [2, 2000], Uncommon: [3, 5000], Rare: [4, 7000], Epic: [5, 8500], Exotic: [6, 9500], Divine: [7, 9850] },
         RELIC_MULTIPLIERS: [0.03, 0.05, 0.09, 0.14, 0.19, 0.24, 0.30],
         RELIC_SCORE_MUTLIPLIERS: [5, 10, 15, 20, 25, 50, 100],
-        GEMS_MULTIPLIERS: { Normal: 0.5, Common: 1.0, Uncommon: 1.5, Rare: 2.0, Epic: 2.5, Exotic: 3.5, Divine: 5.0 },
+        GEMS_MULTIPLIER: { Normal: 0.5, Common: 1.0, Uncommon: 1.5, Rare: 2.0, Epic: 2.5, Exotic: 3.5, Divine: 5.0 },
     };
     let MAX_QUALITY = APP.ScoreModeEnabled == 1 ? "Divine" : QUALITIES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]];
 
-    let MAX_LIFE_GEM = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIERS[MAX_QUALITY] * (((APP.CoreBaseLife - APP.TotalArmorsUpgrades) / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0]);
+    let MAX_LIFE_GEM = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIER[MAX_QUALITY] * (((APP.CoreBaseLife - APP.TotalArmorsUpgrades) / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0]);
     for (let ARMOR in Game.Armors) {
         if (ARMOR != 0) {
             let MAX_VALUE = Math.round((Game.Armors[ARMOR][4] * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 100);
@@ -559,7 +557,7 @@ const CHECK_EQUIPMENT = function () {
         }
     }
 
-    let MAX_POWER_GEM = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIERS[MAX_QUALITY] * (((APP.WeaponsPower - APP.TotalWeaponsUpgrades) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0]);
+    let MAX_POWER_GEM = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIER[MAX_QUALITY] * (((APP.WeaponsPower - APP.TotalWeaponsUpgrades) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0]);
     for (let WEAPON in Game.Weapons) {
         let MAX_VALUE = Math.round((Game.Weapons[WEAPON][3] * 2) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 10);
         if ((Game.Weapons[WEAPON][4] - Game.WeaponUpgrades[WEAPON]) > MAX_VALUE) {

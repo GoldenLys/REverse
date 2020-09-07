@@ -173,96 +173,6 @@ function ChangeAvatar() {
   UpdateUI();
 }
 
-function CheckCode(debug) {
-  CXD = firebase.database().ref("codes");
-  CXD.on("child_added", function (code) {
-    APP.codes[code.key] = code.val();
-  });
-  var code = $("#promocode").val();
-  if (code != null) {
-    if (code === APP.codes[1] || code === APP.codes[2] || code === APP.codes[3] || code === APP.codes[4] || code === APP.codes[5] || code === APP.codes[6] || code === APP.codes[7] || code === APP.codes[8] || code === APP.codes[9] || code === APP.codes[10]) {
-      if (code === APP.codes[1]) {
-        $("#codereturn").html("Code Accepted, name change.");
-        NewUserData(Game.username);
-      }
-      if (code === APP.codes[2]) {
-        $("#codereturn").html("Code Accepted, raising all Armor slots by 1.");
-        for (var UPC = 0; UPC < 4; UPC++) {
-          Game.MaxUPC[UPC]++;
-        }
-      }
-      if (code === APP.codes[3]) {
-        $("#codereturn").html("Code Accepted, you are now at max level.");
-        Game.Level = APP.MaxLevel;
-      }
-      if (code === APP.codes[4]) {
-        $("#codereturn").html("Code Accepted, you just advanced to </i> <i class='globe icon'></i>" + (Game.Simulation + 1));
-        Game.Level = APP.MaxLevel;
-        Game.Armors[1][4] = APP.MaxScore;
-        Game.Armors[2][4] = APP.MaxScore;
-        Game.Armors[3][4] = APP.MaxScore;
-        Game.Armors[4][4] = APP.MaxScore;
-        Game.Weapons.Main[3] = APP.MaxScore;
-        Game.Weapons.Special[3] = APP.MaxScore;
-        ChangeWT();
-      }
-      if (code === APP.codes[5]) {
-        if (Game.Simulation > 1) {
-          $("#codereturn").html("Code Accepted, you just lowered to <i class='globe icon'></i> " + (Game.Simulation - 1));
-          Game.Simulation--;
-        } else {
-          invalidCode(3);
-        }
-      }
-      if (code === APP.codes[6]) {
-        $("#codereturn").html("Code Accepted, save exported to your clipboard.");
-        exportSave();
-      }
-      if (code === APP.codes[7]) {
-        $("#codereturn").html("Code Accepted, external save imported to your current save.");
-        importSave();
-      }
-      if (code === APP.codes[8]) {
-        $("#codereturn").html("Code Accepted, cloud save done.");
-        writeUserData();
-        APP.lastCloudSave = 0;
-      }
-      if (code === APP.codes[9]) {
-        $("#codereturn").html("Code Accepted, Finished the story.");
-        Game.Level = APP.MaxLevel;
-        Game.Armors[1][4] = APP.MaxScore;
-        Game.Armors[2][4] = APP.MaxScore;
-        Game.Armors[3][4] = APP.MaxScore;
-        Game.Armors[4][4] = APP.MaxScore;
-        Game.Weapons.Main[3] = APP.MaxScore;
-        Game.Weapons.Special[3] = APP.MaxScore;
-        Game.MissionStarted = [false, 0, 0, 0];
-        for (var Mission in GLOBALS.MISSIONS) { Game.MissionsCompleted[Mission] = 1; }
-      }
-      if (code === APP.codes[10]) {
-        $("#codereturn").html("Code Accepted, Reset save.");
-        Game.username = "Default";
-        Backup = "Default";
-        save();
-        confirmReset();
-      }
-    } else {
-      if (debug != 1) {
-        CheckCode(1);
-      }
-      invalidCode(1);
-    }
-  } else {
-    invalidCode(2);
-  }
-  APP.codes = [];
-  UpdateGame();
-}
-
-function invalidCode(error) {
-  $("#codereturn").html("Invalid code ! (error " + error + ")");
-}
-
 function helpScore() {
   POPUP("Score Tutorial", "1) It's worked out from the Armors you have, so try to pick the Armors that gets you the highest score possible.<br>That way you'll progress through the Dimensions much faster, even if you take a slight hit on your stats. <br><br>2) Your total armor dictates the score for the loot that drops.<br><br>3) Your score is limited by your actual dimension and the maximum score can be seen in the statistics.");
 }
@@ -287,7 +197,7 @@ function GenExplorationMenu() {
 
     if (GLOBALS.LOCATIONS[E][1] < Game.Level + 1 && E != 11 && E != 17) {
       let CONTENT = ("<div class='" + LOCATION_COLOR + "'><h3 class='text-center'>" + GLOBALS.LOCATIONS[E][0] + "<span class='pw white'> - Lv. " + LEVEL + "</span></h3>\
-<div class='pw label green'><i class='fas fa-ballot-check icon'></i> " + UNLOCKTEXT + "<br>\
+<div class='pw label green'><i class='far fa-dot-circle></i> " + UNLOCKTEXT + "<br>\
 <i class='fas fa-sack icon'></i> <span class='" + QUALITY + "'>" + QUALITY + "</span></div>\
 " + BTN + "</div>");
 
@@ -318,15 +228,14 @@ function UpdatePage() {
   location.reload();
 }
 
-function CalcEXP(level) {
-  let exp = (level * 25) + (500 * (level / 3.5));
-  for (let LE = 0; LE < (level + 1); LE++) {
-    if (LE < 30) exp += exp * (15 / 100); else exp += exp * (25 / 100);
+const CalcEXP = function (LEVEL) {
+  let REQUIRED_EXP = 100;
+  for (let L = 0; L < (LEVEL + 1); L++) {
+    if (L > 1) REQUIRED_EXP += (100 * (L / 2.5) * L);
   }
-  if (level <= 0) exp = 0;
-  if (level == 1) exp = 100;
-  return Math.round(exp);
-}
+
+  return Math.round(REQUIRED_EXP);
+};
 
 function ChangeStep(type) {
   //0 = BACK & 1 = NEXT

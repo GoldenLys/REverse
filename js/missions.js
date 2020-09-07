@@ -80,9 +80,11 @@ function CompleteMission() {
         if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 1 || GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) {
             if (Game.MissionStarted[2] >= GLOBALS.MISSIONS[Game.MissionStarted[1]][4]) {
                 let TYPES = ["Armor or Weapon", "Gem", "Relic"];
-                let FRG = "";
-                if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2 && GLOBALS.MISSIONS[Game.MissionStarted[1]][5] > 0) FRG = `• <i class='pw blue fal fa-dna'></i>${fix(GLOBALS.MISSIONS[Game.MissionStarted[1]][5], 1)} Fragments<br>`;
-                let DESCRIPTION = `${FRG} • 1 <span class='${GLOBALS.MISSIONS[Game.MissionStarted[1]][7]}'>${GLOBALS.MISSIONS[Game.MissionStarted[1]][7]}</span> ${TYPES[GLOBALS.MISSIONS[Game.MissionStarted[1]][6]]}`;
+
+                let REWARDS = GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2 && GLOBALS.MISSIONS[Game.MissionStarted[1]][5] > 0 ? `<div class="pw inline blue label"><i class='pw blue fal fa-dna'></i>${fix(GLOBALS.MISSIONS[Game.MissionStarted[1]][5], 1)}</div>` : `<div class="pw inline alpha label">${fix(GLOBALS.MISSIONS[Game.MissionStarted[1]][5], "auto")} EXP</div>`;
+                if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 1 && GLOBALS.MISSIONS[Game.MissionStarted[1]][5] > 0) Game.xp[0] += GLOBALS.MISSIONS[Game.MissionStarted[1]][5];
+
+                let DESCRIPTION = `${REWARDS} <div class="pw inline green label">1 <span class='${GLOBALS.MISSIONS[Game.MissionStarted[1]][7]}'>${GLOBALS.MISSIONS[Game.MissionStarted[1]][7]}</span> ${TYPES[GLOBALS.MISSIONS[Game.MissionStarted[1]][6]]}</div>`;
                 APP.GOT_REWARDS = 1;
 
                 if (GLOBALS.MISSIONS[Game.MissionStarted[1]][6] == 0 && Game.MissionStarted[3] == 0) { //GIVE ARMOR & WEAPON REWARD
@@ -98,8 +100,8 @@ function CompleteMission() {
 
                 let TITLE = GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2 ? "<h3 class='pw horizontal divider'>Fortress Cleared</h3>" : "<h3 class='pw horizontal divider'>Mission Completed</h3>";
 
-               if ($("#POPUP").hasClass("active")) $("#popup-text").append(`${TITLE} ${DESCRIPTION}`);
-               else NOTICE(TITLE, DESCRIPTION);
+                if ($("#POPUP").hasClass("active")) $("#popup-text").append(`${TITLE} ${DESCRIPTION}`);
+                else NOTICE(TITLE, DESCRIPTION);
                 hideMissionRewards();
             }
         }

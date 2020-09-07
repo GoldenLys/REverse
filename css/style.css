@@ -1606,3 +1606,7 @@ img[src*="E.png"]:before, .error-img:before {
 .equipment .pw.red.button {
 	background-color: rgb(var(--red) / 35%);
 }
+
+div[id^="INVENTORY-"]>.pw.message {
+	padding: 0 .5em;
+}
