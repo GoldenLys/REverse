@@ -453,7 +453,7 @@ function UPGRADE_ARMOR(ARMOR, ITEM) {
             else { Game.Armors[ARMOR][4] = APP.MaxScore; }
         }
         Game.ArmorUpgrades[ARMOR] += Game.inventory[ITEM].life;
-        if (ITEM < Game.MaxInv) RemoveItem(ITEM);
+        if (ITEM <= Game.MaxInv) RemoveItem(ITEM);
     }
     POPUP_CLOSE();
     GenInventory();
@@ -471,7 +471,7 @@ function UPGRADE_WEAPON(WEAPON, ITEM) {
             else Game.Weapons[WEAPON][3] = APP.MaxScore;
         }
         Game.WeaponUpgrades[WEAPON] += Game.inventory[ITEM].power;
-        if (ITEM < Game.MaxInv) RemoveItem(ITEM);
+        if (ITEM <= Game.MaxInv) RemoveItem(ITEM);
     }
     POPUP_CLOSE();
     GenInventory();
@@ -481,8 +481,8 @@ function UPGRADE_WEAPON(WEAPON, ITEM) {
 
 //DESTROY EQUIPMENT 
 function DestroyWeapon(WEAPON) {
-    if (WEAPON == "Main") Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 9 + (Game.Simulation * 1)];
-    else Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 9 + (Game.Simulation * 1)];
+    if (WEAPON == "Main") Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10];
+    else Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10];
     POPUP_CLOSE();
     GenInventory();
     UpdateGame();
@@ -527,14 +527,14 @@ const RemoveItem = function (ITEM) {
     UpdateGame();
 };
 
-const ErrorArmor = function (ARM) {
-    if (ARM < 5) {
-        Game.Armors[ARM] = [true, "Error", "Error", 100, 1, 0];
-        Game.ArmorUpgrades[ARM] = 0;
-        Game.MaxUPC[ARM - 1] = 0;
-    } else if (_.inRange(ARM, 5, 7)) {
-        if (ARM == 5) Game.Weapons.Main = ["Error", "Error", 0, 1, 10];
-        if (ARM == 6) Game.Weapons.Special = ["Error", "Error", 0, 1, 10];
+const ErrorArmor = function (EQUIPMENT) {
+    if (EQUIPMENT < 5) {
+        Game.Armors[EQUIPMENT] = [true, "Error", "Error", 100, 1, 0];
+        Game.ArmorUpgrades[EQUIPMENT] = 0;
+        Game.MaxUPC[EQUIPMENT - 1] = 0;
+    } else if (_.inRange(EQUIPMENT, 5, 7)) {
+        if (EQUIPMENT == 5) Game.Weapons.Main = ["Error", "Error", 0, 1, 10];
+        if (EQUIPMENT == 6) Game.Weapons.Special = ["Error", "Error", 0, 1, 10];
     }
     UpdateGame();
 };

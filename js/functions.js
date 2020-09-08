@@ -74,12 +74,13 @@ function fix(x, type) {
   if (type == 2) return numeral(x).format("0%");
   if (type == 3) return numeral(x).format("0.0%");
   if (type == 4) return numeral(x).format("0.0a");
+  if (type == 5) if (x != Math.round(x)) return numeral(x).format("0,0.0"); else return numeral(x).format("0,0");
   if (type == "auto") {
     if (x <= 1000) return numeral(x).format("0a");
     if (x > 1000) return numeral(x).format("0.0a");
     if (x > 10000) return numeral(x).format("0.00a");
   }
-  if (type == "auto-round") { if (x != Math.round(x)) return numeral(x).format("0.0a"); else return numeral(x).format("0a"); }
+  if (type == "auto-round") if (x != Math.round(x)) return numeral(x).format("0.0a"); else return numeral(x).format("0a");
 }
 
 function getDate() {

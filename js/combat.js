@@ -3,26 +3,30 @@ var HEALING_ANIMATION;
 
 const HEALING = function () {
     APP.NextHeal = Game.Enemy[1] >= 6 ? 3 : 5;
-    let CONFIG = {
-        HEALS: [[65, 85]],
-        DEFAULT: [40, 65],
-        TEXT: "",
-    };
+    let CONFIG = { HEALS: [[65, 85]], DEFAULT: [40, 65], TEXT: "", LUCK: _.random(1, 100) };
 
     if (Game.isInFight != 1) Game.isInFight = 1;
-    if (APP.CoreLife < APP.CoreBaseLife) {
-        let LUCK = _.random(1, 100);
-        if (_.inRange(LUCK, 0, 16)) CONFIG.DEFAULT = CONFIG.HEALS[0];
-        let HEAL_VALUE = random((APP.WeaponsPower * CONFIG.DEFAULT[0]), (APP.WeaponsPower * CONFIG.DEFAULT[1])) / 100;
-        APP.CoreLife = Math.round(APP.CoreLife + HEAL_VALUE);
-        CONFIG.TEXT = LUCK <= 15 ? `+ <span class="pw green">${fix(HEAL_VALUE, 0)}</span>` : `+ ${fix(HEAL_VALUE, 0)}`;
-        if (HEAL_VALUE < 1) CONFIG.TEXT = "MISSED";
-    }
-    $("#EnemyDamage").html("").hide();
-    $("#PlayerDamage").html(CONFIG.TEXT).show();
-    if (APP.CoreLife >= APP.CoreBaseLife) {
-        APP.CoreLife = APP.CoreBaseLife;
-        ClearProtect();
+    if (APP.isCovered) {
+        if (APP.CoreLife < APP.CoreBaseLife) {
+            if (_.inRange(CONFIG.LUCK, 0, 16)) CONFIG.DEFAULT = CONFIG.HEALS[0];
+            let HEAL_VALUE = random((APP.WeaponsPower * CONFIG.DEFAULT[0]), (APP.WeaponsPower * CONFIG.DEFAULT[1])) / 100;
+            APP.CoreLife = (APP.CoreLife + HEAL_VALUE) <= APP.CoreBaseLife ? Math.round(APP.CoreLife + HEAL_VALUE) : APP.CoreBaseLife;
+            CONFIG.TEXT = CONFIG.LUCK <= 15 ? `+ <span class="pw green">${fix(HEAL_VALUE, 0)}</span>` : `+ ${fix(HEAL_VALUE, 0)}`;
+            if (HEAL_VALUE < 1) CONFIG.TEXT = "MISSED";
+            $("#EnemyDamage").html("").hide();
+        } else {
+            APP.CoreLife = APP.CoreBaseLife;
+            APP.isCovered = false;
+            HEALING();
+        }
+        $("#PlayerDamage").html(CONFIG.TEXT).show();
+    } else {
+        APP.isCovered = false;
+        if (APP.LastCover == 0) APP.LastCover = 5;
+        clearInterval(HEALING_TIMER);
+        clearInterval(HEALING_ANIMATION);
+        $("#PlayerDamage").html("").hide();
+        $("#cover-btn").html("<i class='fas fa-shield'></i> Take Cover");
     }
     UpdateGame();
 };
@@ -40,18 +44,7 @@ const TAKE_COVER = function () {
         let HEALING_TIME = Game.Enemy[1] >= 6 ? 3000 : 5000;
         HEALING_TIMER = setInterval(HEALING, HEALING_TIME);
         HEALING_ANIMATION = setInterval(HEALING_TEXT, 1000);
-    } else { ClearProtect(); }
-};
-
-const ClearProtect = function () {
-    if (APP.isCovered) {
-        APP.isCovered = false;
-        APP.LastCover = 5;
-        clearInterval(HEALING_TIMER);
-        clearInterval(HEALING_ANIMATION);
-        $("#PlayerDamage").html("").hide();
-        $("#cover-btn").html("<i class='fas fa-shield'></i> Take Cover");
-    }
+    } else { APP.isCovered = false; HEALING(); }
 };
 
 const MAIN_ATTACK = function () {
@@ -305,6 +298,7 @@ const UpdateCombat = function () {
 
 //ENEMY GENERATION FUNCTION
 const GenEnemy = function () {
+    let EnemyLevel = 1;
     let BasePower = Math.round((APP.WeaponsPower - Game.WeaponUpgrades.Main / 2) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     if (BasePower < 10) BasePower = 10;
     let MULTIPLIERS = { LIFE: [], POWER: [], };
@@ -312,7 +306,6 @@ const GenEnemy = function () {
     MULTIPLIERS.LIFE = APP.ScoreModeEnabled == 0 ? [1.15, 1.25, 1.35, 1.5, 2.5, 3.5, 5] : [2, 2.75, 3, 3.5, 4, 5, 7.5];
     MULTIPLIERS.POWER[0] = APP.ScoreModeEnabled == 0 ? [0.9, 0.95, 1, 1, 1, 1, 1] : [1, 1, 1, 1, 1, 1, 1];
     MULTIPLIERS.POWER[1] = APP.ScoreModeEnabled == 0 ? [1, 1, 1, 1.05, 1.15, 1.25, 1.35] : [1, 1, 1.10, 1.15, 1.25, 1.5, 2.5];
-    TIER = APP.Ranking;
 
     EChance = APP.ScoreModeEnabled == 1 ? _.random(300, 700) : _.random(0, 700);
     if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2 && EChance < 600) EChance = 600;
@@ -323,36 +316,31 @@ const GenEnemy = function () {
         //CLASS NORMAL
         if (_.inRange(EChance, 0, 300)) {
             Game.Enemy[1] = 1;
-            if (APP.Ranking > 0) EnemyLevel = _.random((APP.Ranking * 0.85), APP.Ranking);
-            if (APP.ScoreModeEnabled == 1) EnemyLevel = _.random(TIER - 5, TIER);
+            EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking - 5, APP.Ranking) : _.random((APP.Ranking * 0.85), APP.Ranking);
         }
 
         //CLASS ADVANCED
         if (_.inRange(EChance, 300, 450)) {
             Game.Enemy[1] = 2;
-            if (APP.Ranking > 0) EnemyLevel = _.random((APP.Ranking * 0.95), APP.Ranking);
-            if (APP.ScoreModeEnabled == 1) EnemyLevel = _.random(TIER - 2, TIER + 5);
+            EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking - 2, APP.Ranking + 5) : _.random((APP.Ranking * 0.95), APP.Ranking);
         }
 
         //CLASS SUPERIOR
         if (_.inRange(EChance, 450, 600)) {
             Game.Enemy[1] = 3;
-            if (APP.Ranking > 0) EnemyLevel = _.random(APP.Ranking, APP.Ranking + 1);
-            if (APP.ScoreModeEnabled == 1) EnemyLevel = _.random(TIER - 1, TIER + 10);
+            EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking - 1, APP.Ranking + 10) : _.random(APP.Ranking, APP.Ranking + 1);
         }
 
         //CLASS VETERAN
         if (_.inRange(EChance, 600, 650)) {
             Game.Enemy[1] = 4;
-            if (APP.Ranking > 0) EnemyLevel = _.random(APP.Ranking + 1, APP.Ranking + 2);
-            if (APP.ScoreModeEnabled == 1) EnemyLevel = _.random(TIER + 5, TIER + 15);
+            EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking + 5, APP.Ranking + 10) : _.random(APP.Ranking + 1, APP.Ranking + 2);
         }
 
         //CLASS ELITE
         if (EChance >= 650) {
             Game.Enemy[1] = 5;
-            if (APP.Ranking > 0) EnemyLevel = _.random(APP.Ranking + 2, APP.Ranking + 4);
-            if (APP.ScoreModeEnabled == 1) EnemyLevel = _.random(TIER + 15, TIER + 20);
+            EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking + 10, APP.Ranking + 15) : _.random(APP.Ranking + 2, APP.Ranking + 3);
         }
 
         if (Game.MissionStarted[2] == GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - 1) EChance = 700;
@@ -361,21 +349,20 @@ const GenEnemy = function () {
         if (_.inRange(EChance, 685, 700) && Game.MissionStarted[0]) {
             if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2 || Game.MissionStarted[2] > GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - 2) {
                 Game.Enemy[1] = 6;
+                EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking + 15, APP.Ranking + 20) : _.random(APP.Ranking + 3, APP.Ranking + 4);
                 if (APP.Ranking > 0) EnemyLevel = _.random(APP.Ranking + 4, APP.Ranking + 6);
                 if (APP.ScoreModeEnabled == 1 && _.random(1, 5) >= 4) {
-                        EnemyLevel = _.random(TIER + 20, TIER + 30);
-                        Game.Enemy[1] = 7;
+                    EnemyLevel = _.random(APP.Ranking + 20, APP.Ranking + 30);
+                    Game.Enemy[1] = 7;
                 }
             }
         }
         if (EnemyLevel < 1) EnemyLevel = 1;
-        if (APP.ScoreModeEnabled == 1) {
-            EnemyLevel = EnemyLevel / 10;
-            if (EnemyLevel > Game.Level + 20) EnemyLevel = Game.Level + 20;
-        } else {
-            EnemyLevel = EnemyLevel / 10;
+        EnemyLevel = EnemyLevel / 10;
+        if (APP.ScoreModeEnabled == 0) {
             if (EnemyLevel < GLOBALS.LOCATIONS[Game.Location][1]) EnemyLevel = GLOBALS.LOCATIONS[Game.Location][1];
             if (EnemyLevel > GLOBALS.LOCATIONS[Game.Location][2]) EnemyLevel = GLOBALS.LOCATIONS[Game.Location][2];
+            if (EnemyLevel > Game.Level + 20) EnemyLevel = Game.Level + 20;
         }
         Game.Enemy[2] = EnemyLevel;
         Game.Enemy[3] = 0;
@@ -384,11 +371,12 @@ const GenEnemy = function () {
         if (Game.Armors[1][0] && EnemyLevel >= 10) Game.Enemy[4] += Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[Game.Enemy[1] - 1] * 0.5 + 100, Game.Enemy[4] += EnemyLevel * 10 * MULTIPLIERS.LIFE[Game.Enemy[1] - 1] + 100));
         if (Game.Armors[1][0] && EnemyLevel >= 20) Game.Enemy[4] += Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[Game.Enemy[1] - 1] * 0.5 + 100, Game.Enemy[4] += EnemyLevel * 10 * MULTIPLIERS.LIFE[Game.Enemy[1] - 1] + 100));
         if (Game.Armors[1][0] && EnemyLevel >= 30) Game.Enemy[4] += Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[Game.Enemy[1] - 1] * 0.5 + 100, Game.Enemy[4] += EnemyLevel * 10 * MULTIPLIERS.LIFE[Game.Enemy[1] - 1] + 100));
-        Game.Enemy[3] = Game.Level < 10 && Game.Enemy[1] >= 4 ? Math.round(EnemyLevel =random(BasePower * MULTIPLIERS.POWER[0][2], BasePower * MULTIPLIERS.POWER[1][Game.Enemy[1] - 1])) : Math.round(random(BasePower * MULTIPLIERS.POWER[0][Game.Enemy[1] - 1], BasePower * MULTIPLIERS.POWER[1][Game.Enemy[1] - 1]));
+        Game.Enemy[3] = Game.Level < 10 && Game.Enemy[1] >= 4 ? Math.round(EnemyLevel = random(BasePower * MULTIPLIERS.POWER[0][2], BasePower * MULTIPLIERS.POWER[1][Game.Enemy[1] - 1])) : Math.round(random(BasePower * MULTIPLIERS.POWER[0][Game.Enemy[1] - 1], BasePower * MULTIPLIERS.POWER[1][Game.Enemy[1] - 1]));
         Game.Enemy[4] *= Game.DIMENSION_MULTIPLIERS[3];
         Game.Enemy[5] = Game.Enemy[4];
         if (Game.Enemy[1] >= 6) Game.Enemy[0] = "boss"; else Game.Enemy[0] = Math.floor(Math.random() * GLOBALS.ENEMIES_NAMES[Game.Location].length);
-        if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined') Game.Enemy[0] = 0; else Game.isInFight = 1;
+        if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined') Game.Enemy[0] = 0;
+        Game.isInFight = 1;
         $("#EnemySprite").html("<img class='pw medium image' src='images/Monsters/" + Game.Location + "-" + Game.Enemy[0] + ".png'>");
         $("#EnemyDamage").html("").hide();
         $("#PlayerDamage").html("").hide();

@@ -276,7 +276,7 @@ const UpdateUI = function () {
   if (((APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]) - Math.floor(APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) < 1) $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%"); else $("#POWERMULTVAL").html("+" + Game.Upgrades[1] + "%");
   if (((APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1]) - Math.floor(APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) < 1) $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%"); else $("#LIFEMULTVAL").html("+" + Game.Upgrades[2] + "%");
   $("#INVUPGVAL").html(Game.MaxInv);
-  $("#ShardsNumber").html("<i class='pw blue fal fa-dna'></i>" + fix(Game.Shards, "auto-round") + "</span> Dimensional Fragments");
+  $("#ShardsNumber").html("<i class='pw blue fal fa-dna'></i>" + fix(Game.Shards, 5) + "</span> Dimensional Fragments");
   if (Game.username == "Default") {
     $("#menu").hide();
     $("#GAME").hide();
@@ -286,7 +286,7 @@ const UpdateUI = function () {
   }
   $("#PlayerXP .progress-bar").attr("style", "max-width:" + GetEXPPercent() + "%;");
   var WTText = Game.Simulation > 1 ? "Dimension <i class='globe icon'></i> " + Game.Simulation + "<br>" : "";
-  $("#LABEL_SHARDS").html(fix(Game.Shards, "auto-round"));
+  $("#LABEL_SHARDS").html(fix(Game.Shards, 5));
   if (APP.ScoreModeEnabled == 0) {
     $("#DimensionID").html(WTText);
     $("#PlayerXP").show();
