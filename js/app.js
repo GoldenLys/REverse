@@ -64,7 +64,6 @@ $(document).ready(function () {
     UpdateEngine();
     GenMissions();
     CHECK_EQUIPMENT();
-    GenEnemy();
   }
   Game.isInFight = 0;
   setInterval(UpdateEngine, 1000);
