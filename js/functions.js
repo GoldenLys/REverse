@@ -35,7 +35,11 @@ function exportSave() {
 
 function importSave() {
   var save = prompt("Paste your save code here");
-  if (save) restoreSave(save);
+  if (save) {
+    restoreSave(save);
+    NOTICE("Save imported", "Your save has been imported.");
+    Game.isInFight = 0;
+  }
 }
 
 function restoreSave(save) {
@@ -168,10 +172,17 @@ function GetEXPPercent() {
 
 //GAME FUNCTIONS
 
-function ChangeAvatar() {
-  if (Game.Avatar < 50) Game.Avatar++; else Game.Avatar = 1;
-  UpdateUI();
-}
+const CHANGE_AVATAR = function (TYPE) {
+  if (TYPE == 0) {
+    if (Game.Avatar <= 1) Game.Avatar = 50;
+    else Game.Avatar--;
+  } else {
+    if (Game.Avatar == 0 || Game.Avatar >= 50) Game.Avatar = 1;
+    else Game.Avatar++;
+  }
+  $("#avatar2").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
+  $("#avatar3").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
+};
 
 function helpScore() {
   POPUP("Score Tutorial", "1) It's worked out from the Armors you have, so try to pick the Armors that gets you the highest score possible.<br>That way you'll progress through the Dimensions much faster, even if you take a slight hit on your stats. <br><br>2) Your total armor dictates the score for the loot that drops.<br><br>3) Your score is limited by your actual dimension and the maximum score can be seen in the statistics.");
@@ -197,7 +208,7 @@ function GenExplorationMenu() {
 
     if (GLOBALS.LOCATIONS[E][1] < Game.Level + 1 && E != 11 && E != 17) {
       let CONTENT = ("<div class='" + LOCATION_COLOR + "'><h3 class='text-center'>" + GLOBALS.LOCATIONS[E][0] + "<span class='pw white'> - Lv. " + LEVEL + "</span></h3>\
-<div class='pw label green'><i class='far fa-dot-circle></i> " + UNLOCKTEXT + "<br>\
+<div class='pw label green'><i class='far fa-dot-circle'></i> " + UNLOCKTEXT + "<br>\
 <i class='fas fa-sack icon'></i> <span class='" + QUALITY + "'>" + QUALITY + "</span></div>\
 " + BTN + "</div>");
 
@@ -231,7 +242,7 @@ function UpdatePage() {
 const CalcEXP = function (LEVEL) {
   let REQUIRED_EXP = 100;
   for (let L = 0; L < (LEVEL + 1); L++) {
-    if (L > 1) REQUIRED_EXP += (100 * (L / 2.5) * L);
+    if (L > 1) REQUIRED_EXP += (125 * (L / 2.5) * L);
   }
 
   return Math.round(REQUIRED_EXP);
@@ -374,4 +385,8 @@ const LATEST_LOCATION_UNLOCKED = function () {
     if (GLOBALS.LOCATIONS[LOCATION][1] <= Game.Level && Game.MissionsCompleted[GLOBALS.LOCATIONS[LOCATION][4]] == 1) RESULT = LOCATION;
   }
   return RESULT;
+};
+
+const AUTO_PURPLE = function () {
+
 };

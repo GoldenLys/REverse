@@ -1,5 +1,4 @@
 :root {
-	--locked: rgb(64 64 64);
 	--Normal: rgb(255 255 255);
 	--Common: rgb(55 169 21);
 	--Uncommon: rgb(85 128 243);
@@ -7,6 +6,7 @@
 	--Epic: rgb(255 176 15);
 	--Exotic: rgb(255 99 55);
 	--Divine: rgb(244 67 54);
+	--Unique: rgb(255 0 50);
 	--Error: rgb(255 0 0);
 	--E1: rgb(164 164 164);
 	--E2: rgb(0 164 0);
@@ -107,53 +107,10 @@
 	border-color: var(--Divine) !important;
 }
 
-.locked {
-	color: var(--green) !important;
-}
-
-
-[class*="Bar-"] {
-	position: absolute;
-	width: .5em;
-	top: 0;
-	bottom: 0;
-	float: left;
-}
-
-.Bar-Normal {
-	background: var(--Normal) !important;
-}
-
-.Bar-Common {
-	background: var(--Common) !important;
-}
-
-.Bar-Uncommon {
-	background: var(--Uncommon) !important;
-}
-
-.Bar-Rare {
-	background: var(--Rare) !important;
-}
-
-.Bar-Epic {
-	background: var(--Epic) !important;
-}
-
-.Bar-Exotic {
-	background: var(--Exotic) !important;
-}
-
-.Bar-Divine {
-	background: var(--Divine) !important;
-}
-
-.Bar-U {
-	background: var(--green) !important;
-}
-
-.Bar-E {
-	background: var(--Error) !important;
+.Unique {
+	color: var(--Unique) !important;
+	text-shadow: 0px 0px 3px var(--Unique)!important;
+	border-color: var(--Unique) !important;
 }
 
 .tooltip {

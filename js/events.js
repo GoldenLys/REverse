@@ -52,12 +52,20 @@ function DYNAMICS() {
     TOPPREVIOUS();
   });
 
-  $("#ChangeAvatar").on("click", function () {
-    ChangeAvatar();
+  $("#AVATAR_NEXT").on("click", function () {
+    CHANGE_AVATAR(1);
   });
 
-  $("#ChangeAvatarBegin").on("click", function () {
-    ChangeAvatar();
+  $("#AVATAR_PREVIOUS").on("click", function () {
+    CHANGE_AVATAR(0);
+  });
+
+  $("#AVATAR_NEXT_BEGIN").on("click", function () {
+    CHANGE_AVATAR(1);
+  });
+
+  $("#AVATAR_PREVIOUS_BEGIN").on("click", function () {
+    CHANGE_AVATAR(0);
   });
 
   $("#ChooseWarrior").on("click", function () {
