@@ -52,6 +52,7 @@ var APP = {
 
 $(document).ready(function () {
   if (location.href.match(/(:5500).*/)) GLOBALS.VERSION = "dev";
+  if (location.href.match(/(alpha.purplewizard.space\/beta).*/)) GLOBALS.VERSION = GLOBALS.VERSION + " BETA";
   document.title = GLOBALS.NAME;
   $("#site-name").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
   ResetTheme(0);
