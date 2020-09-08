@@ -71,19 +71,19 @@ const GetMultPrice = function (UPGRADE) {
         },
         // Damage Multiplier
         1: {
-            0: 2,  5: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity,
+            0: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity,
         },
         // Armor Multiplier
         2: {
-            0: 2,  5: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity,
+            0: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity,
         },
         // Inventory Slots
         3: {
-            0: 2.5, 5: 10, 10: 15, 20: 20, 30: 25, 40: 30, 50: 35, 60: 40, 70: 50, 80: Infinity,
+            0: 5, 5: 10, 10: 15, 20: 20, 30: 25, 40: 30, 50: 35, 60: 40, 70: 50, 80: Infinity,
         },
     };
     for (let TIER = 0; TIER < _.size(TIERS[UPGRADE]); TIER++) {
-        if (Game.Upgrades[UPGRADE] >= Number(Object.keys(TIERS[UPGRADE])[TIER]))  SHARDS = TIERS[UPGRADE][Number(Object.keys(TIERS[UPGRADE])[TIER])];
+        if (Game.Upgrades[UPGRADE] >= Number(Object.keys(TIERS[UPGRADE])[TIER])) SHARDS = TIERS[UPGRADE][Number(Object.keys(TIERS[UPGRADE])[TIER])];
     }
     return SHARDS;
 };
