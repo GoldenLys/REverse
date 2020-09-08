@@ -37,7 +37,7 @@ const TAKE_COVER = function () {
         APP.isCovered = true;
         HEALING();
         HEALING_TEXT();
-        let HEALING_TIME = Game.Enemy[1] >= 5 ? 3000 : 5000;
+        let HEALING_TIME = Game.Enemy[1] >= 6 ? 3000 : 5000;
         HEALING_TIMER = setInterval(HEALING, HEALING_TIME);
         HEALING_ANIMATION = setInterval(HEALING_TEXT, 1000);
     } else { ClearProtect(); }
@@ -311,25 +311,9 @@ const GenEnemy = function () {
     let BasePower = Math.round((APP.WeaponsPower - Game.WeaponUpgrades.Main / 2) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     if (BasePower < 10) BasePower = 10;
 
-    let ENEMY_LIFE_MULT = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
-    let ENEMY_POWER_MULT = [0.95, 1, 1, 1, 1, 1, 1];
-    let ENEMY_POWER_MAXMULT = [1.1, 1.25, 1.35, 1.5, 1.75, 2, 2.5];
-    if (APP.ScoreModeEnabled == 0) {
-        if (Game.Level < 30) {
-            ENEMY_LIFE_MULT = [1.5, 2, 2.5, 3.5, 5, 6, 6.5];
-            ENEMY_POWER_MULT = [0.75, 0.85, 1, 1, 1, 1, 1];
-            ENEMY_POWER_MAXMULT = [0.85, 1, 1, 1.10, 1.15, 1.15, 1.15];
-        }
-        if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) {
-            ENEMY_LIFE_MULT = [0, 0, 6, 7, 8, 15, random(15, 20)];
-            ENEMY_POWER_MULT = [1, 1, 1, 1, 1, 1, 1];
-            ENEMY_POWER_MAXMULT = [1, 1, 1.1, 1.15, 1.2, 1.25, 1.5];
-        }
-    } else {
-        ENEMY_LIFE_MULT = [2, 2.75, 3.5, 4, 6, 10, 15];
-        ENEMY_POWER_MULT = [1, 1, 1, 1, 1, 1, 1];
-        ENEMY_POWER_MAXMULT = [1, 1, 1.10, 1.15, 1.20, 1.25, 1.5];
-    }
+    let ENEMY_LIFE_MULT = APP.ScoreModeEnabled == 0 ? [1.15, 1.25, 1.35, 1.5, 2.5, 3.5, 5] : [2, 2.75, 3.5, 4, 5, 7.5, 10];
+    let ENEMY_POWER_MULT = APP.ScoreModeEnabled == 0 ? [0.9, 0.95, 1, 1, 1, 1, 1] : [1, 1, 1, 1, 1, 1, 1];
+    let ENEMY_POWER_MAXMULT = APP.ScoreModeEnabled == 0 ? [1, 1, 1, 1.05, 1.15, 1.25, 1.35] : [1, 1, 1.10, 1.15, 1.25, 1.5, 2.5];
 
     TIER = APP.Ranking;
     EChance = random(0, 700);
@@ -337,7 +321,6 @@ const GenEnemy = function () {
     if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2 && EChance < 600) EChance = 600;
     if (Game.isInFight == 0) {
         APP.CoreLife = APP.CoreBaseLife;
-        $("#EnemyDesc").html("<br><br>");
 
         //CLASS NORMAL
         if (EChance >= 0 && EChance < 300) {
@@ -432,10 +415,10 @@ const GenEnemy = function () {
         Game.isInFight = 1;
         Game.Enemy[3] = 0;
         Game.Enemy[4] = 0;
-        if (Game.Armors[1][0] == 1) Game.Enemy[4] += Math.floor(random((EnemyLevel * 10) * (EnemyLifeMult * 0.5) + 100, (EnemyLevel * 10) * (EnemyLifeMult * 1) + 100));
-        if (Game.Armors[2][0] == 1 && EnemyLevel > 9) Game.Enemy[4] += Math.floor(random((EnemyLevel * 10) * (EnemyLifeMult * 0.5) + 100, (EnemyLevel * 10) * (EnemyLifeMult * 1) + 100));
-        if (Game.Armors[3][0] == 1 && EnemyLevel > 19) Game.Enemy[4] += Math.floor(random((EnemyLevel * 10) * (EnemyLifeMult * 0.5) + 100, (EnemyLevel * 10) * (EnemyLifeMult * 1) + 100));
-        if (Game.Armors[4][0] == 1 && EnemyLevel > 29) Game.Enemy[4] += Math.floor(random((EnemyLevel * 10) * (EnemyLifeMult * 0.5) + 100, (EnemyLevel * 10) * (EnemyLifeMult * 1) + 100));
+        if (Game.Armors[1][0]) Game.Enemy[4] += _.random( EnemyLevel * 10 * EnemyLifeMult * 0.5 + 100, Game.Enemy[4] += EnemyLevel * 10 * EnemyLifeMult  + 100);
+        if (Game.Armors[1][0] && EnemyLevel >= 10) Game.Enemy[4] += _.random( EnemyLevel * 10 * EnemyLifeMult * 0.5 + 100, Game.Enemy[4] += EnemyLevel * 10 * EnemyLifeMult  + 100);
+        if (Game.Armors[1][0] && EnemyLevel >= 20) Game.Enemy[4] += _.random( EnemyLevel * 10 * EnemyLifeMult * 0.5 + 100, Game.Enemy[4] += EnemyLevel * 10 * EnemyLifeMult  + 100);
+        if (Game.Armors[1][0] && EnemyLevel >= 30) Game.Enemy[4] += _.random( EnemyLevel * 10 * EnemyLifeMult * 0.5 + 100, Game.Enemy[4] += EnemyLevel * 10 * EnemyLifeMult  + 100);
         Game.Enemy[3] = Math.round(random(BasePower * EnemyPowerMult, BasePower * EnemyPowerMultMax));
         Game.Enemy[4] *= Game.DIMENSION_MULTIPLIERS[3];
         Game.Enemy[5] = Game.Enemy[4];

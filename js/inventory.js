@@ -1,11 +1,15 @@
 //INVENTORY VISUALS
-function GenInventory() {
+const GenInventory = function () {
+    var COUNTERS = [0, 0, 0, 0, 0];
+    let SCORE = APP.ScoreModeEnabled == 0 ? "Level " + fix(APP.Ranking / 10, 0) : "Score <i class='fad fa-dice-d20'></i>" + fix(APP.Ranking, 0);
     $("#INVENTORY-Gem1").html("");
     $("#INVENTORY-Gem0").html("");
     $("#INVENTORY-Relic").html("");
     $("#INVENTORY-Weapon").html("");
     $("#INVENTORY-Armor").html("");
     $("#EQUIPPED_ITEMS").html($("#EQUIPMENT").html());
+    $("#EQUIPMENT_COUNTER").html(`<i class="fas fa-user"></i> Equipment <div class="pw inline label">${SCORE}</div>`);
+    $("#INVENTORY_COUNTER").html(`<i class="fas fa-sack icon"></i> Inventory <div class="pw inline label">${Game.inventory.length} / ${Game.MaxInv}</div>`);
     for (let IV in Game.inventory) {
         let INVENTORY = {
             BOX_SHADOW: { Normal: 0, Common: 1, Uncommon: 2, Rare: 3, Epic: 4, Exotic: 5, Divine: 6, },
@@ -19,14 +23,25 @@ function GenInventory() {
             if (Game.inventory[IV].type == 1) {
                 ITEM.LEVEL = INVENTORY.LEVEL_TYPE[APP.ScoreModeEnabled];
                 ITEM.DESC = UPS + "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> " + Game.inventory[IV].life + "</div>";
+                COUNTERS[1]++;
             }
-            if (Game.inventory[IV].type == 2) ITEM.DESC = "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> " + Game.inventory[IV].life + "</div>";
-            if (Game.inventory[IV].type == 3) ITEM.DESC = "<div class='pw inline label'>" + INVENTORY.RELICS_DESC[Game.inventory[IV].relictype] + "</div>";
+            if (Game.inventory[IV].type == 2) {
+                ITEM.DESC = "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> " + Game.inventory[IV].life + "</div>";
+                COUNTERS[3]++;
+            }
+            if (Game.inventory[IV].type == 3) {
+                ITEM.DESC = "<div class='pw inline label'>" + INVENTORY.RELICS_DESC[Game.inventory[IV].relictype] + "</div>";
+                COUNTERS[4]++;
+            }
             if (Game.inventory[IV].type == 4) {
                 ITEM.LEVEL = INVENTORY.LEVEL_TYPE[APP.ScoreModeEnabled];
                 ITEM.DESC = UPS + "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[IV].power + "</div>";
+                COUNTERS[0]++;
             }
-            if (Game.inventory[IV].type == 5) ITEM.DESC = "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[IV].power + "</div>";
+            if (Game.inventory[IV].type == 5) {
+                ITEM.DESC = "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[IV].power + "</div>";
+                COUNTERS[2]++;
+            }
             var IS_LEVEL_SET = ITEM.LEVEL != "" ? "<div class='pw inline label'>" + ITEM.LEVEL + "</div>" : "";
 
             $("#INVENTORY-" + INVENTORY.ITEM_TYPES[Game.inventory[IV].type]).append(`<div class="pw message"><div class="pw horizontal segments">
@@ -39,7 +54,12 @@ function GenInventory() {
             </div></div>`);
         }
     }
-}
+    $("#WEAPONS_COUNT").html(`Weapons <div class="pw inline label">${COUNTERS[0]}</div>`);
+    $("#ARMORS_COUNT").html(`Armors <div class="pw inline label">${COUNTERS[1]}</div>`);
+    $("#POWER_GEMS_COUNT").html(`Power Gems <div class="pw inline label">${COUNTERS[2]}</div>`);
+    $("#LIFE_GEMS_COUNT").html(`Life Gems <div class="pw inline label">${COUNTERS[3]}</div>`);
+    $("#RELICS_COUNT").html(`Relics <div class="pw inline label">${COUNTERS[4]}</div>`);
+};
 
 function GenWeapons() {
     var TYPE = "";
@@ -126,7 +146,8 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
         RARITIES: { Normal: [1, 1], Common: [2, 2000], Uncommon: [3, 5000], Rare: [4, 7000], Epic: [5, 8500], Exotic: [6, 9500], Divine: [7, 9850] },
         RELIC_MULTIPLIERS: [_.random(0.01, 0.025, true), _.random(0.025, 0.05, true), _.random(0.05, 0.10, true), _.random(0.10, 0.15, true), _.random(0.15, 0.20, true), _.random(0.20, 0.25, true), _.random(0.25, 0.30, true)],
         RELIC_SCORE_MUTLIPLIERS: [_.random(1, 5), _.random(6, 10), _.random(11, 15), _.random(16, 20), _.random(21, 25), _.random(26, 50), _.random(51, 100)],
-        GEMS_MULTIPLIERS: { Normal: _.random(0.1, 0.5, true), Common: _.random(0.5, 1.0, true), Uncommon: _.random(0.75, 1.5, true), Rare: _.random(1.5, 2.0, true), Epic: _.random(2.0, 2.5, true), Exotic: _.random(2.5, 3.5, true), Divine: _.random(4.0, 5.0, true) },
+        GEMS_MULTIPLIERS: { Normal: _.random(1.0, 1.5, true), Common: _.random(1.5, 2.5, true), Uncommon: _.random(2.5, 3.5, true), Rare: _.random(3.5, 5.0, true), Epic: _.random(5.0, 7.5, true), Exotic: _.random(7.5, 9, true), Divine: _.random(8.5, 10, true) },
+        MAX_GEMS_MULTIPLIER: { Normal: 1.5, Common: 2.5, Uncommon: 3.5, Rare: 5.0, Epic: 7.5, Exotic: 9, Divine: 10 },
     };
     let CLASSES = Object.keys(ITEM_CONFIG.RARITIES);
     let ITEM = {};
@@ -191,7 +212,7 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
         let GEMS_DROP_RATES = APP.ScoreModeEnabled == 1 ? { MIN: [0, 45], MAX: [46, 101] } : { MIN: [0, 50], MAX: [51, 101] };
 
         if (_.inRange(GEMTYPE, GEMS_DROP_RATES.MIN[0], GEMS_DROP_RATES.MAX[0])) { //GENERATE A POWER GEM
-            ITEM.power = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIERS[ITEM.class] * (((APP.WeaponsPower - APP.TotalWeaponsUpgrades) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) * 0.01) + ITEM_CONFIG.RARITIES[ITEM.class][0]);
+            ITEM.power = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIERS[ITEM.class] * ((Game.Weapons.Main[4] - Game.WeaponUpgrades.Main) * 0.01) + ITEM_CONFIG.RARITIES[ITEM.class][0]);
             if (ITEM.power < 1) ITEM.power = 1;
             ITEM.life = 0;
             ITEM.name = "Power Gem";
@@ -199,7 +220,9 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
             ITEM.type = 5; //SET AS POWER GEM
         }
         if (_.inRange(GEMTYPE, GEMS_DROP_RATES.MIN[1], GEMS_DROP_RATES.MAX[1])) { //GENERATE A LIFE GEM
-            ITEM.life = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIERS[ITEM.class] * (((APP.CoreBaseLife - APP.TotalArmorsUpgrades) / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) * 0.01) + ITEM_CONFIG.RARITIES[ITEM.class][0]);
+
+            let BASE_GEM_LIFE = Math.floor((APP.Ranking / 10 * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1] + 100);
+            ITEM.life = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIERS[ITEM.class] * (BASE_GEM_LIFE * 0.01) + ITEM_CONFIG.RARITIES[ITEM.class][0]);
             if (ITEM.life < 1) ITEM.life = 1;
             ITEM.power = 0;
             ITEM.name = "Life Gem";
@@ -525,54 +548,60 @@ const NEXT_ARMOR_PIECE = function () {
 };
 
 const CHECK_EQUIPMENT = function () {
-    let QUALITIES = ["Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Divine"];
+    let QUALITIES = ["Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Divine", "Unique"];
     let GEMS = { 1: 0, 2: 1, 3: 2, 4: 3, "Main": 4, "Special": 5 };
     let ITEM_CONFIG = {
         MULTIPLIERS: [1.05, 1.20, 1.30, 1.40, 1.60, 1.85, 2.10],
         RARITIES: { Normal: [1, 1], Common: [2, 2000], Uncommon: [3, 5000], Rare: [4, 7000], Epic: [5, 8500], Exotic: [6, 9500], Divine: [7, 9850] },
-        RELIC_MULTIPLIERS: [0.03, 0.05, 0.09, 0.14, 0.19, 0.24, 0.30],
-        RELIC_SCORE_MUTLIPLIERS: [5, 10, 15, 20, 25, 50, 100],
-        GEMS_MULTIPLIER: { Normal: 0.5, Common: 1.0, Uncommon: 1.5, Rare: 2.0, Epic: 2.5, Exotic: 3.5, Divine: 5.0 },
+        GEMS_MULTIPLIER: { Normal: 1.5, Common: 2.5, Uncommon: 3.5, Rare: 5.0, Epic: 7.5, Exotic: 9, Divine: 10 },
     };
-    let MAX_QUALITY = APP.ScoreModeEnabled == 1 ? "Divine" : QUALITIES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]];
 
-    let MAX_LIFE_GEM = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIER[MAX_QUALITY] * (((APP.CoreBaseLife - APP.TotalArmorsUpgrades) / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0]);
+    let MAX_QUALITY = APP.ScoreModeEnabled == 1 ? "Divine" : QUALITIES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]];
+    let MAX_GEMS = [0, 0]; // LIFE || POWER
+    for (let ARMOR in Game.Armors) {
+        let VALUE = ITEM_CONFIG.GEMS_MULTIPLIER[MAX_QUALITY] * ((Game.Armors[ARMOR][3] - Game.ArmorUpgrades[ARMOR]) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0];
+        MAX_GEMS[0] = VALUE > MAX_GEMS[0] ? VALUE : MAX_GEMS[0];
+    }
+    for (let WEAPON in Game.Weapons) {
+        let VALUE = ITEM_CONFIG.GEMS_MULTIPLIER[MAX_QUALITY] * ((Game.Weapons[WEAPON][4] - Game.WeaponUpgrades[WEAPON]) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0];
+        MAX_GEMS[1] = VALUE > MAX_GEMS[1] ? VALUE : MAX_GEMS[1];
+    }
+
     for (let ARMOR in Game.Armors) {
         if (ARMOR != 0) {
-            let MAX_VALUE = Math.round((Game.Armors[ARMOR][4] * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 100);
+            let MAX_VALUE = (Game.Armors[ARMOR][4] * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 100;
             if ((Game.Armors[ARMOR][3] - Game.ArmorUpgrades[ARMOR]) > MAX_VALUE) {
+                console.log(`Auto-Scaling of the ${GLOBALS.ARMORS_TYPE[ARMOR]} || ${Game.Armors[ARMOR][3]} out of ${Math.round(MAX_VALUE)}.`);
                 Game.Armors[ARMOR][3] = (MAX_VALUE + Game.ArmorUpgrades[ARMOR]);
-                console.log(`Cheat used on the ${GLOBALS.ARMORS_TYPE[ARMOR]}.`);
             }
-            if (Game.ArmorUpgrades[ARMOR] > (MAX_LIFE_GEM * Game.MaxUPC[GEMS[ARMOR]])) {
-                Game.ArmorUpgrades[ARMOR] = MAX_LIFE_GEM;
-                console.log(`Cheat used for the gems of the ${GLOBALS.ARMORS_TYPE[ARMOR]}.`);
+            if (Game.ArmorUpgrades[ARMOR] > (MAX_GEMS[0] * Game.MaxUPC[GEMS[ARMOR]])) {
+                console.log(`Auto-Scaling the gems of the ${GLOBALS.ARMORS_TYPE[ARMOR]} || ${Game.ArmorUpgrades[ARMOR]} out of ${Math.round(MAX_LIFE_GEM)}.`);
+                Game.ArmorUpgrades[ARMOR] = Math.round(MAX_GEMS[0] * Game.MaxUPC[GEMS[ARMOR]]);
             }
             if (Game.Armors[ARMOR][3] != Math.round(Game.Armors[ARMOR][3]) || Game.ArmorUpgrades[ARMOR] != Math.round(Game.ArmorUpgrades[ARMOR])) {
                 Game.Armors[ARMOR][3] = Math.round(Game.Armors[ARMOR][3]);
                 Game.ArmorUpgrades[ARMOR] = Math.round(Game.ArmorUpgrades[ARMOR]);
             }
-            if (Game.Armors[ARMOR][3] < 0) Game.Armors[ARMOR][3] = MAX_VALUE;
+            if (Game.Armors[ARMOR][3] < 0) Game.Armors[ARMOR][3] = Math.round(MAX_VALUE);
             if (Game.ArmorUpgrades[ARMOR] < 0) Game.ArmorUpgrades[ARMOR] = 0;
         }
     }
 
-    let MAX_POWER_GEM = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIER[MAX_QUALITY] * (((APP.WeaponsPower - APP.TotalWeaponsUpgrades) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0]);
     for (let WEAPON in Game.Weapons) {
-        let MAX_VALUE = Math.round((Game.Weapons[WEAPON][3] * 2) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 10);
+        let MAX_VALUE = (Game.Weapons[WEAPON][3] * 2) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 10;
         if ((Game.Weapons[WEAPON][4] - Game.WeaponUpgrades[WEAPON]) > MAX_VALUE) {
+            console.log(`Auto-Scaling of the ${WEAPON} weapon || ${Game.Weapons[WEAPON][4]} out of ${Math.round(MAX_VALUE)}.`);
             Game.Weapons[WEAPON][4] = (MAX_VALUE + Game.WeaponUpgrades[WEAPON]);
-            console.log(`Cheat used on the ${WEAPON} weapon.`);
         }
-        if (Game.WeaponUpgrades[WEAPON] > (MAX_POWER_GEM * Game.MaxUPC[GEMS[WEAPON]])) {
-            Game.WeaponUpgrades[WEAPON] = MAX_POWER_GEM;
-            console.log(`Cheat used for the gems of the ${WEAPON} weapon.`);
+        if (Game.WeaponUpgrades[WEAPON] > (MAX_GEMS[1] * Game.MaxUPC[GEMS[WEAPON]])) {
+            console.log(`Auto-Scaling the gems of the ${WEAPON} weapon || ${Game.WeaponUpgrades[WEAPON]} out of ${Math.round(MAX_GEMS[1])}.`);
+            Game.WeaponUpgrades[WEAPON] = Math.round(MAX_GEMS[1] * Game.MaxUPC[GEMS[WEAPON]]);
         }
         if (Game.Weapons[WEAPON][4] != Math.round(Game.Weapons[WEAPON][4]) || Game.WeaponUpgrades[WEAPON] != Math.round(Game.WeaponUpgrades[WEAPON])) {
             Game.Weapons[WEAPON][4] = Math.round(Game.Weapons[WEAPON][4]);
             Game.WeaponUpgrades[WEAPON] = Math.round(Game.WeaponUpgrades[WEAPON]);
         }
-        if (Game.Weapons[WEAPON][4] < 0) Game.Weapons[WEAPON][4] = MAX_VALUE;
+        if (Game.Weapons[WEAPON][4] < 0) Game.Weapons[WEAPON][4] = Math.round(MAX_VALUE);
         if (Game.WeaponUpgrades[WEAPON] < 0) Game.WeaponUpgrades[WEAPON] = 0;
     }
 };

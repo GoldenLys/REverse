@@ -1,11 +1,16 @@
 /*
   TODO LIST :
-    • Adding the RGB picker
     • Bug testing
+    • Ability to equip/remove items directly via loots 
 
   IDEAS :
-    • Adding a class skill which would evolve at some levels or be upgradeable
-    • Adding a new rarity "Unique" with pre-defined stats
+1. Unlocking an idle mode when passing dimension 2.
+2. A crafting system for Gems - Weapons - Armors and maybe relics
+3. A bank, guild & shopping System
+    - Bank     : Put your money in the bank so that you don't lose it when dying.
+    - Guild     : Passing ranks in the guild to earn more money.
+    - Shop     : Selling the best weapons & armors of the game, unique-class items would have skills embeded into them
+4. Adding achievements
 */
 
 var APP = {
@@ -79,6 +84,8 @@ $(document).ready(function () {
   });
   $("#VERSION_TEXT").html("AlphaRPG v" + GLOBALS.VERSION);
   $("#VERSION_TEXT2").html("AlphaRPG v" + GLOBALS.VERSION);
+  $("#avatar2").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
+  $("#avatar3").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
   ResetLeaderBoard();
   CLOSE_MENUS();
   UpdateUI();
@@ -122,7 +129,6 @@ const UpdateEngine = function () {
   if (Backup != "Default" && Backup != Game.username) Game.username = Backup;
   if (typeof (Game.xp[2]) === 'undefined') Game.xp[2] = 1;
   let LEVEL = APP.ScoreModeEnabled == 0 ? "Level " + fix(Game.Level, 0) : "Score <i class='fad fa-dice-d20'></i> " + fix(APP.Ranking, 0);
-  let SCORE = APP.ScoreModeEnabled == 0 ? "Level " + fix(APP.Ranking / 10, 0) : "Score <i class='fad fa-dice-d20'></i>" + fix(APP.Ranking, 0);
   if (Game.Level < 1) {
     Game.Level = 1;
     Game.xp[0] = 0;
@@ -147,11 +153,8 @@ const UpdateEngine = function () {
   if (Game.Emp > 50) Game.Emp = 50;
   let ONLINEICON = "<i class='pw red far fa-circle'></i>";
   if (Game.username != "Default" && location.href.match(/(alpha.purplewizard.space).*/) && Game.username != "Default" && Game.username != null && APP.LoggedIn == 1 && APP.Email != "none") ONLINEICON = "<i class='pw alpha fas fa-circle'></i>";
-  $("#Equipment-Title").html("Equipment " + SCORE);
   $("#PlayerID").html("<div class='pw alpha'>" + ONLINEICON + Game.username + " <span class='pw white inline label'>" + LEVEL + "</span></div>");
   $("#PlayerSprite").html("<img class='pw small image' src='images/avatars/avatar" + Game.Avatar + ".jpg'>");
-  $("#avatar2").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
-  $("#avatar3").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
   if (APP.ScoreModeEnabled == 0) {
     for (let ARMOR in Game.Armors) { if (Game.Armors[ARMOR] > Game.Level) { console.log("ERROR 001"); ErrorArmor(ARMOR); } }
     if (Game.Weapons.Main[3] > Game.Level) { console.log("ERROR 002"); ErrorArmor(5); }
@@ -284,7 +287,7 @@ const UpdateUI = function () {
   }
   $("#PlayerXP .progress-bar").attr("style", "max-width:" + GetEXPPercent() + "%;");
   var WTText = Game.Simulation > 1 ? "Dimension <i class='globe icon'></i> " + Game.Simulation + "<br>" : "";
-  $("#LABEL_SHARDS").html(fix(Game.Shards, "auto"));
+  $("#LABEL_SHARDS").html(fix(Game.Shards, "auto-round"));
   if (APP.ScoreModeEnabled == 0) {
     $("#DimensionID").html(WTText);
     $("#PlayerXP").show();
@@ -296,7 +299,7 @@ const UpdateUI = function () {
   }
   if (Game.Level >= APP.MaxLevel && APP.Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && APP.LastMission >= APP.TotalMissions) {
     $("#WTBTN").show();
-    $("#WTUNLOCK").html("<span class='pw alpha'>Dimensional Rift <i class='globe icon'></i>" + (Game.Simulation + 1) + " is opened.");
+    $("#WTUNLOCK").html("Dimensional Rift <i class='globe icon'></i>" + (Game.Simulation + 1) + " is opened.");
   } else {
     $("#WTBTN").hide();
     $("#WTUNLOCK").html("");
@@ -310,7 +313,7 @@ const UpdateUI = function () {
   let CAN_AFFORD_UPGRADE = [];
   for (let UPGRADE = 0; UPGRADE < 4; UPGRADE++) {
     CAN_AFFORD_UPGRADE[UPGRADE] = GetMultPrice(UPGRADE) > Game.Shards ? "pw red" : "pw green";
-    if (GetMultPrice(UPGRADE)>Game.Shards) $(`#UPGRADE_${UPGRADE}`).hide(); else $(`#UPGRADE_${UPGRADE}`).show();
+    if (GetMultPrice(UPGRADE) > Game.Shards) $(`#UPGRADE_${UPGRADE}`).hide(); else $(`#UPGRADE_${UPGRADE}`).show();
     if (GetMultPrice(UPGRADE) === Infinity) {
       UPGRADE_TEXT[UPGRADE] = "MAXED OUT";
     } else {
@@ -333,9 +336,9 @@ const UpdateUI = function () {
     $("#PLAYER-ETA").html("<div class='pw inline label'><i class='fas fa-map-marked-alt icon'></i> Exploration</div>of " + GLOBALS.LOCATIONS[Game.Location][0]);
   }
   if ($('#DIV-COMBAT').is(":visible")) $("#DIV-REWARDS").hide();
-  
+
   if (APP.LoggedIn == 1) $("#CloudTimer").html("Last cloud sync " + toHHMMSS(APP.lastCloudSave) + " ago, as <span class='pw alpha'>" + Game.username + "</span>."); else $("#CloudTimer").html("Cloud sync disabled.");
-  $("#LABEL_INVENTORY").html("<i class='fas fa-sack'></i> " + (Game.inventory.length) + "/" + Game.MaxInv);
+  $("#LABEL_INVENTORY").html("<i class='fas fa-sack'></i> " + Game.inventory.length + "/" + Game.MaxInv);
   $("#LABEL_CASH").html(fix(Game.Cash, 1));
   $("#mcount").html("Missions completed (" + CompletedMissions + "/" + APP.TotalMissions + ")");
   if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0]) $("#MaxPOSLVL").html("You\'ve reached the maximum level for this area, please check the next available missions."); else $("#MaxPOSLVL").html("");

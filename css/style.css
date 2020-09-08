@@ -1074,6 +1074,7 @@ input[type="text"] {
 }
 
 .pw.dropdown>.name {
+	margin: .5em 0 0;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	user-select: none;
@@ -1596,7 +1597,7 @@ img[src*="E.png"]:before, .error-img:before {
 
 .page-content div[id^="DIV-"]>.pw.message>.pw.horizontal.divider:first-child,
 .page-content div[id^="DIV-"].pw.message>.pw.horizontal.divider:first-child {
-	margin-top: 0
+	margin: 0 0 .5rem;
 }
 
 .page-content div[id^="DIV-"].pw.message {
@@ -1609,4 +1610,8 @@ img[src*="E.png"]:before, .error-img:before {
 
 div[id^="INVENTORY-"]>.pw.message {
 	padding: 0 .5em;
+}
+
+#PLAYER-ETA+.pw.sticked.segments>.pw.segment {
+	margin: 0;
 }

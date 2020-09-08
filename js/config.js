@@ -1,6 +1,6 @@
 const GLOBALS = {
     NAME: "AlphaRPG",
-    VERSION: "3.0 BETA19",
+    VERSION: "3.0 BETA21",
     RELICS_NAMES: ["Ares Relic", "Yggdrasil Relic", "Hermes Relic", "Vulcan Relic", "No Relic"],
     ARMORS_NAMES:
     {

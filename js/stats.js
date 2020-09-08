@@ -59,7 +59,6 @@ function login() {
         var user = result.user;
         APP.Email = user.email;
         POPUP_CLOSE();
-        Game.isInFight = 0;
     });
     APP.LoggedIn = 1;
     SendStats();

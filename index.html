@@ -13,9 +13,9 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.14.0/css/pro.min.css"
         async />
-    <link href="css/vars.css?v=3.019" rel="stylesheet" async />
-    <link href="css/style.css?v=3.019" rel="stylesheet" async />
-    <link href="css/palette.css?v=3.019" rel="stylesheet" async />
+    <link href="css/vars.css?v=3.021" rel="stylesheet" async />
+    <link href="css/style.css?v=3.021" rel="stylesheet" async />
+    <link href="css/palette.css?v=3.021" rel="stylesheet" async />
 </head>
 
 <body>
@@ -80,7 +80,8 @@
                     <h3 class="pw horizontal divider" id="PLAYER-ETA"></h3>
                     <div class="pw horizontal sticked segments">
                         <div class="pw segment text-center" id="LABEL_EXP"></div>
-                        <div class="pw segment text-center"><i class="fas fa-dollar-sign pw green"></i>
+                        <div class="pw segment text-center" style="display: none;"><i
+                                class="fas fa-dollar-sign pw green"></i>
                             <span id="LABEL_CASH"></span></div>
                         <div class="pw segment text-center"><i class="fal fa-dna pw blue"></i>
                             <span id="LABEL_SHARDS"></span>
@@ -283,8 +284,7 @@
             </div>
 
             <div id="DIV-INVENTORY" class="pw message no-animation text-center">
-                <h3 class="pw horizontal divider"><i class="fas fa-user"></i> Equipment</h3>
-                <div class="pw blue label" id="Equipment-Title"></div>
+                <h3 class="pw horizontal divider" id="EQUIPMENT_COUNTER"><i class="fas fa-user"></i> Equipment</h3>
                 <div id="EQUIPPED_ITEMS" class="equipment"></div>
 
                 <h3 class="pw horizontal divider"><i class="fas fa-trash"></i> Auto Remove</h3>
@@ -327,29 +327,29 @@
                     </div>
                 </div>
 
-                <h3 class="pw horizontal divider"><i class="fas fa-sack icon"></i> Inventory</h3>
+                <h3 class="pw horizontal divider" id="INVENTORY_COUNTER"><i class="fas fa-sack icon"></i> Inventory</h3>
                 <div class="pw dropdown text-center" data-open="open">
-                    <h3 class="name">Weapons</h3>
+                    <h3 class="name" id="WEAPONS_COUNT">Weapons</h3>
                     <div class="content active" id="INVENTORY-Weapon"></div>
                 </div>
 
                 <div class="pw dropdown text-center" data-open="open">
-                    <h3 class="name">Armors</h3>
+                    <h3 class="name" id="ARMORS_COUNT">Armors</h3>
                     <div class="content active" id="INVENTORY-Armor"></div>
                 </div>
 
                 <div class="pw dropdown text-center" data-open="open">
-                    <h3 class="name">Power Gems</h3>
+                    <h3 class="name" id="POWER_GEMS_COUNT">Power Gems</h3>
                     <div class="content active" id="INVENTORY-Gem0"></div>
                 </div>
 
                 <div class="pw dropdown text-center" data-open="open">
-                    <h3 class="name">Life Gems</h3>
+                    <h3 class="name" id="LIFE_GEMS_COUNT">Life Gems</h3>
                     <div class="content active" id="INVENTORY-Gem1"></div>
                 </div>
 
                 <div class="pw dropdown text-center" data-open="open">
-                    <h3 class="name">Relics</h3>
+                    <h3 class="name" id="RELICS_COUNT">Relics</h3>
                     <div class="content active" id="INVENTORY-Relic"></div>
                 </div>
 
@@ -665,7 +665,11 @@
                 <div class="pw horizontal segments">
                     <div class="pw segment">
                         <img id="avatar2" class="pw centered medium image" src="images/avatars/avatar7.jpg">
-                        <div id="ChangeAvatar" class="pw fluid grey button">Change avatar</div>
+                        <div class="pw fluid buttons">
+                            <div id="AVATAR_PREVIOUS" class="pw grey button"><i class="fal fa-arrow-square-left"></i>
+                            </div>
+                            <div id="AVATAR_NEXT" class="pw grey button"><i class="fal fa-arrow-square-right"></i></div>
+                        </div>
                     </div>
                     <div class="pw segment">
                         <div class="pw checkbox" id="AlertToggle" data-id="0" data-check="checked">
@@ -863,7 +867,9 @@
             <h2>Avatar</h2>
             You can also choose your avatar, it'll be shown during any fight.
             <img id="avatar3" class="pw centered medium image" src="#">
-            <div id="ChangeAvatarBegin" class="pw fluid button">Change avatar
+            <div class="pw fluid buttons">
+                <div id="AVATAR_PREVIOUS_BEGIN" class="pw grey button"><i class="fal fa-arrow-square-left"></i></div>
+                <div id="AVATAR_NEXT_BEGIN" class="pw grey button"><i class="fal fa-arrow-square-right"></i></div>
             </div>
         </div>
 
@@ -955,16 +961,16 @@
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
-    <script type="text/javascript" src="js/functions.js?v=3.019"></script>
-    <script type="text/javascript" src="js/config.js?v=3.019"></script>
-    <script type="text/javascript" src="js/stats.js?v=3.019"></script>
-    <script type="text/javascript" src="js/combat.js?v=3.019"></script>
-    <script type="text/javascript" src="js/inventory.js?v=3.019"></script>
-    <script type="text/javascript" src="js/dimension.js?v=3.019"></script>
-    <script type="text/javascript" src="js/missions.js?v=3.019"></script>
-    <script type="text/javascript" src="js/events.js?v=3.019"></script>
-    <script type="text/javascript" src="js/app.js?v=3.019"></script>
-    <script type="text/javascript" src="js/palette.js?v=3.019"></script>
+    <script type="text/javascript" src="js/functions.js?v=3.021"></script>
+    <script type="text/javascript" src="js/config.js?v=3.021"></script>
+    <script type="text/javascript" src="js/stats.js?v=3.021"></script>
+    <script type="text/javascript" src="js/combat.js?v=3.021"></script>
+    <script type="text/javascript" src="js/inventory.js?v=3.021"></script>
+    <script type="text/javascript" src="js/dimension.js?v=3.021"></script>
+    <script type="text/javascript" src="js/missions.js?v=3.021"></script>
+    <script type="text/javascript" src="js/events.js?v=3.021"></script>
+    <script type="text/javascript" src="js/app.js?v=3.021"></script>
+    <script type="text/javascript" src="js/palette.js?v=3.021"></script>
 </body>
 
 </html>
