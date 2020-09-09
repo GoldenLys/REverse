@@ -139,7 +139,7 @@ var Game = {
         ["Normal", 5, 0],
     ],
     ArmorUpgrades: [null, 0, 0, 0, 0],
-    WeaponUpgrades: {Main: 0, Special: 0},
+    WeaponUpgrades: { Main: 0, Special: 0 },
     MaxUPC: [0, 0, 0, 0, 0, 0],
     xp: [0, 100, 1],
     Level: 1,

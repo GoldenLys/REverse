@@ -1,213 +1,213 @@
 :root {
-	--Normal: rgb(255 255 255);
-	--Common: rgb(55 169 21);
-	--Uncommon: rgb(85 128 243);
-	--Rare: rgb(167 65 146);
-	--Epic: rgb(255 176 15);
-	--Exotic: rgb(255 99 55);
-	--Divine: rgb(244 67 54);
-	--Unique: rgb(255 0 50);
-	--Error: rgb(255 0 0);
-	--E1: rgb(164 164 164);
-	--E2: rgb(0 164 0);
-	--E3: rgb(0 169 114);
-	--E4: rgb(0 164 182);
-	--E5: rgb(164 0 167);
-	--E6: rgb(164 0 0);
-	--E7: rgb(255 170 237);
+    --Normal: rgb(255 255 255);
+    --Common: rgb(55 169 21);
+    --Uncommon: rgb(85 128 243);
+    --Rare: rgb(167 65 146);
+    --Epic: rgb(255 176 15);
+    --Exotic: rgb(255 99 55);
+    --Divine: rgb(244 67 54);
+    --Unique: rgb(255 0 50);
+    --Error: rgb(255 0 0);
+    --E1: rgb(164 164 164);
+    --E2: rgb(0 164 0);
+    --E3: rgb(0 169 114);
+    --E4: rgb(0 164 182);
+    --E5: rgb(164 0 167);
+    --E6: rgb(164 0 0);
+    --E7: rgb(255 170 237);
 }
 
 .Enemy1 {
-	color: var(--E1) !important;
-	text-shadow: 0px 0px 3px var(--E1) !important;
-	border-color: var(--E1) !important;
+    color: var(--E1) !important;
+    text-shadow: 0px 0px 3px var(--E1) !important;
+    border-color: var(--E1) !important;
 }
 
 .Enemy2 {
-	color: var(--E2) !important;
-	text-shadow: 0px 0px 3px var(--E2) !important;
-	border-color: var(--E2) !important;
+    color: var(--E2) !important;
+    text-shadow: 0px 0px 3px var(--E2) !important;
+    border-color: var(--E2) !important;
 }
 
 .Enemy3 {
-	color: var(--E3) !important;
-	text-shadow: 0px 0px 3px var(--E3) !important;
-	border-color: var(--E3) !important;
+    color: var(--E3) !important;
+    text-shadow: 0px 0px 3px var(--E3) !important;
+    border-color: var(--E3) !important;
 }
 
 .Enemy4 {
-	color: var(--E4) !important;
-	text-shadow: 0px 0px 3px var(--E4) !important;
-	border-color: var(--E4) !important;
+    color: var(--E4) !important;
+    text-shadow: 0px 0px 3px var(--E4) !important;
+    border-color: var(--E4) !important;
 }
 
 .Enemy5 {
-	color: var(--E5) !important;
-	text-shadow: 0px 0px 3px var(--E5) !important;
-	border-color: var(--E5) !important;
+    color: var(--E5) !important;
+    text-shadow: 0px 0px 3px var(--E5) !important;
+    border-color: var(--E5) !important;
 }
 
 .Enemy6 {
-	color: var(--E6) !important;
-	text-shadow: 0px 0px 3px var(--E6) !important;
-	border-color: var(--E6) !important;
+    color: var(--E6) !important;
+    text-shadow: 0px 0px 3px var(--E6) !important;
+    border-color: var(--E6) !important;
 }
 
 .Enemy7 {
-	color: var(--E7) !important;
-	text-shadow: 0px 0px 3px var(--E7) !important;
-	border-color: var(--E7) !important;
+    color: var(--E7) !important;
+    text-shadow: 0px 0px 3px var(--E7) !important;
+    border-color: var(--E7) !important;
 }
 
 .Error {
-	color: var(--Error) !important;
-	text-shadow: 0px 0px 3px var(--Error) !important;
-	border-color: var(--Error) !important;
+    color: var(--Error) !important;
+    text-shadow: 0px 0px 3px var(--Error) !important;
+    border-color: var(--Error) !important;
 }
 
 .Normal {
-	color: var(--white) !important;
-	text-shadow: 0px 0px 3px var(--white) !important;
-	border-color: var(--white) !important;
+    color: var(--white) !important;
+    text-shadow: 0px 0px 3px var(--white) !important;
+    border-color: var(--white) !important;
 }
 
 .Common {
-	color: var(--Common) !important;
-	text-shadow: 0px 0px 3px var(--Common) !important;
-	border-color: var(--Common) !important;
+    color: var(--Common) !important;
+    text-shadow: 0px 0px 3px var(--Common) !important;
+    border-color: var(--Common) !important;
 }
 
 .Uncommon {
-	color: var(--Uncommon) !important;
-	text-shadow: 0px 0px 3px var(--Uncommon) !important;
-	border-color: var(--Uncommon) !important;
+    color: var(--Uncommon) !important;
+    text-shadow: 0px 0px 3px var(--Uncommon) !important;
+    border-color: var(--Uncommon) !important;
 }
 
 .Rare {
-	color: var(--Rare) !important;
-	text-shadow: 0px 0px 3px var(--Rare) !important;
-	border-color: var(--Rare) !important;
+    color: var(--Rare) !important;
+    text-shadow: 0px 0px 3px var(--Rare) !important;
+    border-color: var(--Rare) !important;
 }
 
 .Epic {
-	color: var(--Epic) !important;
-	text-shadow: 0px 0px 3px var(--Epic) !important;
-	border-color: var(--Epic) !important;
+    color: var(--Epic) !important;
+    text-shadow: 0px 0px 3px var(--Epic) !important;
+    border-color: var(--Epic) !important;
 }
 
 .Exotic {
-	color: var(--Exotic) !important;
-	text-shadow: 0px 0px 3px var(--Exotic) !important;
-	border-color: var(--Exotic) !important;
+    color: var(--Exotic) !important;
+    text-shadow: 0px 0px 3px var(--Exotic) !important;
+    border-color: var(--Exotic) !important;
 }
 
 .Divine {
-	color: var(--Divine) !important;
-	text-shadow: 0px 0px 3px var(--Divine) !important;
-	border-color: var(--Divine) !important;
+    color: var(--Divine) !important;
+    text-shadow: 0px 0px 3px var(--Divine) !important;
+    border-color: var(--Divine) !important;
 }
 
 .Unique {
-	color: var(--Unique) !important;
-	text-shadow: 0px 0px 3px var(--Unique)!important;
-	border-color: var(--Unique) !important;
+    color: var(--Unique) !important;
+    text-shadow: 0px 0px 3px var(--Unique) !important;
+    border-color: var(--Unique) !important;
 }
 
 .tooltip {
-	position: relative;
-	display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .tooltip .tooltiptext {
-	visibility: hidden;
-	right: 0%;
-	min-width: 7rem;
-	bottom: 125%;
-	left: 0%;
-	background-color: var(--darkgrey5);
-	border-bottom: 1px solid var(--green);
-	color: #fff;
-	text-align: center;
-	padding: 0.5rem 1rem;
-	border-radius: 0.5rem;
-	position: absolute;
-	z-index: 1;
+    visibility: hidden;
+    right: 0%;
+    min-width: 7rem;
+    bottom: 125%;
+    left: 0%;
+    background-color: var(--darkgrey5);
+    border-bottom: 1px solid var(--green);
+    color: #fff;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    position: absolute;
+    z-index: 1;
 }
 
 .tooltip:hover .tooltiptext {
-	visibility: visible;
+    visibility: visible;
 }
 
 
 .notice {
-	display: block;
-	visibility: hidden;
-	background: transparent;
-	position: relative;
-	align-items: center;
-	justify-content: center;
-	transition: visibility 0s ease, background-color 250ms ease;
-	-webkit-transition: visibility 0s ease, background-color 250ms ease;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	user-select: none;
+    display: block;
+    visibility: hidden;
+    background: transparent;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    transition: visibility 0s ease, background-color 250ms ease;
+    -webkit-transition: visibility 0s ease, background-color 250ms ease;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .notice.active {
-	visibility: visible;
+    visibility: visible;
 }
 
 .notice .title {
-	color: rgb(var(--ALPHA));
-	line-height: 1.5em;
-	font-size: 1.25em;
-	text-align: center;
-	padding: 5px 0 0;
-	margin: .5em 0 0;
+    color: rgb(var(--ALPHA));
+    line-height: 1.5em;
+    font-size: 1.25em;
+    text-align: center;
+    padding: 5px 0 0;
+    margin: .5em 0 0;
 }
 
 .notice .countdown {
-	content: " ";
-	display: block;
-	height: .5em;
-	font-weight: bold;
-	position: absolute;
-	top: 5px;
-	left: 0px;
-	right: 0px;
-	margin: 0 10px;
-	background: rgb(var(--ALPHA) / 35%);
-	border-radius: 2.5px;
-	transition: width 1000ms ease;
-	-webkit-transition: width 1000ms ease;
+    content: " ";
+    display: block;
+    height: .5em;
+    font-weight: bold;
+    position: absolute;
+    top: 5px;
+    left: 0px;
+    right: 0px;
+    margin: 0 10px;
+    background: rgb(var(--ALPHA) / 35%);
+    border-radius: 2.5px;
+    transition: width 1000ms ease;
+    -webkit-transition: width 1000ms ease;
 }
 
 .notice .text {
-	line-height: 1.25em;
-	font-size: 1em;
-	text-align: center;
-	padding: .5em 0 1em;
-	overflow-wrap: break-word;
+    line-height: 1.25em;
+    font-size: 1em;
+    text-align: center;
+    padding: .5em 0 1em;
+    overflow-wrap: break-word;
 }
 
 .notice .content {
-	box-shadow: 0 0 5px #0a0a10, inset -2.5px -2.5px 5px #0a0a10;
-	min-width: 15%;
+    box-shadow: 0 0 5px #0a0a10, inset -2.5px -2.5px 5px #0a0a10;
+    min-width: 15%;
     max-width: calc(30% - 30px);
-	text-align: center;
-	border-radius: 5px;
-	background: linear-gradient(to right, rgb(5 5 20 / 1), rgb(18 19 31), rgb(5 5 20 / 1));
-	position: fixed;
-	bottom: 5px;
-	right: 5px;
-	padding: 0 10px;
+    text-align: center;
+    border-radius: 5px;
+    background: linear-gradient(to right, rgb(5 5 20 / 1), rgb(18 19 31), rgb(5 5 20 / 1));
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    padding: 0 10px;
 }
 
 .notice:not(.active) .content,
 .notice:not(.active) * {
-	line-height: 0;
-	font-size: 0;
-	background: transparent;
-	box-shadow: none;
-	visibility: hidden;
+    line-height: 0;
+    font-size: 0;
+    background: transparent;
+    box-shadow: none;
+    visibility: hidden;
 }
