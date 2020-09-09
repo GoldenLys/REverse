@@ -232,7 +232,7 @@ const UpdateGame = function () {
     APP.WeaponsPower = Math.round(Game.Weapons.Main[4] * (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     APP.SpecialPower = Math.round((Game.Weapons.Main[4] + Game.Weapons.Special[4]) * (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     APP.Ranking = Math.floor((APP.Ranking / divisor) * 10);
-    for (let MISSION in GLOBALS.MISSIONS) { if (typeof(Game.MissionsCompleted[MISSION]) === 'undefined') Game.MissionsCompleted[M2] = 0; }
+    for (let MISSION in GLOBALS.MISSIONS) { if (typeof(Game.MissionsCompleted[MISSION]) === 'undefined') Game.MissionsCompleted[MISSION] = 0; }
     if (Game.MissionStarted[0]) Game.Location = GLOBALS.MISSIONS[Game.MissionStarted[1]][8];
     for (var ITEM in Game.inventory) {
         if (typeof Game.inventory[ITEM].name === "undefined" || typeof Game.inventory[ITEM].class === "undefined" || typeof Game.inventory[ITEM].type === "undefined") { RemoveItem(ITEM); console.log("ERROR 007"); }
