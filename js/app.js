@@ -55,7 +55,7 @@ $(document).ready(function () {
     document.title = GLOBALS.NAME;
     $("#site-name").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
     ResetTheme(0);
-    if (localStorage.getItem("Alpha") != null) load();
+    if (localStorage.getItem("Alpha") !== null) load();
     if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin" && !$("#LOGIN-NOTICE").hasClass("active") && GLOBALS.VERSION != "dev") LOGIN("RETURN");
     if (Game.username != "Default") {
         $("#GAME").show();
