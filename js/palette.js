@@ -57,11 +57,8 @@
 })();
 
 const WP_CHANGE = function (TYPE, PARAM) {
-    if (!PARAM) {
-        if (APP.PICKER[TYPE] > 0) APP.PICKER[TYPE]--;
-    } else {
-        if (APP.PICKER[TYPE] < 255) APP.PICKER[TYPE]++;
-    }
+    if (!PARAM && APP.PICKER[TYPE] > 0) APP.PICKER[TYPE]--;
+    else if (PARAM && APP.PICKER[TYPE] < 255) APP.PICKER[TYPE]++;
     $("#range-" + APP.TYPES[TYPE]).val(APP.PICKER[TYPE]);
     WP_UPDATE();
 };
@@ -69,9 +66,7 @@ const WP_CHANGE = function (TYPE, PARAM) {
 const WP_UPDATE = function () {
     Game.Theme = `${APP.PICKER[0]} ${APP.PICKER[1]} ${APP.PICKER[2]}`;
     $('body').attr("style", `--ALPHA: ${Game.Theme};`);
-
     $(".button-validate").attr("style", "background-color: " + Game.Theme + ";");
-
     for (let COLOR in APP.PICKER) {
         $("#selector-" + APP.TYPES[COLOR] + " .value").html(APP.PICKER[COLOR]);
         $("#selector-" + APP.TYPES[COLOR] + " .value").css("margin-left", "calc(" + (APP.PICKER[COLOR] / 255) + " * (100% - 3em))");
@@ -80,15 +75,15 @@ const WP_UPDATE = function () {
     UpdateGame();
 };
 
-//THEME FUNCTIONS
+// THEME FUNCTIONS
 
-const ResetTheme = function(code) {
+const ResetTheme = function (code) {
     if (code != 2) Game.Theme = "19 241 210";
     $('body').attr("style", `--ALPHA: ${Game.Theme};`);
     if (code == 1) save();
 };
 
-const rgbToHex = function(rgb) {
+const rgbToHex = function (rgb) {
     let hex = Number(rgb).toString(16);
     if (hex.length < 2) hex = "0" + hex;
     if (hex == 0) hex = "00";
@@ -101,4 +96,3 @@ const fullColorHex = function (r, g, b) {
     let blue = rgbToHex(b);
     return red + green + blue;
 };
-

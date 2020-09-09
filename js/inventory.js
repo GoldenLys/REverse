@@ -1,4 +1,4 @@
-//INVENTORY VISUALS
+// INVENTORY VISUALS
 const GenInventory = function () {
     var COUNTERS = [0, 0, 0, 0, 0];
     let SCORE = APP.ScoreModeEnabled == 0 ? "Level " + fix(APP.Ranking / 10, 0) : "Score <i class='fad fa-dice-d20'></i>" + fix(APP.Ranking, 0);
@@ -12,10 +12,10 @@ const GenInventory = function () {
     $("#INVENTORY_COUNTER").html(`<i class="fas fa-sack icon"></i> Inventory <div class="pw inline label">${Game.inventory.length} / ${Game.MaxInv}</div>`);
     for (let IV in Game.inventory) {
         let INVENTORY = {
-            BOX_SHADOW: { Normal: 0, Common: 1, Uncommon: 2, Rare: 3, Epic: 4, Exotic: 5, Divine: 6, },
+            BOX_SHADOW: { Normal: 0, Common: 1, Uncommon: 2, Rare: 3, Epic: 4, Exotic: 5, Divine: 6 },
             ITEM_TYPES: ["", "Armor", "Gem1", "Relic", "Weapon", "Gem0"],
             LEVEL_TYPE: ["Level " + Game.inventory[IV].LEVEL, "Score <i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IV].LEVEL * 10)],
-            RELICS_DESC: ["-", "Power bonus of " + fix(Game.inventory[IV].bonus, 2), "Life bonus of " + fix(Game.inventory[IV].bonus, 2), "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>", "Max Score +" + fix(Game.inventory[IV].bonus, 1)],
+            RELICS_DESC: ["-", "Power bonus of " + fix(Game.inventory[IV].bonus, 2), "Life bonus of " + fix(Game.inventory[IV].bonus, 2), "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>", "Max Score +" + fix(Game.inventory[IV].bonus, 1)]
         };
         let ITEM = { DESC: "", LEVEL: "" };
         if (Game.inventory[IV] != undefined) {
@@ -24,34 +24,30 @@ const GenInventory = function () {
                 ITEM.LEVEL = INVENTORY.LEVEL_TYPE[APP.ScoreModeEnabled];
                 ITEM.DESC = UPS + "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> " + Game.inventory[IV].life + "</div>";
                 COUNTERS[1]++;
-            }
-            if (Game.inventory[IV].type == 2) {
+            } else if (Game.inventory[IV].type == 2) {
                 ITEM.DESC = "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> " + Game.inventory[IV].life + "</div>";
                 COUNTERS[3]++;
-            }
-            if (Game.inventory[IV].type == 3) {
+            } else if (Game.inventory[IV].type == 3) {
                 ITEM.DESC = "<div class='pw inline label'>" + INVENTORY.RELICS_DESC[Game.inventory[IV].relictype] + "</div>";
                 COUNTERS[4]++;
-            }
-            if (Game.inventory[IV].type == 4) {
+            } else if (Game.inventory[IV].type == 4) {
                 ITEM.LEVEL = INVENTORY.LEVEL_TYPE[APP.ScoreModeEnabled];
                 ITEM.DESC = UPS + "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[IV].power + "</div>";
                 COUNTERS[0]++;
-            }
-            if (Game.inventory[IV].type == 5) {
+            } else if (Game.inventory[IV].type == 5) {
                 ITEM.DESC = "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[IV].power + "</div>";
                 COUNTERS[2]++;
             }
             var IS_LEVEL_SET = ITEM.LEVEL != "" ? "<div class='pw inline label'>" + ITEM.LEVEL + "</div>" : "";
-
             $("#INVENTORY-" + INVENTORY.ITEM_TYPES[Game.inventory[IV].type]).append(`<div class="pw message"><div class="pw horizontal segments">
-            <div class="pw little segment"> <div onclick="EquipItem(${IV}, ${Game.inventory[IV].type})" class="pw green button"><i class="fal fa-check"></i></div> </div>
-            <div class="pw segment">
-            <span class="${Game.inventory[IV].class}" id="${IV}">${Game.inventory[IV].class}</span>
-            ${Game.inventory[IV].name} ${IS_LEVEL_SET} ${ITEM.DESC}
-            </div>
-            <div class="pw little segment"> <div onclick="RemoveItem(${IV})" class="pw red button"><i class="fas fa-trash"></i></div> </div>
-            </div></div>`);
+                <div class="pw little segment"> <div onclick="EquipItem(${IV}, ${Game.inventory[IV].type})" class="pw green button"><i class="fal fa-check"></i></div> </div>
+                <div class="pw segment">
+                <span class="${Game.inventory[IV].class}" id="${IV}">${Game.inventory[IV].class}</span>
+                ${Game.inventory[IV].name} ${IS_LEVEL_SET} ${ITEM.DESC}
+                </div>
+                <div class="pw little segment"> <div onclick="RemoveItem(${IV})" class="pw red button"><i class="fas fa-trash"></i></div> </div>
+                </div></div>`
+            );
         }
     }
     $("#WEAPONS_COUNT").html(`Weapons <div class="pw inline label">${COUNTERS[0]}</div>`);
@@ -61,11 +57,12 @@ const GenInventory = function () {
     $("#RELICS_COUNT").html(`Relics <div class="pw inline label">${COUNTERS[4]}</div>`);
 };
 
-function GenWeapons() {
+const GenWeapons = function () {
     var TYPE = "";
     for (var T = 1; T < 3; T++) {
         var Names = ["", "Sword", "Dagger"];
-        if (T == 1) { TYPE = "Main"; } else { TYPE = "Special"; }
+        if (T == 1) TYPE = "Main";
+        else TYPE = "Special";
         Game.Weapons[TYPE][0] = Game.Weapons[TYPE][0].replace(/Weapon/gi, Names[T]);
         var Class = 0;
         if (Game.Weapons[TYPE][1] == "Common") Class = "1";
@@ -81,20 +78,18 @@ function GenWeapons() {
         var UPWSELECTOR = T == 1 ? 4 : 5;
         var WEAPONUPC = Game.Weapons[TYPE][2] == Game.MaxUPC[UPWSELECTOR] ? "" : "pw green";
         var UPWTEXT = Game.MaxUPC[UPWSELECTOR] > 0 ? "<i class='pw orange fad fa-gem'></i> <span class='" + WEAPONUPC + "'>" + Game.Weapons[TYPE][2] + "</span>/" + Game.MaxUPC[UPWSELECTOR] : "";
-        if (Game.MaxUPC[UPWSELECTOR] > 0) $("#" + TYPE + "WeaponGems").show(); else $("#" + TYPE + "WeaponGems").hide();
+        if (Game.MaxUPC[UPWSELECTOR] > 0) $("#" + TYPE + "WeaponGems").show();
+        else $("#" + TYPE + "WeaponGems").hide();
         $("#" + TYPE + "WeaponGems").html(UPWTEXT);
-
-        if (Class == "E") { $("#" + TYPE + "WeaponSprite").html("<div class='pw image error-img'></div>"); }
-        else {
-            $("#" + TYPE + "WeaponSprite").html("<img class='pw centered tiny image' src='images/Weapons/" + TYPE + "-" + Class + ".png'></img>");
-        }
+        if (Class == "E") $("#" + TYPE + "WeaponSprite").html("<div class='pw image error-img'></div>");
+        else $("#" + TYPE + "WeaponSprite").html("<img class='pw centered tiny image' src='images/Weapons/" + TYPE + "-" + Class + ".png'></img>");
         $("#" + TYPE + "WeaponLevel").html(LEVELTEXT);
         $("#" + TYPE + "WeaponText").html("<i class='pw blue fas fa-sword'></i> " + Game.Weapons[TYPE][4]);
         $("#" + TYPE + "WeaponTitle").html("<span class='" + Game.Weapons[TYPE][1] + "'>" + Game.Weapons[TYPE][1] + "</span> " + Game.Weapons[TYPE][0]);
     }
-}
+};
 
-function GenArmors() {
+const GenArmors = function () {
     let Names = ["", "Helmet", "Armor", "Shield", "Boots"];
     for (let UPC = 1; UPC < 5; UPC++) {
         let Class = 0;
@@ -108,7 +103,6 @@ function GenArmors() {
         if (Game.Armors[UPC][2] == "Exotic") Class = "5";
         if (Game.Armors[UPC][2] == "Divine") Class = "6";
         if (Game.Armors[UPC][2] == "Error") Class = "E";
-
         $("#" + armor).attr("class", "pw segment");
         $("#" + armor).attr("style", `--QUALITY:var(--${Game.Armors[UPC][2]});`);
         $("#D" + armor).attr("onclick", "ConfirmDestroy(" + UPC + ");");
@@ -125,8 +119,8 @@ function GenArmors() {
         $("#" + armor + "-life").html("<i class='pw red fas fa-heart'></i> " + fix(Game.Armors[UPC][3], 1));
         $("#" + armor + "-rarity").html(RLSTXT);
         $("#" + armor + "-gems").html(UPCTEXT);
-        if (Game.MaxUPC[UPC - 1] > 0) $("#" + armor + "-gems").show(); else $("#" + armor + "-gems").hide();
-
+        if (Game.MaxUPC[UPC - 1] > 0) $("#" + armor + "-gems").show();
+        else $("#" + armor + "-gems").hide();
         if (Class == "E") $("#" + armor + "-image").html("<div class='pw image error-img'></div>");
         else $("#" + armor + "-image").html("<img class='pw centered tiny image' style='margin-top: 1em; height: 80px; width: auto;' src='images/Armors/" + UPC + "-" + Class + ".png'></div>");
         $("#" + armor + "-title").html("<span class='" + Game.Armors[UPC][2] + "'>" + Game.Armors[UPC][2] + "</span> " + Game.Armors[UPC][1]);
@@ -135,10 +129,10 @@ function GenArmors() {
     }
     if (Game.Level < 30) $("#NextArmor").html("Next armor piece unlocked at Lv. " + NEXT_ARMOR_PIECE());
     else $("#NextArmor").html("");
-}
+};
 
 
-//ITEM GENERATION
+// ITEM GENERATION
 const newItem = function (OBJECT, LEVEL, CLASS) {
     if (APP.ScoreModeEnabled == 1) LEVEL /= 10;
     let ITEM_CONFIG = {
@@ -152,24 +146,25 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
     let CLASSES = Object.keys(ITEM_CONFIG.RARITIES);
     let ITEM = {};
     if (LEVEL < 1) LEVEL = 1;
-
     let BALANCE_EQUIPMENT = [67, 50, 40, 33];
-    if (OBJECT == 0) { if (_.random(0, 100) > BALANCE_EQUIPMENT[LATEST_UNLOCKED_ARMOR() - 1]) OBJECT = "Weapon"; else OBJECT = "Armor"; }
+    if (OBJECT == 0) {
+        if (_.random(0, 100) > BALANCE_EQUIPMENT[LATEST_UNLOCKED_ARMOR() - 1]) OBJECT = "Weapon";
+        else OBJECT = "Armor";
+    }
     let BASE_LUCK = ITEM_CONFIG.RARITIES[CLASS][1];
-
-    for (var RELIC in Game.RELICS) {//IF PLAYER HAVE A MINIMAL RARITY RELIC THEN USE IT HERE
+    for (var RELIC in Game.RELICS) { // IF PLAYER HAS A MINIMAL RARITY RELIC THEN USE IT HERE
         if (Game.RELICS[RELIC][1] == 3 && BASE_LUCK < ITEM_CONFIG.RARITIES[Game.RELICS[RELIC][2]][1]) BASE_LUCK = ITEM_CONFIG.RARITIES[Game.RELICS[RELIC][2]][1];
     }
-    if (APP.ScoreModeEnabled == 1 && BASE_LUCK < 7000) {//IF IN SCORE MODE REPLACE ALL LOW CLASS ITEMS WITH HIGH CLASS ONES
-        let LUCK_PER_TYPES = { 0: 7000, 1: 7000, 2: 7000, 3: 7000, 4: 7000, 5: 8500, 6: 8500, 7: 9850, };
+    if (APP.ScoreModeEnabled == 1 && BASE_LUCK < 7000) { // IF IN SCORE MODE REPLACE ALL LOW CLASS ITEMS WITH HIGH CLASS ONES
+        let LUCK_PER_TYPES = { 0: 7000, 1: 7000, 2: 7000, 3: 7000, 4: 7000, 5: 8500, 6: 8500, 7: 9850 };
         BASE_LUCK = LUCK_PER_TYPES[Game.Enemy[1]];
         if (LEVEL > APP.MaxScore) LEVEL = APP.MaxScore;
-        if (Game.MissionStarted[0] && GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) BASE_LUCK = Game.Enemy == 7 ? 9850 : 9500; //IF IN A FORTRESS GENERATE AN EXOTIC OR BETTER
+        if (Game.MissionStarted[0] && GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) BASE_LUCK = Game.Enemy == 7 ? 9850 : 9500; // IF IN A FORTRESS GENERATE AN EXOTIC OR BETTER
     } else {
         if (LEVEL > Game.Level && APP.ScoreModeEnabled == 0) LEVEL = Game.Level;
         if (LEVEL > GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0) LEVEL = GLOBALS.LOCATIONS[Game.Location][2];
     }
-    let MAX_LUCK = ITEM_CONFIG.RARITIES[CLASSES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]]][1]; //DEFINE THE MAXIMUM DROP QUALITY TO LOCATION MAX
+    let MAX_LUCK = ITEM_CONFIG.RARITIES[CLASSES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]]][1]; // DEFINE THE MAXIMUM DROP QUALITY TO LOCATION MAX
     if (_.inRange(Game.Level, 0, 5) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 0) MAX_LUCK = 1999; // NORMAL
     if (_.inRange(Game.Level, 5, 10) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 1) MAX_LUCK = 4999; // COMMON
     if (_.inRange(Game.Level, 10, 15) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 2) MAX_LUCK = 6999; // UNCOMMON
@@ -186,38 +181,32 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
     if (_.inRange(LUCK, 8500, 9500)) ITEM.class = "Epic";
     if (_.inRange(LUCK, 9500, 9850)) ITEM.class = "Exotic";
     if (_.inRange(LUCK, 9850, 10001)) ITEM.class = "Divine";
-
-    if (OBJECT == "Armor") { //GENERATE AN ARMOR
+    if (OBJECT == "Armor") { // GENERATE AN ARMOR
         ITEM.name = GLOBALS.ARMORS_NAMES[[ITEM.class]][Math.floor(Math.random() * GLOBALS.ARMORS_NAMES[ITEM.class].length)] + " Armor";
         if (LEVEL > APP.MaxScore) LEVEL = APP.MaxScore;
         ITEM.LEVEL = LEVEL;
         ITEM.ups = GET_MAX_UPGRADES(ITEM.class);
         if (APP.ScoreModeEnabled == 1) ITEM.life = Math.floor(random((LEVEL * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1] * 0.75) + 100, (LEVEL * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1] + 100));
         else ITEM.life = Math.floor(random((LEVEL * 10) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1] * 0.9) + 100, (LEVEL * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1] + 100));
-        ITEM.type = 1; //SET AS ARMOR
-    }
-
-    if (OBJECT == "Weapon") { //GENERATE A WEAPON
+        ITEM.type = 1; // SET AS ARMOR
+    } else if (OBJECT == "Weapon") { // GENERATE A WEAPON
         ITEM.name = GLOBALS.ARMORS_NAMES[[ITEM.class]][Math.floor(Math.random() * GLOBALS.ARMORS_NAMES[ITEM.class].length)] + " Weapon";
         if (LEVEL > APP.MaxScore) LEVEL = APP.MaxScore;
         ITEM.LEVEL = LEVEL;
         ITEM.ups = GET_MAX_UPGRADES(ITEM.class);
         if (APP.ScoreModeEnabled == 1) ITEM.power = Math.floor(random((LEVEL * 2) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1] * 0.75) + 5, (LEVEL * 2) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1] + 10));
         else ITEM.power = Math.floor(random((LEVEL * 2) * (ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1] * 0.9) + 5, (LEVEL * 2) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1] + 10));
-        ITEM.type = 4; //SET AS WEAPON
-    }
-
-    if (OBJECT == "Gem") { //GENERATE A GEM
+        ITEM.type = 4; // SET AS WEAPON
+    } else if (OBJECT == "Gem") { // GENERATE A GEM
         let GEMTYPE = _.random(1, 100);
         let GEMS_DROP_RATES = APP.ScoreModeEnabled == 1 ? { MIN: [0, 45], MAX: [46, 101] } : { MIN: [0, 50], MAX: [51, 101] };
-
         if (_.inRange(GEMTYPE, GEMS_DROP_RATES.MIN[0], GEMS_DROP_RATES.MAX[0])) { //GENERATE A POWER GEM
             ITEM.power = Math.floor(ITEM_CONFIG.GEMS_MULTIPLIERS[ITEM.class] * ((Game.Weapons.Main[4] - Game.WeaponUpgrades.Main) * 0.01) + ITEM_CONFIG.RARITIES[ITEM.class][0]);
             if (ITEM.power < 1) ITEM.power = 1;
             ITEM.life = 0;
             ITEM.name = "Power Gem";
             ITEM.LEVEL = ITEM_CONFIG.RARITIES[ITEM.class][0];
-            ITEM.type = 5; //SET AS POWER GEM
+            ITEM.type = 5; // SET AS POWER GEM
         }
         if (_.inRange(GEMTYPE, GEMS_DROP_RATES.MIN[1], GEMS_DROP_RATES.MAX[1])) { //GENERATE A LIFE GEM
 
@@ -227,40 +216,33 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
             ITEM.power = 0;
             ITEM.name = "Life Gem";
             ITEM.LEVEL = ITEM_CONFIG.RARITIES[ITEM.class][0];
-            ITEM.type = 2; //SET AS LIFE GEM
+            ITEM.type = 2; // SET AS LIFE GEM
         }
-    }
-
-    if (OBJECT == "Relic") { //GENERATE A RELIC
+    } else if (OBJECT == "Relic") { // GENERATE A RELIC
         let RelicType = Game.Level > 10 ? _.random(0, 2) : _.random(0, 1);
         if (APP.ScoreModeEnabled == 1) RelicType = _.random(0, 3);
-
-        //ARES - POWER BONUS
+        // ARES - POWER BONUS
         if (RelicType == 0) ITEM.bonus = ITEM_CONFIG.RELIC_MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1];
-
-        //YGGDRASIL - LIFE BONUS
+        // YGGDRASIL - LIFE BONUS
         if (RelicType == 1) ITEM.bonus = ITEM_CONFIG.RELIC_MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1];
-
-        //HERMES - MINIMAL RARITY
+        // HERMES - MINIMAL RARITY
         if (RelicType == 2) {
             ITEM.bonus = CLASSES[_.random(0, ITEM_CONFIG.RARITIES[ITEM.class][0]) - 1];
             if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 1) ITEM.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[ITEM.class][0] - 2, ITEM_CONFIG.RARITIES[ITEM.class][0] - 1)];
             if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 2) ITEM.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[ITEM.class][0] - 3, ITEM_CONFIG.RARITIES[ITEM.class][0] - 1)];
         }
-
-        //VULCAN - MAX SCORE
+        // VULCAN - MAX SCORE
         if (RelicType == 3) ITEM.bonus = ITEM_CONFIG.RELIC_SCORE_MUTLIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1];
-
         ITEM.relictype = RelicType + 1;
         ITEM.name = GLOBALS.RELICS_NAMES[RelicType];
-        ITEM.type = 3; //SET AS RELIC
+        ITEM.type = 3; // SET AS RELIC
     }
-    if (OBJECT == 'Armor' || OBJECT == 'Weapon' || OBJECT == 'Gem' || OBJECT == 'Relic') if ((Game.inventory.length - 1) < Game.MaxInv) Game.inventory[Game.inventory.length] = ITEM;
+    if ((OBJECT == 'Armor' || OBJECT == 'Weapon' || OBJECT == 'Gem' || OBJECT == 'Relic') && Game.inventory.length - 1 < Game.MaxInv) Game.inventory[Game.inventory.length] = ITEM;
     GenInventory();
 };
 
 
-//EQUIPMENT INSTALLATION
+// EQUIPMENT INSTALLATION
 const EquipItem = function (ITEM, TYPE) {
     let ARMOR_TYPES = ["", "Helmet", "Armor", "Shield", "Boots"];
     let ARMOR_BUTTON = [];
@@ -268,33 +250,26 @@ const EquipItem = function (ITEM, TYPE) {
     let ARMOR_UPGRADE_BUTTON = [];
     let RELIC_BUTTON = [];
     let WEAPON_UPGRADE_BUTTON = [];
-
     if (TYPE == 1) {
-        for (let ARMOR in Game.Armors) { if (Game.Armors[ARMOR][0]) ARMOR_BUTTON[ARMOR] = "<div onclick='NewCore(" + ARMOR + ", " + ITEM + ");' class='pw alpha button'>Use as " + ARMOR_TYPES[ARMOR] + "</div>"; }
+        for (let ARMOR in Game.Armors) {
+            if (Game.Armors[ARMOR][0]) ARMOR_BUTTON[ARMOR] = "<div onclick='NewCore(" + ARMOR + ", " + ITEM + ");' class='pw alpha button'>Use as " + ARMOR_TYPES[ARMOR] + "</div>";
+        }
         POPUP("Select an Armor Slot", "<div class='pw fluid vertical buttons'>" + ARMOR_BUTTON[1] + ARMOR_BUTTON[2] + ARMOR_BUTTON[3] + ARMOR_BUTTON[4] + "</div>", 0);
-    }
-
-    if (TYPE == 2) {
+    } else if (TYPE == 2) {
         for (let ARMOR in Game.Armors) {
             ARMOR_UPGRADE_BUTTON[ARMOR] = Game.Armors[ARMOR][0] ? `<div onclick='UPGRADE_ARMOR(${ARMOR}, ${ITEM});' class='pw alpha button'>Upgrade ${ARMOR_TYPES[ARMOR]}</div>` : ``;
             if (Game.Armors[ARMOR][5] >= Game.MaxUPC[ARMOR - 1] && Game.Armors[ARMOR][0]) ARMOR_UPGRADE_BUTTON[ARMOR] = `<div class='pw darkgrey button'>No gem slots left for the ${ARMOR_TYPES[ARMOR]}.</div>`;
         }
         POPUP("Select an Armor Slot", "<div class='pw fluid vertical buttons'>" + ARMOR_UPGRADE_BUTTON[1] + ARMOR_UPGRADE_BUTTON[2] + ARMOR_UPGRADE_BUTTON[3] + ARMOR_UPGRADE_BUTTON[4] + "</div>", 0);
-    }
-
-    if (TYPE == 3) {
+    } else if (TYPE == 3) {
         for (let RELIC in Game.RELICS) {
             if (RELIC != 0) RELIC_BUTTON[RELIC] = Game.Armors[RELIC][0] ? `<div onclick="ConfirmRelic(${RELIC}, ${ITEM});" class="pw alpha button">Apply on ${ARMOR_TYPES[RELIC]}</div>` : ``;
         }
         POPUP("Select a Relic Slot", "<div class='pw fluid vertical buttons'>" + RELIC_BUTTON[1] + RELIC_BUTTON[2] + RELIC_BUTTON[3] + RELIC_BUTTON[4] + "</div>", 0);
-    }
-
-    if (TYPE == 4) {
+    } else if (TYPE == 4) {
         for (let WEAPON in Game.Weapons) WEAPON_BUTTON[WEAPON] = `<div onClick='NewWeapon("${WEAPON}", ${ITEM});' class='pw alpha button'>Use as ${WEAPON} weapon</div>`;
         POPUP("Select a Weapon Slot", "<div class='pw fluid vertical buttons'>" + WEAPON_BUTTON.Main + WEAPON_BUTTON.Special + "</div>", 0);
-    }
-
-    if (TYPE == 5) {
+    } else if (TYPE == 5) {
         for (let WEAPON in Game.Weapons) {
             let NUMBER = 4;
             if (WEAPON != "Main") NUMBER = 5;
@@ -303,7 +278,6 @@ const EquipItem = function (ITEM, TYPE) {
         }
         POPUP("Select a Weapon Slot", "<div class='pw fluid vertical buttons'>" + WEAPON_UPGRADE_BUTTON.Main + WEAPON_UPGRADE_BUTTON.Special + "</div>", 0);
     }
-
     Game.isInFight = 0;
     UpdateGame();
 };
@@ -315,20 +289,18 @@ const NewCore = function (ARMOR, ITEM) {
         NEW_ARMOR: [true, Game.inventory[ITEM].name, Game.inventory[ITEM].class, Game.inventory[ITEM].life, Game.inventory[ITEM].LEVEL, Game.inventory[ITEM].ups],
         COLORS: {
             OLD: ["none", "none", "none", "", "", ""],
-            NEW: ["none", "none", "none", "", "", ""],
-        },
+            NEW: ["none", "none", "none", "", "", ""]
+        }
     };
     let TIER = APP.ScoreModeEnabled == 0 ? "Level " : "Score <i class='fad fa-dice-d20'></i>";
     CONFIG.OLD_ARMOR[4] = APP.ScoreModeEnabled == 0 ? CONFIG.OLD_ARMOR[4] : Math.floor(CONFIG.OLD_ARMOR[4] * 10);
     CONFIG.NEW_ARMOR[4] = APP.ScoreModeEnabled == 0 ? CONFIG.NEW_ARMOR[4] : Math.floor(CONFIG.NEW_ARMOR[4] * 10);
-
     for (let CURRENT = 3; CURRENT < 6; CURRENT++) {
         if (CONFIG.NEW_ARMOR[CURRENT] != CONFIG.OLD_ARMOR[CURRENT]) {
             CONFIG.COLORS.OLD[CURRENT] = CONFIG.OLD_ARMOR[CURRENT] > CONFIG.NEW_ARMOR[CURRENT] ? "pw green" : "pw red";
             CONFIG.COLORS.NEW[CURRENT] = CONFIG.OLD_ARMOR[CURRENT] < CONFIG.NEW_ARMOR[CURRENT] ? "pw green" : "pw red";
         }
     }
-
     if (Game.config[0] == 1) POPUP(`Do you really want to equip this new ${GLOBALS.ARMORS_TYPE[ARMOR]} ?`,
         `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw little segment"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
         <div class="pw horizontal segments">
@@ -347,7 +319,8 @@ const DefineCore = function (ARMOR, ITEM) {
         Game.ArmorUpgrades[ARMOR] = 0;
     }
     if (ITEM <= Game.MaxInv) RemoveItem(ITEM);
-    if ($('#DIV-INVENTORY').is(":visible")) POPUP_CLOSE(); else hideRewards();
+    if ($('#DIV-INVENTORY').is(":visible")) POPUP_CLOSE();
+    else hideRewards();
     Game.isInFight = 0;
     GenInventory();
     UpdateGame();
@@ -360,20 +333,18 @@ const NewWeapon = function (WEAPON, ITEM) {
         NEW_WEAPON: [true, Game.inventory[ITEM].name, Game.inventory[ITEM].class, Game.inventory[ITEM].power, Game.inventory[ITEM].LEVEL, Game.inventory[ITEM].ups],
         COLORS: {
             OLD: ["none", "none", "none", "", "", ""],
-            NEW: ["none", "none", "none", "", "", ""],
-        },
+            NEW: ["none", "none", "none", "", "", ""]
+        }
     };
     let TIER = APP.ScoreModeEnabled == 0 ? "Level " : "Score <i class='fad fa-dice-d20'></i>";
     CONFIG.OLD_WEAPON[4] = APP.ScoreModeEnabled == 0 ? CONFIG.OLD_WEAPON[4] : Math.floor(CONFIG.OLD_WEAPON[4] * 10);
     CONFIG.NEW_WEAPON[4] = APP.ScoreModeEnabled == 0 ? CONFIG.NEW_WEAPON[4] : Math.floor(CONFIG.NEW_WEAPON[4] * 10);
-
     for (let CURRENT = 3; CURRENT < 6; CURRENT++) {
         if (CONFIG.NEW_WEAPON[CURRENT] != CONFIG.OLD_WEAPON[CURRENT]) {
             CONFIG.COLORS.OLD[CURRENT] = CONFIG.OLD_WEAPON[CURRENT] > CONFIG.NEW_WEAPON[CURRENT] ? "pw green" : "pw red";
             CONFIG.COLORS.NEW[CURRENT] = CONFIG.OLD_WEAPON[CURRENT] < CONFIG.NEW_WEAPON[CURRENT] ? "pw green" : "pw red";
         }
     }
-
     if (Game.config[0] == 1) POPUP(`Do you really want to equip this weapon as your ${WEAPON} weapon ?`,
         `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw little segment"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
         <div class="pw horizontal segments">
@@ -404,7 +375,6 @@ const ConfirmRelic = function (RELIC, ITEM) {
     let IRCOLOR2 = Game.RELICS[RELIC][1] == 5 ? "pw green" : "pw red";
     if (Game.RELICS[RELIC][1] == Game.inventory[ITEM].relictype && Game.RELICS[RELIC][2] > Game.inventory[ITEM].bonus) IRCOLOR = "pw green";
     if (Game.RELICS[RELIC][1] == Game.inventory[ITEM].relictype && Game.RELICS[RELIC][2] < Game.inventory[ITEM].bonus) IRCOLOR2 = "pw green";
-
     let DESCS = ["-",
         "Power bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RELICS[RELIC][2], 2) + "</span>",
         "Life bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RELICS[RELIC][2], 2) + "</span>",
@@ -412,7 +382,6 @@ const ConfirmRelic = function (RELIC, ITEM) {
         "Max Score +<span class='" + IRCOLOR + "'>" + fix(Game.RELICS[RELIC][2], 1) + "</span>",
         "-"
     ];
-
     let DESCS2 = ["-",
         "Power bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[ITEM].bonus, 2) + "</span>",
         "Life bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[ITEM].bonus, 2) + "</span>",
@@ -420,37 +389,33 @@ const ConfirmRelic = function (RELIC, ITEM) {
         "Max Score +<span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[ITEM].bonus, 1) + "</span>",
         "-"
     ];
-
-    if (Game.config[1] == 1) {
-        POPUP("New Relic confirmation",
-            `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw little segment"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
-      <div class="pw horizontal segments">
-      <div class="pw segment"><div>${GLOBALS.RELICS_NAMES[Game.RELICS[RELIC][1] - 1]}</div><div class="${Game.RELICS[RELIC][0]}">${Game.RELICS[RELIC][0]}</div><div>${DESCS[Game.RELICS[RELIC][1]]}</div></div>
-      <div class="pw little segment"></div>
-      <div class="pw segment"><div>${Game.inventory[ITEM].name}</div><div class="${Game.inventory[ITEM].class}">${Game.inventory[ITEM].class}</div><div>${DESCS2[Game.inventory[ITEM].relictype]}</div></div>
-      </div>`, 4);
-    }
+    if (Game.config[1] == 1) POPUP("New Relic confirmation", `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw little segment"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
+        <div class="pw horizontal segments">
+        <div class="pw segment"><div>${GLOBALS.RELICS_NAMES[Game.RELICS[RELIC][1] - 1]}</div><div class="${Game.RELICS[RELIC][0]}">${Game.RELICS[RELIC][0]}</div><div>${DESCS[Game.RELICS[RELIC][1]]}</div></div>
+        <div class="pw little segment"></div>
+        <div class="pw segment"><div>${Game.inventory[ITEM].name}</div><div class="${Game.inventory[ITEM].class}">${Game.inventory[ITEM].class}</div><div>${DESCS2[Game.inventory[ITEM].relictype]}</div></div>
+        </div>` , 4);
     else InstallRelic(RELIC, ITEM);
 };
 
 const InstallRelic = function (RELIC, ITEM) {
     Game.RELICS[RELIC] = [Game.inventory[ITEM].class, Game.inventory[ITEM].relictype, Game.inventory[ITEM].bonus];
     if (ITEM <= Game.MaxInv) RemoveItem(ITEM);
-    if ($('#DIV-INVENTORY').is(":visible")) POPUP_CLOSE(); else hideRewards();
+    if ($('#DIV-INVENTORY').is(":visible")) POPUP_CLOSE();
+    else hideRewards();
     POPUP_CLOSE();
     GenInventory();
 };
 
-
-//UPGRADE EQUIPMENT
+// UPGRADE EQUIPMENT
 function UPGRADE_ARMOR(ARMOR, ITEM) {
     let BONUSES = { Normal: 0, Common: 1, Uncommon: 2, Rare: 3, Epic: 4, Exotic: 5, Divine: 6 };
     if (Game.Armors[ARMOR][5] < Game.MaxUPC[ARMOR - 1]) {
         Game.Armors[ARMOR][3] += Game.inventory[ITEM].life;
         Game.Armors[ARMOR][5]++;
         if (APP.ScoreModeEnabled === 1) {
-            if (Game.Armors[ARMOR][4] + (BONUSES[Game.inventory[ITEM].class] / 10) <= APP.MaxScore) { Game.Armors[ARMOR][4] += (BONUSES[Game.inventory[ITEM].class] / 10); }
-            else { Game.Armors[ARMOR][4] = APP.MaxScore; }
+            if (Game.Armors[ARMOR][4] + (BONUSES[Game.inventory[ITEM].class] / 10) <= APP.MaxScore) Game.Armors[ARMOR][4] += (BONUSES[Game.inventory[ITEM].class] / 10);
+            else Game.Armors[ARMOR][4] = APP.MaxScore;
         }
         Game.ArmorUpgrades[ARMOR] += Game.inventory[ITEM].life;
         if (ITEM <= Game.MaxInv) RemoveItem(ITEM);
@@ -478,8 +443,7 @@ function UPGRADE_WEAPON(WEAPON, ITEM) {
     UpdateGame();
 }
 
-
-//DESTROY EQUIPMENT
+// DESTROY EQUIPMENT
 function DestroyWeapon(WEAPON) {
     if (WEAPON == "Main") Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10];
     else Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10];
@@ -493,9 +457,7 @@ function ConfirmDestroyWeapon(weapon) {
     APP.ToDelete.type = weapon;
     var TIER = APP.ScoreModeEnabled == 0 ? "Level " : "Score <i class='fad fa-dice-d20'></i>";
     var DTIERRANK = APP.ScoreModeEnabled == 0 ? Math.round(APP.ToDelete[3]) : Math.floor(APP.ToDelete[3] * 10);
-    POPUP("Throw your current " + weapon + " weapon ?",
-        `<span class='${APP.ToDelete[1]}'>${APP.ToDelete[1]} ${APP.ToDelete[0]} <div class='pw inline label'>${TIER} ${DTIERRANK}</div></span><br><i class='pw blue fas fa-sword'></i>${APP.ToDelete[4]}`,
-        1);
+    POPUP("Throw your current " + weapon + " weapon ?", `<span class='${APP.ToDelete[1]}'>${APP.ToDelete[1]} ${APP.ToDelete[0]} <div class='pw inline label'>${TIER} ${DTIERRANK}</div></span><br><i class='pw blue fas fa-sword'></i>${APP.ToDelete[4]}`, 1);
 }
 
 function DestroyCore(ARMOR) {
@@ -513,15 +475,14 @@ function ConfirmDestroy(ARMOR) {
     var TIER = APP.ScoreModeEnabled == 0 ? "Level " : "Score <i class='fad fa-dice-d20'></i>";
     var DTIERRANK = APP.ScoreModeEnabled == 0 ? Math.round(APP.ToDelete[4]) : Math.floor(APP.ToDelete[4] * 10);
     var Names = ["", "Helmet", "Armor", "Shield", "Boots"];
-    POPUP("Throw your current " + Names[ARMOR] + " ?",
-        `<span class='${APP.ToDelete[2]}'>${APP.ToDelete[2]} ${APP.ToDelete[1]} <div class='pw inline label'>${TIER} ${DTIERRANK}</div></span><br>Available slots : ${(Game.MaxUPC[ARMOR - 1] - APP.ToDelete[5])}<i class='pw orange fad fa-gem'></i><br><i class='pw red fas fa-heart'></i>${APP.ToDelete[3]}`,
-        3);
+    POPUP("Throw your current " + Names[ARMOR] + " ?", `<span class='${APP.ToDelete[2]}'>${APP.ToDelete[2]} ${APP.ToDelete[1]} <div class='pw inline label'>${TIER} ${DTIERRANK}</div></span><br>Available slots : ${(Game.MaxUPC[ARMOR - 1] - APP.ToDelete[5])}<i class='pw orange fad fa-gem'></i><br><i class='pw red fas fa-heart'></i>${APP.ToDelete[3]}`, 3);
 }
 
 const RemoveItem = function (ITEM) {
     if (ITEM < Game.MaxInv) {
         Game.inventory[ITEM].type = 0;
-        if (ITEM >= Game.inventory.length) Game.inventory.splice(ITEM - 1, 1); else Game.inventory.splice(ITEM, 1);
+        if (ITEM >= Game.inventory.length) Game.inventory.splice(ITEM - 1, 1);
+        else Game.inventory.splice(ITEM, 1);
     } else Game.inventory.splice(ITEM, 1);
     GenInventory();
     UpdateGame();
@@ -540,11 +501,10 @@ const ErrorArmor = function (EQUIPMENT) {
 };
 
 const NEXT_ARMOR_PIECE = function () {
-    let LEVEL = 0;
-    if (_.inRange(Game.Level, 0, 10)) LEVEL = 10;
-    if (_.inRange(Game.Level, 10, 20)) LEVEL = 20;
-    if (_.inRange(Game.Level, 20, 30)) LEVEL = 30;
-    return LEVEL;
+    if (_.inRange(Game.Level, 0, 10)) return 10;
+    else if (_.inRange(Game.Level, 10, 20)) return 20;
+    else if (_.inRange(Game.Level, 20, 30)) return 30;
+    else return 0;
 };
 
 const CHECK_EQUIPMENT = function () {
@@ -553,7 +513,7 @@ const CHECK_EQUIPMENT = function () {
     let ITEM_CONFIG = {
         MULTIPLIERS: [1.05, 1.20, 1.30, 1.40, 1.60, 1.85, 2.10],
         RARITIES: { Normal: [1, 1], Common: [2, 2000], Uncommon: [3, 5000], Rare: [4, 7000], Epic: [5, 8500], Exotic: [6, 9500], Divine: [7, 9850] },
-        GEMS_MULTIPLIER: { Normal: 1.5, Common: 2.5, Uncommon: 3.5, Rare: 5.0, Epic: 7.5, Exotic: 9, Divine: 10 },
+        GEMS_MULTIPLIER: { Normal: 1.5, Common: 2.5, Uncommon: 3.5, Rare: 5.0, Epic: 7.5, Exotic: 9, Divine: 10 }
     };
 
     let MAX_QUALITY = APP.ScoreModeEnabled == 1 ? "Divine" : QUALITIES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]];

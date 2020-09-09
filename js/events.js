@@ -107,14 +107,37 @@ function DYNAMICS() {
         login();
     });
 
-    $("#UPGRADE_0").on("click", function () { DIMENSIONAL_UPGRADE(0); });
-    $("#UPGRADE_1").on("click", function () { DIMENSIONAL_UPGRADE(1); });
-    $("#UPGRADE_2").on("click", function () { DIMENSIONAL_UPGRADE(2); });
-    $("#UPGRADE_3").on("click", function () { DIMENSIONAL_UPGRADE(3); });
-    $("#reset-btn").on("click", function () { Reset(); });
-    $("#Reload").on("click", function () { location.reload(); });
-    $("#export-btn").on("click", function () { exportSave(); });
-    $("#import-btn").on("click", function () { importSave(); });
+    $("#UPGRADE_0").on("click", function () {
+        DIMENSIONAL_UPGRADE(0);
+    });
+
+    $("#UPGRADE_1").on("click", function () {
+        DIMENSIONAL_UPGRADE(1);
+    });
+
+    $("#UPGRADE_2").on("click", function () {
+        DIMENSIONAL_UPGRADE(2);
+    });
+
+    $("#UPGRADE_3").on("click", function () {
+        DIMENSIONAL_UPGRADE(3);
+    });
+
+    $("#reset-btn").on("click", function () {
+        Reset();
+    });
+
+    $("#Reload").on("click", function () {
+        location.reload();
+    });
+
+    $("#export-btn").on("click", function () {
+        exportSave();
+    });
+
+    $("#import-btn").on("click", function () {
+        importSave();
+    });
 
     $("#missions").on("click", function () {
         $("#exploration").attr("class", "pw button");
@@ -139,7 +162,9 @@ function DYNAMICS() {
         e.preventDefault();
         let TOGGLE = $(this).hasClass("active") ? "" : "active";
         CLOSE_MENUS();
-        $('.link.active').each(function () { $(this).attr("class", "link"); });
+        $('.link.active').each(function () {
+            $(this).attr("class", "link");
+        });
         if ($(this).data("menu") != "#") {
             $(this).attr("class", "link " + TOGGLE);
             OPEN_MENU($(this).data("menu"), TOGGLE);
@@ -160,6 +185,9 @@ function DYNAMICS() {
         Game.config[$(this).attr("data-id")] = CONFIG;
         $(this).attr("data-check", TOGGLE);
         if ($(this).attr("data-id") == 4) ReadDB();
-        if (_.inRange($(this).attr("data-id"), 5, 11)) { Game.AutoRemove[$(this).attr("data-id") - 5] = CONFIG; UpdateUI(); }
+        if (_.inRange($(this).attr("data-id"), 5, 11)) {
+            Game.AutoRemove[$(this).attr("data-id") - 5] = CONFIG;
+            UpdateUI();
+        }
     });
 }
