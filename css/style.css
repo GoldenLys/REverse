@@ -194,12 +194,10 @@ a:-webkit-any-link {
     .pw.messages .pw.message:nth-child(2n) {
         margin-left: 0;
     }
-
     .equipment>.pw.horizontal.segments>.segment:first-child {
         max-width: calc(50% - 1em);
         min-width: calc(50% - 1em);
     }
-
     .equipment>.pw.horizontal.segments>.segment {
         min-width: calc(50% - 1em);
     }
@@ -223,22 +221,18 @@ a:-webkit-any-link {
         width: 100%;
         display: block;
     }
-
     .pw.nostack.buttons .pw.button {
         display: block;
         margin: 0 0 .5em 0 !important;
     }
-
     .pw.nostack.buttons .pw.button.disabled {
         margin: 0 !important;
         display: none !important;
     }
-
     .pw.fluid.steps {
         display: flex;
         flex-wrap: wrap;
     }
-
     .pw.steps .step, .pw.fluid.steps .step {
         margin: 5px;
         width: calc(100% - 5em);
@@ -787,7 +781,6 @@ a:-webkit-any-link {
     background-color: rgb(var(--ALPHA) / 75%);
     color: rgb(255 255 255 / 75%);
 }
-
 
 .page-content .player-exp {
     position: fixed;
