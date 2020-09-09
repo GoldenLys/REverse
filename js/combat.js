@@ -1,5 +1,6 @@
 var HEALING_TIMER;
 var HEALING_ANIMATION;
+var RESPAWN_TIMER;
 
 const HEALING = function () {
     APP.NextHeal = Game.Enemy[1] >= 6 ? 3 : 5;
@@ -50,7 +51,7 @@ const TAKE_COVER = function () {
 const MAIN_ATTACK = function () {
     CHECK_EQUIPMENT();
     if (Game.isInFight != 1) Game.isInFight = 1;
-    if (APP.isCovered) ClearProtect();
+    if (APP.isCovered) { APP.isCovered = false; HEALING(); }
     var luck = random(1, 100);
     var rPlayerPower = random((APP.WeaponsPower * 85), APP.WeaponsPower * 100) / 100;
     if (luck <= random(6, 10)) rPlayerPower = APP.WeaponsPower * 1.15;
@@ -69,7 +70,7 @@ const MAIN_ATTACK = function () {
 const SPECIAL_ATTACK = function () {
     CHECK_EQUIPMENT();
     if (Game.isInFight != 1) Game.isInFight = 1;
-    if (APP.isCovered) ClearProtect();
+    if (APP.isCovered) { APP.isCovered = false; HEALING(); }
     if (Game.Emp > 0 && !$("#emp-btn").hasClass("transparent")) {
         Game.Emp--;
         var luck = random(0, 100);
@@ -87,7 +88,7 @@ const SPECIAL_ATTACK = function () {
 };
 
 const RUN_AWAY = function () {
-    if (APP.isCovered) ClearProtect();
+    if (APP.isCovered) { APP.isCovered = false; HEALING(); }
     if (Game.LastEscape == 0) {
         Game.LastEscape = 45;
         if (Game.Level <= 25) Game.LastEscape = 35;
@@ -101,7 +102,7 @@ const RUN_AWAY = function () {
     }
 };
 
-//WIN OR LOSE FIGHT
+// WIN OR LOSE FIGHT
 const WinFight = function () {
     if (Game.MissionStarted[4] == 0 && Game.isInFight == 1) {
         let LOOT_RATES = [50, 15, 45];
@@ -140,7 +141,7 @@ const WinFight = function () {
 
         if (Game.Enemy[1] >= 6 && !Game.MissionStarted[0]) LOOT_RATES[0] = 1;
 
-        //CORE LOOT CHANCE
+        // CORE LOOT CHANCE
         var LOOTCHANCE1 = random(0, 100);
         if (LOOTCHANCE1 > 0 && LOOTCHANCE1 <= LOOT_RATES[0] && Game.isInFight != 2) {
             COUNTED_LOOTS++;
@@ -170,7 +171,7 @@ const WinFight = function () {
             if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'><div class='pw inline label'>" + TIER + " " + TIERRANK + "</div>" + Game.inventory[ITEMID].name + "<span class='" + Game.inventory[ITEMID].class + "'> " + UPS + "</span><br><span class='" + Game.inventory[ITEMID].class + "'> " + Game.inventory[ITEMID].class + " </span><br>" + LOOTCONTENT + "</div></div>";
         }
 
-        //RELIC LOOT CHANCE
+        // RELIC LOOT CHANCE
         var LOOTCHANCE2 = _.random(0, 100);
         if (LOOTCHANCE2 > 0 && LOOTCHANCE2 <= LOOT_RATES[1] && Game.isInFight != 2) {
             COUNTED_LOOTS++;
@@ -190,13 +191,12 @@ const WinFight = function () {
             let DESCRIPTIONS = ["-", "Power bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Life bonus of " + fix(Game.inventory[ITEMID].bonus, 2), "Minimal drop quality <span class='" + Game.inventory[ITEMID].bonus + "'>" + Game.inventory[ITEMID].bonus + "</span>", "Max Score +" + fix(Game.inventory[ITEMID].bonus, 1)];
             if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].name + "<br><span class='" + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].class + "</span><br>" + DESCRIPTIONS[Game.inventory[ITEMID].relictype] + "</div></div>";
         }
-        //GEM LOOT CHANCE
+        // GEM LOOT CHANCE
         var LOOTCHANCE3 = random(0, 100);
         if (LOOTCHANCE3 > 0 && LOOTCHANCE3 <= LOOT_RATES[2] && Game.Level >= 10 && Game.isInFight != 2) {
             COUNTED_LOOTS++;
-            if (APP.ScoreModeEnabled == 0) {
-                newItem("Gem", null, MIN_LOOT_QUALITY[Game.Enemy[1]]);
-            } else {
+            if (APP.ScoreModeEnabled == 0) newItem("Gem", null, MIN_LOOT_QUALITY[Game.Enemy[1]]);
+            else {
                 if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) {
                     if (Game.Enemy[1] >= 1) {
                         if (Game.Enemy[1] == 7) newItem("Gem", null, "Divine");
@@ -209,12 +209,10 @@ const WinFight = function () {
             }
             let ITEMID = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
 
-            //IF GEM IS A WEAPON OR AN ARMOR
-            if (Game.inventory[ITEMID].type == 2 || Game.inventory[ITEMID].type == 5) {
-                if (Game.inventory[ITEMID].type == 2) descitem = "+<i class='pw red fas fa-heart'></i>" + fix(Game.inventory[ITEMID].life, "auto") + "<br>";
-                if (Game.inventory[ITEMID].type == 5) descitem = "+<i class='pw blue fas fa-sword'></i>" + fix(Game.inventory[ITEMID].power, "auto") + "<br>";
-                if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].name + "<br><span class='" + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].class + "</span><br>" + descitem + "</div></div>";
-            }
+            // IF GEM IS A WEAPON OR AN ARMOR
+            if (Game.inventory[ITEMID].type == 2) descitem = "+<i class='pw red fas fa-heart'></i>" + fix(Game.inventory[ITEMID].life, "auto") + "<br>";
+            if (Game.inventory[ITEMID].type == 5) descitem = "+<i class='pw blue fas fa-sword'></i>" + fix(Game.inventory[ITEMID].power, "auto") + "<br>";
+            if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw segments'><div class='pw segment " + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].name + "<br><span class='" + Game.inventory[ITEMID].class + "'>" + Game.inventory[ITEMID].class + "</span><br>" + descitem + "</div></div>";
         }
         let INVENTORYFULL = (Game.inventory.length - 1) < Game.MaxInv ? "" : "<div>Inventory full, you can\'t recover any new item.</div>";
         LOOTS = LOOTS + INVENTORYFULL;
@@ -229,14 +227,12 @@ const WinFight = function () {
         let DEATHS = Game.Loses == 0 ? 1 : Game.Loses;
         let EXP_TEXT = APP.ScoreModeEnabled == 0 ? "<div class='pw inline alpha label'>" + fix(Math.floor(expGain), "auto") + " EXP</div>" : "";
         if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] || Game.MissionStarted[0] && Game.Level >= GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][2]) EXP_TEXT = "";
-        if (Game.config[2] == 0) {
-            POPUP("<span class='pw alpha'> " + GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]] + " defeated !</span>",
-                "You have defeated " + fix(Game.Defeated[Game.Enemy[1]], 1) + " <span class='Enemy" + Game.Enemy[1] + "'>" + ThreatLevel + "</span> enemies.<br>Current Ratio " + fix(Game.Wins / DEATHS, 4) + "<br><br>" + EXP_TEXT + LEVELUP + EMP + "<div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>" + ToAddCash + "</div>" + LOOTS, 0);
-        } else { hideRewards(); }
+        if (Game.config[2] == 0) POPUP("<span class='pw alpha'> " + GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]] + " defeated !</span>",
+            "You have defeated " + fix(Game.Defeated[Game.Enemy[1]], 1) + " <span class='Enemy" + Game.Enemy[1] + "'>" + ThreatLevel + "</span> enemies.<br>Current Ratio " + fix(Game.Wins / DEATHS, 4) + "<br><br>" + EXP_TEXT + LEVELUP + EMP + "<div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>" + ToAddCash + "</div>" + LOOTS, 0);
+        else hideRewards();
     }
 };
 
-var RESPAWN_TIMER = [];
 const LoseFight = function () {
     UpdateCombat();
     Game.isInFight = 2;
@@ -296,7 +292,7 @@ const UpdateCombat = function () {
     $("#EnemySprite+h2").attr("class", ENEMY_LIFE_COLOR);
 };
 
-//ENEMY GENERATION FUNCTION
+// ENEMY GENERATION FUNCTION
 const GenEnemy = function () {
     let EnemyLevel = 1;
     let BasePower = Math.round((APP.WeaponsPower - Game.WeaponUpgrades.Main / 2) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
@@ -313,31 +309,31 @@ const GenEnemy = function () {
     if (Game.isInFight == 0) {
         APP.CoreLife = APP.CoreBaseLife;
 
-        //CLASS NORMAL
+        // CLASS NORMAL
         if (_.inRange(EChance, 0, 300)) {
             Game.Enemy[1] = 1;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking - 5, APP.Ranking) : _.random((APP.Ranking * 0.85), APP.Ranking);
         }
 
-        //CLASS ADVANCED
+        // CLASS ADVANCED
         if (_.inRange(EChance, 300, 450)) {
             Game.Enemy[1] = 2;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking - 2, APP.Ranking + 5) : _.random((APP.Ranking * 0.95), APP.Ranking);
         }
 
-        //CLASS SUPERIOR
+        // CLASS SUPERIOR
         if (_.inRange(EChance, 450, 600)) {
             Game.Enemy[1] = 3;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking - 1, APP.Ranking + 10) : _.random(APP.Ranking, APP.Ranking + 1);
         }
 
-        //CLASS VETERAN
+        // CLASS VETERAN
         if (_.inRange(EChance, 600, 650)) {
             Game.Enemy[1] = 4;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking + 5, APP.Ranking + 10) : _.random(APP.Ranking + 1, APP.Ranking + 2);
         }
 
-        //CLASS ELITE
+        // CLASS ELITE
         if (EChance >= 650) {
             Game.Enemy[1] = 5;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking + 10, APP.Ranking + 15) : _.random(APP.Ranking + 2, APP.Ranking + 3);
@@ -345,8 +341,8 @@ const GenEnemy = function () {
 
         if (Game.MissionStarted[2] == GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - 1) EChance = 700;
 
-        //CLASS BOSS OR 1:4 GOD
-        if (_.inRange(EChance, 685, 700) && Game.MissionStarted[0]) {
+        // CLASS BOSS OR 2:5 GOD
+        if (_.inRange(EChance, 685, 701) && Game.MissionStarted[0]) {
             if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2 || Game.MissionStarted[2] > GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - 2) {
                 Game.Enemy[1] = 6;
                 EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking + 15, APP.Ranking + 20) : _.random(APP.Ranking + 3, APP.Ranking + 4);
@@ -375,7 +371,7 @@ const GenEnemy = function () {
         Game.Enemy[4] *= Game.DIMENSION_MULTIPLIERS[3];
         Game.Enemy[5] = Game.Enemy[4];
         if (Game.Enemy[1] >= 6) Game.Enemy[0] = "boss"; else Game.Enemy[0] = Math.floor(Math.random() * GLOBALS.ENEMIES_NAMES[Game.Location].length);
-        if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined') Game.Enemy[0] = 0;
+        if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined' && Game.Enemy[0] != "boss") Game.Enemy[0] = 0;
         Game.isInFight = 1;
         $("#EnemySprite").html("<img class='pw medium image' src='images/Monsters/" + Game.Location + "-" + Game.Enemy[0] + ".png'>");
         $("#EnemyDamage").html("").hide();

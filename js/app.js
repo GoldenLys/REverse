@@ -7,9 +7,9 @@
 1. Unlocking an idle mode when passing dimension 2.
 2. A crafting system for Gems - Weapons - Armors and maybe relics
 3. A bank, guild & shopping System
-    - Bank     : Put your money in the bank so that you don't lose it when dying.
-    - Guild     : Passing ranks in the guild to earn more money.
-    - Shop     : Selling the best weapons & armors of the game, unique-class items would have skills embeded into them
+    - Bank : Put your money in the bank so that you don't lose it when dying.
+    - Guild : Passing ranks in the guild to earn more money.
+    - Shop : Selling the best weapons & armors of the game, unique-class items would have skills embedded into them
 4. Adding achievements
 */
 
@@ -45,18 +45,17 @@ var APP = {
     LastCover: 0,
     NextHeal: 5,
     TYPES: ["red", "green", "blue"],
-    VERSION: 0.1,
-    PICKER: [0, 0, 0],
+    PICKER: [19, 241, 210],
     SELECTION: "",
 };
 
 $(document).ready(function () {
+    if (GLOBALS.BETA) GLOBALS.VERSION = `${GLOBALS.VERSION} BETA ${GLOBALS.BETA}`;
     if (location.href.match(/(:5500).*/)) GLOBALS.VERSION = "dev";
-    if (location.href.match(/(alpha.purplewizard.space\/beta).*/)) GLOBALS.VERSION = GLOBALS.VERSION + " BETA";
     document.title = GLOBALS.NAME;
     $("#site-name").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
     ResetTheme(0);
-    if (localStorage.getItem("Alpha") != null) load();
+    if (localStorage.getItem("Alpha") !== null) load();
     if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin" && !$("#LOGIN-NOTICE").hasClass("active") && GLOBALS.VERSION != "dev") LOGIN("RETURN");
     if (Game.username != "Default") {
         $("#GAME").show();
@@ -95,14 +94,14 @@ const UpdateEngine = function () {
     UpdateGame();
     Game.PlayTime++;
     if (Game.Level >= APP.MaxLevel && APP.LastMission >= APP.TotalMissions) APP.ScoreModeEnabled = 1; else APP.ScoreModeEnabled = 0;
-    if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined') Game.Enemy[0] = 0;
+    if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined' && Game.Enemy[0] != "boss") Game.Enemy[0] = 0;
     if (Game.Level == 1 && !Game.MissionStarted[0] && Game.MissionsCompleted[0] == 0 && Game.config[3] == 1 && $("#INTRODUCTION").is(":hidden") && !$("#LOGIN-NOTICE").hasClass("active")) mission(0);
     if (Game.isInFight == 1) $("#EnemySprite").html("<img class='pw medium image' src='images/Monsters/" + Game.Location + "-" + Game.Enemy[0] + ".png'>");
     if (APP.CoreLife > APP.CoreBaseLife) {
         APP.CoreLife = APP.CoreBaseLife;
         UpdateUI();
     }
-    if (Game.isInFight != 2 && APP.CoreLife == null || Game.Enemy[5] == null || Game.Enemy[5] == 0) {
+    if (typeof(APP.CoreLife) === 'undefined' || typeof(Game.Enemy[5]) === 'undefined' || Game.Enemy[5] <= 0) {
         Game.isInFight = 0;
         UpdateGame();
     }
@@ -112,15 +111,15 @@ const UpdateEngine = function () {
     }
     if (APP.lastCloudSave < 180) APP.lastCloudSave++; else SendStats();
     if (Game.LastEscape > 0) { Game.LastEscape--; $("#NextRetreat").html(`Next retreat in ${toHHMMSS(Game.LastEscape)}.`); }
-    else { $("#NextRetreat").html(""); }
+    else $("#NextRetreat").html("");
 
     if (APP.LastCover > 0) { $("#NextCover").html(`Next cover in ${toHHMMSS(APP.LastCover)}.`); APP.LastCover--; }
-    else { $("#NextCover").html(""); }
+    else $("#NextCover").html("");
     if (Game.xp[0] < 0) Game.xp[0] = 0;
     for (let UPC = 0; UPC < 4; UPC++) {
         if (typeof (Game.MaxUPC[UPC]) === 'undefined') Game.MaxUPC[UPC] = 0;
     }
-    if (Game.username == null || Game.username == "" || Game.username == " " || Game.username == "_" || Game.username.length < 3) {
+    if (typeof(Game.username) === 'undefined' || Game.username == "" || Game.username == " " || Game.username == "_" || Game.username.length < 3) {
         localStorage.clear();
         Backup = "Default";
         Game.username = Backup;
@@ -152,7 +151,7 @@ const UpdateEngine = function () {
     }
     if (Game.Emp > 50) Game.Emp = 50;
     let ONLINEICON = "<i class='pw red far fa-circle'></i>";
-    if (Game.username != "Default" && location.href.match(/(alpha.purplewizard.space).*/) && Game.username != "Default" && Game.username != null && APP.LoggedIn == 1 && APP.Email != "none") ONLINEICON = "<i class='pw alpha fas fa-circle'></i>";
+    if (Game.username != "Default" && location.href.match(/(alpha.purplewizard.space).*/) && typeof(Game.username) !== 'undefined' && APP.LoggedIn == 1 && APP.Email != "none") ONLINEICON = "<i class='pw alpha fas fa-circle'></i>";
     $("#PlayerID").html("<div class='pw alpha'>" + ONLINEICON + Game.username + " <span class='pw white inline label'>" + LEVEL + "</span></div>");
     $("#PlayerSprite").html("<img class='pw small image' src='images/avatars/avatar" + Game.Avatar + ".jpg'>");
     if (APP.ScoreModeEnabled == 0) {
@@ -170,30 +169,17 @@ const UpdateEngine = function () {
     if (Game.isInFight == 1 && APP.CoreLife <= 0) LoseFight(); else if (Game.isInFight == 1 && Game.Enemy[5] <= 0) WinFight();
     for (var I in Game.inventory) {
         if (I > Game.MaxInv) Game.inventory.splice(I, 1);
-        else if (APP.ScoreModeEnabled == 0) {
-            if (Game.inventory[I].LEVEL > Game.Level) Game.inventory.splice(I, 1);
-        }
-    }
-    for (var IV2 in Game.inventory) {
-        if (typeof (Game.inventory[IV2]) !== 'undefined' && Game.inventory[I].type == 1 || Game.inventory[I].type == 3) {
-            if (Game.inventory[I].life == Game.inventory[IV2].life && Game.inventory[I].power == Game.inventory[IV2].power && IV2 != I && Game.inventory[I].name == Game.inventory[IV2].name && Game.inventory[I].type != 3) {
-                Game.inventory.splice(I, 1);
-            }
-        }
+        else if (APP.ScoreModeEnabled == 0 && Game.inventory[I].LEVEL > Game.Level) Game.inventory.splice(I, 1);
     }
 };
 
 const UpdateGame = function () {
-    let counter = 0;
-    for (var M in GLOBALS.MISSIONS) { if (GLOBALS.MISSIONS[M][3] != 2) counter++; }
-    APP.TotalMissions = counter;
+    APP.TotalMissions = 0;
+    for (var M in GLOBALS.MISSIONS) { if (GLOBALS.MISSIONS[M][3] != 2) APP.TotalMissions++; }
     if (Game.Simulation > 50) Game.Simulation = 50;
-    let divisor = 0;
     APP.MaxLevel = 35;
     APP.MaxScore = (APP.MaxLevel + (Game.Simulation * 5) - 5);
-    for (var D = 1; D < 7; D++) {
-        if (Game.Defeated[D] == null) Game.Defeated[D] = 0;
-    }
+    for (let CLASS = 1; CLASS < 7; CLASS++)  if (typeof(Game.Defeated[CLASS]) === 'undefined') Game.Defeated[CLASS] = 0;
     Game.DIMENSION_MULTIPLIERS[0] = 0;
     Game.DIMENSION_MULTIPLIERS[1] = 0;
     for (let R in Game.RELICS) {
@@ -224,7 +210,7 @@ const UpdateGame = function () {
     APP.Ranking = 0;
     APP.Ranking += Game.Weapons.Main[3] + Game.Weapons.Special[3];
     APP.TotalWeaponsUpgrades += Game.WeaponUpgrades.Main + Game.WeaponUpgrades.Special;
-    divisor = 2;
+    let divisor = 2;
     for (let armor = 1; armor < 5; armor++) {
         if (Game.Armors[armor][0]) {
             APP.CoreBaseLife += Game.Armors[armor][3];
@@ -235,10 +221,10 @@ const UpdateGame = function () {
         }
     }
     if (LATEST_LOCATION_UNLOCKED() !== "none") if (APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0] && Game.Level >= GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][2] && Game.username != "Default" && Game.isInFight == 1) {
-        for (M in GLOBALS.MISSIONS) {
-            if (Game.MissionsCompleted[M] == 0 && Game.MissionsCompleted[GLOBALS.MISSIONS[M][9]] == 1 && GLOBALS.MISSIONS[M][3] != 2 && Game.Level >= GLOBALS.MISSIONS[M][2]) {
+        for (let MISSION in GLOBALS.MISSIONS) {
+            if (Game.MissionsCompleted[MISSION] == 0 && Game.MissionsCompleted[GLOBALS.MISSIONS[MISSION][9]] == 1 && GLOBALS.MISSIONS[MISSION][3] != 2 && Game.Level >= GLOBALS.MISSIONS[MISSION][2]) {
                 GenMissions();
-                if (Game.config[3] == 1 && !$("#POPUP").hasClass("active")) mission(M);
+                if (Game.config[3] == 1 && !$("#POPUP").hasClass("active")) mission(MISSION);
             }
         }
     }
@@ -246,28 +232,26 @@ const UpdateGame = function () {
     APP.WeaponsPower = Math.round(Game.Weapons.Main[4] * (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     APP.SpecialPower = Math.round((Game.Weapons.Main[4] + Game.Weapons.Special[4]) * (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     APP.Ranking = Math.floor((APP.Ranking / divisor) * 10);
-    for (var M2 in GLOBALS.MISSIONS) { if (Game.MissionsCompleted[M2] == null) Game.MissionsCompleted[M2] = 0; }
-    if (Game.MissionStarted[0]) { Game.Location = GLOBALS.MISSIONS[Game.MissionStarted[1]][8]; }
-    for (var IV in Game.inventory) {
-        if (typeof Game.inventory[IV].name === "undefined" || typeof Game.inventory[IV].class === "undefined" || typeof Game.inventory[IV].type === "undefined") { RemoveItem(IV); console.log("ERROR 007"); }
-        if (Game.Level < 10 && Game.inventory[IV].class == 'Uncommon') { RemoveItem(IV); console.log("ERROR 008"); }
-        if (Game.Level < 15 && Game.inventory[IV].class == 'Rare') { RemoveItem(IV); console.log("ERROR 009"); }
-        if (Game.Level < 20 && Game.inventory[IV].class == 'Epic') { RemoveItem(IV); console.log("ERROR 010"); }
-        if (Game.Level < 30 && Game.inventory[IV].class == 'Exotic' || Game.Level < 30 && Game.inventory[IV].class == 'Divine') { RemoveItem(IV); console.log("ERROR 011"); }
-        if (Game.inventory[IV].type == 0) { RemoveItem(IV); console.log("ERROR 012"); }
-        if (IV >= Game.MaxInv) { RemoveItem(IV); }
-        if (typeof Game.inventory[IV] !== 'undefined') {
-            if (Game.AutoRemove[0] == 1 && Game.inventory[IV].class == "Normal") { RemoveItem(IV); }
-            else if (Game.AutoRemove[1] == 1 && Game.inventory[IV].class == "Common") { RemoveItem(IV); }
-            else if (Game.AutoRemove[2] == 1 && Game.inventory[IV].class == "Uncommon") { RemoveItem(IV); }
-            else if (Game.AutoRemove[3] == 1 && Game.inventory[IV].class == "Rare") { RemoveItem(IV); }
-            else if (Game.AutoRemove[4] == 1 && Game.inventory[IV].class == "Epic") { RemoveItem(IV); }
-            else if (Game.AutoRemove[5] == 1 && Game.inventory[IV].class == "Exotic") { RemoveItem(IV); }
+    for (let MISSION in GLOBALS.MISSIONS) { if (typeof(Game.MissionsCompleted[MISSION]) === 'undefined') Game.MissionsCompleted[M2] = 0; }
+    if (Game.MissionStarted[0]) Game.Location = GLOBALS.MISSIONS[Game.MissionStarted[1]][8];
+    for (var ITEM in Game.inventory) {
+        if (typeof Game.inventory[ITEM].name === "undefined" || typeof Game.inventory[ITEM].class === "undefined" || typeof Game.inventory[ITEM].type === "undefined") { RemoveItem(ITEM); console.log("ERROR 007"); }
+        if (Game.Level < 10 && Game.inventory[ITEM].class == 'Uncommon') { RemoveItem(ITEM); console.log("ERROR 008"); }
+        if (Game.Level < 15 && Game.inventory[ITEM].class == 'Rare') { RemoveItem(ITEM); console.log("ERROR 009"); }
+        if (Game.Level < 20 && Game.inventory[ITEM].class == 'Epic') { RemoveItem(ITEM); console.log("ERROR 010"); }
+        if (Game.Level < 30 && Game.inventory[ITEM].class == 'Exotic' || Game.Level < 30 && Game.inventory[ITEM].class == 'Divine') { RemoveItem(ITEM); console.log("ERROR 011"); }
+        if (Game.inventory[ITEM].type == 0) { RemoveItem(ITEM); console.log("ERROR 012"); }
+        if (ITEM >= Game.MaxInv) RemoveItem(ITEM);
+        if (typeof Game.inventory[ITEM] !== 'undefined') {
+            if (Game.AutoRemove[0] == 1 && Game.inventory[ITEM].class == "Normal") RemoveItem(ITEM);
+            else if (Game.AutoRemove[1] == 1 && Game.inventory[ITEM].class == "Common") RemoveItem(ITEM);
+            else if (Game.AutoRemove[2] == 1 && Game.inventory[ITEM].class == "Uncommon") RemoveItem(ITEM);
+            else if (Game.AutoRemove[3] == 1 && Game.inventory[ITEM].class == "Rare") RemoveItem(ITEM);
+            else if (Game.AutoRemove[4] == 1 && Game.inventory[ITEM].class == "Epic") RemoveItem(ITEM);
+            else if (Game.AutoRemove[5] == 1 && Game.inventory[ITEM].class == "Exotic") RemoveItem(ITEM);
         }
     }
-    if (!Game.MissionStarted[0]) {
-        if (Game.Location == 11 || Game.Location == 17) { Game.Location--; }
-    }
+    if (!Game.MissionStarted[0] && Game.Location == 11 || !Game.MissionStarted[0] && Game.Location == 17) Game.Location--;
     UpdateUI();
     save();
 };
@@ -286,13 +270,13 @@ const UpdateUI = function () {
         Game.isInFight = 3;
     }
     $("#PlayerXP .progress-bar").attr("style", "max-width:" + GetEXPPercent() + "%;");
-    var WTText = Game.Simulation > 1 ? "Dimension <i class='globe icon'></i> " + Game.Simulation + "<br>" : "";
+    let WTText = Game.Simulation > 1 ? "Dimension <i class='globe icon'></i> " + Game.Simulation + "<br>" : "";
     $("#LABEL_SHARDS").html(fix(Game.Shards, 5));
     if (APP.ScoreModeEnabled == 0) {
-        $("#DimensionID").html(WTText);
         $("#PlayerXP").show();
         $("#LABEL_EXP").html("<span class='pw alpha bold'>" + fix(Game.xp[0], "auto") + "</span>/" + fix(Game.xp[1], "auto") + " EXP");
-    } else $("#DimensionID").html(WTText);
+    }
+    $("#DimensionID").html(WTText);
     if (Game.Level >= APP.MaxLevel) {
         $("#PlayerXP").hide();
         $("#LABEL_EXP").html("Max Level");
@@ -314,11 +298,8 @@ const UpdateUI = function () {
     for (let UPGRADE = 0; UPGRADE < 4; UPGRADE++) {
         CAN_AFFORD_UPGRADE[UPGRADE] = GetMultPrice(UPGRADE) > Game.Shards ? "pw red" : "pw green";
         if (GetMultPrice(UPGRADE) > Game.Shards) $(`#UPGRADE_${UPGRADE}`).hide(); else $(`#UPGRADE_${UPGRADE}`).show();
-        if (GetMultPrice(UPGRADE) === Infinity) {
-            UPGRADE_TEXT[UPGRADE] = "MAXED OUT";
-        } else {
-            UPGRADE_TEXT[UPGRADE] = `<i class='fal fa-dna'></i>${GetMultPrice(UPGRADE)}`;
-        }
+        if (GetMultPrice(UPGRADE) === Infinity) UPGRADE_TEXT[UPGRADE] = "MAXED OUT";
+        else UPGRADE_TEXT[UPGRADE] = `<i class='fal fa-dna'></i>${GetMultPrice(UPGRADE)}`;
         $(`#${UPGRADES_IDs[UPGRADE]}`).html(`<span class="${CAN_AFFORD_UPGRADE[UPGRADE]}">${UPGRADE_TEXT[UPGRADE]}</span>`);
     }
     $("#TOPNEXT").html((APP.LEADERBOARD.PAGE + 1) + " <i class='large arrow alternate circle right outline icon'></i>");
@@ -326,17 +307,14 @@ const UpdateUI = function () {
     if (APP.LEADERBOARD.RANGES[1] + 1 <= APP.LastId) $("#TOPNEXT").attr('class', 'pw button'); else $("#TOPNEXT").attr('class', 'pw button disabled');
     if (APP.LEADERBOARD.PAGE == 1) $("#TOPPREVIOUS").attr('class', 'pw button disabled'); else $("#TOPPREVIOUS").attr('class', 'pw button');
     if (((Game.Level - 5) * 10) >= APP.Ranking) $("#LowScore").html("Using low level armor, upgrade your equipment."); else $("#LowScore").html("");
-    var CompletedMissions = 0;
+    let CompletedMissions = 0;
     for (var M in GLOBALS.MISSIONS) if (GLOBALS.MISSIONS[M][3] != 2 && Game.MissionsCompleted[M] == 1) CompletedMissions++;
     if (Game.isInFight != 2 || Game.isInFight != 3) APP.LastMission = CompletedMissions;
     if (Game.MissionStarted[0]) {
         if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 1) $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-dot-circle'></i> Mission</div>Defeat " + (GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + " enemies in " + GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][0]);
         if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-bullseye'></i> Fortress</div>Clear " + GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][0] + " (" + (GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + " left)");
-    } else {
-        $("#PLAYER-ETA").html("<div class='pw inline label'><i class='fas fa-map-marked-alt icon'></i> Exploration</div>of " + GLOBALS.LOCATIONS[Game.Location][0]);
-    }
+    } else $("#PLAYER-ETA").html("<div class='pw inline label'><i class='fas fa-map-marked-alt icon'></i> Exploration</div>of " + GLOBALS.LOCATIONS[Game.Location][0]);
     if ($('#DIV-COMBAT').is(":visible")) $("#DIV-REWARDS").hide();
-
     if (APP.LoggedIn == 1) $("#CloudTimer").html("Last cloud sync " + toHHMMSS(APP.lastCloudSave) + " ago, as <span class='pw alpha'>" + Game.username + "</span>."); else $("#CloudTimer").html("Cloud sync disabled.");
     $("#LABEL_INVENTORY").html("<i class='fas fa-sack'></i> " + Game.inventory.length + "/" + Game.MaxInv);
     $("#LABEL_CASH").html(fix(Game.Cash, 1));

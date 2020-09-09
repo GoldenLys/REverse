@@ -248,7 +248,7 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
             if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 2) ITEM.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[ITEM.class][0] - 3, ITEM_CONFIG.RARITIES[ITEM.class][0] - 1)];
         }
 
-        //VULCAN - MAX SCORE 
+        //VULCAN - MAX SCORE
         if (RelicType == 3) ITEM.bonus = ITEM_CONFIG.RELIC_SCORE_MUTLIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1];
 
         ITEM.relictype = RelicType + 1;
@@ -479,7 +479,7 @@ function UPGRADE_WEAPON(WEAPON, ITEM) {
 }
 
 
-//DESTROY EQUIPMENT 
+//DESTROY EQUIPMENT
 function DestroyWeapon(WEAPON) {
     if (WEAPON == "Main") Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10];
     else Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10];
@@ -561,15 +561,17 @@ const CHECK_EQUIPMENT = function () {
     for (let ARMOR in Game.Armors) {
         let VALUE = ITEM_CONFIG.GEMS_MULTIPLIER[MAX_QUALITY] * ((Game.Armors[ARMOR][3] - Game.ArmorUpgrades[ARMOR]) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0];
         MAX_GEMS[0] = VALUE > MAX_GEMS[0] ? VALUE : MAX_GEMS[0];
+        Game.MaxLevelReached = Game.Armors[ARMOR][4] > Game.MaxLevelReached ? Game.Armors[ARMOR][4] : Game.MaxLevelReached;
     }
     for (let WEAPON in Game.Weapons) {
         let VALUE = ITEM_CONFIG.GEMS_MULTIPLIER[MAX_QUALITY] * ((Game.Weapons[WEAPON][4] - Game.WeaponUpgrades[WEAPON]) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0];
         MAX_GEMS[1] = VALUE > MAX_GEMS[1] ? VALUE : MAX_GEMS[1];
+        Game.MaxLevelReached = Game.Weapons[WEAPON][3] > Game.MaxLevelReached ? Game.Weapons[WEAPON][3] : Game.MaxLevelReached;
     }
 
     for (let ARMOR in Game.Armors) {
         if (ARMOR != 0) {
-            let MAX_VALUE = (Game.Armors[ARMOR][4] * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 100;
+            let MAX_VALUE = (Game.MaxLevelReached * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 100;
             if ((Game.Armors[ARMOR][3] - Game.ArmorUpgrades[ARMOR]) > MAX_VALUE) {
                 console.log(`Auto-Scaling of the ${GLOBALS.ARMORS_TYPE[ARMOR]} || ${Game.Armors[ARMOR][3]} out of ${Math.round(MAX_VALUE)}.`);
                 Game.Armors[ARMOR][3] = (MAX_VALUE + Game.ArmorUpgrades[ARMOR]);
@@ -588,7 +590,7 @@ const CHECK_EQUIPMENT = function () {
     }
 
     for (let WEAPON in Game.Weapons) {
-        let MAX_VALUE = (Game.Weapons[WEAPON][3] * 2) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 10;
+        let MAX_VALUE = (Game.MaxLevelReached * 2) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 10;
         if ((Game.Weapons[WEAPON][4] - Game.WeaponUpgrades[WEAPON]) > MAX_VALUE) {
             console.log(`Auto-Scaling of the ${WEAPON} weapon || ${Game.Weapons[WEAPON][4]} out of ${Math.round(MAX_VALUE)}.`);
             Game.Weapons[WEAPON][4] = (MAX_VALUE + Game.WeaponUpgrades[WEAPON]);

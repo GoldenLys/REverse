@@ -1,7 +1,7 @@
 :root {
-    --EDITOR_RED: 0;
-    --EDITOR_GREEN: 0;
-    --EDITOR_BLUE: 0;
+    --EDITOR_RED: 19;
+    --EDITOR_GREEN: 241;
+    --EDITOR_BLUE: 210;
 }
 
 .color-picker {

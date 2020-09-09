@@ -1,6 +1,7 @@
 const GLOBALS = {
     NAME: "AlphaRPG",
     VERSION: "3.0",
+    BETA: false,
     RELICS_NAMES: ["Ares Relic", "Yggdrasil Relic", "Hermes Relic", "Vulcan Relic", "No Relic"],
     ARMORS_NAMES:
     {
@@ -170,4 +171,5 @@ var Game = {
     AutoRemove: [0, 0, 0, 0, 0, 0],
     TotalMissions: 0,
     class: "none",
+    MaxLevelReached: 1,
 };
