@@ -131,7 +131,6 @@ const GenArmors = function () {
     else $("#NextArmor").html("");
 };
 
-
 // ITEM GENERATION
 const newItem = function (OBJECT, LEVEL, CLASS) {
     if (APP.ScoreModeEnabled == 1) LEVEL /= 10;
@@ -240,7 +239,6 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
     if ((OBJECT == 'Armor' || OBJECT == 'Weapon' || OBJECT == 'Gem' || OBJECT == 'Relic') && Game.inventory.length - 1 < Game.MaxInv) Game.inventory[Game.inventory.length] = ITEM;
     GenInventory();
 };
-
 
 // EQUIPMENT INSTALLATION
 const EquipItem = function (ITEM, TYPE) {
@@ -394,7 +392,7 @@ const ConfirmRelic = function (RELIC, ITEM) {
         <div class="pw segment"><div>${GLOBALS.RELICS_NAMES[Game.RELICS[RELIC][1] - 1]}</div><div class="${Game.RELICS[RELIC][0]}">${Game.RELICS[RELIC][0]}</div><div>${DESCS[Game.RELICS[RELIC][1]]}</div></div>
         <div class="pw little segment"></div>
         <div class="pw segment"><div>${Game.inventory[ITEM].name}</div><div class="${Game.inventory[ITEM].class}">${Game.inventory[ITEM].class}</div><div>${DESCS2[Game.inventory[ITEM].relictype]}</div></div>
-        </div>` , 4);
+        </div>`, 4);
     else InstallRelic(RELIC, ITEM);
 };
 
@@ -515,7 +513,6 @@ const CHECK_EQUIPMENT = function () {
         RARITIES: { Normal: [1, 1], Common: [2, 2000], Uncommon: [3, 5000], Rare: [4, 7000], Epic: [5, 8500], Exotic: [6, 9500], Divine: [7, 9850] },
         GEMS_MULTIPLIER: { Normal: 1.5, Common: 2.5, Uncommon: 3.5, Rare: 5.0, Epic: 7.5, Exotic: 9, Divine: 10 }
     };
-
     let MAX_QUALITY = APP.ScoreModeEnabled == 1 ? "Divine" : QUALITIES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]];
     let MAX_GEMS = [0, 0]; // LIFE || POWER
     for (let ARMOR in Game.Armors) {
@@ -528,7 +525,6 @@ const CHECK_EQUIPMENT = function () {
         MAX_GEMS[1] = VALUE > MAX_GEMS[1] ? VALUE : MAX_GEMS[1];
         Game.MaxLevelReached = Game.Weapons[WEAPON][3] > Game.MaxLevelReached ? Game.Weapons[WEAPON][3] : Game.MaxLevelReached;
     }
-
     for (let ARMOR in Game.Armors) {
         if (ARMOR != 0) {
             let MAX_VALUE = (Game.MaxLevelReached * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 100;
