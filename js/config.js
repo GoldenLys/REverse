@@ -159,7 +159,7 @@ var Game = {
     MissionsCompleted: [],
     Location: 0,
     PlayTime: 0,
-    MissionStarted: [false, 0, 0, 0, 0], // MISSION STARTED, MISSION ID, PROGRESSION, OBTAINED REWARD, LOCK WIN
+    MissionStarted: [false, 0, 0, 0, 0], // MISSION STARTED TOGGLE, MISSION ID, PROGRESSION, OBTAINED REWARD, LOCK WIN
     DefeatedByLocation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     FortressesCleared: 0,
     AutoRemove: [0, 0, 0, 0, 0, 0],
