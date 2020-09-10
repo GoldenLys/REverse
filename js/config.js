@@ -1,8 +1,9 @@
 const GLOBALS = {
     NAME: "AlphaRPG",
-    VERSION: "3.0",
+    VERSION: "3.1",
     BETA: false,
     RELICS_NAMES: ["Ares Relic", "Yggdrasil Relic", "Hermes Relic", "Vulcan Relic", "No Relic"],
+    THREATS: ["", "NORMAL", "ADVANCED", "SUPERIOR", "VETERAN", "ELITE", "BOSS", "GOD"],
     ARMORS_NAMES: {
         Normal: ['Tiny', 'Cursed', 'Ruined', 'Damaged', 'Unusable', 'Rusty', 'Weakened', 'Broken'],
         Common: ['Cheap', 'Small', 'Fragile', 'Chipped', 'Weak', 'Used', 'Battered', 'Basic'],
@@ -15,7 +16,7 @@ const GLOBALS = {
     ARMORS_TYPE: ["", "Helmet", "Armor", "Shield", "Boots"],
     WEAPONS_TYPE: ["Main", "Special"],
     MISSIONS: {
-        // 0            1         2           3         4                   5                       6                          7               8                  9
+        // 0           1          2           3         4                   5                       6                          7               8                  9
         // NAME, DESC, LEVEL, TYPE, REQ KILLS, EXPERIENCE, REWARD TYPE, QUALITY, LOCATION, REQ MISSION
         0: ["White Light",
             'You wake up in an unknown place where a white light dazzles you...<br>You can see the exit in the distance. Make it quick, this place seems weird!',

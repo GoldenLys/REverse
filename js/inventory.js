@@ -10,53 +10,44 @@ const GenInventory = function () {
     $("#EQUIPPED_ITEMS").html($("#EQUIPMENT").html());
     $("#EQUIPMENT_COUNTER").html(`<i class="fas fa-user"></i> Equipment <div class="pw inline label">${SCORE}</div>`);
     $("#INVENTORY_COUNTER").html(`<i class="fas fa-sack icon"></i> Inventory <div class="pw inline label">${Game.inventory.length} / ${Game.MaxInv}</div>`);
-    for (let IV in Game.inventory) {
+    for (let ITEM in Game.inventory) {
         let INVENTORY = {
-            BOX_SHADOW: {
-                Normal: 0,
-                Common: 1,
-                Uncommon: 2,
-                Rare: 3,
-                Epic: 4,
-                Exotic: 5,
-                Divine: 6
-            },
             ITEM_TYPES: ["", "Armor", "Gem1", "Relic", "Weapon", "Gem0"],
-            LEVEL_TYPE: ["Level " + Game.inventory[IV].LEVEL, "Score <i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[IV].LEVEL * 10)],
-            RELICS_DESC: ["-", "Power bonus of " + fix(Game.inventory[IV].bonus, 2), "Life bonus of " + fix(Game.inventory[IV].bonus, 2), "Minimal drop quality <span class='" + Game.inventory[IV].bonus + "'>" + Game.inventory[IV].bonus + "</span>", "Max Score +" + fix(Game.inventory[IV].bonus, 1)]
+            LEVEL_TYPE: ["Level " + Game.inventory[ITEM].LEVEL, "Score <i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[ITEM].LEVEL * 10)],
+            RELICS_DESC: ["-", "Power bonus of " + fix(Game.inventory[ITEM].bonus, 2), "Life bonus of " + fix(Game.inventory[ITEM].bonus, 2), "Minimal drop quality <span class='" + Game.inventory[ITEM].bonus + "'>" + Game.inventory[ITEM].bonus + "</span>", "Max Score +" + fix(Game.inventory[ITEM].bonus, 1)]
         };
-        let ITEM = {
+        let I = {
             DESC: "",
             LEVEL: ""
         };
-        if (Game.inventory[IV] != undefined) {
-            var UPS = Game.inventory[IV].ups > 0 ? "<div class='pw inline orange label'><i class='pw orange fad fa-gem'></i> " + Game.inventory[IV].ups + "</div>" : "";
-            if (Game.inventory[IV].type == 1) {
-                ITEM.LEVEL = INVENTORY.LEVEL_TYPE[APP.ScoreModeEnabled];
-                ITEM.DESC = UPS + "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> " + Game.inventory[IV].life + "</div>";
+        if (Game.inventory[ITEM] != undefined) {
+            var UPS = Game.inventory[ITEM].ups > 0 ? "<div class='pw inline orange label'><i class='pw orange fad fa-gem'></i> " + Game.inventory[ITEM].ups + "</div>" : "";
+            if (Game.inventory[ITEM].type == 1) {
+                I.LEVEL = INVENTORY.LEVEL_TYPE[APP.ScoreModeEnabled];
+                I.DESC = UPS + "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> " + Game.inventory[ITEM].life + "</div>";
                 COUNTERS[1]++;
-            } else if (Game.inventory[IV].type == 2) {
-                ITEM.DESC = "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> " + Game.inventory[IV].life + "</div>";
+            } else if (Game.inventory[ITEM].type == 2) {
+                I.DESC = "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> " + Game.inventory[ITEM].life + "</div>";
                 COUNTERS[3]++;
-            } else if (Game.inventory[IV].type == 3) {
-                ITEM.DESC = "<div class='pw inline label'>" + INVENTORY.RELICS_DESC[Game.inventory[IV].relictype] + "</div>";
+            } else if (Game.inventory[ITEM].type == 3) {
+                I.DESC = "<div class='pw inline label'>" + INVENTORY.RELICS_DESC[Game.inventory[ITEM].relictype] + "</div>";
                 COUNTERS[4]++;
-            } else if (Game.inventory[IV].type == 4) {
-                ITEM.LEVEL = INVENTORY.LEVEL_TYPE[APP.ScoreModeEnabled];
-                ITEM.DESC = UPS + "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[IV].power + "</div>";
+            } else if (Game.inventory[ITEM].type == 4) {
+                I.LEVEL = INVENTORY.LEVEL_TYPE[APP.ScoreModeEnabled];
+                I.DESC = UPS + "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[ITEM].power + "</div>";
                 COUNTERS[0]++;
-            } else if (Game.inventory[IV].type == 5) {
-                ITEM.DESC = "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[IV].power + "</div>";
+            } else if (Game.inventory[ITEM].type == 5) {
+                I.DESC = "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[ITEM].power + "</div>";
                 COUNTERS[2]++;
             }
-            var IS_LEVEL_SET = ITEM.LEVEL != "" ? "<div class='pw inline label'>" + ITEM.LEVEL + "</div>" : "";
-            $("#INVENTORY-" + INVENTORY.ITEM_TYPES[Game.inventory[IV].type]).append(`<div class="pw message"><div class="pw horizontal segments">
-                <div class="pw little segment"> <div onclick="EquipItem(${IV}, ${Game.inventory[IV].type})" class="pw green button"><i class="fal fa-check"></i></div> </div>
+            let IS_LEVEL_SET = I.LEVEL != "" ? "<div class='pw inline label'>" + I.LEVEL + "</div>" : "";
+            $("#INVENTORY-" + INVENTORY.ITEM_TYPES[Game.inventory[ITEM].type]).append(`<div id="ITEM-${ITEM}" class="pw message item"><div class="pw horizontal segments">
+                <div class="pw little segment"> <div onclick="EquipItem(${ITEM}, ${Game.inventory[ITEM].type})" class="pw green button"><i class="fal fa-check"></i></div> </div>
                 <div class="pw segment">
-                <span class="${Game.inventory[IV].class}" id="${IV}">${Game.inventory[IV].class}</span>
-                ${Game.inventory[IV].name} ${IS_LEVEL_SET} ${ITEM.DESC}
+                <span class="${Game.inventory[ITEM].class}" id="${ITEM}">${Game.inventory[ITEM].class}</span>
+                ${Game.inventory[ITEM].name} ${IS_LEVEL_SET} ${I.DESC}
                 </div>
-                <div class="pw little segment"> <div onclick="RemoveItem(${IV})" class="pw red button"><i class="fas fa-trash"></i></div> </div>
+                <div class="pw little segment"> <div onclick="RemoveItem(${ITEM})" class="pw red button"><i class="fas fa-trash"></i></div> </div>
                 </div></div>`);
         }
     }

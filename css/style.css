@@ -1487,22 +1487,6 @@ img[src*="E.png"]:before, .error-img:before {
     background-color: rgb(var(--ALPHA) / 15%);
 }
 
-.pw.segment.Normal,
-.pw.segment.Common,
-.pw.segment.Uncommon,
-.pw.segment.Rare,
-.pw.segment.Epic,
-.pw.segment.Exotic,
-.pw.segment.Divine {
-    border: 1px solid;
-    border-left: 5px solid;
-    margin: 0 1em .5em;
-    border-radius: 5px;
-    color: white !important;
-    text-shadow: none !important;
-    background-color: rgb(255 255 255 / 5%);
-}
-
 .pw.label>h1, .pw.label>h2, .pw.label>h3,
 .pw.label>h4, .pw.label>h5, .pw.label>h6 {
     text-transform: uppercase;
@@ -1528,21 +1512,18 @@ img[src*="E.png"]:before, .error-img:before {
     width: calc(25% - 2em);
 }
 
-#DIV-INVENTORY .pw.message>.pw.segments {
+.pw.message.item>.pw.segments,
+.pw.message.item>.pw.segments>.pw.little.segment>.pw.button {
     margin: 0
 }
 
-#DIV-INVENTORY .pw.little.segment {
+.pw.message.item>.pw.segments>.pw.little.segment {
     display: inline-block;
     min-width: 3em;
     justify-content: center;
     align-self: center;
     max-width: 3em;
     padding: initial;
-}
-
-#DIV-INVENTORY .pw.little.segment>.pw.button {
-    margin: 0;
 }
 
 .pw.message.respawning>* {
@@ -1606,4 +1587,20 @@ div[id^="INVENTORY-"]>.pw.message {
 
 #PLAYER-ETA+.pw.sticked.segments>.pw.segment {
     margin: 0;
+}
+
+.pw.vertical.buttons {
+    display: inline-block;
+}
+
+.pw.vertical.buttons>.pw.button {
+    display: block;
+}
+
+.pw.vertical.buttons .pw.button:first-child {
+    border-radius: 5px 5px 0 0;
+}
+
+.pw.vertical.buttons .pw.button:last-child {
+    border-radius: 0 0 5px 5px;
 }

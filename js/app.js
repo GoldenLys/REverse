@@ -1,7 +1,6 @@
 /*
   TODO LIST :
     • Bug testing
-    • Ability to equip/remove items directly via loots
 
   IDEAS :
 1. Unlocking an idle mode when passing dimension 2.
