@@ -4,7 +4,6 @@ function GenMissions() {
     $("#MissionsCPL").html("");
     let TYPES = ["Armor or Weapon", "Gem", "Relic"];
     let LEVEL = "";
-
     for (var M in GLOBALS.MISSIONS) {
         let Status = Game.MissionsCompleted[M] == 1 ? "<span class='pw green'>Complete</span>" : "<span class='pw red'>Incomplete</span>";
         if (Game.MissionStarted[1] == M) Status = "<span class='pw alpha'>In Progress</span>";
@@ -12,7 +11,6 @@ function GenMissions() {
         let QUALITY = "• 1 <span class='" + GLOBALS.MISSIONS[M][7] + "'>" + GLOBALS.MISSIONS[M][7] + "</span>";
         let UNLOCKED = Game.Level >= GLOBALS.MISSIONS[M][2] ? "pw green" : "pw red";
         let BTN = "<div class='pw fluid darkgrey button' onclick='mission(" + M + ");' >Launch <i class='" + UNLOCKED + " fal fa-arrow-right'></i></div>";
-
         if (Game.MissionStarted[0] && Game.MissionStarted[1] == M && Game.MissionsCompleted[M] == 0) BTN = "<div class='pw fluid darkgrey button' onclick='ResetMission();' >Cancel mission <i class='pw green fal fa-arrow-right'></i></div>";
         if (Game.MissionsCompleted[M] == 1 && GLOBALS.MISSIONS[M][3] != 2) BTN = "<div class='pw fluid darkgrey button' onclick='MissionStory(" + M + ");' >Story <i class='pw green fal fa-arrow-right'></i></div>";
         let REQLEVEL = Game.Level >= GLOBALS.MISSIONS[M][2] ? "<span class='pw green'>" + GLOBALS.MISSIONS[M][2] + "</span>" : "<span class='pw red'>" + GLOBALS.MISSIONS[M][2] + "</span>";
@@ -24,7 +22,6 @@ function GenMissions() {
                 if (Game.MissionsCompleted[M] == 1) $("#MissionsCPL").append(CONTENT);
             }
         }
-
         if (GLOBALS.MISSIONS[M][2] <= Game.Level && GLOBALS.MISSIONS[M][3] == 2) {
             let FRG = GLOBALS.MISSIONS[M][5] > 0 ? "• <i class='pw blue fal fa-dna'></i>" + fix(GLOBALS.MISSIONS[M][5], 1) + " Fragments<br>" : "";
             if (Game.MissionsCompleted[GLOBALS.MISSIONS[M][9]] == 1 || GLOBALS.MISSIONS[M][9] == -1) {
@@ -39,6 +36,7 @@ function MissionStory(id) {
     POPUP("Mission Story", GLOBALS.MISSIONS[id][1]);
 }
 
+// START MISSIONS
 function mission(id) {
     if (!Game.MissionStarted[0] && Game.Level >= GLOBALS.MISSIONS[id][2]) {
         Game.MissionStarted = [true, id, 0, 0, 0];
