@@ -1,6 +1,5 @@
 const UPDATE_STATS = function () {
     let DEATHS = Game.Loses == 0 ? 1 : Game.Loses;
-
     // GENERAL
     $("#namestat").html("<img class='pw mini image' src='images/avatars/avatar" + Game.Avatar + ".jpg'><span style='color: rgb(" + Game.Theme + ");'>" + Game.username + "</span>");
     $("#playtimestat").html(toHHMMSS(Game.PlayTime));
@@ -14,21 +13,17 @@ const UPDATE_STATS = function () {
     $("#fortressstat").html(Game.FortressesCleared);
     $("#lifestat").html("<i class='pw red fas fa-heart'></i>" + fix(Math.round(APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])), 1) + " <span class='pw inline label'>+" + fix(APP.CoreBaseLife - Math.round(APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])), 1) + "</span>");
     $("#powerstat").html("<i class='pw blue fas fa-sword'></i>" + fix(Math.round(APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])), 1) + " <span class='pw inline label'>+" + fix(APP.WeaponsPower - Math.round(APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])), 1) + "</span>");
-
     // WEAPONS
     $("#mainweaponstat").html("<i class='pw blue fas fa-sword'></i>" + (Game.Weapons.Main[4] - Game.WeaponUpgrades.Main) + "<span class='pw inline label'>+" + Game.WeaponUpgrades.Main + "</span>");
     $("#specialweaponstat").html("<i class='pw blue fas fa-sword'></i>" + (Game.Weapons.Special[4] - Game.WeaponUpgrades.Special) + "<span class='pw inline label'>+" + Game.WeaponUpgrades.Special + "</span>");
-
     // ARMOR
     $("#armor1stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[1][3] - Game.ArmorUpgrades[1]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[1] + "</span>");
     if (Game.Armors[2][0]) $("#armor2stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[2][3] - Game.ArmorUpgrades[2]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[2] + "</span>"); else $("#armor2stat").html("Not yet unlocked.");
     if (Game.Armors[3][0]) $("#armor3stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[3][3] - Game.ArmorUpgrades[3]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[3] + "</span>"); else $("#armor3stat").html("Not yet unlocked.");
     if (Game.Armors[4][0]) $("#armor4stat").html("<i class='pw red fas fa-heart'></i>" + (Game.Armors[4][3] - Game.ArmorUpgrades[4]) + "<span class='pw inline label'>+" + Game.ArmorUpgrades[4] + "</span>"); else $("#armor4stat").html("Not yet unlocked.");
-
     // LOCATIONS
     $("#locations-stats").html("");
     for (var L in GLOBALS.LOCATIONS) $("#locations-stats").append(`<div class="pw dark horizontal segments" id="defeatloc${L}"><div class='pw segment text-left'>${GLOBALS.LOCATIONS[L][0]}</div><div class='pw segment text-right'>${fix(Game.DefeatedByLocation[L], 1)} Defeated</div></div>`);
-
     // KILLS
     for (var D in Game.Defeated) { if (D != 0) { $("#Defeat" + D).html(fix(Game.Defeated[D], "auto")); } }
     $("#Killstat").html(Game.Wins);
