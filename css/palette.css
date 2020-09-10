@@ -70,15 +70,15 @@
     transition: all .5s ease-out;
 }
 
-.color-range.red {
+.color-picker .color-range.red {
     background: center / cover no-repeat linear-gradient(to right, rgb(0 var(--EDITOR_GREEN) var(--EDITOR_BLUE)), rgb(255 var(--EDITOR_GREEN) var(--EDITOR_BLUE)));
 }
 
-.color-range.green {
+.color-picker .color-range.green {
     background: center / cover no-repeat linear-gradient(to right, rgb(var(--EDITOR_RED) 0 var(--EDITOR_BLUE)), rgb(var(--EDITOR_RED) 255 var(--EDITOR_BLUE)));
 }
 
-.color-range.blue {
+.color-picker .color-range.blue {
     background: center / cover no-repeat linear-gradient(to right, rgb(var(--EDITOR_RED) var(--EDITOR_GREEN) 0), rgb(var(--EDITOR_RED) var(--EDITOR_GREEN) 255));
 }
 
@@ -153,7 +153,7 @@
     content: "#";
 }
 
-.color-picker input[type="text"]:hover, input[type="text"]:active, input[type="text"]:focus {
+.color-picker input[type="text"]:hover, .color-picker input[type="text"]:active, .color-picker input[type="text"]:focus {
     background-color: rgba(255 255 255 / 30%);
     border: none;
     outline: none;

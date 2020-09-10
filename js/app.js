@@ -40,7 +40,10 @@ var APP = {
     GOT_REWARDS: 0,
     LastId: 0,
     LeaderFilter: 0,
-    LEADERBOARD: { PAGE: 0, RANGES: [1, 10] },
+    LEADERBOARD: {
+        PAGE: 0,
+        RANGES: [1, 10]
+    },
     isCovered: false,
     LastCover: 0,
     NextHeal: 5,
@@ -110,7 +113,8 @@ const UpdateEngine = function () {
         Game.Level = GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][2];
         UpdateGame();
     }
-    if (APP.lastCloudSave < 180) APP.lastCloudSave++; else SendStats();
+    if (APP.lastCloudSave < 180) APP.lastCloudSave++;
+    else SendStats();
     if (Game.LastEscape > 0) {
         Game.LastEscape--;
         $("#NextRetreat").html(`Next retreat in ${toHHMMSS(Game.LastEscape)}.`);

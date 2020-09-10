@@ -4,7 +4,14 @@ var RESPAWN_TIMER;
 
 const HEALING = function () {
     APP.NextHeal = Game.Enemy[1] >= 6 ? 3 : 5;
-    let CONFIG = { HEALS: [[65, 85]], DEFAULT: [40, 65], TEXT: "", LUCK: _.random(1, 100) };
+    let CONFIG = {
+        HEALS: [
+            [65, 85]
+        ],
+        DEFAULT: [40, 65],
+        TEXT: "",
+        LUCK: _.random(1, 100)
+    };
 
     if (Game.isInFight != 1) Game.isInFight = 1;
     if (APP.isCovered) {
@@ -45,7 +52,10 @@ const TAKE_COVER = function () {
         let HEALING_TIME = Game.Enemy[1] >= 6 ? 3000 : 5000;
         HEALING_TIMER = setInterval(HEALING, HEALING_TIME);
         HEALING_ANIMATION = setInterval(HEALING_TEXT, 1000);
-    } else { APP.isCovered = false; HEALING(); }
+    } else {
+        APP.isCovered = false;
+        HEALING();
+    }
 };
 
 const MAIN_ATTACK = function () {
@@ -74,7 +84,10 @@ const MAIN_ATTACK = function () {
 const SPECIAL_ATTACK = function () {
     CHECK_EQUIPMENT();
     if (Game.isInFight != 1) Game.isInFight = 1;
-    if (APP.isCovered) { APP.isCovered = false; HEALING(); }
+    if (APP.isCovered) {
+        APP.isCovered = false;
+        HEALING();
+    }
     if (Game.Emp > 0 && !$("#emp-btn").hasClass("transparent")) {
         Game.Emp--;
         var luck = random(0, 100);
@@ -136,7 +149,8 @@ const WinFight = function () {
         if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2]) expGain = 0;
         if (Game.Level < APP.MaxLevel) {
             Game.xp[0] += Math.floor(expGain);
-            if (Game.xp[0] >= Game.xp[1]) LEVELUP = "<div class='pw inline blue label'>LEVEL UP (" + (Game.Level + 1) + ")</div>"; UpdateGame();
+            if (Game.xp[0] >= Game.xp[1]) LEVELUP = "<div class='pw inline blue label'>LEVEL UP (" + (Game.Level + 1) + ")</div>";
+            UpdateGame();
         }
         // EMP LOOT CHANCE
         var ELOOTCHANCE = random(1, 100);
@@ -157,8 +171,7 @@ const WinFight = function () {
                 if (Game.Level >= APP.Ranking) {
                     let LOOT_LEVEL = [random(Game.Level - 5, Game.Level + 1), random(Game.Level - 4, Game.Level + 2), random(Game.Level - 3, Game.Level + 2), random(Game.Level - 2, Game.Level + 3), random(Game.Level - 1, Game.Level + 4), Game.Level, Game.Level];
                     newItem(0, LOOT_LEVEL[Game.Enemy[1]], MIN_LOOT_QUALITY[Game.Enemy[1]]);
-                }
-                else newItem(0, random(APP.Ranking, APP.Ranking + 2), "Normal");
+                } else newItem(0, random(APP.Ranking, APP.Ranking + 2), "Normal");
             } else {
                 if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) {
                     if (Game.Enemy[1] >= 1) {
@@ -297,7 +310,10 @@ const GenEnemy = function () {
     let EnemyLevel = 1;
     let BasePower = Math.round((APP.WeaponsPower - Game.WeaponUpgrades.Main / 2) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     if (BasePower < 10) BasePower = 10;
-    let MULTIPLIERS = { LIFE: [], POWER: [], };
+    let MULTIPLIERS = {
+        LIFE: [],
+        POWER: [],
+    };
 
     MULTIPLIERS.LIFE = APP.ScoreModeEnabled == 0 ? [1.15, 1.25, 1.35, 1.5, 2.5, 3.5, 5] : [2, 2.75, 3, 3.5, 4, 5, 7.5];
     MULTIPLIERS.POWER[0] = APP.ScoreModeEnabled == 0 ? [0.9, 0.95, 1, 1, 1, 1, 1] : [1, 1, 1, 1, 1, 1, 1];
@@ -370,7 +386,8 @@ const GenEnemy = function () {
         Game.Enemy[3] = Game.Level < 10 && Game.Enemy[1] >= 4 ? Math.round(EnemyLevel = random(BasePower * MULTIPLIERS.POWER[0][2], BasePower * MULTIPLIERS.POWER[1][Game.Enemy[1] - 1])) : Math.round(random(BasePower * MULTIPLIERS.POWER[0][Game.Enemy[1] - 1], BasePower * MULTIPLIERS.POWER[1][Game.Enemy[1] - 1]));
         Game.Enemy[4] *= Game.DIMENSION_MULTIPLIERS[3];
         Game.Enemy[5] = Game.Enemy[4];
-        if (Game.Enemy[1] >= 6) Game.Enemy[0] = "boss"; else Game.Enemy[0] = Math.floor(Math.random() * GLOBALS.ENEMIES_NAMES[Game.Location].length);
+        if (Game.Enemy[1] >= 6) Game.Enemy[0] = "boss";
+        else Game.Enemy[0] = Math.floor(Math.random() * GLOBALS.ENEMIES_NAMES[Game.Location].length);
         if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined' && Game.Enemy[0] != "boss") Game.Enemy[0] = 0;
         Game.isInFight = 1;
         $("#EnemySprite").html("<img class='pw medium image' src='images/Monsters/" + Game.Location + "-" + Game.Enemy[0] + ".png'>");

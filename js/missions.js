@@ -39,6 +39,7 @@ function MissionStory(id) {
     POPUP("Mission Story", GLOBALS.MISSIONS[id][1]);
 }
 
+// START MISSIONS
 function mission(id) {
     if (!Game.MissionStarted[0] && Game.Level >= GLOBALS.MISSIONS[id][2]) {
         Game.MissionStarted = [true, id, 0, 0, 0];

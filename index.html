@@ -1,783 +1,629 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta property="og:type" content="website">
-        <meta property="og:title" content="AlphaRPG">
-        <meta property="og:locale" content="en_US">
-        <meta property="og:description" content="AlphaRPG Incremental Game">
-        <meta property="og:image" content="http://alpha.purplewizard.space/images/avatars/avatar34.jpg">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.14.0/css/pro.min.css" async>
-        <link href="css/vars.css?v=3.001" rel="stylesheet" async>
-        <link href="css/style.css?v=3.001" rel="stylesheet" async>
-        <link href="css/palette.css?v=3.001" rel="stylesheet" async>
-    </head>
-    <body>
-        <div class="background"></div>
-        <div class="pw page" id="GAME" style="display: none;">
-            <div class="page-sidebar">
-                <div class="menu">
-                    <li data-menu="INVENTORY">
-                        <div class="link" id="inventory" data-url="#">
-                            <i class="fas fa-sack icon"></i>
-                            Inventory
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta content="website" property="og:type" />
+    <meta content="AlphaRPG" property="og:title" />
+    <meta content="en_US" property="og:locale" />
+    <meta content="AlphaRPG Incremental Game" property="og:description" />
+    <meta content="http://alpha.purplewizard.space/images/avatars/avatar34.jpg" property="og:image" />
+    <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
+    <link async href="https://kit-pro.fontawesome.com/releases/v5.14.0/css/pro.min.css" rel="stylesheet"
+        type="text/css" />
+    <link async href="css/vars.css?v=3.001" rel="stylesheet" />
+    <link async href="css/style.css?v=3.001" rel="stylesheet" />
+    <link async href="css/palette.css?v=3.001" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="pw page" id="GAME" style="display: none;">
+        <div class="page-sidebar">
+            <div class="menu">
+                <li data-menu="INVENTORY">
+                    <div class="link" data-url="#" id="inventory"><i class="fas fa-sack icon"></i> Inventory</div>
+                </li>
+                <li data-menu="PRESTIGE">
+                    <div class="link" data-url="#" id="prestige"><i class="far fa-portal-enter"></i> Dimension</div>
+                </li>
+                <li data-menu="STATS">
+                    <div class="link" data-url="#" id="statistics"><i class="fas fa-clipboard list icon"></i> Statistics
+                    </div>
+                </li>
+                <li data-menu="LEADERBOARD">
+                    <div class="link" data-url="#" id="leaderboard"><i class="fas fa-trophy icon"></i> Leaderboard</div>
+                </li>
+                <li data-menu="SETTINGS">
+                    <div class="link" data-url="#" id="settings"><i class="fas fa-cogs icon"></i> Settings</div>
+                </li>
+                <li data-menu="CREDITS">
+                    <div class="link" data-url="#" id="inventory"><i class="fas fa-popcorn"></i> Credits</div>
+                </li>
+                <li data-menu="#">
+                    <div class="link" data-url="https://discord.com/invite/SBuYeHh"><i class="fab fa-discord"></i>
+                        Discord</div>
+                </li>
+            </div>
+            <div class="pw sticked segments text-center">
+                <div class="pw segment alpha" id="NextArmor"></div>
+                <div class="pw segment green" id="WTUNLOCK"></div>
+                <div class="pw segment red" id="LowScore"></div>
+                <div class="pw segment red" id="MaxPOSLVL"></div>
+                <div class="pw segment yellow" id="NextRetreat"></div>
+                <div class="pw segment yellow" id="NextCover"></div>
+            </div>
+            <div class="credits">
+                <div class="site-name" id="site-name">AlphaRPG</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="location-bg" id="LOCATION_BACKGROUND"></div>
+            <div id="DIV-COMBAT">
+                <div class="pw message no-animation">
+                    <h3 class="pw horizontal divider" id="PLAYER-ETA"></h3>
+                    <div class="pw horizontal sticked segments">
+                        <div class="pw segment text-center" id="LABEL_EXP">
                         </div>
-                    </li>
-                    <li data-menu="PRESTIGE">
-                        <div class="link" id="prestige" data-url="#">
-                            <i class="far fa-portal-enter"></i>
-                            Dimension
+                        <div class="pw segment text-center" style="display: none;">
+                            <i class="fas fa-dollar-sign pw green"></i>
+                            <span id="LABEL_CASH"></span>
                         </div>
-                    </li>
-                    <li data-menu="STATS">
-                        <div class="link" id="statistics" data-url="#">
-                            <i class="fas fa-clipboard list icon"></i>
-                            Statistics
+                        <div class="pw segment text-center">
+                            <i class="fal fa-dna pw blue"></i> <span id="LABEL_SHARDS"></span>
                         </div>
-                    </li>
-                    <li data-menu="LEADERBOARD">
-                        <div class="link" id="leaderboard" data-url="#">
-                            <i class="fas fa-trophy icon"></i>
-                            Leaderboard
+                        <div class="pw segment text-center" id="LABEL_INVENTORY">
                         </div>
-                    </li>
-                    <li data-menu="SETTINGS">
-                        <div class="link" id="settings" data-url="#">
-                            <i class="fas fa-cogs icon"></i>
-                            Settings
-                        </div>
-                    </li>
-                    <li data-menu="CREDITS">
-                        <div class="link" id="inventory" data-url="#">
-                            <i class="fas fa-popcorn"></i>
-                            Credits
-                        </div>
-                    </li>
-                    <li data-menu="#">
-                        <div class="link" data-url="https://discord.com/invite/SBuYeHh">
-                            <i class="fab fa-discord"></i>
-                            Discord
-                        </div>
-                    </li>
+                    </div>
                 </div>
-                <div class="pw sticked segments text-center">
-                    <div class="pw segment alpha" id="NextArmor"></div>
-                    <div class="pw segment green" id="WTUNLOCK"></div>
-                    <div class="pw segment red" id="LowScore"></div>
-                    <div class="pw segment red" id="MaxPOSLVL"></div>
-                    <div class="pw segment yellow" id="NextRetreat"></div>
-                    <div class="pw segment yellow" id="NextCover"></div>
+                <div class="pw horizontal segments">
+                    <div class="pw segment type_card">
+                        <div class="card" id="PlayerCard">
+                            <div class="box">
+                                <h2 class="text" id="PlayerID"></h2>
+                                <div class="card_content">
+                                    <svg>
+                                        <circle cx="70" cy="70" r="72.5" />
+                                        <circle class="Percentage" cx="70" cy="70" id="PLAYER_PERCENT" r="72.5" />
+                                    </svg>
+                                    <div class="number">
+                                        <div id="PlayerSprite"></div>
+                                        <h2>100<span>%</span></h2>
+                                    </div>
+                                </div>
+                                <h2 class="text">
+                                    <span id="PlayerLife"></span>
+                                    <span class="pw inline label" id="PlayerDamage" style="display: none;"></span><br />
+                                    <span id="PlayerPower"></span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pw segment type_card">
+                        <div class="card" id="EnemyCard">
+                            <div class="box">
+                                <h2 class="text" id="EnemyTitle"></h2>
+                                <div class="card_content">
+                                    <svg>
+                                        <circle cx="70" cy="70" r="72.5" />
+                                        <circle class="Percentage" cx="70" cy="70" id="ENEMY_PERCENT" r="72.5" />
+
+                                    </svg>
+                                    <div class="number">
+                                        <div id="EnemySprite"></div>
+                                        <h2>100<span>%</span></h2>
+                                    </div>
+                                </div>
+                                <h2 class="text">
+                                    <span id="EnemyLife"></span>
+                                    <span class="pw inline label" id="EnemyDamage" style="display: none;"></span> <br />
+                                    <span id="EnemyPower"></span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="credits">
-                    <div class="site-name" id="site-name">AlphaRPG</div>
+                <div class="pw message" id="BUTTONS_COMBAT">
+                    <div class="pw fluid nostack buttons">
+                        <div class="pw blue button" data-url="#" id="attack-btn">
+                            <i class="fas fa-sword"></i> Main Attack</div>
+                        <div class="pw yellow button" data-url="#" id="emp-btn">
+                            <i class="fas fa-swords"></i> 0 Special Attack</div>
+                        <div class="pw grey button" data-url="#" id="cover-btn">
+                            <i class="fas fa-shield"></i> Take Cover</div>
+                    </div>
+                    <div class="pw invisible divider"></div>
+                    <div class="pw fluid darkgrey button" data-url="#" id="run-btn">
+                        <i class="fas fa-running"></i> Run Away</div>
+                </div>
+                <div class="pw message" id="RESPAWNING" style="display: none;">
+                    <div class="respawning" id="RESPAWN_TEXT"></div>
+                </div>
+                <div class="equipment" id="EQUIPMENT">
+                    <div class="pw horizontal segments">
+                        <div class="pw segment" id="MainWeapon">
+                            <div class="pw horizontal segments">
+                                <div class="pw segment text-center">
+                                    Main Weapon <div class="pw inline label" id="MainWeaponLevel"></div>
+                                    <h4 id="MainWeaponTitle"></h4>
+                                    <div class="pw inline orange label" id="MainWeaponGems"></div>
+                                    <div class="pw inline blue label" id="MainWeaponText"></div>
+                                </div>
+                                <div class="pw segment">
+                                    <div class="image" id="MainWeaponSprite"></div>
+                                </div>
+                            </div>
+                            <div class="pw fluid red button" onclick="ConfirmDestroyWeapon('Main');">
+                                <i class="fas fa-trash"></i> Throw </div>
+                        </div>
+                        <div class="pw segment" id="SpecialWeapon">
+                            <div class="pw horizontal segments">
+                                <div class="pw segment text-center">
+                                    Special Weapon <div class="pw inline label" id="SpecialWeaponLevel"></div>
+                                    <h4 id="SpecialWeaponTitle"></h4>
+                                    <span class="pw inline orange label" id="SpecialWeaponGems"> </span>
+                                    <div class="pw inline blue label" id="SpecialWeaponText"></div>
+                                </div>
+                                <div class="pw segment">
+                                    <div class="image" id="SpecialWeaponSprite"></div>
+                                </div>
+                            </div>
+                            <div class="pw fluid red button" onclick="ConfirmDestroyWeapon('Special');">
+                                <i class="fas fa-trash"></i> Throw</div>
+                        </div>
+                    </div>
+                    <div class="pw horizontal segments">
+                        <div class="pw segment" id="armor1">
+                            <div class="pw horizontal segments">
+                                <div class="pw segment text-center">
+                                    Helmet <span class="pw inline label" id="armor1-level"></span>
+                                    <h4 class="text-center" id="armor1-title"></h4>
+                                    <div class="pw inline red label" id="armor1-life"></div>
+                                    <div class="pw inline orange label" id="armor1-gems"></div>
+                                    <div id="armor1-rarity"></div>
+                                </div>
+                                <div class="pw segment">
+                                    <div class="image" id="armor1-image"></div>
+                                </div>
+                            </div>
+                            <div class="pw fluid red button" id="Darmor1"><i class="fas fa-trash"></i> Throw</div>
+                        </div>
+                        <div class="pw segment" id="armor2">
+                            <div class="pw horizontal segments">
+                                <div class="pw segment text-center">
+                                    Armor <span class="pw inline label" id="armor2-level"></span>
+                                    <h4 class="text-center" id="armor2-title"></h4>
+                                    <div class="pw inline red label" id="armor2-life"></div>
+                                    <div class="pw inline orange label" id="armor2-gems"></div>
+                                    <div id="armor3-rarity"></div>
+                                </div>
+                                <div class="pw segment">
+                                    <div class="image" id="armor2-image"></div>
+                                </div>
+                            </div>
+                            <div class="pw fluid red button" id="Darmor2"><i class="fas fa-trash"></i> Throw</div>
+                        </div>
+                        <div class="pw segment" id="armor3">
+                            <div class="pw horizontal segments">
+                                <div class="pw segment text-center">
+                                    Shield <span class="pw inline label" id="armor3-level"></span>
+                                    <h4 class="text-center" id="armor3-title"></h4>
+                                    <div class="pw inline red label" id="armor3-life"></div>
+                                    <div class="pw inline orange label" id="armor3-gems"></div>
+                                    <div id="armor3-rarity"></div>
+                                </div>
+                                <div class="pw segment">
+                                    <div class="image" id="armor3-image"></div>
+                                </div>
+                            </div>
+                            <div class="pw fluid red button" id="Darmor3"><i class="fas fa-trash"></i> Throw</div>
+                        </div>
+                        <div class="pw segment" id="armor4">
+                            <div class="pw horizontal segments">
+                                <div class="pw segment text-center">
+                                    Boots <span class="pw inline label" id="armor4-level"></span>
+                                    <h4 class="text-center" id="armor1-title"></h4>
+                                    <div class="pw inline red label" id="armor1-life"></div>
+                                    <div class="pw inline orange label" id="armor1-gems"></div>
+                                    <div id="armor1-rarity"></div>
+                                </div>
+                                <div class="pw segment">
+                                    <div class="image" id="armor1-image"></div>
+                                </div>
+                            </div>
+                            <div class="pw fluid red button" id="Darmor1"><i class="fas fa-trash"></i> Throw</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="player-exp" id="PlayerXP">
+                    <div class="pw progress">
+                        <div class="progress-bar"></div>
+                        <div class="progress-text"></div>
+                    </div>
                 </div>
             </div>
-            <div class="page-content">
-                <div id="LOCATION_BACKGROUND" class="location-bg"></div>
-                <div id="DIV-COMBAT">
-                    <div class="pw message no-animation">
-                        <h3 class="pw horizontal divider" id="PLAYER-ETA"></h3>
-                        <div class="pw horizontal sticked segments">
-                            <div class="pw segment text-center" id="LABEL_EXP"></div>
-                            <div class="pw segment text-center" style="display: none;">
-                                <i class="fas fa-dollar-sign pw green"></i>
-                                <span id="LABEL_CASH"></span>
-                            </div>
-                            <div class="pw segment text-center">
-                                <i class="fal fa-dna pw blue"></i>
-                                <span id="LABEL_SHARDS"></span>
-                            </div>
-                            <div class="pw segment text-center" id="LABEL_INVENTORY"></div>
+            <div class="pw message no-animation text-center" id="DIV-INVENTORY">
+                <h3 class="pw horizontal divider" id="EQUIPMENT_COUNTER"><i class="fas fa-user"></i> Equipment</h3>
+                <div class="equipment" id="EQUIPPED_ITEMS"></div>
+                <h3 class="pw horizontal divider"><i class="fas fa-trash"></i> Auto Remove</h3>
+                <div class="pw horizontal sticked segments">
+                    <div class="pw segment">
+                        <div class="pw checkbox" data-check="unchecked" data-id="5" id="RM1">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text Normal">Normal</label>
                         </div>
                     </div>
-                    <div class="pw horizontal segments">
-                        <div class="pw segment type_card">
-                            <div id="PlayerCard" class="card">
-                                <div class="box">
-                                    <h2 class="text" id="PlayerID"></h2>
-                                    <div class="card_content">
-                                        <svg>
-                                            <circle cx="70" cy="70" r="72.5"></circle>
-                                            <circle id="PLAYER_PERCENT" class="Percentage" cx="70" cy="70" r="72.5"></circle>
-                                        </svg>
-                                        <div class="number">
-                                            <div id="PlayerSprite"></div>
-                                            <h2>
-                                                100
-                                                <span>%</span>
-                                            </h2>
-                                        </div>
-                                    </div>
-                                    <h2 class="text">
-                                        <span id="PlayerLife"></span>
-                                        <span class="pw inline label" id="PlayerDamage" style="display: none;"></span>
-                                        <br>
-                                        <span id="PlayerPower"></span>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pw segment type_card">
-                            <div id="EnemyCard" class="card">
-                                <div class="box">
-                                    <h2 class="text" id="EnemyTitle"></h2>
-                                    <div class="card_content">
-                                        <svg>
-                                            <circle cx="70" cy="70" r="72.5"></circle>
-                                            <circle id="ENEMY_PERCENT" class="Percentage" cx="70" cy="70" r="72.5"></circle>
-                                        </svg>
-                                        <div class="number">
-                                            <div id="EnemySprite"></div>
-                                            <h2>
-                                                100
-                                                <span>%</span>
-                                            </h2>
-                                        </div>
-                                    </div>
-                                    <h2 class="text">
-                                        <span id="EnemyLife"></span>
-                                        <span class="pw inline label" id="EnemyDamage" style="display: none;"></span>
-                                        <br>
-                                        <span id="EnemyPower"></span>
-                                    </h2>
-                                </div>
-                            </div>
+                    <div class="pw segment">
+                        <div class="pw checkbox" data-check="unchecked" data-id="6" id="RM2">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text Common">Common</label>
                         </div>
                     </div>
-                    <div class="pw message" id="BUTTONS_COMBAT">
-                        <div class="pw fluid nostack buttons">
-                            <div class="pw blue button" data-url="#" id="attack-btn">
-                                <i class="fas fa-sword"></i>
-                                Main Attack
-                            </div>
-                            <div class="pw yellow button" data-url="#" id="emp-btn">
-                                <i class="fas fa-swords"></i>
-                                0 Special Attack
-                            </div>
-                            <div class="pw grey button" data-url="#" id="cover-btn">
-                                <i class="fas fa-shield"></i>
-                                Take Cover
-                            </div>
-                        </div>
-                        <div class="pw invisible divider"></div>
-                        <div class="pw fluid darkgrey button" data-url="#" id="run-btn">
-                            <i class="fas fa-running"></i>
-                            Run Away
+                    <div class="pw segment">
+                        <div class="pw checkbox" data-check="unchecked" data-id="7" id="RM3">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text Uncommon">Uncommon</label>
                         </div>
                     </div>
-                    <div class="pw message" id="RESPAWNING" style="display: none;">
-                        <div class="respawning" id="RESPAWN_TEXT"></div>
-                    </div>
-                    <div id="EQUIPMENT" class="equipment">
-                        <div class="pw horizontal segments">
-                            <div class="pw segment" id="MainWeapon">
-                                <div class="pw horizontal segments">
-                                    <div class="pw segment text-center">
-                                        Main Weapon
-                                        <div class="pw inline label" id="MainWeaponLevel"></div>
-                                        <h4 id="MainWeaponTitle"></h4>
-                                        <div id="MainWeaponGems" class="pw inline orange label"></div>
-                                        <div class="pw inline blue label" id="MainWeaponText"></div>
-                                    </div>
-                                    <div class="pw segment">
-                                        <div class="image" id="MainWeaponSprite"></div>
-                                    </div>
-                                </div>
-                                <div onclick='ConfirmDestroyWeapon("Main");' class="pw fluid red button">
-                                    <i class="fas fa-trash"></i>
-                                    Throw
-                                </div>
-                            </div>
-                            <div class="pw segment" id="SpecialWeapon">
-                                <div class="pw horizontal segments">
-                                    <div class="pw segment  text-center">
-                                        Special Weapon
-                                        <div class="pw inline label" id="SpecialWeaponLevel"></div>
-                                        <h4 id="SpecialWeaponTitle"></h4>
-                                        <span id="SpecialWeaponGems" class="pw inline orange label"></span>
-                                        <div class="pw inline blue label" id="SpecialWeaponText"></div>
-                                    </div>
-                                    <div class="pw segment">
-                                        <div class="image" id="SpecialWeaponSprite"></div>
-                                    </div>
-                                </div>
-                                <div onclick='ConfirmDestroyWeapon("Special");' class="pw fluid red button">
-                                    <i class="fas fa-trash"></i>
-                                    Throw
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pw horizontal segments">
-                            <div id="armor1" class="pw segment">
-                                <div class="pw horizontal segments">
-                                    <div class="pw segment text-center">
-                                        Helmet
-                                        <span id="armor1-level" class="pw inline label">Level 1</span>
-                                        <h4 id="armor1-title" class="text-center"></h4>
-                                        <div class="pw inline red label" id="armor1-life"></div>
-                                        <div id="armor1-gems" class="pw inline orange label"></div>
-                                        <div id="armor1-rarity"></div>
-                                    </div>
-                                    <div class="pw segment">
-                                        <div class="image" id="armor1-image"></div>
-                                    </div>
-                                </div>
-                                <div id="Darmor1" class="pw fluid red button">
-                                    <i class="fas fa-trash"></i>
-                                    Throw
-                                </div>
-                            </div>
-                            <div id="armor2" class="pw segment">
-                                <div class="pw horizontal segments">
-                                    <div class="pw segment text-center">
-                                        Armor
-                                        <span id="armor2-level" class="pw inline label">Level 1</span>
-                                        <h4 id="armor2-title" class="text-center"></h4>
-                                        <div class="pw inline red label" id="armor2-life"></div>
-                                        <div id="armor2-gems" class="pw inline orange label"></div>
-                                        <div id="armor2-rarity"></div>
-                                    </div>
-                                    <div class="pw segment">
-                                        <div class="image" id="armor2-image"></div>
-                                    </div>
-                                </div>
-                                <div id="Darmor2" class="pw fluid red button">
-                                    <i class="fas fa-trash"></i>
-                                    Throw
-                                </div>
-                            </div>
-                            <div id="armor3" class="pw segment">
-                                <div class="pw horizontal segments">
-                                    <div class="pw segment text-center">
-                                        Shield
-                                        <span id="armor3-level" class="pw inline label">Level 1</span>
-                                        <h4 id="armor3-title" class="text-center"></h4>
-                                        <div class="pw inline red label" id="armor3-life"></div>
-                                        <div id="armor3-gems" class="pw inline orange label"></div>
-                                        <div id="armor3-rarity"></div>
-                                    </div>
-                                    <div class="pw segment">
-                                        <div class="image" id="armor3-image"></div>
-                                    </div>
-                                </div>
-                                <div id="Darmor3" class="pw fluid red button">
-                                    <i class="fas fa-trash"></i>
-                                    Throw
-                                </div>
-                            </div>
-                            <div id="armor4" class="pw segment">
-                                <div class="pw horizontal segments">
-                                    <div class="pw segment text-center">
-                                        Boots
-                                        <span id="armor4-level" class="pw inline label">Level 1</span>
-                                        <h4 id="armor4-title" class="text-center"></h4>
-                                        <div class="pw inline red label" id="armor4-life"></div>
-                                        <div id="armor4-gems" class="pw inline orange label"></div>
-                                        <div id="armor4-rarity"></div>
-                                    </div>
-                                    <div class="pw segment">
-                                        <div class="image" id="armor4-image"></div>
-                                    </div>
-                                </div>
-                                <div id="Darmor4" class="pw fluid red button">
-                                    <i class="fas fa-trash"></i>
-                                    Throw
-                                </div>
-                            </div>
+                    <div class="pw segment">
+                        <div class="pw checkbox" data-check="unchecked" data-id="8" id="RM4">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text Rare">Rare</label>
                         </div>
                     </div>
-                    <div id="PlayerXP" class="player-exp">
-                        <div class="pw progress">
-                            <div class="progress-bar"></div>
-                            <div class="progress-text"></div>
+                    <div class="pw segment">
+                        <div class="pw checkbox" data-check="unchecked" data-id="9" id="RM5">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text Epic">Epic</label>
+                        </div>
+                    </div>
+                    <div class="pw segment">
+                        <div class="pw checkbox" data-check="unchecked" data-id="10" id="RM6">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text Exotic">Exotic</label>
                         </div>
                     </div>
                 </div>
-                <div id="DIV-INVENTORY" class="pw message no-animation text-center">
-                    <h3 class="pw horizontal divider" id="EQUIPMENT_COUNTER">
-                        <i class="fas fa-user"></i>
-                        Equipment
-                    </h3>
-                    <div id="EQUIPPED_ITEMS" class="equipment"></div>
-                    <h3 class="pw horizontal divider">
-                        <i class="fas fa-trash"></i>
-                        Auto Remove
-                    </h3>
-                    <div class="pw horizontal sticked segments">
-                        <div class="pw segment">
-                            <div class="pw checkbox" id="RM1" data-id="5" data-check="unchecked">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text Normal">Normal</label>
-                            </div>
-                        </div>
-                        <div class="pw segment">
-                            <div class="pw checkbox" id="RM2" data-id="6" data-check="unchecked">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text Common">Common</label>
-                            </div>
-                        </div>
-                        <div class="pw segment">
-                            <div class="pw checkbox" id="RM3" data-id="7" data-check="unchecked">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text Uncommon">Uncommon</label>
-                            </div>
-                        </div>
-                        <div class="pw segment">
-                            <div class="pw checkbox" id="RM4" data-id="8" data-check="unchecked">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text Rare">Rare</label>
-                            </div>
-                        </div>
-                        <div class="pw segment">
-                            <div class="pw checkbox" id="RM5" data-id="9" data-check="unchecked">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text Epic">Epic</label>
-                            </div>
-                        </div>
-                        <div class="pw segment">
-                            <div class="pw checkbox" id="RM6" data-id="10" data-check="unchecked">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text Exotic">Exotic</label>
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="pw horizontal divider" id="INVENTORY_COUNTER">
-                        <i class="fas fa-sack icon"></i>
-                        Inventory
-                    </h3>
-                    <div class="pw dropdown text-center" data-open="open">
-                        <h3 class="name" id="WEAPONS_COUNT">Weapons</h3>
-                        <div class="content active" id="INVENTORY-Weapon"></div>
-                    </div>
-                    <div class="pw dropdown text-center" data-open="open">
-                        <h3 class="name" id="ARMORS_COUNT">Armor</h3>
-                        <div class="content active" id="INVENTORY-Armor"></div>
-                    </div>
-                    <div class="pw dropdown text-center" data-open="open">
-                        <h3 class="name" id="POWER_GEMS_COUNT">Power Gems</h3>
-                        <div class="content active" id="INVENTORY-Gem0"></div>
-                    </div>
-                    <div class="pw dropdown text-center" data-open="open">
-                        <h3 class="name" id="LIFE_GEMS_COUNT">Life Gems</h3>
-                        <div class="content active" id="INVENTORY-Gem1"></div>
-                    </div>
-                    <div class="pw dropdown text-center" data-open="open">
-                        <h3 class="name" id="RELICS_COUNT">Relics</h3>
-                        <div class="content active" id="INVENTORY-Relic"></div>
-                    </div>
+                <h3 class="pw horizontal divider" id="INVENTORY_COUNTER"><i class="fas fa-sack icon"></i> Inventory</h3>
+                <div class="pw dropdown text-center" data-open="open">
+                    <h3 class="name" id="WEAPONS_COUNT">Weapons</h3>
+                    <div class="content active" id="INVENTORY-Weapon"></div>
                 </div>
-                <div id="DIV-PRESTIGE" class="pw message no-animation text-center">
-                    <h3 class="pw horizontal divider">
-                        <i class="far fa-portal-enter"></i>
-                        Dimension
-                    </h3>
-                    <div id="CurrWT"></div>
-                    <div id="WTShards"></div>
-                    <div class="pw red label">
-                        <h4 class="pw red">Information</h4>
-                        By passing through the dimensional rift you will lose your current equipment and mission progress.
-                        <br>
-                        The story will be reset and the difficulty will increase by 5%.
+                <div class="pw dropdown text-center" data-open="open">
+                    <h3 class="name" id="ARMORS_COUNT">Armor</h3>
+                    <div class="content active" id="INVENTORY-Armor"></div>
+                </div>
+                <div class="pw dropdown text-center" data-open="open">
+                    <h3 class="name" id="POWER_GEMS_COUNT">Power Gems</h3>
+                    <div class="content active" id="INVENTORY-Gem0"></div>
+                </div>
+                <div class="pw dropdown text-center" data-open="open">
+                    <h3 class="name" id="LIFE_GEMS_COUNT">Life Gems</h3>
+                    <div class="content active" id="INVENTORY-Gem1"></div>
+                </div>
+                <div class="pw dropdown text-center" data-open="open">
+                    <h3 class="name" id="RELICS_COUNT">Relics</h3>
+                    <div class="content active" id="INVENTORY-Relic"></div>
+                </div>
+            </div>
+            <div class="pw message no-animation text-center" id="DIV-PRESTIGE">
+                <h3 class="pw horizontal divider"><i class="far fa-portal-enter"></i> Dimension</h3>
+                <div id="CurrWT"></div>
+                <div id="WTShards"></div>
+                <div class="pw red label">
+                    <h4 class="pw red">Information</h4>
+                    By passing through the dimensional rift you will lose your current equipment and mission progress.
+                    <br />The story will be reset and the difficulty will increase by 5%.
+                </div>
+                <h4 class="pw horizontal divider">Benefits for each dimension</h4>
+                <div class="pw inline green label">+50 maximum score</div>
+                <div class="pw inline green label">3% more experience</div>
+                <div class="pw inline green label">+2 inventory slots</div>
+                <div class="pw fluid blue button" id="WTBTN"><i class="far fa-portal-enter"></i> Dimensional Rift</div>
+                <h3 class="pw horizontal divider"><i class="fal fa-arrow-alt-circle-up"></i> Dimensional Upgrades</h3>
+                <span class="pw label blue" id="ShardsNumber"></span>
+                <div id="Upgrades">
+                    <div class="pw horizontal dark segments">
+                        <div class="pw segment">Name</div>
+                        <div class="pw segment">Current bonus</div>
+                        <div class="pw segment">Price</div>
+                        <div class="pw segment">Upgrade</div>
                     </div>
-                    <h4 class="pw horizontal divider">Benefits for each dimension</h4>
-                    <div class="pw inline green label">+50 maximum score</div>
-                    <div class="pw inline green label">3% more experience</div>
-                    <div class="pw inline green label">+2 inventory slots</div>
-                    <div id="WTBTN" class="pw fluid blue button">
-                        <i class="far fa-portal-enter"></i>
-                        Dimensional Rift
+                    <div class="pw horizontal dark segments">
+                        <div class="pw segment">Experience Multiplier</div>
+                        <div class="pw segment" id="XPMULTVAL"></div>
+                        <div class="pw segment" id="XPMULTPRICE"></div>
+                        <div class="pw segment">
+                            <div class="pw link" data-url="#" id="UPGRADE_0">Purchase</div>
+                        </div>
                     </div>
-                    <h3 class="pw horizontal divider">
-                        <i class="fal fa-arrow-alt-circle-up"></i>
-                        Dimensional Upgrades
-                    </h3>
-                    <span class="pw label blue" id="ShardsNumber"></span>
-                    <div id="Upgrades">
-                        <div class="pw horizontal dark segments">
-                            <div class="pw segment">Name</div>
-                            <div class="pw segment">Current bonus</div>
-                            <div class="pw segment">Price</div>
-                            <div class="pw segment">Upgrade</div>
+                    <div class="pw horizontal dark segments">
+                        <div class="pw segment">Damage Multiplier</div>
+                        <div class="pw segment" id="POWERMULTVAL"></div>
+                        <div class="pw segment" id="POWERMULTPRICE"></div>
+                        <div class="pw segment">
+                            <div class="pw link" data-url="#" id="UPGRADE_1">Purchase</div>
                         </div>
-                        <div class="pw horizontal dark segments">
-                            <div class="pw segment">Experience Multiplier</div>
-                            <div id="XPMULTVAL" class="pw segment">0</div>
-                            <div id="XPMULTPRICE" class="pw segment">
-                                3
-                                <i class="pw blue fal fa-dna"></i>
-                            </div>
-                            <div class="pw segment">
-                                <div id="UPGRADE_0" class="pw link" data-url="#">Purchase</div>
-                            </div>
+                    </div>
+                    <div class="pw horizontal dark segments">
+                        <div class="pw segment">Armor Multiplier</div>
+                        <div class="pw segment" id="LIFEMULTVAL"></div>
+                        <div class="pw segment" id="LIFEMULTPRICE"></div>
+                        <div class="pw segment">
+                            <div class="pw link" data-url="#" id="UPGRADE_2">Purchase</div>
                         </div>
-                        <div class="pw horizontal dark segments">
-                            <div class="pw segment">Damage Multiplier</div>
-                            <div id="POWERMULTVAL" class="pw segment">0</div>
-                            <div id="POWERMULTPRICE" class="pw segment">
-                                3
-                                <i class="pw blue fal fa-dna"></i>
-                            </div>
-                            <div class="pw segment">
-                                <div id="UPGRADE_1" class="pw link" data-url="#">Purchase</div>
-                            </div>
-                        </div>
-                        <div class="pw horizontal dark segments">
-                            <div class="pw segment">Armor Multiplier</div>
-                            <div id="LIFEMULTVAL" class="pw segment">0</div>
-                            <div id="LIFEMULTPRICE" class="pw segment">
-                                3
-                                <i class="pw blue fal fa-dna"></i>
-                            </div>
-                            <div class="pw segment">
-                                <div id="UPGRADE_2" class="pw link" data-url="#">Purchase</div>
-                            </div>
-                        </div>
-                        <div class="pw horizontal dark segments">
-                            <div class="pw segment">Inventory capacity</div>
-                            <div id="INVUPGVAL" class="pw segment">0</div>
-                            <div id="INVUPGPRICE" class="pw segment">
-                                3
-                                <i class="pw blue fal fa-dna"></i>
-                            </div>
-                            <div class="pw segment">
-                                <div id="UPGRADE_3" class="pw link" data-url="#">Purchase</div>
-                            </div>
+                    </div>
+                    <div class="pw horizontal dark segments">
+                        <div class="pw segment">Inventory Capacity</div>
+                        <div class="pw segment" id="INVUPGVAL"></div>
+                        <div class="pw segment" id="INVUPGPRICE"></div>
+                        <div class="pw segment">
+                            <div class="pw link" data-url="#" id="UPGRADE_3">Purchase</div>
                         </div>
                     </div>
                 </div>
-                <div id="DIV-STATS" class="pw message no-animation text-center">
-                    <h3 class="pw horizontal divider">
-                        <i class="fas fa-clipboard list icon"></i>
-                        Statistics
-                    </h3>
-                    <div class="pw dropdown text-center" data-open="open">
-                        <h3 class="name">General</h3>
-                        <div class="content active">
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"> Identification</div>
-                                <div class="pw segment avatar text-right" id="namestat"></div>
+            </div>
+            <div class="pw message no-animation text-center" id="DIV-STATS">
+                <h3 class="pw horizontal divider"><i class="fas fa-clipboard list icon"></i> Statistics</h3>
+                <div class="pw dropdown text-center" data-open="open">
+                    <h3 class="name">General</h3>
+                    <div class="content active">
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Identification</div>
+                            <div class="pw segment avatar text-right" id="namestat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Ranking</div>
+                            <div class="pw segment text-right" id="Rankstat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Time Played</div>
+                            <div class="pw segment text-right" id="playtimestat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Current Level</div>
+                            <div class="pw segment text-right" id="Levelstat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Class</div>
+                            <div class="pw segment text-right" id="Classstat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Main Attack Damage</div>
+                            <div class="pw segment text-right" id="powerstat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Maximum Life</div>
+                            <div class="pw segment text-right" id="lifestat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Ratio (K/D)</div>
+                            <div class="pw segment text-right" id="Ratiostat">
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Ranking</div>
-                                <div class="pw segment text-right" id="Rankstat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">
+                                <div class="link" data-url="#" onclick=" helpScore()">Equipment Score</div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Time Played</div>
-                                <div class="pw segment text-right" id="playtimestat"></div>
+                            <div class="pw segment text-right" id="Scorestat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Dimensional Difficulty</div>
+                            <div class="pw segment text-right" id="Difficultystat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Fortresses Defeated</div>
+                            <div class="pw segment text-right" id="fortressstat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Main Weapon Base Damage</div>
+                            <div class="pw segment text-right" id="mainweaponstat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Special Weapon Base Damage</div>
+                            <div class="pw segment text-right" id="specialweaponstat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Helmet Base Life</div>
+                            <div class="pw segment text-right" id="armor1stat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Armor Base Life</div>
+                            <div class="pw segment text-right" id="armor2stat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Shield Base Life</div>
+                            <div class="pw segment text-right" id="armor3stat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Boots Base Life</div>
+                            <div class="pw segment text-right" id="armor4stat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Game Version</div>
+                            <div class="pw segment text-right" id="Versionstat"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pw dropdown text-center">
+                    <h3 class="name">Locations</h3>
+                    <div class="content" id="locations-stats"></div>
+                </div>
+                <div class="pw dropdown text-center">
+                    <h3 class="name">Kills</h3>
+                    <div class="content">
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left"><span class="Enemy1">NORMAL</span> Kills</div>
+                            <div class="pw segment text-right" id="Defeat1"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left"><span class="Enemy2">ADVANCED</span> Kills</div>
+                            <div class="pw segment text-right" id="Defeat2"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left"><span class="Enemy3">SUPERIOR</span> Kills</div>
+                            <div class="pw segment text-right" id="Defeat3"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left"><span class="Enemy4">VETERAN</span> Kills</div>
+                            <div class="pw segment text-right" id="Defeat4"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left"><span class="Enemy5">ELITE</span> Kills</div>
+                            <div class="pw segment text-right" id="Defeat5"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left"><span class="Enemy6">BOSS</span> Kills</div>
+                            <div class="pw segment text-right" id="Defeat6"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left"><span class="Enemy7">GOD</span> Kills</div>
+                            <div class="pw segment text-right" id="Defeat7"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Total Kills</div>
+                            <div class="pw segment text-right" id="Killstat"></div>
+                        </div>
+                        <div class="pw horizontal dark segments">
+                            <div class="pw segment text-left">Total Deaths</div>
+                            <div class="pw segment text-right" id="Deathstat"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pw message no-animation text-center" id="DIV-LEADERBOARD">
+                <h3 class="pw horizontal divider">
+                    <i class="fas fa-trophy icon"></i>
+                    Leaderboard
+                </h3>
+                <h4 class="text-center" id="CloudTimer"></h4>
+                <div class="pw checkbox" data-id="4" id="OnlyMyVersion">
+                    <input tabindex="0" type="checkbox" />
+                    <label class="text">Hide players from older versions</label>
+                </div>
+                <div class="pw fluid button" id="Reload">Refresh</div>
+                <div id="LEADERBOARD"></div>
+                <div class="pw fluid buttons" style="margin: 1px 0px 0px 0px;">
+                    <div class="pw button" id="TOPPREVIOUS"></div>
+                    <div class="pw button" id="TOPNEXT"></div>
+                </div>
+                <div class="pw fluid button" id="TOP10">Top 10</div>
+                <h3 class="pw message">
+                    <span class="pw inline green label"><i class="info icon"></i> INFO</span> You can change the color
+                    of your name by changing the <span class="pw alpha">theme color</span> in the Settings.
+                </h3>
+            </div>
+            <div class="pw message no-animation text-center" id="DIV-SETTINGS">
+                <div class="pw horizontal divider"><i class="fas fa-cogs"></i> Settings</div>
+                <div class="pw horizontal segments">
+                    <div class="pw segment">
+                        <div class="pw fluid buttons">
+                            <div class="pw red button" id="reset-btn">Delete save</div>
+                            <div class="pw grey button" id="export-btn">Export save</div>
+                            <div class="pw green button" id="import-btn">Import save</div>
+                        </div>
+                        <div id="exportBody"></div>
+                    </div>
+                </div>
+                <div class="pw horizontal segments">
+                    <div class="pw segment">
+                        <img class="pw centered medium image" id="avatar2" src="images/avatars/avatar7.jpg" />
+                        <div class="pw fluid buttons">
+                            <div class="pw grey button" id="AVATAR_PREVIOUS">
+                                <i class="fal fa-arrow-square-left"></i>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Current Level</div>
-                                <div class="pw segment text-right" id="Levelstat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Class</div>
-                                <div class="pw segment text-right" id="Classstat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"> Main Attack Damage</div>
-                                <div class="pw segment text-right" id="powerstat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Maximum Life</div>
-                                <div class="pw segment text-right" id="lifestat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Ratio (K/D)</div>
-                                <div class="pw segment text-right" id="Ratiostat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">
-                                    <div class="link" data-url="#" onclick=" helpScore()">Equipment Score</div>
-                                </div>
-                                <div class="pw segment text-right" id="Scorestat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Dimensional Difficulty</div>
-                                <div class="pw segment text-right" id="Difficultystat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Fortresses Defeated</div>
-                                <div class="pw segment text-right" id="fortressstat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Main Weapon Base Damage</div>
-                                <div class="pw segment text-right" id="mainweaponstat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Special Weapon Base Damage</div>
-                                <div class="pw segment text-right" id="specialweaponstat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Helmet Base Life</div>
-                                <div class="pw segment text-right" id="armor1stat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Armor Base Life</div>
-                                <div class="pw segment text-right" id="armor2stat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Shield Base Life</div>
-                                <div class="pw segment text-right" id="armor3stat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Boots Base Life</div>
-                                <div class="pw segment text-right" id="armor4stat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Game Version</div>
-                                <div class="pw segment text-right" id="Versionstat"></div>
+                            <div class="pw grey button" id="AVATAR_NEXT">
+                                <i class="fal fa-arrow-square-right"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="pw dropdown text-center">
-                        <h3 class="name">Locations</h3>
-                        <div class="content" id="locations-stats"></div>
+                    <div class="pw segment">
+                        <div class="pw checkbox" data-check="checked" data-id="0" id="AlertToggle">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text">Confirmation for changing Weapons or Armor.</label>
+                        </div>
+                        <div class="pw checkbox" data-check="checked" data-id="1" id="AlertToggle2">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text">Confirmation for changing Relics.</label>
+                        </div>
+                        <div class="pw checkbox" data-id="2" id="SkipRewards">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text">Skip monster rewards.</label>
+                        </div>
+                        <div class="pw checkbox" data-check="checked" data-id="3" id="AutoMissions">
+                            <input tabindex="0" type="checkbox" />
+                            <label class="text">Automatically start available missions.</label>
+                        </div>
                     </div>
-                    <div class="pw dropdown text-center">
-                        <h3 class="name">Kills</h3>
+                </div>
+                <div class="pw segments">
+                    <div class="pw segment">
+                        <h3 class="pw horizontal divider"> <i class="fal fa-terminal"></i> Promotional Codes</h3>
+                        If you have a promotional code enter it here.
+                        <input id="promocode" maxlength="6" placeholder="Abc123" type="text" />
+                        <div class="pw fluid grey button" id="CheckCode">Check code</div>
+                        <span id="codereturn"></span>
+                    </div>
+                    <div class="pw horizontal divider"><i class="fas fa-paint-brush"></i> Theme</div>
+                    <div class="color-picker">
                         <div class="content">
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">
-                                    <span class="Enemy1">NORMAL</span>
-                                    Kills
+                            <div class="hex-color">
+                                <div class="text">#</div>
+                                <input disabled id="color-name" maxlength="6" minlength="3" placeholder="000000"
+                                    type="text" value />
+                            </div>
+                            <div class="divider"></div>
+                            <div class="selector red noselect" id="selector-red">
+                                <div class="container">
+                                    <div class="value">19</div>
                                 </div>
-                                <div class="pw segment text-right" id="Defeat1"></div>
+                                <div class="button minus"><i class="fal fa-minus"></i></div>
+                                <input class="color-range red" id="range-red" max="255" min="0" type="range"
+                                    value="19" />
+                                <div class="button plus"><i class="fal fa-plus"></i></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">
-                                    <span class="Enemy2">ADVANCED</span>
-                                    Kills
+                            <div class="selector green noselect" id="selector-green">
+                                <div class="container">
+                                    <div class="value">241</div>
                                 </div>
-                                <div class="pw segment text-right" id="Defeat2"></div>
+                                <div class="button minus"><i class="fal fa-minus"></i></div>
+                                <input class="color-range green" id="range-green" max="255" min="0" type="range"
+                                    value="241" />
+                                <div class="button plus"><i class="fal fa-plus"></i></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">
-                                    <span class="Enemy3">SUPERIOR</span>
-                                    Kills
+                            <div class="selector blue noselect" id="selector-blue">
+                                <div class="container">
+                                    <div class="value">210</div>
                                 </div>
-                                <div class="pw segment text-right" id="Defeat3"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">
-                                    <span class="Enemy4">VETERAN</span>
-                                    Kills
-                                </div>
-                                <div class="pw segment text-right" id="Defeat4"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">
-                                    <span class="Enemy5">ELITE</span>
-                                    Kills
-                                </div>
-                                <div class="pw segment text-right" id="Defeat5"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">
-                                    <span class="Enemy6">BOSS</span>
-                                    Kills
-                                </div>
-                                <div class="pw segment text-right" id="Defeat6"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">
-                                    <span class="Enemy7">GOD</span>
-                                    Kills
-                                </div>
-                                <div class="pw segment text-right" id="Defeat7"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Total Kills</div>
-                                <div class="pw segment text-right" id="Killstat"></div>
-                            </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Total Deaths</div>
-                                <div class="pw segment text-right" id="Deathstat"></div>
+                                <div class="button minus"><i class="fal fa-minus"></i></div>
+                                <input class="color-range blue" id="range-blue" max="255" min="0" type="range"
+                                    value="210" />
+                                <div class="button plus"> <i class="fal fa-plus"></i></div>
                             </div>
                         </div>
                     </div>
+                    <div class="pw fluid alpha button" id="RESET_THEME">Reset Theme</div>
                 </div>
-                <div id="DIV-LEADERBOARD" class="pw message no-animation text-center">
-                    <h3 class="pw horizontal divider">
-                        <i class="fas fa-trophy icon"></i>
-                        Leaderboard
-                    </h3>
-                    <h4 class="text-center" id="CloudTimer"></h4>
-                    <div class="pw checkbox" id="OnlyMyVersion" data-id="4">
-                        <input type="checkbox" tabindex="0">
-                        <label class="text">Hide players from older versions</label>
-                    </div>
-                    <div id="Reload" class="pw fluid button">Refresh</div>
-                    <div id="LEADERBOARD"></div>
-                    <div class="pw fluid buttons" style="margin: 1px 0px 0px 0px;">
-                        <div id="TOPPREVIOUS" class="pw button"></div>
-                        <div id="TOPNEXT" class="pw button"></div>
-                    </div>
-                    <div id="TOP10" class="pw fluid button">Top 10</div>
-                    <h3 class="pw message">
-                        <span class="pw inline green label">
-                            <i class="info icon"></i>
-                            INFO
-                        </span>
-                        You can change the color of your name. Just change the
-                        <span class="pw alpha">theme color</span>
-                        in Settings.
-                    </h3>
-                </div>
-                <div id="DIV-SETTINGS" class="pw message no-animation text-center">
-                    <div class="pw horizontal divider">
-                        <i class="fas fa-cogs"></i>
-                        Settings
-                    </div>
-                    <div class="pw horizontal segments">
-                        <div class="pw segment">
-                            <div class="pw fluid buttons">
-                                <div id="reset-btn" class="pw red button">Delete save</div>
-                                <div id="export-btn" class="pw grey button">Export save</div>
-                                <div id="import-btn" class="pw green button">Import save</div>
-                            </div>
-                            <div id="exportBody"></div>
-                        </div>
-                    </div>
-                    <div class="pw horizontal segments">
-                        <div class="pw segment">
-                            <img id="avatar2" class="pw centered medium image" src="images/avatars/avatar7.jpg">
-                            <div class="pw fluid buttons">
-                                <div id="AVATAR_PREVIOUS" class="pw grey button">
-                                    <i class="fal fa-arrow-square-left"></i>
-                                </div>
-                                <div id="AVATAR_NEXT" class="pw grey button">
-                                    <i class="fal fa-arrow-square-right"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pw segment">
-                            <div class="pw checkbox" id="AlertToggle" data-id="0" data-check="checked">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text">Confirmation for changing Weapons or Armor.</label>
-                            </div>
-                            <div class="pw checkbox" id="AlertToggle2" data-id="1" data-check="checked">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text">Confirmation for changing Relics.</label>
-                            </div>
-                            <div class="pw checkbox" id="SkipRewards" data-id="2">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text">Skip monster rewards.</label>
-                            </div>
-                            <div class="pw checkbox" id="AutoMissions" data-id="3" data-check="checked">
-                                <input type="checkbox" tabindex="0">
-                                <label class="text">Automatically start available missions.</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pw segments">
-                        <div class="pw segment">
-                            <h3 class="pw horizontal divider">
-                                <i class="fal fa-terminal"></i>
-                                Promotional Codes
-                            </h3>
-                            If you have a promotional code enter it here.
-                            <input id="promocode" placeholder="Abc123" type="text" maxlength="6">
-                            <div id="CheckCode" class="pw fluid grey button">Check code</div>
-                            <span id="codereturn"></span>
-                        </div>
-                        <div class="pw horizontal divider">
-                            <i class="fas fa-paint-brush "></i>
-                            Theme
-                        </div>
-                        <div class="color-picker">
-                            <div class="content">
-                                <div class="hex-color">
-                                    <div class="text">#</div>
-                                    <input id="color-name" type="text" placeholder="000000" value="" minlength="3" maxlength="6" disabled>
-                                </div>
-                                <div class="divider"></div>
-                                <div class="selector red noselect" id="selector-red">
-                                    <div class="container">
-                                        <div class="value">19</div>
-                                    </div>
-                                    <div class="button minus">
-                                        <i class="fal fa-minus"></i>
-                                    </div>
-                                    <input class="color-range red" id="range-red" value="19" type="range" min="0" max="255">
-                                    <div class="button plus">
-                                        <i class="fal fa-plus"></i>
-                                    </div>
-                                </div>
-                                <div class="selector green noselect" id="selector-green">
-                                    <div class="container">
-                                        <div class="value">241</div>
-                                    </div>
-                                    <div class="button minus">
-                                        <i class="fal fa-minus"></i>
-                                    </div>
-                                    <input class="color-range green" id="range-green" value="241" type="range" min="0" max="255">
-                                    <div class="button plus">
-                                        <i class="fal fa-plus"></i>
-                                    </div>
-                                </div>
-                                <div class="selector blue noselect" id="selector-blue">
-                                    <div class="container">
-                                        <div class="value">210</div>
-                                    </div>
-                                    <div class="button minus">
-                                        <i class="fal fa-minus"></i>
-                                    </div>
-                                    <input class="color-range blue" id="range-blue" value="210" type="range" min="0" max="255">
-                                    <div class="button plus">
-                                        <i class="fal fa-plus"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pw fluid alpha button" id="RESET_THEME">Reset Theme</div>
-                    </div>
-                </div>
-                <div id="DIV-CREDITS" class="pw message text-center">
-                    <h3 class="pw horizontal divider">
-                        <i class="fas fa-popcorn"></i>
-                        Credits
-                    </h3>
-                    <span id="VERSION_TEXT2"></span>
-                    made with 💖 by
-                    <div class="link" data-url="https://github.com/GoldenLys">Purple Wizard</div>
-                    .
-                    <br>
-                    <div class="pw inline label">
-                        <i class="pw discord fab fa-discord"></i>
-                        Purple Wizard#0984
-                    </div>
-                    <div class="pw inline label">
-                        <i class="pw reddit fab fa-reddit"></i>
-                        u/Aizen45
-                    </div>
-                    <br>
-                    Huge thanks to
-                    <b>Tiwaz</b>
-                </span>
-                and
-                <b>Pedter</b>
-                for their help!
-                <br>
-                <br>
+            </div>
+            <div class="pw message text-center" id="DIV-CREDITS">
+                <h3 class="pw horizontal divider"><i class="fas fa-popcorn"></i> Credits</h3>
+                <span id="VERSION_TEXT2"></span> made with 💖 by
+                <div class="link" data-url="https://github.com/GoldenLys">Purple Wizard </div>.<br />
+                <div class="pw inline label"><i class="pw discord fab fa-discord"></i> Purple Wizard#0984</div>
+                <div class="pw inline label"><i class="pw reddit fab fa-reddit"></i> u/Aizen45</div>
+                <br />Huge thanks to <b>Tiwaz</b> and <b>Pedter</b> for their help !<br /> <br />
                 <div class="link" data-url="https://github.com/GoldenLys/AlphaRPG">
-                    <i class="fas fa-code"></i>
-                    Source Code
-                </div>
+                    <i class="fas fa-code"></i> Source Code</div>
             </div>
         </div>
         <div class="page-tabs">
             <div class="pw fluid buttons">
-                <div class="pw button active" id="missions" data-url="#">
-                    <i class="far fa-dot-circle"></i>
-                    Missions
+                <div class="pw button active" data-url="#" id="missions"><i class="far fa-dot-circle"></i> Missions
                 </div>
-                <div class="pw button" id="exploration" data-url="#">
-                    <i class="fas fa-map-marked-alt icon"></i>
-                    Exploration
-                </div>
+                <div class="pw button" data-url="#" id="exploration">
+                    <i class="fas fa-map-marked-alt icon"></i> Exploration</div>
             </div>
             <div id="DIV-MISSIONS">
                 <div class="pw segments" id="MissionsList"></div>
@@ -794,7 +640,8 @@
                     </div>
                 </div>
             </div>
-            <div id="DIV-EXPLORE" class="pw segments" style="display: none;"></div>
+            <div class="pw segments" id="DIV-EXPLORE" style="display: none;">
+            </div>
         </div>
     </div>
     <!--INTRODUCTION-->
@@ -802,35 +649,35 @@
         <div class="header">
             AlphaRPG
             <div class="pw fluid steps">
-                <div id="step1" class="step active">
+                <div class="step active" id="step1">
                     <i class="fal fa-question-square"></i>
                     <div class="content">
                         <div class="title">Welcome</div>
                         <div class="description">Welcome to AlphaRPG</div>
                     </div>
                 </div>
-                <div id="step2" class="step">
+                <div class="step" id="step2">
                     <i class="fal fa-pen-square"></i>
                     <div class="content">
                         <div class="title">Username</div>
                         <div class="description">Choose a username</div>
                     </div>
                 </div>
-                <div id="step3" class="step">
+                <div class="step" id="step3">
                     <i class="fal fa-image"></i>
                     <div class="content">
                         <div class="title">Avatar</div>
                         <div class="description">Choose an avatar</div>
                     </div>
                 </div>
-                <div id="step4" class="step">
+                <div class="step" id="step4">
                     <i class="fal fa-clipboard-user"></i>
                     <div class="content">
                         <div class="title">Class</div>
                         <div class="description">Choose a class</div>
                     </div>
                 </div>
-                <div id="step5" class="step">
+                <div class="step" id="step5">
                     <i class="fal fa-clipboard-list-check"></i>
                     <div class="content">
                         <div class="title">Confirmation</div>
@@ -840,63 +687,47 @@
             </div>
         </div>
         <div class="pw message text-center" id="tutorial-1">
-            <h2>Introduction</h2>
-            Welcome to AlphaRPG, a game made by Purple Wizard.
-            <br>
-            The main goal of this game is to fight enemies and progress through the story to gain
-            <b>EQUIPMENT</b>
-            and
-            <b>EXPERIENCE</b>
-            .
-            <br>
-            You'll discover & explore a new world called Alpha filled with many cities & monsters!
-            <br>
-            But beware: there are also powerful monsters that you will need to fight wisely; it's up to you to find your own way to do so! 😉
-            <br>
+            <h2>Introduction</h2>Welcome to AlphaRPG, a game made by Purple Wizard.
+            <br />The main goal of this game is to fight enemies and progress through the story to gain
+            <b>EQUIPMENT</b> and <b>EXPERIENCE</b>.
+            <br />You'll discover & explore a new world called Alpha filled with many cities & monsters!
+            <br />But beware: there are also powerful monsters that you will need to fight wisely; it's up to you to
+            find your own way to do so! 😉<br />
             If you have any question don't hesitate to join our
             <a class="link" data-url="https://discord.com/invite/SBuYeHh">
-                <i class="fab fa-discord"></i>
-                discord server
-            </a>
-            .
-            <br>
+                <i class="fab fa-discord"></i> discord server</a>.<br />
             Okay, so now we need to know who your character will be...
         </div>
         <div class="pw message text-center" id="tutorial-2" style="display: none;">
-            <h2>Username</h2>
-            Enter your desired username for your character (3-16 alphanumerical characters).
-            <br>
-            Write "Neo" to generate a random name.
-            <br>
-            <input id="PlayerName" placeholder="Neo" type="text" maxlength="16">
-            <br>
+            <h2>Username</h2>Enter your desired username for your character (3-16 alphanumerical characters).<br />
+            Write "Neo" to generate a random name.<br />
+            <input id="PlayerName" maxlength="16" placeholder="Neo" type="text" />
+            <br />
             <span id="namehelp"></span>
         </div>
         <div class="pw message text-center" id="tutorial-3" style="display: none;">
             <h2>Avatar</h2>
             You can also choose your avatar; it will be shown during any fight.
-            <img id="avatar3" class="pw centered medium image" src="#">
+            <img class="pw centered medium image" id="avatar3" src="#" />
             <div class="pw fluid buttons">
-                <div id="AVATAR_PREVIOUS_BEGIN" class="pw grey button">
+                <div class="pw grey button" id="AVATAR_PREVIOUS_BEGIN">
                     <i class="fal fa-arrow-square-left"></i>
                 </div>
-                <div id="AVATAR_NEXT_BEGIN" class="pw grey button">
+                <div class="pw grey button" id="AVATAR_NEXT_BEGIN">
                     <i class="fal fa-arrow-square-right"></i>
                 </div>
             </div>
         </div>
         <div class="pw message text-center" id="tutorial-4" style="display: none;">
             <h2>Class</h2>
-            You now require a class, which will define your basic skills.
-            <br>
+            You now require a class, which will define your basic skills. <br />
             You will eventually be able to gain the bonuses granted by each class.
             <div class="pw horizontal segments">
                 <div class="pw segment" id="ChooseWarrior">
                     <div class="pw message" id="warrior">
                         <h3>WARRIOR</h3>
                         <div class="content">
-                            Warriors form the frontline of any fight. They deal the most initial damage.
-                            <br>
+                            Warriors form the frontline of any fight. They deal the most damage.<br />
                             (+5% Damages)
                         </div>
                     </div>
@@ -905,8 +736,7 @@
                     <div class="pw message" id="paladin">
                         <h3>PALADIN</h3>
                         <div class="content">
-                            Paladins fight for justice. They protect the weak with their strong initial shield.
-                            <br>
+                            Paladins fight for justice. They protect the weak with their strong shield.<br />
                             (+5% Armor)
                         </div>
                     </div>
@@ -915,8 +745,8 @@
                     <div class="pw message" id="ninja">
                         <h3>NINJA</h3>
                         <div class="content">
-                            Ninjas are elite fighters, planning and plotting before the fight. They learn the fastest initially.
-                            <br>
+                            Ninjas are elite fighters, planning and plotting before the fight.<br />
+                            They can learn the basics faster than anyone.<br />
                             (+5% Bonus Experience)
                         </div>
                     </div>
@@ -924,76 +754,62 @@
             </div>
         </div>
         <div class="pw message text-center" id="tutorial-5" style="display: none;">
-            <h2>Validation</h2>
-            Do you wish to start the game with these choices?
+            <h2>Validation</h2>Do you wish to start the game with these choices?
             <div id="WELCOME_DATA"></div>
         </div>
         <div class="pw fluid buttons">
             <div class="pw darkgrey button" id="WelcomePrevious" style="display: none;">
-                <i class="left arrow icon"></i>
-                Previous
-            </div>
-            <div class="pw alpha button" id="WelcomeNext">
-                Next
-                <i class="right arrow icon"></i>
-            </div>
+                <i class="left arrow icon"></i>Previous</div>
+            <div class="pw alpha button" id="WelcomeNext">Next <i class="right arrow icon"></i></div>
         </div>
     </div>
     <!--LOGIN-->
-    <div id="LOGIN-NOTICE" class="popup">
+    <div class="popup" id="LOGIN-NOTICE">
         <div class="content">
             <div class="title" id="wb-texttitle"></div>
             <div class="text" id="wb-text"></div>
             <div class="pw fluid buttons">
-                <div id="LOGIN-BTN" class="pw green button">
-                    <i class="fal fa-check"></i>
-                    Yes
-                </div>
-                <div id="WB-BTN" class="pw red button">
-                    <i class="fal fa-times"></i>
-                    No
-                </div>
+                <div class="pw green button" id="LOGIN-BTN"><i class="fal fa-check"></i> Yes</div>
+                <div class="pw red button" id="WB-BTN"><i class="fal fa-times"></i> No</div>
             </div>
         </div>
     </div>
     <!--POPUP-->
-    <div id="POPUP" class="popup">
+    <div class="popup" id="POPUP">
         <div class="content">
             <div class="title" id="popup-title"></div>
             <div class="text" id="popup-text"></div>
             <div id="popup-buttons">
-                <div id="POPUP_CLOSE" class="pw fluid red button">
-                    <i class="fal fa-times"></i>
-                    Close
-                </div>
+                <div class="pw fluid red button" id="POPUP_CLOSE"><i class="fal fa-times"></i> Close</div>
             </div>
         </div>
     </div>
     <!--NOTICE-->
-    <div id="NOTICE" class="notice">
+    <div class="notice" id="NOTICE">
         <div class="content">
-            <div id="notice-countdown" class="countdown"></div>
-            <div id="notice-title" class="title"></div>
-            <div id="notice-text" class="text"></div>
+            <div class="countdown" id="notice-countdown"></div>
+            <div class="title" id="notice-title"></div>
+            <div class="text" id="notice-text"></div>
         </div>
     </div>
-    <script type="text/javascript" src="libs/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" src="libs/numeral.min.js"></script>
-    <script type="text/javascript" src="libs/lodash.min.js"></script>
+    <script src="libs/jquery-3.5.1.min.js" type="text/javascript"></script>
+    <script src="libs/numeral.min.js" type="text/javascript"></script>
+    <script src="libs/lodash.min.js" type="text/javascript"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
-    <script type="text/javascript" src="js/functions.js?v=3.001"></script>
-    <script type="text/javascript" src="js/config.js?v=3.001"></script>
-    <script type="text/javascript" src="js/stats.js?v=3.001"></script>
-    <script type="text/javascript" src="js/combat.js?v=3.001"></script>
-    <script type="text/javascript" src="js/inventory.js?v=3.001"></script>
-    <script type="text/javascript" src="js/dimension.js?v=3.001"></script>
-    <script type="text/javascript" src="js/missions.js?v=3.001"></script>
-    <script type="text/javascript" src="js/events.js?v=3.001"></script>
-    <script type="text/javascript" src="js/app.js?v=3.001"></script>
-    <script type="text/javascript" src="js/palette.js?v=3.001"></script>
+    <script src="js/functions.js?v=3.002" type="text/javascript"></script>
+    <script src="js/config.js?v=3.002" type="text/javascript"></script>
+    <script src="js/stats.js?v=3.002" type="text/javascript"></script>
+    <script src="js/combat.js?v=3.002" type="text/javascript"></script>
+    <script src="js/inventory.js?v=3.002" type="text/javascript"></script>
+    <script src="js/dimension.js?v=3.002" type="text/javascript"></script>
+    <script src="js/missions.js?v=3.002" type="text/javascript"></script>
+    <script src="js/events.js?v=3.002" type="text/javascript"></script>
+    <script src="js/app.js?v=3.002" type="text/javascript"></script>
+    <script src="js/palette.js?v=3.002" type="text/javascript"></script>
 </body>
+
 </html>
