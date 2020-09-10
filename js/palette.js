@@ -75,7 +75,6 @@ const WP_UPDATE = function () {
 };
 
 // THEME FUNCTIONS
-
 const ResetTheme = function (code) {
     if (code != 2) Game.Theme = "19 241 210";
     $('body').attr("style", `--ALPHA: ${Game.Theme};`);
