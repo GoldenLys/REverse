@@ -208,15 +208,12 @@ a:-webkit-any-link {
         flex: 0 0 100%;
         max-width: 100%;
     }
-
     .pw.messages .pw.message:last-child {
         margin-bottom: 0
     }
-
     .pw.images {
         flex-wrap: wrap;
     }
-
     .pw.fluid.nostack.buttons {
         width: 100%;
         display: block;
