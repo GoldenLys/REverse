@@ -208,10 +208,10 @@ const UpdateGame = function () {
         if (GLOBALS.MISSIONS[M][3] != 2) counter++;
     }
     APP.TotalMissions = counter;
-    if (Game.Simulation > 50) Game.Simulation = 50;
+    if (Game.Dimension > 50) Game.Dimension = 50;
     let divisor = 0;
     APP.MaxLevel = 35;
-    APP.MaxScore = (APP.MaxLevel + (Game.Simulation * 5) - 5);
+    APP.MaxScore = (APP.MaxLevel + (Game.Dimension * 5) - 5);
     for (var D = 1; D < 7; D++) {
         if (Game.Defeated[D] == null) Game.Defeated[D] = 0;
     }
@@ -230,13 +230,13 @@ const UpdateGame = function () {
         ResetTheme(1);
         save();
     }
-    Game.DIMENSION_MULTIPLIERS[2] = (Game.Simulation * 0.03) - 0.03; // EXPMULT
-    Game.DIMENSION_MULTIPLIERS[3] = (Game.Simulation * 0.05) + 0.95; // DIFFICULTYMULT
+    Game.DIMENSION_MULTIPLIERS[2] = (Game.Dimension * 0.03) - 0.03; // EXPMULT
+    Game.DIMENSION_MULTIPLIERS[3] = (Game.Dimension * 0.05) + 0.95; // DIFFICULTYMULT
     Backup = Game.username;
     Game.xp[2] = Game.Upgrades[0] * 0.01 + 1;
     APP.PowerMult = Game.Upgrades[1] * 0.01 + 1;
     APP.LifeMult = Game.Upgrades[2] * 0.01 + 1;
-    Game.MaxInv = (Game.Simulation * 2) + 18 + (Game.Upgrades[3] * 1);
+    Game.MaxInv = (Game.Dimension * 2) + 18 + (Game.Upgrades[3] * 1);
     if (typeof (Game.MissionStarted[4]) === 'undefined') Game.MissionStarted[4] = 0;
     if (Game.isInFight == 0) {
         APP.CoreLife = APP.CoreBaseLife;
@@ -331,7 +331,7 @@ const UpdateUI = function () {
         Game.isInFight = 3;
     }
     $("#PlayerXP .progress-bar").attr("style", "max-width:" + GetEXPPercent() + "%;");
-    let WTText = Game.Simulation > 1 ? "Dimension <i class='globe icon'></i> " + Game.Simulation + "<br>" : "";
+    let WTText = Game.Dimension > 1 ? "Dimension <i class='globe icon'></i> " + Game.Dimension + "<br>" : "";
     $("#LABEL_SHARDS").html(fix(Game.Shards, 5));
     if (APP.ScoreModeEnabled == 0) {
         $("#DimensionID").html(WTText);
@@ -342,17 +342,17 @@ const UpdateUI = function () {
         $("#PlayerXP").hide();
         $("#LABEL_EXP").html("Max Level");
     }
-    if (Game.Level >= APP.MaxLevel && APP.Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && APP.LastMission >= APP.TotalMissions) {
+    if (Game.Level >= APP.MaxLevel && APP.Ranking >= (((30 + (Game.Dimension * 5)) * 10) - 5) && APP.LastMission >= APP.TotalMissions) {
         $("#WTBTN").show();
-        $("#WTUNLOCK").html("Dimensional Rift <i class='globe icon'></i>" + (Game.Simulation + 1) + " is opened.");
+        $("#WTUNLOCK").html("Dimensional Rift <i class='globe icon'></i>" + (Game.Dimension + 1) + " is opened.");
     } else {
         $("#WTBTN").hide();
         $("#WTUNLOCK").html("");
     }
     var shards = Game.Level < APP.MaxLevel ? "0" : Math.round(APP.Ranking / 10 - 30);
     var completedstory = APP.LastMission == APP.TotalMissions ? "<span class='pw alpha'>Yes</span>" : "<span class='pw red'>Not Yet</span>";
-    $("#WTShards").html("Score Required : <span class='pw alpha'><i class='fad fa-dice-d20'></i>" + (((30 + (Game.Simulation * 5)) * 10) - 5) + "</span><br>Story completed : " + completedstory + "<br>Fragments reward : <span class='pw alpha'><i class='fal fa-dna'></i>" + shards + "</span>");
-    $("#CurrWT").html("Current Dimension : <span class='pw alpha'><i class='globe icon'></i>" + Game.Simulation + "</span>");
+    $("#WTShards").html("Score Required : <span class='pw alpha'><i class='fad fa-dice-d20'></i>" + (((30 + (Game.Dimension * 5)) * 10) - 5) + "</span><br>Story completed : " + completedstory + "<br>Fragments reward : <span class='pw alpha'><i class='fal fa-dna'></i>" + shards + "</span>");
+    $("#CurrWT").html("Current Dimension : <span class='pw alpha'><i class='globe icon'></i>" + Game.Dimension + "</span>");
     let UPGRADES_IDs = ["XPMULTPRICE", "POWERMULTPRICE", "LIFEMULTPRICE", "INVUPGPRICE"];
     let UPGRADE_TEXT = [];
     let CAN_AFFORD_UPGRADE = [];

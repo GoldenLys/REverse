@@ -93,11 +93,11 @@ function writeUserData() {
         database.ref('users/' + Game.username).set({
             Name: Game.username,
             Email: APP.Email,
-            Order: (-1 * APP.Ranking) - (100000 * Game.Simulation),
+            Order: (-1 * APP.Ranking) - (100000 * Game.Dimension),
             Order2: -1 * APP.Ranking,
             Level: Game.Level,
             Ranking: APP.Ranking,
-            WT: Game.Simulation,
+            WT: Game.Dimension,
             CorePower: APP.WeaponsPower,
             CoreLife: APP.CoreBaseLife,
             Kills: Game.Wins,
@@ -223,7 +223,7 @@ function CheckCode(debug) {
             $("#codereturn").html("Code Accepted, you are now at max level.");
             Game.Level = APP.MaxLevel;
         } else if (code === APP.codes[4]) {
-            $("#codereturn").html("Code Accepted, you just advanced to </i> <i class='globe icon'></i>" + (Game.Simulation + 1));
+            $("#codereturn").html("Code Accepted, you just advanced to </i> <i class='globe icon'></i>" + (Game.Dimension + 1));
             Game.Level = APP.MaxLevel;
             Game.Armors[1][4] = APP.MaxScore;
             Game.Armors[2][4] = APP.MaxScore;
@@ -233,9 +233,9 @@ function CheckCode(debug) {
             Game.Weapons.Special[3] = APP.MaxScore;
             ChangeWT();
         } else if (code === APP.codes[5]) {
-            if (Game.Simulation > 1) {
-                $("#codereturn").html("Code Accepted, you just lowered to <i class='globe icon'></i> " + (Game.Simulation - 1));
-                Game.Simulation--;
+            if (Game.Dimension > 1) {
+                $("#codereturn").html("Code Accepted, you just lowered to <i class='globe icon'></i> " + (Game.Dimension - 1));
+                Game.Dimension--;
             } else invalidCode(3);
         } else if (code === APP.codes[6]) {
             $("#codereturn").html("Code Accepted, save exported to your clipboard.");

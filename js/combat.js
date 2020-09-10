@@ -305,7 +305,7 @@ const GenEnemy = function () {
         POWER: [],
     };
 
-    MULTIPLIERS.LIFE = APP.ScoreModeEnabled == 0 ? [1.15, 1.25, 1.35, 1.5, 2.5, 3.5, 5] : [2, 2.75, 3, 3.5, 4, 5, 7.5];
+    MULTIPLIERS.LIFE = APP.ScoreModeEnabled == 0 ? [1.05, 1.25, 1.5, 2, 2.5, 3.5, 5] : [2, 2.75, 3, 3.5, 4, 5, 7.5];
     MULTIPLIERS.POWER[0] = APP.ScoreModeEnabled == 0 ? [0.9, 0.95, 1, 1, 1, 1, 1] : [1, 1, 1, 1, 1, 1, 1];
     MULTIPLIERS.POWER[1] = APP.ScoreModeEnabled == 0 ? [1, 1, 1, 1.05, 1.15, 1.25, 1.35] : [1, 1, 1.10, 1.15, 1.25, 1.5, 2.5];
 

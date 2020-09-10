@@ -273,7 +273,7 @@ var Game = {
     MaxInv: 20,
     Theme: "",
     Upgrades: [0, 0, 0, 0],
-    Simulation: 1,
+    Dimension: 1,
     DIMENSION_MULTIPLIERS: [0, 0, 0, 1], //POWER, LIFE, XP, DIFFICULTY
     Avatar: random(1, 50),
     config: [1, 1, 0, 1, 0],
