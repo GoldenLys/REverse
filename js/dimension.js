@@ -7,7 +7,7 @@ const ChangeWT = function () {
 const ConfirmWT = function () {
     if (Game.Level >= APP.MaxLevel && APP.Ranking >= (((30 + (Game.Simulation * 5)) * 10) - 5) && APP.LastMission >= APP.TotalMissions) {
         Game.Simulation++;
-        Game.xp = [0, 100, 0];
+        Game.xp = [0, 100, 1];
         Game.Level = 1;
         Game.Shards += Math.round(APP.Ranking / 10 - 30);
         APP.LifeMult = 1;

@@ -72,7 +72,6 @@ const WP_UPDATE = function () {
         $("#selector-" + APP.TYPES[COLOR] + " .value").css("margin-left", "calc(" + (APP.PICKER[COLOR] / 255) + " * (100% - 3em))");
     }
     $("#color-name").attr("placeholder", fullColorHex(APP.PICKER[0], APP.PICKER[1], APP.PICKER[2]));
-    UpdateGame();
 };
 
 // THEME FUNCTIONS
