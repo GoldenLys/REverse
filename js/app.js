@@ -64,6 +64,7 @@ $(document).ready(function () {
         UpdateEngine();
         GenMissions();
         CHECK_EQUIPMENT();
+        WP_UPDATE();
     }
     Game.isInFight = 0;
     setInterval(UpdateEngine, 1000);
