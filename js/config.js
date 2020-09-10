@@ -15,7 +15,7 @@ const GLOBALS = {
     ARMORS_TYPE: ["", "Helmet", "Armor", "Shield", "Boots"],
     WEAPONS_TYPE: ["Main", "Special"],
     MISSIONS: {
-        // 0            1         2           3         4                   5                       6                          7               8                  9
+        // 0     1     2      3     4          5           6            7        8         9
         // NAME, DESC, LEVEL, TYPE, REQ KILLS, EXPERIENCE, REWARD TYPE, QUALITY, LOCATION, REQ MISSION
         0: ["White Light", 'You wake up in an unknown place where a white light dazzles you...<br>You can see the exit in the distance. Make it quick, this place seems weird!', 1, 1, 10, 200, 0, "Normal", 0, -1],
         1: ["Shadow Forest", 'You are now in a forest... a dark and creepy forest.<br>You decide to move from here since at this rate you could die in that lost place.', 4, 1, 10, 250, 0, "Common", 1, 0],
@@ -24,12 +24,12 @@ const GLOBALS = {
         4: ["Endless mountain", 'One of the locals advises you to go north and reach the royal capital through the mountains...<br>So here you are in the so-called "endless" mountains.', 12, 1, 10, 1000, 0, "Uncommon", 4, 3],
         5: ["Dark Cave", 'You arrive at the entrance of a dark cave.<br>It seems narrow but it is much faster and less dangerous than the mountains.', 15, 1, 10, 1500, 0, "Rare", 5, 4],
         6: ["Empire Road", 'You finally reach the end of the cave, tired but in one piece.<br>You can already see a sprawling city at the end of the road.', 19, 1, 10, 2500, 0, "Rare", 6, 5],
-        7: ["Imperium City", 'You arrive at the Capital; The king, having heard about your story, asks for an immediate hearing.', 22, 1, 10, 3000, 0, "Rare", 7, 6],
+        7: ["Imperium City", 'You arrive at the Capital; the King, having heard about your story, demands an immediate hearing.', 22, 1, 10, 3000, 0, "Rare", 7, 6],
         8: ["Central V", 'You discuss finding a way to return to your world with the king.<br>He informs you that the only way is through the Red Portal on the farm side of the nearby demon army.<br>You\'ll need to get there quickly before the demons swarm you!', 25, 1, 10, 5000, 0, "Epic", 8, 7],
         9: ["The Red Portal", 'The red portal is near and burns white-hot like the gates of hell.<br>Lacking any better options you head closer.', 27, 1, 10, 7500, 0, "Epic", 9, 8],
         10: ["Corrupted World", 'You have successfully passed through the portal... But where have you arrived?', 29, 1, 10, 10000, 0, "Epic", 10, 9],
-        11: ["Corrupted Fortress", 'You see a huge fortress full of nothing but demons; You feel the need to cleanse this place.', 30, 2, 10, 0, 0, "Exotic", 11, 10],
-        12: ["Corrupted Fortress - Basement", 'There is a door inside that leads downwards to another level; You feel the need to cleanse this place too.', 30, 2, 25, 0, 2, "Exotic", 11, 11],
+        11: ["Corrupted Fortress", 'You see a huge fortress full of nothing but demons; you feel the need to cleanse this place.', 30, 2, 10, 0, 0, "Exotic", 11, 10],
+        12: ["Corrupted Fortress - Basement", 'There is a door inside that leads downwards to another level; you feel the need to cleanse this place too.', 30, 2, 25, 0, 2, "Exotic", 11, 11],
         13: ["Corrupted Fortress - Core", 'On the final floor you find the Fortress Core, where the corruption started... Destroy it.', 30, 2, 50, 1, 0, "Exotic", 11, 12],
         14: ["The Black Portal", 'Just after you destroyed the Fortress Core another portal appears, this one black and cold as ice.<br><br><center>A new story begins.</center>', 30, 1, 10, 15000, 0, "Exotic", 12, 11],
         15: ["The Black Portal II", 'As you move forward the passage becomes even darker and colder.<br>You can just make out a light far in the distance...', 30, 1, 10, 20000, 0, "Exotic", 12, 14],
@@ -86,7 +86,7 @@ const GLOBALS = {
         ["Vampire Lord", "Noble Vampire"]
     ],
     LOCATIONS: {
-        // 0           1                   2                    3                                  4                                    5                    6
+        // 0     1          2          3                 4                 5           6
         // NAME, MIN LEVEL, MAX LEVEL, MAX DROP QUALITY, MISSION REQUIRED, LOOT (WIP), BACKGROUND
         0: ["The White Light", 1, 4, 0, 0, { lootables: ["Truc", "Potion"], }, "0.jpg"],
         1: ["The Shadow Forest", 4, 7, 1, 1, { lootables: ["Truc", "Potion"], }, "1.jpg"],
@@ -111,25 +111,23 @@ const GLOBALS = {
 var Backup = "Default";
 var Game = {
     username: "Default",
-    Armors: [
-        //    0            1           2           3             4           5
-        //  STATUS, NAME, CLASS, ARMOR, LEVEL, GEMS
-        [],
+    Armors: [[],
+        // 0       1     2      3      4      5
+        // STATUS, NAME, CLASS, ARMOR, LEVEL, GEMS
         [true, "Basic Armor", "Normal", 100, 1, 0],
         [false, "Basic Armor", "Normal", 100, 1, 0],
         [false, "Basic Armor", "Normal", 100, 1, 0],
         [false, "Basic Armor", "Normal", 100, 1, 0]
     ],
     Weapons: {
-        // 0           1           2           3            4
+        // 0     1      2     3      4
         // NAME, CLASS, GEMS, LEVEL, POWER
         Main: ["Training Sword", "Normal", 0, 1, 10],
         Special: ["Training Dagger", "Normal", 0, 1, 10]
     },
-    RELICS: [
-        //  0                     1           2          3
-        // RELIC NAME, CLASS, TYPE, VALUE
-        [],
+    RELICS: [[],
+        // 0      1    2
+        // CLASS, TYPE, VALUE
         ["Normal", 5, 0],
         ["Normal", 5, 0],
         ["Normal", 5, 0],
@@ -140,7 +138,7 @@ var Game = {
     MaxUPC: [0, 0, 0, 0, 0, 0],
     xp: [0, 100, 1],
     Level: 1,
-    Enemy: [], //NAME, CLASS, LEVEL, POWER, LIFE, CURRENTLIFE
+    Enemy: [], // NAME, CLASS, LEVEL, POWER, LIFE, CURRENTLIFE
     Loses: 0,
     Wins: 0,
     Cash: 0,
@@ -153,7 +151,7 @@ var Game = {
     Theme: "",
     Upgrades: [0, 0, 0, 0],
     Simulation: 1,
-    DIMENSION_MULTIPLIERS: [0, 0, 0, 1], //POWER, LIFE, XP, DIFFICULTY
+    DIMENSION_MULTIPLIERS: [0, 0, 0, 1], // POWER, LIFE, XP, DIFFICULTY
     Avatar: random(1, 50),
     config: [1, 1, 0, 1, 0],
     LastEscape: 0,
@@ -161,7 +159,7 @@ var Game = {
     MissionsCompleted: [],
     Location: 0,
     PlayTime: 0,
-    MissionStarted: [false, 0, 0, 0, 0], //TOGGLE, MISSION ID, PROGRESSION, OBTAINED REWARD, LOCK WIN
+    MissionStarted: [false, 0, 0, 0, 0], // MISSION STARTED, MISSION ID, PROGRESSION, OBTAINED REWARD, LOCK WIN
     DefeatedByLocation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     FortressesCleared: 0,
     AutoRemove: [0, 0, 0, 0, 0, 0],
