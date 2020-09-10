@@ -284,6 +284,7 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
 
 // EQUIPMENT INSTALLATION
 const EquipItem = function (ITEM, TYPE) {
+    POPUP_CLOSE();
     let ARMOR_TYPES = ["", "Helmet", "Armor", "Shield", "Boots"];
     let ARMOR_BUTTON = [];
     let WEAPON_BUTTON = [];

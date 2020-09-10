@@ -238,7 +238,7 @@ const WinFight = function () {
         if (Game.config[2] == 0) POPUP("<span class='pw alpha'> " + GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]] + " defeated !</span>", "You have defeated " + fix(Game.Defeated[Game.Enemy[1]], 1) + " <span class='Enemy" + Game.Enemy[1] + "'>" + ThreatLevel + "</span> enemies.<br>Current Ratio " + fix(Game.Wins / DEATHS, 4) + "<br><br>" + EXP_TEXT + LEVELUP + EMP + "<div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>" + ToAddCash + "</div>" + LOOTS, 0);
         else hideRewards();
     }
-    $(".pw.message.item").click(".pw.button", function () { POPUP_CLOSE(); });
+    $(".pw.message.item").click(".pw.red.button", function () { POPUP_CLOSE(); });
 };
 
 const LoseFight = function () {
