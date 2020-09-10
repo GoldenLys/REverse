@@ -50,6 +50,7 @@ var APP = {
 };
 
 $(document).ready(function () {
+    if (GLOBALS.BETA) GLOBALS.VERSION = `${GLOBALS.VERSION} BETA ${GLOBALS.BETA}`;
     if (location.href.match(/(:5500).*/)) GLOBALS.VERSION = "dev";
     document.title = GLOBALS.NAME;
     $("#site-name").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
