@@ -5,7 +5,6 @@ var RESPAWN_TIMER;
 const HEALING = function () {
     APP.NextHeal = Game.Enemy[1] >= 6 ? 3 : 5;
     let CONFIG = { HEALS: [[65, 85]], DEFAULT: [40, 65], TEXT: "", LUCK: _.random(1, 100) };
-
     if (Game.isInFight != 1) Game.isInFight = 1;
     if (APP.isCovered) {
         if (APP.CoreLife < APP.CoreBaseLife) {
@@ -45,7 +44,10 @@ const TAKE_COVER = function () {
         let HEALING_TIME = Game.Enemy[1] >= 6 ? 3000 : 5000;
         HEALING_TIMER = setInterval(HEALING, HEALING_TIME);
         HEALING_ANIMATION = setInterval(HEALING_TEXT, 1000);
-    } else { APP.isCovered = false; HEALING(); }
+    } else {
+        APP.isCovered = false;
+        HEALING();
+    }
 };
 
 const MAIN_ATTACK = function () {
@@ -74,7 +76,10 @@ const MAIN_ATTACK = function () {
 const SPECIAL_ATTACK = function () {
     CHECK_EQUIPMENT();
     if (Game.isInFight != 1) Game.isInFight = 1;
-    if (APP.isCovered) { APP.isCovered = false; HEALING(); }
+    if (APP.isCovered) {
+        APP.isCovered = false;
+        HEALING();
+    }
     if (Game.Emp > 0 && !$("#emp-btn").hasClass("transparent")) {
         Game.Emp--;
         var luck = random(0, 100);
@@ -298,49 +303,39 @@ const GenEnemy = function () {
     let BasePower = Math.round((APP.WeaponsPower - Game.WeaponUpgrades.Main / 2) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     if (BasePower < 10) BasePower = 10;
     let MULTIPLIERS = { LIFE: [], POWER: [], };
-
     MULTIPLIERS.LIFE = APP.ScoreModeEnabled == 0 ? [1.15, 1.25, 1.35, 1.5, 2.5, 3.5, 5] : [2, 2.75, 3, 3.5, 4, 5, 7.5];
     MULTIPLIERS.POWER[0] = APP.ScoreModeEnabled == 0 ? [0.9, 0.95, 1, 1, 1, 1, 1] : [1, 1, 1, 1, 1, 1, 1];
     MULTIPLIERS.POWER[1] = APP.ScoreModeEnabled == 0 ? [1, 1, 1, 1.05, 1.15, 1.25, 1.35] : [1, 1, 1.10, 1.15, 1.25, 1.5, 2.5];
-
     EChance = APP.ScoreModeEnabled == 1 ? _.random(300, 700) : _.random(0, 700);
     if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2 && EChance < 600) EChance = 600;
-
     if (Game.isInFight == 0) {
         APP.CoreLife = APP.CoreBaseLife;
-
         // CLASS NORMAL
         if (_.inRange(EChance, 0, 300)) {
             Game.Enemy[1] = 1;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking - 5, APP.Ranking) : _.random((APP.Ranking * 0.85), APP.Ranking);
         }
-
         // CLASS ADVANCED
         if (_.inRange(EChance, 300, 450)) {
             Game.Enemy[1] = 2;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking - 2, APP.Ranking + 5) : _.random((APP.Ranking * 0.95), APP.Ranking);
         }
-
         // CLASS SUPERIOR
         if (_.inRange(EChance, 450, 600)) {
             Game.Enemy[1] = 3;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking - 1, APP.Ranking + 10) : _.random(APP.Ranking, APP.Ranking + 1);
         }
-
         // CLASS VETERAN
         if (_.inRange(EChance, 600, 650)) {
             Game.Enemy[1] = 4;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking + 5, APP.Ranking + 10) : _.random(APP.Ranking + 1, APP.Ranking + 2);
         }
-
         // CLASS ELITE
         if (EChance >= 650) {
             Game.Enemy[1] = 5;
             EnemyLevel = APP.ScoreModeEnabled == 1 ? _.random(APP.Ranking + 10, APP.Ranking + 15) : _.random(APP.Ranking + 2, APP.Ranking + 3);
         }
-
         if (Game.MissionStarted[2] == GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - 1) EChance = 700;
-
         // CLASS BOSS OR 2:5 GOD
         if (_.inRange(EChance, 685, 701) && Game.MissionStarted[0]) {
             if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2 || Game.MissionStarted[2] > GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - 2) {
