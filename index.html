@@ -756,202 +756,201 @@
                     <br>
                     Huge thanks to
                     <b>Tiwaz</b>
-                </span>
-                and
-                <b>Pedter</b>
-                for their help!
+                    and
+                    <b>Pedter</b>
+                    for their help!
+                    <br>
+                    <br>
+                    <div class="link" data-url="https://github.com/GoldenLys/AlphaRPG">
+                        <i class="fas fa-code"></i>
+                        Source Code
+                    </div>
+                </div>
+            </div>
+            <div class="page-tabs">
+                <div class="pw fluid buttons">
+                    <div class="pw button active" id="missions" data-url="#">
+                        <i class="far fa-dot-circle"></i>
+                        Missions
+                    </div>
+                    <div class="pw button" id="exploration" data-url="#">
+                        <i class="fas fa-map-marked-alt icon"></i>
+                        Exploration
+                    </div>
+                </div>
+                <div id="DIV-MISSIONS">
+                    <div class="pw segments" id="MissionsList"></div>
+                    <div class="pw dropdown text-center">
+                        <h3 class="name">Fortresses</h3>
+                        <div class="content">
+                            <div id="MissionsList2"></div>
+                        </div>
+                    </div>
+                    <div class="pw dropdown text-center">
+                        <h3 class="name" id="mcount"></h3>
+                        <div class="content">
+                            <div id="MissionsCPL"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="DIV-EXPLORE" class="pw segments" style="display: none;"></div>
+            </div>
+        </div>
+        <!--INTRODUCTION-->
+        <div id="INTRODUCTION">
+            <div class="header">
+                AlphaRPG
+                <div class="pw fluid steps">
+                    <div id="step1" class="step active">
+                        <i class="fal fa-question-square"></i>
+                        <div class="content">
+                            <div class="title">Welcome</div>
+                            <div class="description">Welcome to AlphaRPG</div>
+                        </div>
+                    </div>
+                    <div id="step2" class="step">
+                        <i class="fal fa-pen-square"></i>
+                        <div class="content">
+                            <div class="title">Username</div>
+                            <div class="description">Choose a username</div>
+                        </div>
+                    </div>
+                    <div id="step3" class="step">
+                        <i class="fal fa-image"></i>
+                        <div class="content">
+                            <div class="title">Avatar</div>
+                            <div class="description">Choose an avatar</div>
+                        </div>
+                    </div>
+                    <div id="step4" class="step">
+                        <i class="fal fa-clipboard-user"></i>
+                        <div class="content">
+                            <div class="title">Class</div>
+                            <div class="description">Choose a class</div>
+                        </div>
+                    </div>
+                    <div id="step5" class="step">
+                        <i class="fal fa-clipboard-list-check"></i>
+                        <div class="content">
+                            <div class="title">Confirmation</div>
+                            <div class="description">Confirm your choices</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pw message text-center" id="tutorial-1">
+                <h2>Introduction</h2>
+                Welcome to AlphaRPG, a game made by Purple Wizard.<br>
+                The main goal of this game is to fight enemies and progress through the story to gain <b>EQUIPMENT</b> and <b>EXPERIENCE</b>.<br>
+                You'll discover & explore a new world called Alpha filled with many cities & monsters!<br>
+                But beware: there are also powerful monsters that you will need to fight wisely; it's up to you to find your own way to do so! 😉<br>
+                If you have any question don't hesitate to join our <a class="link" data-url="https://discord.com/invite/SBuYeHh"><i class="fab fa-discord"></i>discord server</a>.<br>
+                Okay, so now we need to know who your character will be...
+            </div>
+            <div class="pw message text-center" id="tutorial-2" style="display: none;">
+                <h2>Username</h2>
+                Enter your desired username for your character (3-16 alphanumerical characters).<br>
+                Write "Neo" to generate a random name.<br>
+                <input id="PlayerName" placeholder="Neo" type="text" maxlength="16">
                 <br>
-                <br>
-                <div class="link" data-url="https://github.com/GoldenLys/AlphaRPG">
-                    <i class="fas fa-code"></i>
-                    Source Code
+                <span id="namehelp"></span>
+            </div>
+            <div class="pw message text-center" id="tutorial-3" style="display: none;">
+                <h2>Avatar</h2>
+                You can also choose your avatar; it will be shown during any fight.
+                <img id="avatar3" class="pw centered medium image" src="#">
+                <div class="pw fluid buttons">
+                    <div id="AVATAR_PREVIOUS_BEGIN" class="pw grey button"><i class="fal fa-arrow-square-left"></i></div>
+                    <div id="AVATAR_NEXT_BEGIN" class="pw grey button"><i class="fal fa-arrow-square-right"></i></div>
                 </div>
             </div>
-        </div>
-        <div class="page-tabs">
+            <div class="pw message text-center" id="tutorial-4" style="display: none;">
+                <h2>Class</h2>
+                You now require a class, which will define your basic skills.<br>
+                You will eventually be able to gain the bonuses granted by each class.
+                <div class="pw horizontal segments">
+                    <div class="pw segment" id="ChooseWarrior">
+                        <div class="pw message" id="warrior">
+                            <h3>WARRIOR</h3>
+                            <div class="content">Warriors form the frontline of any fight. They deal the most initial damage.<br>(+5% Damages)</div>
+                        </div>
+                    </div>
+                    <div class="pw segment" id="ChoosePaladin">
+                        <div class="pw message" id="paladin">
+                            <h3>PALADIN</h3>
+                            <div class="content">Paladins fight for justice. They protect the weak with their strong initial shield.<br>(+5% Armor)</div>
+                        </div>
+                    </div>
+                    <div class="pw segment" id="ChooseNinja">
+                        <div class="pw message" id="ninja">
+                            <h3>NINJA</h3>
+                            <div class="content">Ninjas are elite fighters, planning and plotting before the fight. They learn the fastest initially.<br>(+5% Bonus Experience)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pw message text-center" id="tutorial-5" style="display: none;">
+                <h2>Validation</h2>
+                Do you wish to start the game with these choices?
+                <div id="WELCOME_DATA"></div>
+            </div>
             <div class="pw fluid buttons">
-                <div class="pw button active" id="missions" data-url="#">
-                    <i class="far fa-dot-circle"></i>
-                    Missions
+                <div class="pw darkgrey button" id="WelcomePrevious" style="display: none;">
+                    <i class="left arrow icon"></i>Previous
                 </div>
-                <div class="pw button" id="exploration" data-url="#">
-                    <i class="fas fa-map-marked-alt icon"></i>
-                    Exploration
+                <div class="pw alpha button" id="WelcomeNext">
+                    Next <i class="right arrow icon"></i>
                 </div>
             </div>
-            <div id="DIV-MISSIONS">
-                <div class="pw segments" id="MissionsList"></div>
-                <div class="pw dropdown text-center">
-                    <h3 class="name">Fortresses</h3>
-                    <div class="content">
-                        <div id="MissionsList2"></div>
-                    </div>
-                </div>
-                <div class="pw dropdown text-center">
-                    <h3 class="name" id="mcount"></h3>
-                    <div class="content">
-                        <div id="MissionsCPL"></div>
-                    </div>
-                </div>
-            </div>
-            <div id="DIV-EXPLORE" class="pw segments" style="display: none;"></div>
         </div>
-    </div>
-    <!--INTRODUCTION-->
-    <div id="INTRODUCTION">
-        <div class="header">
-            AlphaRPG
-            <div class="pw fluid steps">
-                <div id="step1" class="step active">
-                    <i class="fal fa-question-square"></i>
-                    <div class="content">
-                        <div class="title">Welcome</div>
-                        <div class="description">Welcome to AlphaRPG</div>
-                    </div>
+        <!--LOGIN-->
+        <div id="LOGIN-NOTICE" class="popup">
+            <div class="content">
+                <div class="title" id="wb-texttitle"></div>
+                <div class="text" id="wb-text"></div>
+                <div class="pw fluid buttons">
+                    <div id="LOGIN-BTN" class="pw green button"><i class="fal fa-check"></i> Yes</div>
+                    <div id="WB-BTN" class="pw red button"><i class="fal fa-times"></i>No</div>
                 </div>
-                <div id="step2" class="step">
-                    <i class="fal fa-pen-square"></i>
-                    <div class="content">
-                        <div class="title">Username</div>
-                        <div class="description">Choose a username</div>
-                    </div>
-                </div>
-                <div id="step3" class="step">
-                    <i class="fal fa-image"></i>
-                    <div class="content">
-                        <div class="title">Avatar</div>
-                        <div class="description">Choose an avatar</div>
-                    </div>
-                </div>
-                <div id="step4" class="step">
-                    <i class="fal fa-clipboard-user"></i>
-                    <div class="content">
-                        <div class="title">Class</div>
-                        <div class="description">Choose a class</div>
-                    </div>
-                </div>
-                <div id="step5" class="step">
-                    <i class="fal fa-clipboard-list-check"></i>
-                    <div class="content">
-                        <div class="title">Confirmation</div>
-                        <div class="description">Confirm your choices</div>
+            </div>
+        </div>
+        <!--POPUP-->
+        <div id="POPUP" class="popup">
+            <div class="content">
+                <div class="title" id="popup-title"></div>
+                <div class="text" id="popup-text"></div>
+                <div id="popup-buttons">
+                    <div id="POPUP_CLOSE" class="pw fluid red button">
+                        <i class="fal fa-times"></i> Close
                     </div>
                 </div>
             </div>
         </div>
-        <div class="pw message text-center" id="tutorial-1">
-            <h2>Introduction</h2>
-            Welcome to AlphaRPG, a game made by Purple Wizard.<br>
-            The main goal of this game is to fight enemies and progress through the story to gain <b>EQUIPMENT</b> and <b>EXPERIENCE</b>.<br>
-            You'll discover & explore a new world called Alpha filled with many cities & monsters!<br>
-            But beware: there are also powerful monsters that you will need to fight wisely; it's up to you to find your own way to do so! 😉<br>
-            If you have any question don't hesitate to join our <a class="link" data-url="https://discord.com/invite/SBuYeHh"><i class="fab fa-discord"></i>discord server</a>.<br>
-            Okay, so now we need to know who your character will be...
-        </div>
-        <div class="pw message text-center" id="tutorial-2" style="display: none;">
-            <h2>Username</h2>
-            Enter your desired username for your character (3-16 alphanumerical characters).<br>
-            Write "Neo" to generate a random name.<br>
-            <input id="PlayerName" placeholder="Neo" type="text" maxlength="16">
-            <br>
-            <span id="namehelp"></span>
-        </div>
-        <div class="pw message text-center" id="tutorial-3" style="display: none;">
-            <h2>Avatar</h2>
-            You can also choose your avatar; it will be shown during any fight.
-            <img id="avatar3" class="pw centered medium image" src="#">
-            <div class="pw fluid buttons">
-                <div id="AVATAR_PREVIOUS_BEGIN" class="pw grey button"><i class="fal fa-arrow-square-left"></i></div>
-                <div id="AVATAR_NEXT_BEGIN" class="pw grey button"><i class="fal fa-arrow-square-right"></i></div>
+        <!--NOTICE-->
+        <div id="NOTICE" class="notice">
+            <div class="content">
+                <div id="notice-countdown" class="countdown"></div>
+                <div id="notice-title" class="title"></div>
+                <div id="notice-text" class="text"></div>
             </div>
         </div>
-        <div class="pw message text-center" id="tutorial-4" style="display: none;">
-            <h2>Class</h2>
-            You now require a class, which will define your basic skills.<br>
-            You will eventually be able to gain the bonuses granted by each class.
-            <div class="pw horizontal segments">
-                <div class="pw segment" id="ChooseWarrior">
-                    <div class="pw message" id="warrior">
-                        <h3>WARRIOR</h3>
-                        <div class="content">Warriors form the frontline of any fight. They deal the most initial damage.<br>(+5% Damages)</div>
-                    </div>
-                </div>
-                <div class="pw segment" id="ChoosePaladin">
-                    <div class="pw message" id="paladin">
-                        <h3>PALADIN</h3>
-                        <div class="content">Paladins fight for justice. They protect the weak with their strong initial shield.<br>(+5% Armor)</div>
-                    </div>
-                </div>
-                <div class="pw segment" id="ChooseNinja">
-                    <div class="pw message" id="ninja">
-                        <h3>NINJA</h3>
-                        <div class="content">Ninjas are elite fighters, planning and plotting before the fight. They learn the fastest initially.<br>(+5% Bonus Experience)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="pw message text-center" id="tutorial-5" style="display: none;">
-            <h2>Validation</h2>
-            Do you wish to start the game with these choices?
-            <div id="WELCOME_DATA"></div>
-        </div>
-        <div class="pw fluid buttons">
-            <div class="pw darkgrey button" id="WelcomePrevious" style="display: none;">
-                <i class="left arrow icon"></i>Previous
-            </div>
-            <div class="pw alpha button" id="WelcomeNext">
-                Next <i class="right arrow icon"></i>
-            </div>
-        </div>
-    </div>
-    <!--LOGIN-->
-    <div id="LOGIN-NOTICE" class="popup">
-        <div class="content">
-            <div class="title" id="wb-texttitle"></div>
-            <div class="text" id="wb-text"></div>
-            <div class="pw fluid buttons">
-                <div id="LOGIN-BTN" class="pw green button"><i class="fal fa-check"></i> Yes</div>
-                <div id="WB-BTN" class="pw red button"><i class="fal fa-times"></i>No</div>
-            </div>
-        </div>
-    </div>
-    <!--POPUP-->
-    <div id="POPUP" class="popup">
-        <div class="content">
-            <div class="title" id="popup-title"></div>
-            <div class="text" id="popup-text"></div>
-            <div id="popup-buttons">
-                <div id="POPUP_CLOSE" class="pw fluid red button">
-                    <i class="fal fa-times"></i> Close
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--NOTICE-->
-    <div id="NOTICE" class="notice">
-        <div class="content">
-            <div id="notice-countdown" class="countdown"></div>
-            <div id="notice-title" class="title"></div>
-            <div id="notice-text" class="text"></div>
-        </div>
-    </div>
-    <script type="text/javascript" src="libs/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" src="libs/numeral.min.js"></script>
-    <script type="text/javascript" src="libs/lodash.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
-    <script type="text/javascript" src="js/functions.js?v=3.00"></script>
-    <script type="text/javascript" src="js/config.js?v=3.00"></script>
-    <script type="text/javascript" src="js/stats.js?v=3.00"></script>
-    <script type="text/javascript" src="js/combat.js?v=3.00"></script>
-    <script type="text/javascript" src="js/inventory.js?v=3.00"></script>
-    <script type="text/javascript" src="js/dimension.js?v=3.00"></script>
-    <script type="text/javascript" src="js/missions.js?v=3.00"></script>
-    <script type="text/javascript" src="js/events.js?v=3.00"></script>
-    <script type="text/javascript" src="js/app.js?v=3.00"></script>
-    <script type="text/javascript" src="js/palette.js?v=3.00"></script>
-</body>
+        <script type="text/javascript" src="libs/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="libs/numeral.min.js"></script>
+        <script type="text/javascript" src="libs/lodash.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+        <script type="text/javascript" src="js/functions.js?v=3.00"></script>
+        <script type="text/javascript" src="js/config.js?v=3.00"></script>
+        <script type="text/javascript" src="js/stats.js?v=3.00"></script>
+        <script type="text/javascript" src="js/combat.js?v=3.00"></script>
+        <script type="text/javascript" src="js/inventory.js?v=3.00"></script>
+        <script type="text/javascript" src="js/dimension.js?v=3.00"></script>
+        <script type="text/javascript" src="js/missions.js?v=3.00"></script>
+        <script type="text/javascript" src="js/events.js?v=3.00"></script>
+        <script type="text/javascript" src="js/app.js?v=3.00"></script>
+        <script type="text/javascript" src="js/palette.js?v=3.00"></script>
+    </body>
 </html>
