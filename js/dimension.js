@@ -1,7 +1,12 @@
-//PRESTIGE FUNCTIONS
+// PRESTIGE FUNCTIONS
 const ChangeWT = function () {
-    POPUP("Do you really want to go inside the rift?", `You will lose your current equipment and mission progress but gain the following benefits: <br>
-• +50 maximum tier score <br> • +3% experience <br> • +2 maximum inventory capacity <br> • +${Math.round(APP.Ranking / 10 - 30)} Dimensional Fragments`, 2);
+    POPUP("Do you really want to go inside the rift?",
+        "You will lose your current equipment and mission progress but gain the following benefits:<br>
+        • +50 maximum tier score<br>
+        • +3% experience<br>
+        • +2 maximum inventory capacity<br>
+        • +${Math.round(APP.Ranking / 10 - 30)} Dimensional Fragments"
+    2);
 };
 
 const ConfirmWT = function () {
@@ -39,6 +44,7 @@ const ConfirmWT = function () {
     }
 };
 
+// UPGRADE FUNCTIONS
 const GET_MAX_UPGRADES = function (CLASS) {
     let CONFIG = [
         { Normal: 0, Common: _.random(0, 1), Uncommon: _.random(1, 2), Rare: _.random(2, 2), Epic: _.random(2, 3), Exotic: _.random(3, 4), Divine: _.random(4, 5) },
@@ -63,20 +69,20 @@ const GetMultPrice = function (UPGRADE) {
         // Experience Multiplier
         0: {
             0: 2, 10: 3, 20: 4, 30: 5, 40: 10, 50: 15, 60: 20, 70: 25, 80: 30, 90: 40, 100: 50,
-            110: 60, 120: 70, 130: 80, 140: 90, 150: 100, 160: 125, 170: 150, 180: 175, 190: 200, 200: Infinity,
+            110: 60, 120: 70, 130: 80, 140: 90, 150: 100, 160: 125, 170: 150, 180: 175, 190: 200, 200: Infinity
         },
         // Damage Multiplier
         1: {
-            0: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity,
+            0: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity
         },
         // Armor Multiplier
         2: {
-            0: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity,
+            0: 2.5, 10: 5, 20: 10, 30: 15, 40: 20, 50: 25, 60: 30, 70: 35, 80: 40, 90: 50, 100: Infinity
         },
         // Additional Inventory Capacity
         3: {
-            0: 5, 5: 10, 10: 15, 20: 20, 30: 25, 40: 30, 50: 35, 60: 40, 70: 50, 80: Infinity,
-        },
+            0: 5, 5: 10, 10: 15, 20: 20, 30: 25, 40: 30, 50: 35, 60: 40, 70: 50, 80: Infinity
+        }
     };
     for (let TIER = 0; TIER < _.size(TIERS[UPGRADE]); TIER++) {
         if (Game.Upgrades[UPGRADE] >= Number(Object.keys(TIERS[UPGRADE])[TIER])) SHARDS = TIERS[UPGRADE][Number(Object.keys(TIERS[UPGRADE])[TIER])];
