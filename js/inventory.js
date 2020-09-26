@@ -620,7 +620,7 @@ const CHECK_EQUIPMENT = function () {
                 Game.Armors[ARMOR][3] = (MAX_VALUE + Game.ArmorUpgrades[ARMOR]);
             }
             if (Game.ArmorUpgrades[ARMOR] > (MAX_GEMS[0] * Game.MaxUPC[GEMS[ARMOR]])) {
-                console.log(`Auto-Scaling the gems of the ${GLOBALS.ARMORS_TYPE[ARMOR]} || ${Game.ArmorUpgrades[ARMOR]} out of ${Math.round(MAX_LIFE_GEM)}.`);
+                console.log(`Auto-Scaling the gems of the ${GLOBALS.ARMORS_TYPE[ARMOR]} || ${Game.ArmorUpgrades[ARMOR]} out of ${Math.round(MAX_GEMS[0])}.`);
                 Game.ArmorUpgrades[ARMOR] = Math.round(MAX_GEMS[0] * Game.MaxUPC[GEMS[ARMOR]]);
             }
             if (Game.Armors[ARMOR][3] != Math.round(Game.Armors[ARMOR][3]) || Game.ArmorUpgrades[ARMOR] != Math.round(Game.ArmorUpgrades[ARMOR])) {
