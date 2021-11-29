@@ -1,27 +1,27 @@
 function GenMissions() {
-    $("#MissionsList").html("");
-    $("#MissionsList2").html("");
-    $("#MissionsCPL").html("");
-    let TYPES = ["Armor or Weapon", "Gem", "Relic"];
+    $("#MISSIONS-CURRENT").html("");
+    $("#MISSIONS-FORTRESSES").html("");
+    $("#MISSIONS-COMPLETED").html("");
+    let TYPES = ["", language[APP.LANG].MISC.Gem, language[APP.LANG].MISC.Relic];
     let LEVEL = "";
 
     for (var M in GLOBALS.MISSIONS) {
-        let Status = Game.MissionsCompleted[M] == 1 ? "<span class='pw green'>Complete</span>" : "<span class='pw red'>Incomplete</span>";
-        if (Game.MissionStarted[1] == M) Status = "<span class='pw alpha'>In Progress</span>";
-        if (Game.MissionsCompleted[M] == 0 && !Game.MissionStarted[0]) Status = "<span class='pw red'>Not Started</span>";
-        let QUALITY = "1 <span class='" + GLOBALS.MISSIONS[M][7] + "'>" + GLOBALS.MISSIONS[M][7] + "</span>";
+        let Status = Game.MissionsCompleted[M] == 1 ? "<div class='pw subtitle green'>" + language[APP.LANG].STATUS.Complete + "</div>" : "<div class='pw subtitle red'>" + language[APP.LANG].STATUS.Incomplete + "</div>";
+        if (Game.MissionStarted[1] == M && Game.MissionStarted[0]) Status = "<div class='pw subtitle alpha'>" + language[APP.LANG].STATUS.InProgress + "</div>";
+        if (Game.MissionsCompleted[M] == 0 && !Game.MissionStarted[0]) Status = "<div class='pw subtitle red'>" + language[APP.LANG].STATUS.NotStarted + "</div>";
+        let QUALITY = language[APP.LANG].MISC.LootItem.split("[QUALITY]").join("<span class='" + GLOBALS.MISSIONS[M][7] + "'>" + language[APP.LANG].QUALITIES[GLOBALS.MISSIONS[M][7]] + "</span>");
         let UNLOCKED = Game.Level >= GLOBALS.MISSIONS[M][2] ? "pw green" : "pw red";
-        let BTN = "<div class='pw fluid darkgrey button' onclick='mission(" + M + ");' >Launch <i class='" + UNLOCKED + " fal fa-arrow-right'></i></div>";
+        let BTN = "<div class='pw fluid darkgrey button' onclick='mission(" + M + ");' >" + language[APP.LANG].ACTIONS.LaunchMission + " <i class='" + UNLOCKED + " fal fa-arrow-right'></i></div>";
 
-        if (Game.MissionStarted[0] && Game.MissionStarted[1] == M && Game.MissionsCompleted[M] == 0) BTN = "<div class='pw fluid darkgrey button' onclick='ResetMission();' >Cancel mission <i class='pw green fal fa-arrow-right'></i></div>";
-        if (Game.MissionsCompleted[M] == 1 && GLOBALS.MISSIONS[M][3] != 2) BTN = "<div class='pw fluid darkgrey button' onclick='MissionStory(" + M + ");' >Story <i class='pw green fal fa-arrow-right'></i></div>";
+        if (Game.MissionStarted[0] && Game.MissionStarted[1] == M && Game.MissionsCompleted[M] == 0) BTN = "<div class='pw fluid darkgrey button' onclick='ResetMission();' >" + language[APP.LANG].ACTIONS.CancelMission + " <i class='pw green fal fa-arrow-right'></i></div>";
+        if (Game.MissionsCompleted[M] == 1 && GLOBALS.MISSIONS[M][3] != 2) BTN = "<div class='pw fluid darkgrey button' onclick='MissionStory(" + M + ");' >" + language[APP.LANG].ACTIONS.Story + " <i class='pw green fal fa-arrow-right'></i></div>";
         let REQLEVEL = Game.Level >= GLOBALS.MISSIONS[M][2] ? "<span class='pw green'>" + GLOBALS.MISSIONS[M][2] + "</span>" : "<span class='pw red'>" + GLOBALS.MISSIONS[M][2] + "</span>";
         if (GLOBALS.MISSIONS[M][3] != 2) {
             if (Game.MissionsCompleted[GLOBALS.MISSIONS[M][9]] == 1 || GLOBALS.MISSIONS[M][9] == -1) {
-                let DESCRIPTION = Game.MissionsCompleted[M] == 0 ? "Status : " + Status + "<br><div class='pw inline label'><span class='pw yellow'>" + fix(GLOBALS.MISSIONS[M][5], 1) + "</span> EXP</div><div class='pw inline label'>" + QUALITY + " " + TYPES[GLOBALS.MISSIONS[M][6]] + LEVEL + "</div>" : "Status: <span class='pw green'>Completed</span>";
-                let CONTENT = "<div class='pw segment dark text-center'><h3 class='text-center " + UNLOCKED + "'>" + GLOBALS.MISSIONS[M][0] + " - Lv. " + REQLEVEL + "</h3>" + DESCRIPTION + BTN + "</div>";
-                if (Game.MissionsCompleted[M] == 0) $("#MissionsList").append(CONTENT);
-                if (Game.MissionsCompleted[M] == 1) $("#MissionsCPL").append(CONTENT);
+                let DESCRIPTION = Game.MissionsCompleted[M] == 0 ? "<div class='pw inline green label'><span class='pw yellow'>" + fix(GLOBALS.MISSIONS[M][5], 1) + "</span> " + language[APP.LANG].MISC.EXP + "</div><div class='pw inline green label'>" + QUALITY + " " + TYPES[GLOBALS.MISSIONS[M][6]] + LEVEL + "</div>" : "";
+                let CONTENT = "<div class='pw segment dark text-center'><h3 class='text-center " + UNLOCKED + "'>" + GLOBALS.MISSIONS[M][0] + " - " + language[APP.LANG].MISC.Lv + " " + REQLEVEL + Status + "</h3>" + DESCRIPTION + BTN + "</div>";
+                if (Game.MissionsCompleted[M] == 0) $("#MISSIONS-CURRENT").append(CONTENT);
+                if (Game.MissionsCompleted[M] == 1) $("#MISSIONS-COMPLETED").append(CONTENT);
             }
         }
 
@@ -29,7 +29,7 @@ function GenMissions() {
             let FRG = GLOBALS.MISSIONS[M][5] > 0 ? "• <i class='pw blue fal fa-dna'></i>" + fix(GLOBALS.MISSIONS[M][5], 1) + " Fragments<br>" : "";
             if (Game.MissionsCompleted[GLOBALS.MISSIONS[M][9]] == 1 || GLOBALS.MISSIONS[M][9] == -1) {
                 let CONTENT = "<h3 class='" + UNLOCKED + "'>" + GLOBALS.MISSIONS[M][0] + "</h3><div class='ui pw alpha label'> " + FRG + " " + QUALITY + " " + TYPES[GLOBALS.MISSIONS[M][6]] + LEVEL + "</div>" + BTN + "";
-                $("#MissionsList2").append(CONTENT);
+                $("#MISSIONS-FORTRESSES").append(CONTENT);
             }
         }
     }

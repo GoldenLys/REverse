@@ -65,7 +65,7 @@ const WP_CHANGE = function (TYPE, PARAM) {
 
 const WP_UPDATE = function () {
     Game.Theme = `${APP.PICKER[0]} ${APP.PICKER[1]} ${APP.PICKER[2]}`;
-    $('body').attr("style", `--ALPHA: ${Game.Theme};`);
+    DEFINE_BODY_ATTRIBUTES();
     $(".button-validate").attr("style", "background-color: " + Game.Theme + ";");
     for (let COLOR in APP.PICKER) {
         $("#selector-" + APP.TYPES[COLOR] + " .value").html(APP.PICKER[COLOR]);
@@ -78,7 +78,7 @@ const WP_UPDATE = function () {
 
 const ResetTheme = function (code) {
     if (code != 2) Game.Theme = "19 241 210";
-    $('body').attr("style", `--ALPHA: ${Game.Theme};`);
+    DEFINE_BODY_ATTRIBUTES();
     if (code == 1) save();
 };
 

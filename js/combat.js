@@ -34,13 +34,14 @@ const HEALING = function () {
         clearInterval(HEALING_TIMER);
         clearInterval(HEALING_ANIMATION);
         $("#PlayerDamage").html("").hide();
-        $("#cover-btn").html("<i class='fas fa-shield'></i> Take Cover");
+        $("#cover-btn").html("<i class='fas fa-shield'></i>" + language[APP.LANG].ACTIONS.Cover);
+
     }
     UpdateGame();
 };
 
 const HEALING_TEXT = function () {
-    $("#cover-btn").html(`Recovering... (<span class='pw yellow'>${APP.NextHeal}s</span>)`);
+    $("#cover-btn").html(`${language[APP.LANG].MISC.Recovering}... (<span class='pw yellow'>${APP.NextHeal}s</span>)`);
     if (APP.NextHeal > 0) APP.NextHeal--;
 };
 
@@ -72,7 +73,7 @@ const MAIN_ATTACK = function () {
     Game.Enemy[5] = Math.floor(Game.Enemy[5] - rPlayerPower);
     var rEnemyPower = random((Game.Enemy[3] * 65), Game.Enemy[3] * 100) / 100;
     if (luck >= 90) rEnemyPower = 0;
-    var DAMAGES = rEnemyPower > 0 ? "-" + fix(Math.round(rEnemyPower), 1) : "MISSED";
+    var DAMAGES = rEnemyPower > 0 ? "-" + fix(Math.round(rEnemyPower), 1) : language[APP.LANG].MISC.Missed;
     APP.CoreLife -= rEnemyPower;
     $("#EnemyDamage").html(EDamage).show();
     $("#PlayerDamage").html(DAMAGES).show();
@@ -88,7 +89,7 @@ const SPECIAL_ATTACK = function () {
         APP.isCovered = false;
         HEALING();
     }
-    if (Game.Emp > 0 && !$("#emp-btn").hasClass("transparent")) {
+    if (Game.Emp > 0 && !$("#special-btn").hasClass("transparent")) {
         Game.Emp--;
         var luck = random(0, 100);
         var POWERRANGES = [0.75, 1];
@@ -128,7 +129,7 @@ const WinFight = function () {
     if (Game.MissionStarted[4] == 0 && Game.isInFight == 1) {
         let LOOT_RATES = [50, 15, 45];
         if (Game.MissionStarted[0]) LOOT_RATES = GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 1 ? [5, 7.5, 10] : [40, 20, 30];
-        let MIN_LOOT_QUALITY = ["", "Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Divine"];
+        let MIN_LOOT_QUALITY = ["", "Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Legendary"];
         let COUNTED_LOOTS = 0;
         let LOOTS = "";
         let EMP = "";
@@ -149,7 +150,7 @@ const WinFight = function () {
         if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2]) expGain = 0;
         if (Game.Level < APP.MaxLevel) {
             Game.xp[0] += Math.floor(expGain);
-            if (Game.xp[0] >= Game.xp[1]) LEVELUP = "<div class='pw inline blue label'>LEVEL UP (" + (Game.Level + 1) + ")</div>";
+            if (Game.xp[0] >= Game.xp[1]) LEVELUP = "<div class='pw inline blue label'>" + language[APP.LANG].MISC.LevelUp + " (" + (Game.Level + 1) + ")</div>";
             UpdateGame();
         }
         // EMP LOOT CHANCE
@@ -160,7 +161,8 @@ const WinFight = function () {
         let EMP_DROPS = (Game.Emp + EMPCount) > 50 ? (50 - Game.Emp) : EMPCount;
         if (ELOOTCHANCE <= MINIMALRATE_EMP && Game.Emp < 50) {
             Game.Emp += EMP_DROPS;
-            EMP = "<div class='pw inline yellow label'><i class='pw yellow fas fa-swords'></i>" + EMP_DROPS + " Special Attack(s)</div>";
+            let EMP_TEXT = EMP_DROPS > 1 ? "SpecialsDropped" : "SpecialDropped";
+            EMP = "<div class='pw inline yellow label'><i class='pw yellow fas fa-swords'></i>" + language[APP.LANG].MISC[EMP_TEXT].split("[COUNT]").join(EMP_DROPS) + "</div>";
         }
         if (Game.Enemy[1] >= 6 && !Game.MissionStarted[0]) LOOT_RATES[0] = 1;
         // ARMOR / WEAPON LOOT CHANCE
@@ -175,7 +177,7 @@ const WinFight = function () {
             } else {
                 if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) {
                     if (Game.Enemy[1] >= 1) {
-                        if (Game.Enemy[1] == 7) newItem(0, random((APP.Ranking - 10) + Game.Enemy[1], (APP.Ranking + 5) + Game.Enemy[1]), "Divine");
+                        if (Game.Enemy[1] == 7) newItem(0, random((APP.Ranking - 10) + Game.Enemy[1], (APP.Ranking + 5) + Game.Enemy[1]), "Legendary");
                         else newItem(0, random((APP.Ranking - 10) + Game.Enemy[1], (APP.Ranking + 5) + Game.Enemy[1]), "Exotic");
                     }
                 } else {
@@ -195,7 +197,7 @@ const WinFight = function () {
                 else newItem("Relic", null, "Normal");
             } else {
                 if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) {
-                    if (Game.Enemy[1] == 7) newItem("Relic", null, "Divine");
+                    if (Game.Enemy[1] == 7) newItem("Relic", null, "Legendary");
                     else newItem("Relic", null, "Exotic");
                 } else {
                     if (Game.Enemy[1] <= 4) newItem("Relic", null, "Rare");
@@ -213,7 +215,7 @@ const WinFight = function () {
             else {
                 if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) {
                     if (Game.Enemy[1] >= 1) {
-                        if (Game.Enemy[1] == 7) newItem("Gem", null, "Divine");
+                        if (Game.Enemy[1] == 7) newItem("Gem", null, "Legendary");
                         else newItem("Gem", null, "Exotic");
                     }
                 } else {
@@ -224,7 +226,7 @@ const WinFight = function () {
             let ITEMID = (Game.inventory.length - 1) < Game.MaxInv ? (Game.inventory.length - 1) : Game.MaxInv;
             if (ITEMID < Game.MaxInv) LOOTS = LOOTS + "<div class='pw message item'>" + $(`#ITEM-${ITEMID}`).html() + "</div>";
         }
-        let INVENTORYFULL = (Game.inventory.length - 1) < Game.MaxInv ? `` : `<div>Inventory full, you can't recover any new item.</div>`;
+        let INVENTORYFULL = (Game.inventory.length - 1) < Game.MaxInv ? `` : `<div>${language[APP.LANG].MISC.InventoryFull}</div>`;
         LOOTS = LOOTS + INVENTORYFULL;
         if (COUNTED_LOOTS == 0) LOOTS = "<br>" + INVENTORYFULL;
         Game.isInFight = 2;
@@ -233,12 +235,20 @@ const WinFight = function () {
         Game.Cash += ToAddCash;
         let ThreatLevel = GLOBALS.THREATS[Game.Enemy[1]];
         let DEATHS = Game.Loses == 0 ? 1 : Game.Loses;
-        let EXP_TEXT = APP.ScoreModeEnabled == 0 ? "<div class='pw inline alpha label'>" + fix(Math.floor(expGain), "auto") + " EXP</div>" : "";
+        let EXP_TEXT = APP.ScoreModeEnabled == 0 ? "<div class='pw inline alpha label'>" + fix(Math.floor(expGain), "auto") + " " + language[APP.LANG].MISC.EXP + "</div>" : "";
         if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] || Game.MissionStarted[0] && Game.Level >= GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][2]) EXP_TEXT = "";
-        if (Game.config[2] == 0) POPUP("<span class='pw alpha'> " + GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]] + " defeated !</span>", "You have defeated " + fix(Game.Defeated[Game.Enemy[1]], 1) + " <span class='Enemy" + Game.Enemy[1] + "'>" + ThreatLevel + "</span> enemies.<br>Current Ratio " + fix(Game.Wins / DEATHS, 4) + "<br><br>" + EXP_TEXT + LEVELUP + EMP + "<div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>" + ToAddCash + "</div>" + LOOTS, 0);
+        let content = [
+            `<span class='pw alpha'> ${language[APP.LANG].MISC.Defeated}</span>`.split("[ENEMY]").join(Game.Enemy[1] > 5 ? GLOBALS.BOSSES_NAMES[Game.Location] : GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]),
+            `${language[APP.LANG].MISC.YouDefeated}
+<br>${language[APP.LANG].MISC.CurrentRatio} ${fix(Game.Wins / DEATHS, 4)}
+<br><br>${EXP_TEXT} ${LEVELUP} ${EMP} <div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>${ToAddCash}</div>${LOOTS}`
+        ];
+        if (Game.config[2] == 0) POPUP(content[0], content[1].split("[COUNT]").join(fix(Game.Defeated[Game.Enemy[1]], 1)).split("[CLASS]").join(`<span class='Enemy${Game.Enemy[1]}'>${ThreatLevel}</span>`), 0);
         else hideRewards();
     }
-    $(".pw.message.item").click(".pw.red.button", function () { POPUP_CLOSE(); });
+    $(".pw.message.item").click(".pw.red.button", function () {
+        POPUP_CLOSE();
+    });
 };
 
 const LoseFight = function () {
@@ -246,13 +256,14 @@ const LoseFight = function () {
     Game.isInFight = 2;
     Game.Loses++;
     let DEATHS = Game.Loses == 0 ? 1 : Game.Loses;
-    let EXP_DESC = APP.ScoreModeEnabled == 0 ? "You lost a part of your EXP.<br>" : "";
+    let EXP_DESC = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.LostExp + "<br>" : "";
     Game.xp[0] = CalcEXP(Game.Level - 1);
+    let DEFEATED = language[APP.LANG].MISC.DefeatedBy;
     if (Game.MissionStarted[0] && GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) {
         Game.MissionStarted = [false, 0, 0, 0, 0];
-        NOTICE("<span class='pw red'>MISSION FAILED</span>", "You failed to clear the fortress, now returning outside of it.");
+        NOTICE("<span class='pw red'>" + language[APP.LANG].MISC.FortressFailed + "</span>", language[APP.LANG].MISC.FortressFailedMessage);
         Game.Location = 0;
-    } else NOTICE(`You were defeated by the <span class="Enemy${Game.Enemy[1]}">${GLOBALS.THREATS[Game.Enemy[1]]} ${GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]}</span> !`, EXP_DESC + "Current Ratio <span class='pw red'>" + fix(Game.Wins / DEATHS, "auto"));
+    } else NOTICE(DEFEATED.split("[ENEMY]").join(`<span class="Enemy${Game.Enemy[1]}">${GLOBALS.THREATS[Game.Enemy[1]]} ${GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]}</span>`), EXP_DESC + language[APP.LANG].MISC.CurrentRatio + " <span class='pw red'>" + fix(Game.Wins / DEATHS, "auto"));
     $("#BUTTONS_COMBAT").hide();
     $("#RESPAWNING").show();
     RESPAWN_TIMER = [5, setInterval(RESPAWN_TIMING, 1000)];
@@ -260,7 +271,7 @@ const LoseFight = function () {
 };
 
 const RESPAWN_TIMING = function () {
-    let TEXT = RESPAWN_TIMER[0] > 1 ? `Respawning in ${RESPAWN_TIMER[0]} seconds.` : `Respawning in ${RESPAWN_TIMER[0]} second.`;
+    let TEXT = RESPAWN_TIMER[0] > 1 ? language[APP.LANG].MISC.Respawning.split("[COUNT]").join(RESPAWN_TIMER[0]).split("[SECONDS]").join(language[APP.LANG].MISC.Seconds) : language[APP.LANG].MISC.Respawning.split("[COUNT]").join(RESPAWN_TIMER[0]).split("[SECONDS]").join(language[APP.LANG].MISC.Second);
     $("#RESPAWN_TEXT").html(`${TEXT}`);
     if (RESPAWN_TIMER[0] > 0) RESPAWN_TIMER[0]--;
     else {
@@ -276,17 +287,18 @@ const UpdateCombat = function () {
     if (APP.CoreLife <= Game.Enemy[3]) PLAYER_LIFE_COLOR = " pw red";
     var ENEMY_LIFE_COLOR = Game.Enemy[5] < Game.Enemy[4] / 2 ? "pw orange" : " pw green";
     if (Game.Enemy[5] < Game.Enemy[4] / 3) ENEMY_LIFE_COLOR = " pw red";
-    var LVLTEXT = APP.ScoreModeEnabled == 0 ? " Level " : " Score <i class='fad fa-dice-d20'></i>";
+    var LVLTEXT = APP.ScoreModeEnabled == 0 ? ` ${language[APP.LANG].MISC.Level} ` : ` ${language[APP.LANG].MISC.Score} <i class='fad fa-dice-d20'></i>`;
     var TIERTEXT = APP.ScoreModeEnabled == 0 ? Math.round(Game.Enemy[2]) : Math.floor(Game.Enemy[2] * 10);
     var EnemyName = Game.Enemy[1] > 5 ? GLOBALS.BOSSES_NAMES[Game.Location] : GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]];
-    $("#EnemyTitle").html("<span class='Enemy" + Game.Enemy[1] + "'>" + GLOBALS.THREATS[Game.Enemy[1]] + " " + EnemyName + "</span><span class='pw white inline label'>" + LVLTEXT + fix(TIERTEXT, 0) + "</span>");
+    $("#EnemyTitle").html(`<span class='Enemy${Game.Enemy[1]}'>${language[APP.LANG].FORMAT.ENEMIES.split("[NAME]").join(EnemyName).split("[CLASS]").join(GLOBALS.THREATS[Game.Enemy[1]])}</span><span class='pw white inline label'>${LVLTEXT} ${fix(TIERTEXT, 0)}</span>`);
     $("#EnemyPower").html("<i class='pw blue fas fa-sword'></i> " + fix(Game.Enemy[3], "auto"));
     $("#EnemyLife").html("<i class='pw red fas fa-heart'></i> <span class='" + ENEMY_LIFE_COLOR + "'>" + fix(Game.Enemy[5], "auto") + "</span>");
     $("#PlayerLife").html("<i class='pw red fas fa-heart'></i> <span class='" + PLAYER_LIFE_COLOR + "'>" + fix(APP.CoreLife, "auto") + "</span>/" + fix(APP.CoreBaseLife, "auto") + " ");
     $("#PlayerPower").html("<i class='pw blue fas fa-sword'></i> " + fix(APP.WeaponsPower, "auto") + " <span class='sub'>(<i class='pw yellow fas fa-swords'></i> " + fix(APP.SpecialPower, "auto") + ")</span>");
-    $("#emp-btn").html("<i class='fas fa-swords'></i> " + fix(Game.Emp, 0) + " Special Attack");
-    if (Game.Emp < 1) $("#emp-btn").attr("class", "pw darkgrey button transparent");
-    else $("#emp-btn").attr("class", "pw yellow button");
+    if (Game.Emp > 1) $("#special-btn").html("<i class='fas fa-swords'></i> " + fix(Game.Emp, 0) + " " + language[APP.LANG].ACTIONS.Specials);
+    else $("#special-btn").html("<i class='fas fa-swords'></i> " + fix(Game.Emp, 0) + " " + language[APP.LANG].ACTIONS.Special);
+    if (Game.Emp < 1) $("#special-btn").attr("class", "pw darkgrey button transparent");
+    else $("#special-btn").attr("class", "pw yellow button");
     $("#PLAYER_PERCENT").attr("style", "stroke-dashoffset: calc(455 - (455 * " + GetPlayerHPPercent() + ") / 100)");
     $("#ENEMY_PERCENT").attr("style", "stroke-dashoffset: calc(455 - (455 * " + GetEnemyHPPercent() + ") / 100)");
     $("#PlayerSprite+h2").html(fix(GetPlayerHPPercent(), 1) + "<span>%</span>");

@@ -1,20 +1,20 @@
 :root {
-    --Normal: rgb(255 255 255);
-    --Common: rgb(55 169 21);
-    --Uncommon: rgb(85 128 243);
-    --Rare: rgb(167 65 146);
-    --Epic: rgb(255 176 15);
-    --Exotic: rgb(255 99 55);
-    --Divine: rgb(244 67 54);
-    --Unique: rgb(255 0 50);
-    --Error: rgb(255 0 0);
-    --E1: rgb(164 164 164);
-    --E2: rgb(0 164 0);
-    --E3: rgb(0 169 114);
-    --E4: rgb(0 164 182);
-    --E5: rgb(164 0 167);
-    --E6: rgb(164 0 0);
-    --E7: rgb(255 170 237);
+    --Normal: #ffffff;
+    --Common: #36b80f;
+    --Uncommon: #3053ff;
+    --Rare: #c52ecf;
+    --Epic: #ffb00f;
+    --Exotic: #ff6337;
+    --Legendary: #f44336;
+    --Divine: #ff0032;
+    --Error: #ff0000;
+    --E1: #a4a4a4;
+    --E2: #00a400;
+    --E3: #00a972;
+    --E4: #00a4b6;
+    --E5: #a400a7;
+    --E6: #a40000;
+    --E7: #ffaaed;
 }
 
 .Enemy1 {
@@ -66,9 +66,9 @@
 }
 
 .Normal {
-    color: var(--white) !important;
-    text-shadow: 0px 0px 3px var(--white) !important;
-    border-color: var(--white) !important;
+    color: var(--Normal) !important;
+    text-shadow: 0px 0px 3px var(--Normal) !important;
+    border-color: var(--Normal) !important;
 }
 
 .Common {
@@ -101,112 +101,117 @@
     border-color: var(--Exotic) !important;
 }
 
+.Legendary {
+    color: var(--Legendary) !important;
+    text-shadow: 0px 0px 3px var(--Legendary) !important;
+    border-color: var(--Legendary) !important;
+}
+
 .Divine {
     color: var(--Divine) !important;
     text-shadow: 0px 0px 3px var(--Divine) !important;
     border-color: var(--Divine) !important;
 }
 
-.Unique {
-    color: var(--Unique) !important;
-    text-shadow: 0px 0px 3px var(--Unique) !important;
-    border-color: var(--Unique) !important;
-}
-
-.tooltip {
+.pw.label.Normal,
+.pw.label.Common,
+.pw.label.Uncommon,
+.pw.label.Rare,
+.pw.label.Epic,
+.pw.label.Exotic,
+.pw.label.Legendary,
+.pw.label.Divine {
     position: relative;
-    display: inline-block;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    right: 0%;
-    min-width: 7rem;
-    bottom: 125%;
-    left: 0%;
-    background-color: var(--darkgrey5);
-    border-bottom: 1px solid var(--green);
-    color: #fff;
-    text-align: center;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    position: absolute;
-    z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
-
-.notice {
-    display: block;
-    visibility: hidden;
     background: transparent;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    transition: visibility 0s ease, background-color 250ms ease;
-    -webkit-transition: visibility 0s ease, background-color 250ms ease;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
 }
 
-.notice.active {
-    visibility: visible;
-}
-
-.notice .title {
-    color: rgb(var(--ALPHA));
-    line-height: 1.5em;
-    font-size: 1.25em;
-    text-align: center;
-    padding: 5px 0 0;
-    margin: .5em 0 0;
-}
-
-.notice .countdown {
-    content: " ";
-    display: block;
-    height: .5em;
-    font-weight: bold;
+.pw.label.Normal:after,
+.pw.label.Common:after,
+.pw.label.Uncommon:after,
+.pw.label.Rare:after,
+.pw.label.Epic:after,
+.pw.label.Exotic:after,
+.pw.label.Legendary:after,
+.pw.label.Divine:after {
+    content: "";
     position: absolute;
-    top: 5px;
-    left: 0px;
-    right: 0px;
-    margin: 0 10px;
-    background: rgb(var(--ALPHA) / 35%);
-    border-radius: 2.5px;
-    transition: width 1000ms ease;
-    -webkit-transition: width 1000ms ease;
-}
-
-.notice .text {
-    line-height: 1.25em;
-    font-size: 1em;
-    text-align: center;
-    padding: .5em 0 1em;
-    overflow-wrap: break-word;
-}
-
-.notice .content {
-    box-shadow: 0 0 5px #0a0a10, inset -2.5px -2.5px 5px #0a0a10;
-    min-width: 15%;
-    max-width: calc(30% - 30px);
-    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
-    background: linear-gradient(to right, rgb(5 5 20 / 1), rgb(18 19 31), rgb(5 5 20 / 1));
-    position: fixed;
-    bottom: 5px;
-    right: 5px;
-    padding: 0 10px;
+    opacity: 0.15;
 }
 
-.notice:not(.active) .content,
-.notice:not(.active) * {
-    line-height: 0;
-    font-size: 0;
-    background: transparent;
-    box-shadow: none;
-    visibility: hidden;
+.pw.label.Normal:after {
+    background: var(--Normal);
+}
+
+.pw.label.Common:after {
+    background: var(--Common);
+}
+
+.pw.label.Uncommon:after {
+    background: var(--Uncommon);
+}
+
+.pw.label.Rare:after {
+    background: var(--Rare);
+}
+
+.pw.label.Epic:after {
+    background: var(--Epic);
+}
+
+.pw.label.Exotic:after {
+    background: var(--Exotic);
+}
+
+.pw.label.Legendary:after {
+    background: var(--Legendary);
+}
+
+.pw.label.Divine:after {
+    background: var(--Divine);
+}
+
+
+.pw.equipment>.content>.icon>img.Normal {
+    filter: drop-shadow(0px 0px 10px var(--Normal));
+    margin: 0;
+}
+
+.pw.equipment>.content>.icon>img.Common {
+    filter: drop-shadow(0px 0px 10px var(--Common));
+    margin: 0;
+}
+
+.pw.equipment>.content>.icon>img.Uncommon {
+    filter: drop-shadow(0px 0px 10px var(--Uncommon));
+    margin: 0;
+}
+
+.pw.equipment>.content>.icon>img.Rare {
+    filter: drop-shadow(0px 0px 10px var(--Rare));
+    margin: 0;
+}
+
+.pw.equipment>.content>.icon>img.Epic {
+    filter: drop-shadow(0px 0px 10px var(--Epic));
+    margin: 0;
+}
+
+.pw.equipment>.content>.icon>img.Exotic {
+    filter: drop-shadow(0px 0px 10px var(--Exotic));
+    margin: 0;
+}
+
+.pw.equipment>.content>.icon>img.Legendary {
+    filter: drop-shadow(0px 0px 10px var(--Legendary));
+    margin: 0;
+}
+
+.pw.equipment>.content>.icon>img.Divine {
+    filter: drop-shadow(0px 0px 10px var(--Divine));
+    margin: 0;
 }

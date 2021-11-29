@@ -1,5 +1,6 @@
 function DYNAMICS() {
     $("#menu").on("click", "div", function () {
+        APP.MIND_CONTROL[1] = 0;
         hideMenuTabs();
         TOP10();
     });
@@ -10,18 +11,22 @@ function DYNAMICS() {
 
     $("#attack-btn").on("click", function () {
         MAIN_ATTACK();
+        APP.MIND_CONTROL[1] = 0;
     });
 
-    $("#emp-btn").on("click", function () {
+    $("#special-btn").on("click", function () {
         SPECIAL_ATTACK();
+        APP.MIND_CONTROL[1] = 0;
     });
 
     $("#cover-btn").on("click", function () {
         TAKE_COVER();
+        APP.MIND_CONTROL[1] = 0;
     });
 
     $("#run-btn").on("click", function () {
         RUN_AWAY();
+        APP.MIND_CONTROL[1] = 0;
     });
 
     $("#WelcomeNext").on("click", function () {
@@ -144,6 +149,7 @@ function DYNAMICS() {
         $("#missions").attr("class", "pw button active");
         GenMissions();
         SelectTAB("MISSIONS");
+        APP.MIND_CONTROL[1] = 0;
     });
 
     $("#exploration").on("click", function () {
@@ -151,11 +157,13 @@ function DYNAMICS() {
         $("#missions").attr("class", "pw button");
         GenExplorationMenu();
         SelectTAB("EXPLORE");
+        APP.MIND_CONTROL[1] = 0;
     });
 
     $(".link").bind("click", function (e) {
         e.preventDefault();
         OpenLink($(this).attr("data-url"));
+        APP.MIND_CONTROL[1] = 0;
     });
 
     $(".menu li").bind("click", function (e) {
@@ -170,12 +178,14 @@ function DYNAMICS() {
             OPEN_MENU($(this).data("menu"), TOGGLE);
             if ($(this).data("menu") == "INVENTORY") GenInventory();
         }
+        APP.MIND_CONTROL[1] = 0;
     });
 
     $(".pw.dropdown .name").bind("click", function (e) {
         e.preventDefault();
         let TOGGLE = $(this).parent().attr("data-open") === "open" ? "closed" : "open";
         $(this).parent().attr("data-open", TOGGLE);
+        APP.MIND_CONTROL[1] = 0;
     });
 
     $(".pw.checkbox").bind("click", function (e) {
@@ -189,5 +199,19 @@ function DYNAMICS() {
             Game.AutoRemove[$(this).attr("data-id") - 5] = CONFIG;
             UpdateUI();
         }
+        if ($(this).attr("data-id") == 11) Game.config[5] = CONFIG;
+        APP.MIND_CONTROL[1] = 0;
+    });
+
+    $("#LanguageSelector_French").on("click", function () {
+        Game.Language = "fr-FR";
+        SELECT_LANGUAGE();
+        UpdateUI();
+    });
+
+    $("#LanguageSelector_English").on("click", function () {
+        Game.Language = "en-US";
+        SELECT_LANGUAGE();
+        UpdateUI();
     });
 }

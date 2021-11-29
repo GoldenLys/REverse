@@ -30,8 +30,7 @@ const UPDATE_STATS = function () {
 
     // LOCATIONS
     $("#locations-stats").html("");
-    for (var L in GLOBALS.LOCATIONS) $("#locations-stats").append(`<div class="pw dark horizontal segments" id="defeatloc${L}"><div class='pw segment text-left'>${GLOBALS.LOCATIONS[L][0]}</div><div class='pw segment text-right'>${fix(Game.DefeatedByLocation[L], 1)} Defeated</div></div>`);
-
+    for (var L in GLOBALS.LOCATIONS) $("#locations-stats").append(`<div class="pw dark horizontal segments" id="defeatloc${L}"><div class='pw segment text-left'>${GLOBALS.LOCATIONS[L][0]}</div><div class='pw segment text-right'>${language[APP.LANG].STATS.Defeated.split("[COUNT]").join(fix(Game.DefeatedByLocation[L], 1))}</div></div>`);
     // KILLS
     for (var D in Game.Defeated) {
         if (D != 0) $("#Defeat" + D).html(fix(Game.Defeated[D], "auto"));

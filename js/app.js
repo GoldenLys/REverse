@@ -1,15 +1,16 @@
-/*
-  TODO LIST :
-    • Bug testing
+/* Ideas & Future updates :
 
-  IDEAS :
-1. Unlocking an idle mode when passing dimension 2.
-2. A crafting system for Gems - Weapons - Armors and maybe relics
-3. A bank, guild & shopping System
-    - Bank : Put your money in the bank so that you don't lose it when dying.
-    - Guild : Passing ranks in the guild to earn more money.
-    - Shop : Selling the best weapons & armors of the game, unique-class items would have skills embedded into them
-4. Adding achievements
+1     | Divine items with unique skills. (Old divines will now be legendaries)
+2     | Guild : Gain fame in the guild to obtain a cool new rank badge and also to earn some more money.
+3     | Shop : Selling the best weapons & armors of the game, unique-class items would have skills embedded into them
+4 [?] | Bank : May be put as a guild feature; put your money in a safe so that you don't lose it when dying.
+5 [?] | Crafting system for Gems Weapons, Armors and maybe Relics under some circumstances.
+6 [?] | Adding achievements
+7 [?] | Titles : Unlocking titles under certains conditions, example: kill 1k mobs in a fortress to unlock the "HERO" title.
+8     | Bug testing the game
+
+[?] Features listed with a ? mark may be abandonned/modified in future updates
+
 */
 
 var APP = {
@@ -48,7 +49,10 @@ var APP = {
     NextHeal: 5,
     TYPES: ["red", "green", "blue"],
     PICKER: [19, 241, 210],
-    SELECTION: ""
+    SELECTION: "",
+    MIND_CONTROL: [false, 0],
+    AverageArmorStat: 0,
+    LANG: "EN"
 };
 
 $(document).ready(function () {
@@ -58,6 +62,7 @@ $(document).ready(function () {
     $("#site-name").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
     ResetTheme(0);
     if (localStorage.getItem("Alpha") !== null) load();
+    SELECT_LANGUAGE();
     if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin" && !$("#LOGIN-NOTICE").hasClass("active") && GLOBALS.VERSION != "dev") LOGIN("RETURN");
     if (Game.username != "Default") {
         $("#GAME").show();
@@ -69,13 +74,17 @@ $(document).ready(function () {
         WP_UPDATE();
     }
     Game.isInFight = 0;
+    APP.MIND_CONTROL[1] = 0;
+    setInterval(function () {
+        if (Game.config[5] === 1) MIND_CONTROL();
+    }, 1750);
     setInterval(UpdateEngine, 1000);
     Game.xp[1] = CalcEXP(Game.Level);
     CompleteMission();
     DYNAMICS();
     filter(0);
     $('.pw.checkbox').each(function () {
-        if ($(this).attr("data-id") < 5) {
+        if ($(this).attr("data-id") < 5 || $(this).attr("data-id") == 11) {
             let TOGGLE = Game.config[$(this).attr("data-id")] == 1 ? "checked" : "unchecked";
             $(this).attr("data-check", TOGGLE);
         } else {
@@ -84,9 +93,10 @@ $(document).ready(function () {
         }
     });
     $("#VERSION_TEXT").html("AlphaRPG v" + GLOBALS.VERSION);
-    $("#VERSION_TEXT2").html("AlphaRPG v" + GLOBALS.VERSION);
+    $("#avatar").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
     $("#avatar2").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
-    $("#avatar3").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
+    GenArmors();
+    GenWeapons();
     ResetLeaderBoard();
     CLOSE_MENUS();
     UpdateUI();
@@ -114,13 +124,13 @@ const UpdateEngine = function () {
     }
     if (APP.lastCloudSave < 180) APP.lastCloudSave++;
     else SendStats();
-    if (Game.LastEscape > 0) {
+    if (Game.LastEscape > 1) {
         Game.LastEscape--;
-        $("#NextRetreat").html(`Next retreat in ${toHHMMSS(Game.LastEscape)}.`);
+        $("#NextRetreat").html(`${language[APP.LANG].MISC.Retreat.split("[COUNT]").join(toHHMMSS(Game.LastEscape))}`);
     } else $("#NextRetreat").html("");
-    if (APP.LastCover > 0) {
-        $("#NextCover").html(`Next cover in ${toHHMMSS(APP.LastCover)}.`);
+    if (APP.LastCover > 1) {
         APP.LastCover--;
+        $("#NextCover").html(`${language[APP.LANG].MISC.Cover.split("[COUNT]").join(toHHMMSS(APP.LastCover))}`);
     } else $("#NextCover").html("");
     if (Game.xp[0] < 0) Game.xp[0] = 0;
     for (let UPC = 0; UPC < 4; UPC++) {
@@ -131,9 +141,9 @@ const UpdateEngine = function () {
         Backup = "Default";
         Game.username = Backup;
     } else Game.username = Game.username.replace(/[^a-zA-Z0-9]/g, '_');
-    if (Backup != "Default" && Backup != Game.username) Game.username = Backup;
+    if (Backup !== "Default" && Backup !== Game.username) Game.username = Backup;
     if (typeof (Game.xp[2]) === 'undefined') Game.xp[2] = 1;
-    let LEVEL = APP.ScoreModeEnabled == 0 ? "Level " + fix(Game.Level, 0) : "Score <i class='fad fa-dice-d20'></i> " + fix(APP.Ranking, 0);
+    let LEVEL = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + fix(Game.Level, 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>" + fix(APP.Ranking, 0);
     if (Game.Level < 1) {
         Game.Level = 1;
         Game.xp[0] = 0;
@@ -232,7 +242,7 @@ const UpdateGame = function () {
     }
     Game.DIMENSION_MULTIPLIERS[2] = (Game.Dimension * 0.03) - 0.03; // EXPMULT
     Game.DIMENSION_MULTIPLIERS[3] = (Game.Dimension * 0.05) + 0.95; // DIFFICULTYMULT
-    Backup = Game.username;
+    Backup = Object.freeze(Game.username);
     Game.xp[2] = Game.Upgrades[0] * 0.01 + 1;
     APP.PowerMult = Game.Upgrades[1] * 0.01 + 1;
     APP.LifeMult = Game.Upgrades[2] * 0.01 + 1;
@@ -291,7 +301,7 @@ const UpdateGame = function () {
             RemoveItem(IV);
             console.log("ERROR 010");
         }
-        if (Game.Level < 30 && (Game.inventory[IV].class == 'Exotic' || Game.inventory[IV].class == 'Divine')) {
+        if (Game.Level < 30 && Game.inventory[IV].class == 'Exotic' || Game.Level < 30 && Game.inventory[IV].class == 'Legendary') {
             RemoveItem(IV);
             console.log("ERROR 011");
         }
@@ -377,17 +387,14 @@ const UpdateUI = function () {
         if (GLOBALS.MISSIONS[M][3] != 2 && Game.MissionsCompleted[M] == 1) CompletedMissions++;
     }
     if (Game.isInFight != 2 || Game.isInFight != 3) APP.LastMission = CompletedMissions;
-    if (Game.MissionStarted[0]) {
-        if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 1) $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-dot-circle'></i> Mission</div>Defeat " + (GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + " enemies in " + GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][0]);
-        else if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-bullseye'></i> Fortress</div>Clear " + GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][0] + " (" + (GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - Game.MissionStarted[2]) + " left)");
-    } else $("#PLAYER-ETA").html("<div class='pw inline label'><i class='fas fa-map-marked-alt icon'></i> Exploration</div>of " + GLOBALS.LOCATIONS[Game.Location][0]);
+    SET_CURRENT_TASK();
     if ($('#DIV-COMBAT').is(":visible")) $("#DIV-REWARDS").hide();
     if (APP.LoggedIn == 1) $("#CloudTimer").html("Last cloud sync " + toHHMMSS(APP.lastCloudSave) + " ago, as <span class='pw alpha'>" + Game.username + "</span>.");
     else $("#CloudTimer").html("Cloud sync disabled.");
     $("#LABEL_INVENTORY").html("<i class='fas fa-sack'></i> " + Game.inventory.length + "/" + Game.MaxInv);
     $("#LABEL_CASH").html(fix(Game.Cash, 1));
     $("#mcount").html("Missions completed (" + CompletedMissions + "/" + APP.TotalMissions + ")");
-    if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0]) $("#MaxPOSLVL").html("You\'ve reached the maximum level for this area, please check the next available missions.");
+    if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0]) $("#MaxPOSLVL").html(`${language[APP.LANG].MISC.MaxLevelForArea}`);
     else $("#MaxPOSLVL").html("");
     if ($('#DIV-INVENTORY').is(":visible")) {
         $("#DIV-REWARDS").hide();
@@ -398,9 +405,19 @@ const UpdateUI = function () {
         $("#BUTTONS_COMBAT").show();
         UpdateCombat();
     }
-    $("#LOCATION_BACKGROUND").attr("style", `background-image: url("../images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
+
     if ($('#DIV-STATS').is(":visible")) UPDATE_STATS();
-    GenArmors();
-    GenWeapons();
     ResetTheme(2);
+};
+
+const SET_CURRENT_TASK = function () {
+    if (Game.MissionStarted[0]) {
+        if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 1) $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-dot-circle'></i> " + language[APP.LANG].TASKS.Mission[0] + "</div>" + language[APP.LANG].TASKS.Mission[1].split("[COUNT]").join(GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - Game.MissionStarted[2]).split("[LOCATION]").join(GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][0]));
+        else if (GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-bullseye'></i> " + language[APP.LANG].TASKS.Fortress[0] + "</div>" + language[APP.LANG].TASKS.Fortress[1].split("[COUNT]").join(GLOBALS.MISSIONS[Game.MissionStarted[1]][4] - Game.MissionStarted[2]).split("[LOCATION]").join(GLOBALS.LOCATIONS[GLOBALS.MISSIONS[Game.MissionStarted[1]][8]][0]));
+    } else $("#PLAYER-ETA").html("<div class='pw inline label'><i class='fas fa-map-marked-alt icon'></i> " + language[APP.LANG].TASKS.Exploration[0] + "</div>" + language[APP.LANG].TASKS.Exploration[1].split("[LOCATION]").join(language[APP.LANG].LOCATIONS[Game.Location]));
+};
+
+const DEFINE_BODY_ATTRIBUTES = function () {
+    $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("../images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
+    $("body").attr("style", `--ALPHA: ${Game.Theme};`);
 };

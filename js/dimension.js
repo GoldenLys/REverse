@@ -19,13 +19,13 @@ const ConfirmWT = function () {
         Game.inventory = [];
         Game.MaxUPC = [0, 0, 0, 0, 0, 0];
         Game.Armors = {
-            1: [true, "Basic Armor", "Normal", 100, 1, 0],
-            2: [false, "Basic Armor", "Normal", 100, 1, 0],
-            3: [false, "Basic Armor", "Normal", 100, 1, 0],
-            4: [false, "Basic Armor", "Normal", 100, 1, 0]
+            1: [true, "Basic Armor", "Normal", 100, 1, 0, "Default"],
+            2: [false, "Basic Armor", "Normal", 100, 1, 0, "Default"],
+            3: [false, "Basic Armor", "Normal", 100, 1, 0, "Default"],
+            4: [false, "Basic Armor", "Normal", 100, 1, 0, "Default"]
         };
         Game.ArmorUpgrades = [null, 0, 0, 0, 0];
-        Game.WeaponsUpgrades = {
+        Game.WeaponUpgrades = {
             Main: 0,
             Special: 0
         };
@@ -36,8 +36,8 @@ const ConfirmWT = function () {
             ["Normal", 5, 0],
             ["Normal", 5, 0]
         ];
-        Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10];
-        Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10];
+        Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10, "Default"];
+        Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10, "Default"];
         Game.isInFight = 0;
         Game.MissionsCompleted = [];
         Game.Location = 0;
@@ -49,6 +49,7 @@ const ConfirmWT = function () {
         $("#RM4").attr("data-check", "unchecked");
         $("#RM5").attr("data-check", "unchecked");
         $("#RM6").attr("data-check", "unchecked");
+        APP.MIND_CONTROL[1] = 0;
         hideRewards();
         CLOSE_MENUS();
         POPUP_CLOSE();
@@ -59,12 +60,12 @@ const ConfirmWT = function () {
 const GET_MAX_UPGRADES = function (CLASS) {
     let CONFIG = [{
             Normal: 0,
-            Common: _.random(0, 1),
-            Uncommon: _.random(1, 2),
-            Rare: _.random(2, 2),
+            Common: 0,
+            Uncommon: _.random(0, 1),
+            Rare: _.random(1, 2),
             Epic: _.random(2, 3),
             Exotic: _.random(3, 4),
-            Divine: _.random(4, 5)
+            Legendary: _.random(4, 5)
         },
         {
             Normal: _.random(0, 1),
@@ -73,7 +74,7 @@ const GET_MAX_UPGRADES = function (CLASS) {
             Rare: _.random(2, 3),
             Epic: _.random(3, 4),
             Exotic: _.random(3, 5),
-            Divine: _.random(5, 6)
+            Legendary: _.random(5, 6)
         },
     ];
     return CONFIG[APP.ScoreModeEnabled][CLASS];
