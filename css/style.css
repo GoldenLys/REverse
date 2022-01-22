@@ -139,9 +139,10 @@ a:-webkit-any-link {
     position: relative;
     background: linear-gradient(to right, rgb(5 5 20 / 50%), rgb(18 19 31 / 50%));
     width: 20%;
+    height: 100vh;
     border-radius: 0;
     padding: 0;
-    margin: 0;
+    margin: 0px;
 }
 
 .page-sidebar .credits {
@@ -233,6 +234,7 @@ a:-webkit-any-link {
 .page-tabs {
     position: relative;
     width: 30%;
+    height: 100vh;
     background: linear-gradient(to right, rgb(18 19 31 / 50%), rgb(5 5 20 / 50%));
 }
 
@@ -541,7 +543,7 @@ img[src*="E.png"]:before,
 
 .page-content div[id^="DIV-"].pw.message {
     background: rgb(18 19 31 / 65%);
-    padding: 0;
+    padding: 5px 0px;
 }
 
 .equipment .pw.red.button {
@@ -658,8 +660,19 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
 }
 
 .pw.equipment>.content>.icon {
+    position: relative;
     flex: 0 0 auto;
     margin: 5px;
+    padding: 5px;
+    width: 80px;
+    height: 80px;
+}
+
+.pw.equipment>.content>.icon:before {
+    top: -5px;
+    left: -5px;
+    position: absolute;
+    content: " ";
     padding: 5px;
     width: 80px;
     height: 80px;
@@ -668,13 +681,15 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
     border-radius: 5px;
 }
 
-.pw.equipment>.content>.icon>img {
+.pw.equipment>.content>.icon>.image>img {
     margin: 0;
 }
 
 .pw.equipment>.content>.description {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     display: inline-block;
+    min-width: 9vw;
+    max-width: fit-content;
     text-align: center;
 }
 

@@ -424,13 +424,7 @@
     border-radius: .10px;
 }
 
-.pw.little.segment {
-    max-width: 1em;
-}
-
 .pw.segments>.segment {
-    top: 0;
-    bottom: 0;
     border-radius: 0;
     margin: 0;
     width: auto;
@@ -439,7 +433,6 @@
 .pw.segments>.segment.content {
     display: flex;
     align-items: center;
-    justify-content: center;
     align-content: center;
     padding: 5px 10px;
 }
@@ -704,7 +697,7 @@
     background: rgb(0 0 0 / 85%);
 }
 
-.popup .title {
+.popup>.content>.title {
     color: rgb(var(--ALPHA));
     line-height: 1.5em;
     font-size: 1.25em;
@@ -719,8 +712,7 @@
     padding: .5em 0 1em;
 }
 
-.popup .content {
-    position: absolute;
+.popup>.content {
     display: block;
     width: 75%;
     text-align: center;
@@ -1117,13 +1109,21 @@
     margin: 0
 }
 
-.pw.message.item>.pw.segments>.pw.little.segment {
+.pw.button-container {
     display: inline-block;
     min-width: 3em;
     justify-content: center;
     align-self: center;
     max-width: 3em;
     padding: initial;
+}
+
+.pw.button-container:first-child {
+    margin-right: auto;
+}
+
+.pw.button-container:last-child {
+    margin-left: auto;
 }
 
 .pw.vertical.buttons {

@@ -552,7 +552,10 @@ const GET_ICON_ID = function (TYPE, CLASS) {
             ICON = `./images/Weapons/${TYPE}/${QUALITY_ID(CLASS)}-${_.random(1, TYPES[TYPE][QUALITY_ID(CLASS)])}.png`;
         } else if (TYPE === "Relic") {
             ICON = `./images/Relics/${CLASS}.png`;
-        } else {
+        } else if (TYPE === "Gem") {
+            ICON = `./images/Gems/${CLASS}.png`;
+        }
+        else {
             ICON = `./images/Armors/${ARMORS[TYPE]}/${QUALITY_ID(CLASS)}-${_.random(1, TYPES[ARMORS[TYPE]][QUALITY_ID(CLASS)])}.png`;
         }
         return ICON;

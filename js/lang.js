@@ -124,7 +124,7 @@ var language = {
         },
         TASKS: {
             Exploration: ["Exploration", "of [LOCATION]"],
-            Mission: ["Mission", "Defeat [COUNT] enemies in [LOCATION]"],
+            Mission: ["Mission", "Defeat [COUNT] enemies in [LOCATION]", "Defeat the [CLASS] of [LOCATION]"],
             Fortress: ["Fortress", "Clear [LOCATION] ([COUNT] left.)"],
         },
         MENUS: {
@@ -337,7 +337,7 @@ var language = {
             10: "Le Monde Corrompu",
             11: "La Forteresse Corrompue",
             12: "Le portail Noir",
-            13: "La Ville d\'Elysia",
+            13: "La Ville d'Elysia",
             14: "Le Manoir des Vampires",
             15: "La Rivière Rouge",
             16: "Le Pont Immortel",
@@ -356,7 +356,7 @@ var language = {
         },
         TASKS: {
             Exploration: ["Exploration", "de [LOCATION]"],
-            Mission: ["Mission", "Battre [COUNT] ennemis dans [LOCATION]"],
+            Mission: ["Mission", "Battre [COUNT] ennemis dans [LOCATION]", "Battre le [CLASS] de [LOCATION]"],
             Fortress: ["Forteresse", "Nettoyer [LOCATION] ([COUNT] ennemis restants.)"],
         },
         MENUS: {

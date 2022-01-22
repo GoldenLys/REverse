@@ -51,11 +51,10 @@ const GenInventory = function () {
 
             let ICON = QUALITY_ID(Game.inventory[ITEM].class) == "E" ? "<div class='pw image error-img'></div>" : "<img class='icon' src='" + Game.inventory[ITEM].icon + "'></img>";
             $("#INVENTORY-" + INVENTORY.ITEM_TYPES[Game.inventory[ITEM].type]).append(`<div id="ITEM-${ITEM}" class="pw message item"><div class="pw horizontal segments">
-                <div class="pw little segment"> <div onclick="EquipItem(${ITEM}, ${Game.inventory[ITEM].type})" class="pw green button"><i class="fal fa-check"></i></div> </div>
-                <div class="pw segment content">${ICON} ${Game.inventory[ITEM].name} ${IS_LEVEL_SET}
+                <div class="pw segment content"><div class="pw button-container"> <div onclick="EquipItem(${ITEM}, ${Game.inventory[ITEM].type})" class="pw green button"><i class="fal fa-check"></i></div> </div>
+                ${ICON} ${Game.inventory[ITEM].name} ${IS_LEVEL_SET}
                 <span class="pw inline ${Game.inventory[ITEM].class} label" id="${ITEM}">${language[APP.LANG].QUALITIES[Game.inventory[ITEM].class]}</span> ${I.DESC}
-                </div>
-                <div class="pw little segment"> <div onclick="RemoveItem(${ITEM})" class="pw red button"><i class="fas fa-trash"></i></div> </div>
+                <div class="pw button-container"> <div onclick="RemoveItem(${ITEM})" class="pw red button"><i class="fas fa-trash"></i></div></div></div>
                 </div></div>`);
         }
     }
@@ -265,6 +264,7 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
             if (ITEM.power < 1) ITEM.power = 1;
             ITEM.life = 0;
             ITEM.name = language[APP.LANG].MISC.PowerGem;
+            ITEM.icon = GET_ICON_ID("Gem", "Power");
             ITEM.LEVEL = ITEM_CONFIG.RARITIES[ITEM.class][0];
             ITEM.type = 5; // SET AS POWER GEM
         }
@@ -273,6 +273,7 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
             if (ITEM.life < 1) ITEM.life = 1;
             ITEM.power = 0;
             ITEM.name = language[APP.LANG].MISC.LifeGem;
+            ITEM.icon = GET_ICON_ID("Gem", "Life");
             ITEM.LEVEL = ITEM_CONFIG.RARITIES[ITEM.class][0];
             ITEM.type = 2; // SET AS LIFE GEM
         }
@@ -285,9 +286,8 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
         if (RelicType == 1) ITEM.bonus = ITEM_CONFIG.RELIC_MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1];
         // HERMES - MINIMAL RARITY
         if (RelicType == 2) {
-            ITEM.bonus = CLASSES[_.random(0, ITEM_CONFIG.RARITIES[ITEM.class][0]) - 1];
-            if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 1) ITEM.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[ITEM.class][0] - 2, ITEM_CONFIG.RARITIES[ITEM.class][0] - 1)];
-            if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 2) ITEM.bonus = CLASSES[_.random(ITEM_CONFIG.RARITIES[ITEM.class][0] - 3, ITEM_CONFIG.RARITIES[ITEM.class][0] - 1)];
+            ITEM.bonus = ITEM_CONFIG.RARITIES[ITEM.class][0] - 1;
+            if (ITEM_CONFIG.RARITIES[ITEM.class][0] > 1) ITEM.bonus = CLASSES[ITEM.bonus - 1, ITEM.bonus];
         }
         // VULCAN - MAX SCORE
         if (RelicType == 3) ITEM.bonus = ITEM_CONFIG.RELIC_SCORE_MUTLIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1];
@@ -365,10 +365,10 @@ const NewCore = function (ARMOR, ITEM) {
         }
     }
     if (Game.config[0] == 1) POPUP(`Do you really want to equip this new ${GLOBALS.ARMORS_TYPE[ARMOR]} ?`,
-        `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw little segment"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
+        `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw button-container"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
         <div class="pw horizontal segments">
         <div class="pw segment"><div>${CONFIG.OLD_ARMOR[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.OLD[4]}">${CONFIG.OLD_ARMOR[4]}</span></div></div><div class="${CONFIG.OLD_ARMOR[2]}">${CONFIG.OLD_ARMOR[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.OLD[5]}">${CONFIG.OLD_ARMOR[5]}</span></div><div class="pw inline red label"><i class="pw red fas fa-heart"></i> <span class="${CONFIG.COLORS.OLD[3]}">${CONFIG.OLD_ARMOR[3]}</span></div></div>
-        <div class="pw little segment"></div>
+        <div class="pw button-container"></div>
         <div class="pw segment"><div>${CONFIG.NEW_ARMOR[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.NEW[4]}">${CONFIG.NEW_ARMOR[4]}</span></div></div><div class="${CONFIG.NEW_ARMOR[2]}">${CONFIG.NEW_ARMOR[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.NEW[5]}">${CONFIG.NEW_ARMOR[5]}</span></div><div class="pw inline red label"><i class="pw red fas fa-heart"></i> <span class="${CONFIG.COLORS.NEW[3]}">${CONFIG.NEW_ARMOR[3]}</span></div></div>
         </div>`, 6);
     else DefineCore(ARMOR, ITEM);
@@ -409,10 +409,10 @@ const NewWeapon = function (WEAPON, ITEM) {
         }
     }
     if (Game.config[0] == 1) POPUP(`Do you really want to equip this weapon as your ${WEAPON} weapon ?`,
-        `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw little segment"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
+        `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw button-container"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
         <div class="pw horizontal segments">
         <div class="pw segment"><div>${CONFIG.OLD_WEAPON[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.OLD[4]}">${CONFIG.OLD_WEAPON[4]}</span></div></div><div class="${CONFIG.OLD_WEAPON[2]}">${CONFIG.OLD_WEAPON[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.OLD[5]}">${CONFIG.OLD_WEAPON[5]}</span></div><div class="pw inline blue label"><i class="pw blue fas fa-sword"></i> <span class="${CONFIG.COLORS.OLD[3]}">${CONFIG.OLD_WEAPON[3]}</span></div></div>
-        <div class="pw little segment"></div>
+        <div class="pw button-container"></div>
         <div class="pw segment"><div>${CONFIG.NEW_WEAPON[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.NEW[4]}">${CONFIG.NEW_WEAPON[4]}</span></div></div><div class="${CONFIG.NEW_WEAPON[2]}">${CONFIG.NEW_WEAPON[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.NEW[5]}">${CONFIG.NEW_WEAPON[5]}</span></div><div class="pw inline blue label"><i class="pw blue fas fa-sword"></i> <span class="${CONFIG.COLORS.NEW[3]}">${CONFIG.NEW_WEAPON[3]}</span></div></div>
         </div>`, 7);
     else DefineWeapon(WEAPON, ITEM);
@@ -455,10 +455,10 @@ const ConfirmRelic = function (RELIC, ITEM) {
         "Max Score +<span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[ITEM].bonus, 1) + "</span>",
         "-"
     ];
-    if (Game.config[1] == 1) POPUP("New Relic confirmation", `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw little segment"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
+    if (Game.config[1] == 1) POPUP("New Relic confirmation", `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw button-container"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
         <div class="pw horizontal segments">
         <div class="pw segment"><div>${GLOBALS.RELICS_NAMES[Game.RELICS[RELIC][1] - 1]}</div><div class="${Game.RELICS[RELIC][0]}">${Game.RELICS[RELIC][0]}</div><div>${DESCS[Game.RELICS[RELIC][1]]}</div></div>
-        <div class="pw little segment"></div>
+        <div class="pw button-container"></div>
         <div class="pw segment"><div>${Game.inventory[ITEM].name}</div><div class="${Game.inventory[ITEM].class}">${Game.inventory[ITEM].class}</div><div>${DESCS2[Game.inventory[ITEM].relictype]}</div></div>
         </div>`, 4);
     else InstallRelic(RELIC, ITEM);
