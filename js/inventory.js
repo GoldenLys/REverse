@@ -1,7 +1,7 @@
 // INVENTORY VISUALS
 const GenInventory = function () {
     var COUNTERS = [0, 0, 0, 0, 0];
-    let SCORE = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + fix(APP.Ranking / 10, 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>" + fix(APP.Ranking, 0);
+    let SCORE = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + fix(APP.Ranking / 10, 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i> " + fix(APP.Ranking, 0);
     $("#INVENTORY-Gem1").html("");
     $("#INVENTORY-Gem0").html("");
     $("#INVENTORY-Relic").html("");
@@ -81,11 +81,11 @@ const GenWeapons = function () {
         Game.Weapons[WEAPON][0] = Game.Weapons[WEAPON][0].split(language[APP.LANG].MISC.Weapon).join(language[APP.LANG].WEAPONS_TYPE[`${WEAPON === "Main" ? 0 : 1}`]).split(language.EN.MISC.Weapon).join(language.EN.WEAPONS_TYPE[`${WEAPON === "Main" ? 0 : 1}`]);
         let MAX_GEMS = WEAPON === "Main" ? Game.MaxUPC[4] : Game.MaxUPC[5];
         let GEMS = Game.Weapons[WEAPON][2] > 0 ? `<div class="pw inline orange label"><span class="pw orange">+${Game.Weapons[WEAPON][2]}</span></div>` : "";
-        let GEMS_SLOTS = (MAX_GEMS - Game.Weapons[WEAPON][2]) > 0 ? `<div class="pw inline orange label"><i class='pw orange fad fa-gem'></i> <span class='${MAX_GEMS - Game.Weapons[WEAPON][2] ? "" :"pw green"}'>${MAX_GEMS - Game.Weapons[WEAPON][2]}</span></div> ` : "";
+        let GEMS_SLOTS = (MAX_GEMS - Game.Weapons[WEAPON][2]) > 0 ? `<div class="pw inline orange label"><i class='pw orange fad fa-gem'></i> <span class='${MAX_GEMS - Game.Weapons[WEAPON][2] ? "" : "pw green"}'>${MAX_GEMS - Game.Weapons[WEAPON][2]}</span></div> ` : "";
 
         //DEFINE CONTENT
         $(`#${WEAPON}Weapon>.header`).html(`${Game.Weapons[WEAPON][0]}${GEMS}
-<div class="pw inline label">${APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + fix(Math.floor(Game.Weapons[WEAPON][3]), 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>" + fix(Math.floor(Game.Weapons[WEAPON][3] * 10), 0)}</div>
+<div class="pw inline label">${APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + fix(Math.floor(Game.Weapons[WEAPON][3]), 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i> " + fix(Math.floor(Game.Weapons[WEAPON][3] * 10), 0)}</div>
 <div class="pw inline label ${Game.Weapons[WEAPON][1]}">${language[APP.LANG].QUALITIES[Game.Weapons[WEAPON][1]]}</div>`);
         if (QUALITY_ID(Game.Weapons[WEAPON][1]) == "E") $(`#${WEAPON}Weapon>.content>.icon`).html("<div class='pw image error-img'></div>");
         else $(`#${WEAPON}Weapon>.content>.icon`).html("<img class='pw centered tiny image " + Game.Weapons[WEAPON][1] + "' src='" + Game.Weapons[WEAPON][5] + "'></img>");
@@ -103,7 +103,7 @@ const GenArmors = function () {
 
         let MAX_GEMS = Game.MaxUPC[ARMOR - 1];
         let GEMS = Game.Armors[ARMOR][5] > 0 ? `<div class="pw inline orange label"><span class="pw orange">+${Game.Armors[ARMOR][5]}</span></div>` : "";
-        let GEMS_SLOTS = (MAX_GEMS - Game.Armors[ARMOR][5]) > 0 ? `<div class="pw inline orange label"><i class='pw orange fad fa-gem'></i> <span class='${MAX_GEMS - Game.Armors[ARMOR][5] ? "" :"pw green"}'>${MAX_GEMS - Game.Armors[ARMOR][5]}</span></div> ` : "";
+        let GEMS_SLOTS = (MAX_GEMS - Game.Armors[ARMOR][5]) > 0 ? `<div class="pw inline orange label"><i class='pw orange fad fa-gem'></i> <span class='${MAX_GEMS - Game.Armors[ARMOR][5] ? "" : "pw green"}'>${MAX_GEMS - Game.Armors[ARMOR][5]}</span></div> ` : "";
         let RELIC = "";
         let RELIC_ICON = "";
         if (Game.RELICS[ARMOR][1] !== 5) {
@@ -117,7 +117,7 @@ const GenArmors = function () {
 
         //DEFINE CONTENT
         $(`#Armor${ARMOR}>.header`).html(`${Game.Armors[ARMOR][1]}${GEMS}
-<div class="pw inline label">${APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + fix(Math.floor(Game.Armors[ARMOR][4]), 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>" + fix(Math.floor(Game.Armors[ARMOR][4] * 10), 0)}</div>
+<div class="pw inline label">${APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + fix(Math.floor(Game.Armors[ARMOR][4]), 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i> " + fix(Math.floor(Game.Armors[ARMOR][4] * 10), 0)}</div>
 <div class="pw inline label ${Game.Armors[ARMOR][2]}">${language[APP.LANG].QUALITIES[Game.Armors[ARMOR][2]]}</div>`);
 
         if (QUALITY_ID(Game.Armors[ARMOR][2]) == "E") $(`#Armor${ARMOR}>.content>.icon`).html("<div class='pw image error-img'></div>");
@@ -133,7 +133,6 @@ const GenArmors = function () {
     else $("#NextArmor").html("");
 
 };
-
 
 // ITEM GENERATION
 const newItem = function (OBJECT, LEVEL, CLASS) {
@@ -173,7 +172,7 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
     };
     let CLASSES = Object.keys(ITEM_CONFIG.RARITIES);
     let ITEM = {};
-    if (LEVEL < 1) LEVEL = 1;
+    if (LEVEL < 1 || LEVEL === undefined) LEVEL = 1;
     let BALANCE_EQUIPMENT = [67, 50, 40, 33];
     if (OBJECT == 0) {
         if (_.random(0, 100) > BALANCE_EQUIPMENT[LATEST_UNLOCKED_ARMOR() - 1]) OBJECT = "Weapon";
@@ -300,13 +299,10 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
     GenInventory();
 };
 
-
 // EQUIPMENT INSTALLATION
 const EquipItem = function (ITEM, TYPE) {
     POPUP_CLOSE();
     let ARMOR_TYPES = language[APP.LANG].ARMORS_TYPE;
-    let WEAPON_TYPES = language[APP.LANG].WEAPONS_TYPE;
-    let WEAPON_BUTTON = [];
     let ARMOR_UPGRADE_BUTTON = [];
     let RELIC_BUTTON = [];
     let WEAPON_UPGRADE_BUTTON = [];
@@ -317,7 +313,7 @@ const EquipItem = function (ITEM, TYPE) {
             "Shield": 3,
             "Boots": 4
         };
-        NewCore(ARMORS[Game.inventory[ITEM].TYPE2], ITEM);
+        PREVIEW_ARMOR(ARMORS[Game.inventory[ITEM].TYPE2], ITEM);
     } else if (TYPE == 2) {
         for (let ARMOR in Game.Armors) {
             ARMOR_UPGRADE_BUTTON[ARMOR] = Game.Armors[ARMOR][0] ? `<div onclick='UPGRADE_ARMOR(${ARMOR}, ${ITEM});' class='pw alpha button'>Upgrade ${ARMOR_TYPES[ARMOR]}</div>` : ``;
@@ -329,10 +325,8 @@ const EquipItem = function (ITEM, TYPE) {
             if (RELIC != 0) RELIC_BUTTON[RELIC] = Game.Armors[RELIC][0] ? `<div onclick="ConfirmRelic(${RELIC}, ${ITEM});" class="pw alpha button">Apply on ${ARMOR_TYPES[RELIC]}</div>` : ``;
         }
         POPUP("Select a Relic Slot", "<div class='pw fluid vertical buttons'>" + RELIC_BUTTON[1] + RELIC_BUTTON[2] + RELIC_BUTTON[3] + RELIC_BUTTON[4] + "</div>", 0);
-    } else if (TYPE == 4) {
-        for (let WEAPON in Game.Weapons) WEAPON_BUTTON[WEAPON] = `<div onClick='NewWeapon("${WEAPON}", ${ITEM});' class='pw alpha button'>Use as ${WEAPON} weapon</div>`;
-        POPUP("Select a Weapon Slot", "<div class='pw fluid vertical buttons'>" + WEAPON_BUTTON.Main + WEAPON_BUTTON.Special + "</div>", 0);
-    } else if (TYPE == 5) {
+    } else if (TYPE == 4) PREVIEW_WEAPON(Game.inventory[ITEM].TYPE2, ITEM);
+    else if (TYPE == 5) {
         for (let WEAPON in Game.Weapons) {
             let NUMBER = 4;
             if (WEAPON != "Main") NUMBER = 5;
@@ -345,20 +339,18 @@ const EquipItem = function (ITEM, TYPE) {
     UpdateGame();
 };
 
-const NewCore = function (ARMOR, ITEM) {
+const PREVIEW_ARMOR = function (ARMOR, ITEM) {
     APP.ToAdd = [ARMOR, ITEM];
-    let CONFIG = {
-        OLD_ARMOR: Game.Armors[ARMOR],
+    var CONFIG = {
+        OLD_ARMOR: Object.assign({}, Game.Armors[ARMOR]),
         NEW_ARMOR: [true, Game.inventory[ITEM].name, Game.inventory[ITEM].class, Game.inventory[ITEM].life, Game.inventory[ITEM].LEVEL, Game.inventory[ITEM].ups],
         COLORS: {
             OLD: ["none", "none", "none", "", "", ""],
             NEW: ["none", "none", "none", "", "", ""]
         }
     };
-    let TIER = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>";
-    CONFIG.OLD_ARMOR[4] = APP.ScoreModeEnabled == 0 ? CONFIG.OLD_ARMOR[4] : Math.floor(CONFIG.OLD_ARMOR[4] * 10);
-    CONFIG.NEW_ARMOR[4] = APP.ScoreModeEnabled == 0 ? CONFIG.NEW_ARMOR[4] : Math.floor(CONFIG.NEW_ARMOR[4] * 10);
-    for (let CURRENT = 3; CURRENT < 6; CURRENT++) {
+    var TIER = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>"; 
+    for (var CURRENT = 3; CURRENT < 6; CURRENT++) {
         if (CONFIG.NEW_ARMOR[CURRENT] != CONFIG.OLD_ARMOR[CURRENT]) {
             CONFIG.COLORS.OLD[CURRENT] = CONFIG.OLD_ARMOR[CURRENT] > CONFIG.NEW_ARMOR[CURRENT] ? "pw green" : "pw red";
             CONFIG.COLORS.NEW[CURRENT] = CONFIG.OLD_ARMOR[CURRENT] < CONFIG.NEW_ARMOR[CURRENT] ? "pw green" : "pw red";
@@ -367,14 +359,14 @@ const NewCore = function (ARMOR, ITEM) {
     if (Game.config[0] == 1) POPUP(`Do you really want to equip this new ${GLOBALS.ARMORS_TYPE[ARMOR]} ?`,
         `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw button-container"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
         <div class="pw horizontal segments">
-        <div class="pw segment"><div>${CONFIG.OLD_ARMOR[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.OLD[4]}">${CONFIG.OLD_ARMOR[4]}</span></div></div><div class="${CONFIG.OLD_ARMOR[2]}">${CONFIG.OLD_ARMOR[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.OLD[5]}">${CONFIG.OLD_ARMOR[5]}</span></div><div class="pw inline red label"><i class="pw red fas fa-heart"></i> <span class="${CONFIG.COLORS.OLD[3]}">${CONFIG.OLD_ARMOR[3]}</span></div></div>
+        <div class="pw segment"><div>${CONFIG.OLD_ARMOR[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.OLD[4]}">${APP.ScoreModeEnabled == 0 ? CONFIG.OLD_ARMOR[4] : Math.floor(CONFIG.OLD_ARMOR[4] * 10)}</span></div></div><div class="${CONFIG.OLD_ARMOR[2]}">${CONFIG.OLD_ARMOR[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.OLD[5]}">${CONFIG.OLD_ARMOR[5]}</span></div><div class="pw inline red label"><i class="pw red fas fa-heart"></i> <span class="${CONFIG.COLORS.OLD[3]}">${CONFIG.OLD_ARMOR[3]}</span></div></div>
         <div class="pw button-container"></div>
-        <div class="pw segment"><div>${CONFIG.NEW_ARMOR[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.NEW[4]}">${CONFIG.NEW_ARMOR[4]}</span></div></div><div class="${CONFIG.NEW_ARMOR[2]}">${CONFIG.NEW_ARMOR[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.NEW[5]}">${CONFIG.NEW_ARMOR[5]}</span></div><div class="pw inline red label"><i class="pw red fas fa-heart"></i> <span class="${CONFIG.COLORS.NEW[3]}">${CONFIG.NEW_ARMOR[3]}</span></div></div>
+        <div class="pw segment"><div>${CONFIG.NEW_ARMOR[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.NEW[4]}">${APP.ScoreModeEnabled == 0 ? CONFIG.NEW_ARMOR[4] : Math.floor(CONFIG.NEW_ARMOR[4] * 10)}</span></div></div><div class="${CONFIG.NEW_ARMOR[2]}">${CONFIG.NEW_ARMOR[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.NEW[5]}">${CONFIG.NEW_ARMOR[5]}</span></div><div class="pw inline red label"><i class="pw red fas fa-heart"></i> <span class="${CONFIG.COLORS.NEW[3]}">${CONFIG.NEW_ARMOR[3]}</span></div></div>
         </div>`, 6);
-    else DefineCore(ARMOR, ITEM);
+    else DEFINE_ARMOR(ARMOR, ITEM);
 };
 
-const DefineCore = function (ARMOR, ITEM) {
+const DEFINE_ARMOR = function (ARMOR, ITEM) {
     if (Game.config[0] == 1) POPUP_CLOSE();
     if (typeof (Game.inventory[ITEM].life) !== 'undefined') {
         Game.Armors[ARMOR] = [true, Game.inventory[ITEM].name, Game.inventory[ITEM].class, Game.inventory[ITEM].life, Game.inventory[ITEM].LEVEL, 0, Game.inventory[ITEM].icon];
@@ -389,9 +381,9 @@ const DefineCore = function (ARMOR, ITEM) {
     UpdateGame();
 };
 
-const NewWeapon = function (WEAPON, ITEM) {
+const PREVIEW_WEAPON = function (WEAPON, ITEM) {
     APP.ToAdd = [WEAPON, ITEM];
-    let CONFIG = {
+    var CONFIG = {
         OLD_WEAPON: [true, Game.Weapons[WEAPON][0], Game.Weapons[WEAPON][1], Game.Weapons[WEAPON][4], Game.Weapons[WEAPON][3], Game.Weapons[WEAPON][2]],
         NEW_WEAPON: [true, Game.inventory[ITEM].name, Game.inventory[ITEM].class, Game.inventory[ITEM].power, Game.inventory[ITEM].LEVEL, Game.inventory[ITEM].ups],
         COLORS: {
@@ -399,9 +391,7 @@ const NewWeapon = function (WEAPON, ITEM) {
             NEW: ["none", "none", "none", "", "", ""]
         }
     };
-    let TIER = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>";
-    CONFIG.OLD_WEAPON[4] = APP.ScoreModeEnabled == 0 ? CONFIG.OLD_WEAPON[4] : Math.floor(CONFIG.OLD_WEAPON[4] * 10);
-    CONFIG.NEW_WEAPON[4] = APP.ScoreModeEnabled == 0 ? CONFIG.NEW_WEAPON[4] : Math.floor(CONFIG.NEW_WEAPON[4] * 10);
+    var TIER = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>";
     for (let CURRENT = 3; CURRENT < 6; CURRENT++) {
         if (CONFIG.NEW_WEAPON[CURRENT] != CONFIG.OLD_WEAPON[CURRENT]) {
             CONFIG.COLORS.OLD[CURRENT] = CONFIG.OLD_WEAPON[CURRENT] > CONFIG.NEW_WEAPON[CURRENT] ? "pw green" : "pw red";
@@ -411,22 +401,22 @@ const NewWeapon = function (WEAPON, ITEM) {
     if (Game.config[0] == 1) POPUP(`Do you really want to equip this weapon as your ${WEAPON} weapon ?`,
         `<div class="pw horizontal segments"><div class="pw segment">Old</div><div class="pw button-container"><i class="fal fa-arrow-right"></i></div><div class="pw segment">New</div></div>
         <div class="pw horizontal segments">
-        <div class="pw segment"><div>${CONFIG.OLD_WEAPON[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.OLD[4]}">${CONFIG.OLD_WEAPON[4]}</span></div></div><div class="${CONFIG.OLD_WEAPON[2]}">${CONFIG.OLD_WEAPON[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.OLD[5]}">${CONFIG.OLD_WEAPON[5]}</span></div><div class="pw inline blue label"><i class="pw blue fas fa-sword"></i> <span class="${CONFIG.COLORS.OLD[3]}">${CONFIG.OLD_WEAPON[3]}</span></div></div>
+        <div class="pw segment"><div>${CONFIG.OLD_WEAPON[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.OLD[4]}">${APP.ScoreModeEnabled == 0 ? CONFIG.OLD_WEAPON[4] : Math.floor(CONFIG.OLD_WEAPON[4] * 10)}</span></div></div><div class="${CONFIG.OLD_WEAPON[2]}">${CONFIG.OLD_WEAPON[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.OLD[5]}">${CONFIG.OLD_WEAPON[5]}</span></div><div class="pw inline blue label"><i class="pw blue fas fa-sword"></i> <span class="${CONFIG.COLORS.OLD[3]}">${CONFIG.OLD_WEAPON[3]}</span></div></div>
         <div class="pw button-container"></div>
-        <div class="pw segment"><div>${CONFIG.NEW_WEAPON[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.NEW[4]}">${CONFIG.NEW_WEAPON[4]}</span></div></div><div class="${CONFIG.NEW_WEAPON[2]}">${CONFIG.NEW_WEAPON[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.NEW[5]}">${CONFIG.NEW_WEAPON[5]}</span></div><div class="pw inline blue label"><i class="pw blue fas fa-sword"></i> <span class="${CONFIG.COLORS.NEW[3]}">${CONFIG.NEW_WEAPON[3]}</span></div></div>
+        <div class="pw segment"><div>${CONFIG.NEW_WEAPON[1]}<div class="pw inline label">${TIER} <span class="${CONFIG.COLORS.NEW[4]}">${APP.ScoreModeEnabled == 0 ? CONFIG.NEW_WEAPON[4] : Math.floor(CONFIG.NEW_WEAPON[4] * 10)}</span></div></div><div class="${CONFIG.NEW_WEAPON[2]}">${CONFIG.NEW_WEAPON[2]}</div><div class="pw inline orange label"><i class="pw orange fad fa-gem"></i> <span class="${CONFIG.COLORS.NEW[5]}">${CONFIG.NEW_WEAPON[5]}</span></div><div class="pw inline blue label"><i class="pw blue fas fa-sword"></i> <span class="${CONFIG.COLORS.NEW[3]}">${CONFIG.NEW_WEAPON[3]}</span></div></div>
         </div>`, 7);
-    else DefineWeapon(WEAPON, ITEM);
+    else DEFINE_WEAPON(WEAPON, ITEM);
 };
 
-const DefineWeapon = function (type, ITEM) {
+const DEFINE_WEAPON = function (WEAPON, ITEM) {
     let UPC_TYPE = {
         Main: 1,
         Special: 2
     };
     if (typeof (Game.inventory[ITEM].power) !== 'undefined') {
-        Game.Weapons[type] = [Game.inventory[ITEM].name, Game.inventory[ITEM].class, 0, Game.inventory[ITEM].LEVEL, Game.inventory[ITEM].power, Game.inventory[ITEM].icon];
-        Game.MaxUPC[UPC_TYPE[type] + 3] = Game.inventory[ITEM].ups;
-        Game.WeaponUpgrades[type] = 0;
+        Game.Weapons[WEAPON] = [Game.inventory[ITEM].name, Game.inventory[ITEM].class, 0, Game.inventory[ITEM].LEVEL, Game.inventory[ITEM].power, Game.inventory[ITEM].icon];
+        Game.MaxUPC[UPC_TYPE[WEAPON] + 3] = Game.inventory[ITEM].ups;
+        Game.WeaponUpgrades[WEAPON] = 0;
     }
     if (ITEM <= Game.MaxInv) RemoveItem(ITEM);
     Game.isInFight = 0;
@@ -494,6 +484,7 @@ function UPGRADE_ARMOR(ARMOR, ITEM) {
         }
         Game.ArmorUpgrades[ARMOR] += Game.inventory[ITEM].life;
         if (ITEM <= Game.MaxInv) RemoveItem(ITEM);
+        Game.Armors[ARMOR][4] = Number(fix(Game.Armors[ARMOR][4], 5));
     }
     POPUP_CLOSE();
     GenInventory();
@@ -508,7 +499,8 @@ function UPGRADE_WEAPON(WEAPON, ITEM) {
         Rare: 3,
         Epic: 4,
         Exotic: 5,
-        Legendary: 6
+        Legendary: 6,
+        Divine: 8
     };
     let WEAPON_ID = WEAPON == "Main" ? 1 : 2;
     if (Game.Weapons[WEAPON][2] < Game.MaxUPC[WEAPON_ID + 3]) {
@@ -520,6 +512,7 @@ function UPGRADE_WEAPON(WEAPON, ITEM) {
         }
         Game.WeaponUpgrades[WEAPON] += Game.inventory[ITEM].power;
         if (ITEM <= Game.MaxInv) RemoveItem(ITEM);
+        Game.Weapons[WEAPON][3] = Number(fix(Game.Weapons[WEAPON][3], 5));
     }
     POPUP_CLOSE();
     GenInventory();
@@ -594,6 +587,7 @@ const NEXT_ARMOR_PIECE = function () {
 };
 
 const CHECK_EQUIPMENT = function () {
+    Game.MaxLevelReached = 0;
     let QUALITIES = ["Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Legendary", "Divine"];
     let GEMS = {
         1: 0,
@@ -647,12 +641,14 @@ const CHECK_EQUIPMENT = function () {
         MAX_GEMS[1] = ITEM_CONFIG.GEMS_MULTIPLIER[MAX_QUALITY] * ((Game.Weapons[WEAPON][4] - Game.WeaponUpgrades[WEAPON]) * 0.01) + ITEM_CONFIG.RARITIES[MAX_QUALITY][0];
         Game.MaxLevelReached = Game.Weapons[WEAPON][3] > Game.MaxLevelReached ? Game.Weapons[WEAPON][3] : Game.MaxLevelReached;
     }
+    let MAX_LEVEL = APP.ScoreModeEnabled == 1 ? APP.MaxScore : APP.MaxLevel;
+    if (Game.MaxLevelReached > MAX_LEVEL) Game.MaxLevelReached = MAX_LEVEL;
 
     // CHECK & AUTO SCALE ARMORS
     for (let ARMOR in Game.Armors) {
         if (ARMOR != 0) {
             let MAX_VALUE = (Game.MaxLevelReached * 10) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 100;
-
+            if (isNaN(Game.Armors[ARMOR][4])) Game.Armors[ARMOR][4] = Number(Game.Armors[ARMOR][4]);
             if (Game.Armors[ARMOR][6].includes("undefined")) Game.Armors[ARMOR][6] = GET_ICON_ID(ARMOR, Game.Armors[ARMOR][2]);
             if ((Game.Armors[ARMOR][3] - Game.ArmorUpgrades[ARMOR]) > MAX_VALUE) {
                 LOG(`Auto scaling of the ${GLOBALS.ARMORS_TYPE[ARMOR]}`, `${Game.Armors[ARMOR][3]} out of ${Math.floor(MAX_VALUE)}.`, "white; background-color: rgb(58 59 70)");
@@ -674,7 +670,7 @@ const CHECK_EQUIPMENT = function () {
     // CHECK & AUTO SCALE WEAPONS
     for (let WEAPON in Game.Weapons) {
         let MAX_VALUE = (Game.MaxLevelReached * 2) * ITEM_CONFIG.MULTIPLIERS[ITEM_CONFIG.RARITIES[MAX_QUALITY][0] - 1] + 10;
-
+        if (isNaN(Game.Weapons[WEAPON][3])) Game.Weapons[WEAPON][3] = Number(Game.Weapons[WEAPON][3]);
         if (Game.Weapons[WEAPON][5].includes("undefined")) Game.Weapons[WEAPON][5] = GET_ICON_ID(WEAPON, Game.Weapons[WEAPON][1]);
         if ((Game.Weapons[WEAPON][4] - Game.WeaponUpgrades[WEAPON]) > MAX_VALUE) {
             LOG(`Auto scaling of the ${WEAPON} weapon`, `${Game.Weapons[WEAPON][4]} out of ${Math.floor(MAX_VALUE)}.`, "white; background-color: rgb(58 59 70)");

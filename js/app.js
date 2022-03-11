@@ -2,8 +2,8 @@
 
 1     | Divine items with unique skills. (Old divines will now be legendaries)
 2     | Guild : Gain fame in the guild to obtain a cool new rank badge and also to earn some more money.
-3     | Shop : Selling the best weapons & armors of the game, unique-class items would have skills embedded into them
-4 [?] | Bank : May be put as a guild feature; put your money in a safe so that you don't lose it when dying.
+3     | Shop  : Selling the best weapons & armors of the game, unique-class items would have skills embedded into them
+4 [?] | Bank  : May be put as a guild feature; put your money in a safe so that you don't lose it when dying.
 5 [?] | Crafting system for Gems Weapons, Armors and maybe Relics under some circumstances.
 6 [?] | Adding achievements
 7 [?] | Titles : Unlocking titles under certains conditions, example: kill 1k mobs in a fortress to unlock the "HERO" title.
@@ -59,7 +59,7 @@ $(document).ready(function () {
     if (GLOBALS.BETA) GLOBALS.VERSION = `${GLOBALS.VERSION} BETA ${GLOBALS.BETA}`;
     if (location.href.match(/(:5500).*/)) GLOBALS.VERSION = "dev";
     document.title = GLOBALS.NAME;
-    $("#site-name").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
+    $("#game_title").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
     ResetTheme(0);
     if (localStorage.getItem("Alpha") !== null) load();
     SELECT_LANGUAGE();
@@ -81,7 +81,6 @@ $(document).ready(function () {
     setInterval(UpdateEngine, 1000);
     Game.xp[1] = CalcEXP(Game.Level);
     CompleteMission();
-    DYNAMICS();
     filter(0);
     $('.pw.checkbox').each(function () {
         if ($(this).attr("data-id") < 5 || $(this).attr("data-id") == 11) {
@@ -99,6 +98,7 @@ $(document).ready(function () {
     GenWeapons();
     ResetLeaderBoard();
     CLOSE_MENUS();
+    DYNAMICS();
     UpdateUI();
 });
 
@@ -124,7 +124,7 @@ const UpdateEngine = function () {
     }
     if (APP.lastCloudSave < 180) APP.lastCloudSave++;
     else SendStats();
-    if (Game.LastEscape > 1) {
+    if (Game.LastEscape >= 1) {
         Game.LastEscape--;
         $("#NextRetreat").html(`${language[APP.LANG].MISC.Retreat.split("[COUNT]").join(toHHMMSS(Game.LastEscape))}`);
     } else $("#NextRetreat").html("");
@@ -219,7 +219,6 @@ const UpdateGame = function () {
     }
     APP.TotalMissions = counter;
     if (Game.Dimension > 50) Game.Dimension = 50;
-    let divisor = 0;
     APP.MaxLevel = 35;
     APP.MaxScore = (APP.MaxLevel + (Game.Dimension * 5) - 5);
     for (var D = 1; D < 7; D++) {
@@ -255,19 +254,8 @@ const UpdateGame = function () {
     APP.CoreBaseLife = 0;
     APP.TotalWeaponsUpgrades = 0;
     APP.TotalArmorsUpgrades = 0;
-    APP.Ranking = 0;
-    APP.Ranking += Game.Weapons.Main[3] + Game.Weapons.Special[3];
+    GET_EQUIPMENT_RANK();
     APP.TotalWeaponsUpgrades += Game.WeaponUpgrades.Main + Game.WeaponUpgrades.Special;
-    divisor = 2;
-    for (let armor = 1; armor < 5; armor++) {
-        if (Game.Armors[armor][0]) {
-            APP.CoreBaseLife += Game.Armors[armor][3];
-            APP.TotalArmorsUpgrades += Game.ArmorUpgrades[armor];
-            APP.Ranking += Game.Armors[armor][4];
-            divisor++;
-            if (typeof (Game.Armors[armor][5]) === 'undefined') Game.Armors[armor][5] = 0;
-        }
-    }
     if (LATEST_LOCATION_UNLOCKED() !== "none" && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0] && Game.Level >= GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][2] && Game.username != "Default" && Game.isInFight == 1) {
         for (M in GLOBALS.MISSIONS) {
             if (Game.MissionsCompleted[M] == 0 && Game.MissionsCompleted[GLOBALS.MISSIONS[M][9]] == 1 && GLOBALS.MISSIONS[M][3] != 2 && Game.Level >= GLOBALS.MISSIONS[M][2]) {
@@ -279,7 +267,6 @@ const UpdateGame = function () {
     APP.CoreBaseLife = Math.round(APP.CoreBaseLife * (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1]));
     APP.WeaponsPower = Math.round(Game.Weapons.Main[4] * (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     APP.SpecialPower = Math.round((Game.Weapons.Main[4] + Game.Weapons.Special[4]) * (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
-    APP.Ranking = Math.floor((APP.Ranking / divisor) * 10);
     for (var M2 in GLOBALS.MISSIONS) {
         if (Game.MissionsCompleted[M2] == null) Game.MissionsCompleted[M2] = 0;
     }
@@ -424,3 +411,19 @@ const DEFINE_BODY_ATTRIBUTES = function () {
     $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("../images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
     $("body").attr("style", `--ALPHA: ${Game.Theme};`);
 };
+
+function GET_EQUIPMENT_RANK () {
+    let RANKING = Game.Weapons.Main[3] + Game.Weapons.Special[3];
+    let divisor = 2;
+    for (let armor = 1; armor < 5; armor++) {
+        if (Game.Armors[armor][0]) {
+            Game.Armors[armor][4] = Number(Game.Armors[armor][4]);
+            APP.CoreBaseLife += Game.Armors[armor][3];
+            APP.TotalArmorsUpgrades += Game.ArmorUpgrades[armor];
+            RANKING += Game.Armors[armor][4];
+            divisor++;
+            if (typeof (Game.Armors[armor][5]) === 'undefined') Game.Armors[armor][5] = 0;
+        }
+    }
+    APP.Ranking = Math.floor((RANKING / divisor) * 10);
+}

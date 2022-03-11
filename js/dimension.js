@@ -12,7 +12,8 @@ const ConfirmWT = function () {
         Game.Dimension++;
         Game.xp = [0, 100, 1];
         Game.Level = 1;
-        Game.Shards += Math.round(APP.Ranking / 10 - 30);
+        let FRAGMENTS = Math.round(APP.Ranking / 10 - 30) > 50 ? 50 : Math.round(APP.Ranking / 10 - 30);
+        Game.Shards += FRAGMENTS;
         APP.LifeMult = 1;
         APP.PowerMult = 1;
         Game.Emp = 0;

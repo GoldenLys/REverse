@@ -239,7 +239,7 @@ var language = {
             Common: ['[ARMOR] Rayé', '[ARMOR] Abimé', '[ARMOR] Fragile', '[ARMOR] Ébréché', 'Faible [ARMOR]', '[ARMOR] Utilisé', '[ARMOR] Usé', '[ARMOR] Cabossé'],
             Uncommon: ['[ARMOR] Acceptable', 'Grand [ARMOR]', '[ARMOR] Onéreux', '[ARMOR] Lumineux', '[ARMOR] Intacte', '[ARMOR] Propre', '[ARMOR] Basique', '[ARMOR] Neuf'],
             Rare: ['[ARMOR] Superbe', '[ARMOR] Immuable', '[ARMOR] Premium', '[ARMOR] Résistant', '[ARMOR] Solide', '[ARMOR] Durable', '[ARMOR] Brillant', '[ARMOR] Puissant'],
-            Epic: ['[ARMOR] de Maître', '[ARMOR] d\'Expert', '[ARMOR] de Gardien', '[ARMOR] Parfait', '[ARMOR] Équilibré', '[ARMOR] Indestructible', '[ARMOR] Avancé', '[ARMOR] Brillant'],
+            Epic: ['[ARMOR] de Maître', '[ARMOR] d\'Expert', '[ARMOR] de Gardien', '[ARMOR] Parfait', '[ARMOR] Reluisant', '[ARMOR] Indestructible', '[ARMOR] Avancé', '[ARMOR] Brillant'],
             Exotic: ['[ARMOR] Infini', '[ARMOR] Magique', '[ARMOR] Sacré', '[ARMOR] Béni', '[ARMOR] Reliquat', '[ARMOR] d\'Alpha', '[ARMOR] Fantastique', '[ARMOR] Incroyable'],
             Legendary: ['[ARMOR] Irréel', '[ARMOR] Éternel', '[ARMOR] des Anges', '[ARMOR] de Légende', '[ARMOR] Saint', '[ARMOR] Céleste', '[ARMOR] Féérique', '[ARMOR] de la Destinée', '[ARMOR] de la Transcendance']
         },

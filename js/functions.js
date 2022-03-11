@@ -357,10 +357,10 @@ const POPUP = function (title, content, buttons) {
         `<div class="pw fluid buttons"><div class="pw alpha button" onclick="confirmReset();" ><i class="fal fa-check"></i> Yes</div><div id="POPUP_CLOSE" class="pw red button"><i class="fal fa-times"></i> Cancel</div></div>`,
 
         /* CONFIRM ARMOR  */
-        `<div class="pw fluid buttons"><div id='replace-btn' onclick='DefineCore(${APP.ToAdd[0]}, ${APP.ToAdd[1]});' class='pw alpha button'><i class="fal fa-check"></i> Replace the ${GLOBALS.ARMORS_TYPE[APP.ToAdd[0]]}</div><div id="POPUP_CLOSE" class="pw red button"><i class="fal fa-times"></i> Cancel</div></div>`,
+        `<div class="pw fluid buttons"><div id='replace-btn' onclick='DEFINE_ARMOR(${APP.ToAdd[0]}, ${APP.ToAdd[1]});' class='pw alpha button'><i class="fal fa-check"></i> Replace the ${GLOBALS.ARMORS_TYPE[APP.ToAdd[0]]}</div><div id="POPUP_CLOSE" class="pw red button"><i class="fal fa-times"></i> Cancel</div></div>`,
 
         /* CONFIRM WEAPON */
-        `<div class="pw fluid buttons"><div id='replace-btn' onclick='DefineWeapon("${APP.ToAdd[0]}", ${APP.ToAdd[1]});' class='pw alpha button'><i class="fal fa-check"></i> Replace the ${APP.ToAdd[0]} Weapon</div><div id="POPUP_CLOSE" class="pw red button"><i class="fal fa-times"></i> Cancel</div></div>`
+        `<div class="pw fluid buttons"><div id='replace-btn' onclick='DEFINE_WEAPON("${APP.ToAdd[0]}", ${APP.ToAdd[1]});' class='pw alpha button'><i class="fal fa-check"></i> Replace the ${APP.ToAdd[0]} Weapon</div><div id="POPUP_CLOSE" class="pw red button"><i class="fal fa-times"></i> Cancel</div></div>`
     ];
     if (typeof (buttons) === 'undefined') $("#popup-buttons").html(buttons_type[0]);
     else $("#popup-buttons").html(buttons_type[buttons]);

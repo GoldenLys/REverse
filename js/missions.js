@@ -26,9 +26,8 @@ function GenMissions() {
         }
 
         if (GLOBALS.MISSIONS[M][2] <= Game.Level && GLOBALS.MISSIONS[M][3] == 2) {
-            let FRG = GLOBALS.MISSIONS[M][5] > 0 ? "• <i class='pw blue fal fa-dna'></i>" + fix(GLOBALS.MISSIONS[M][5], 1) + " Fragments<br>" : "";
             if (Game.MissionsCompleted[GLOBALS.MISSIONS[M][9]] == 1 || GLOBALS.MISSIONS[M][9] == -1) {
-                let CONTENT = "<h3 class='" + UNLOCKED + "'>" + GLOBALS.MISSIONS[M][0] + "</h3><div class='ui pw alpha label'> " + FRG + " " + QUALITY + " " + TYPES[GLOBALS.MISSIONS[M][6]] + LEVEL + "</div>" + BTN + "";
+                let CONTENT = "<h3 class='" + UNLOCKED + "'>" + GLOBALS.MISSIONS[M][0] + "</h3><div class='ui pw alpha label'> " + (GLOBALS.MISSIONS[M][5] > 0 ? "<i class='pw blue fal fa-dna'></i>" + fix(GLOBALS.MISSIONS[M][5], 1) + " Fragment" + (GLOBALS.MISSIONS[M][5] > 1 ? "s" : "") + "<br>" : "") + " " + QUALITY + " " + TYPES[GLOBALS.MISSIONS[M][6]] + LEVEL + "</div>" + BTN + "";
                 $("#MISSIONS-FORTRESSES").append(CONTENT);
             }
         }

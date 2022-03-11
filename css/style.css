@@ -73,12 +73,12 @@ p.right {
     margin: auto 5px;
 }
 
-.site-name {
+.game-title {
     font-size: 1.25rem;
     font-weight: bold;
 }
 
-.site-name .sub {
+.game-title .sub {
     opacity: .5;
     margin-left: 5px;
     vertical-align: baseline;
@@ -133,6 +133,12 @@ a:-webkit-any-link {
 ::-webkit-scrollbar-thumb:window-inactive {
     border-color: transparent;
     background: transparent;
+}
+
+.pw.page .scroller {
+    padding: 0px 0px 10px;
+    height: calc(100%);
+    overflow: hidden auto;
 }
 
 .page-sidebar {
@@ -233,6 +239,7 @@ a:-webkit-any-link {
 
 .page-tabs {
     position: relative;
+    padding-top: 40px;
     width: 30%;
     height: 100vh;
     background: linear-gradient(to right, rgb(18 19 31 / 50%), rgb(5 5 20 / 50%));
@@ -626,14 +633,12 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
 
 
 .pw.equipment {
+    flex: calc(50% - 10px);
     background: rgb(18 19 31 / 50%);
     display: flex;
     flex-direction: column;
     font-size: 16px;
     line-height: 16px;
-    min-width: 16vw;
-    max-width: calc(100% - 32px);
-    min-height: 185px;
     border-radius: 5px;
 }
 
@@ -708,22 +713,14 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
     margin: 0;
 }
 
-.pw.armor.grids {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(150px, 2fr));
-    grid-template-rows: repeat(2, minmax(150px, 2fr));
-    grid-gap: 10px;
+.pw.equipment-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .pw.armor.grids[data-variant='vertical'] {
     grid-template-columns: repeat(1, minmax(150px, 1fr));
-}
-
-.pw.weapon.grids {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(150px, 1fr));
-    grid-template-rows: repeat(1, minmax(150px, 1fr));
-    grid-gap: 10px;
 }
 
 .pw.equipment>.header>.pw.inline.label:nth-child(1) {
@@ -743,8 +740,8 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
 .pw.item .icon {
     padding: 5px;
     margin-right: 5px;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     background: rgb(0 0 0 / 10%);
     box-shadow: 5px 5px 5px -5px rgb(28 29 47), inset 5px 5px 5px -2.5px rgb(12 13 23);
     border-radius: 5px;
@@ -752,4 +749,15 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
 
 img {
     pointer-events: none
+}
+
+.page-tabs>.pw.fluid.buttons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.pw.page .page-tabs .scroller {
+    height: calc(100% - 40px);
 }
