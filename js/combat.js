@@ -243,7 +243,7 @@ const WinFight = function () {
 <br>${language[APP.LANG].MISC.CurrentRatio} ${fix(Game.Wins / DEATHS, 4)}
 <br><br>${EXP_TEXT} ${LEVELUP} ${EMP} <div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>${ToAddCash}</div>${LOOTS}`
         ];
-        if (Game.config[2] == 0) POPUP(content[0], content[1].split("[COUNT]").join(fix(Game.Defeated[Game.Enemy[1]], 1)).split("[CLASS]").join(`<span class='Enemy${Game.Enemy[1]}'>${ThreatLevel}</span>`), 0);
+        if (Game.config[2] == 0 || Game.config[2] == 2 && COUNTED_LOOTS >= 1) POPUP(content[0], content[1].split("[COUNT]").join(fix(Game.Defeated[Game.Enemy[1]], 1)).split("[CLASS]").join(`<span class='Enemy${Game.Enemy[1]}'>${ThreatLevel}</span>`), 0);
         else hideRewards();
     }
     $(".pw.message.item").click(".pw.red.button", function () {

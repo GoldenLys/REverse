@@ -12,19 +12,13 @@ body {
     --ALPHA: 19 241 210;
 }
 
-::-moz-selection {
-    color: _clear_;
-    background-color: rgb(125, 125, 155);
-}
-
 ::selection {
     background-color: rgb(125, 125, 155);
 }
 
 *,
-:after,
-:before {
-    -webkit-box-sizing: inherit;
+::after,
+::before {
     box-sizing: inherit;
 }
 
@@ -33,16 +27,15 @@ html {
 }
 
 body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    font-family: Inter, sans-serif;
     font-weight: 300;
     line-height: 1;
     font-size: 15px;
     height: 100vh;
-    color: #FFFFFF;
-    background: center / cover no-repeat rgb(17, 15, 31);
+    color: rgb(255, 255, 255);
+    background: center center / cover no-repeat rgb(17, 15, 31);
     overflow: hidden;
-    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -79,23 +72,20 @@ p.right {
 }
 
 .game-title .sub {
-    opacity: .5;
+    opacity: 0.5;
     margin-left: 5px;
     vertical-align: baseline;
     font-size: 12px;
 }
 
 span>.sub {
-    font-size: .75rem;
+    font-size: 0.75rem;
 }
 
 a:-webkit-any-link {
     color: white;
     text-decoration: none;
-    -webkit-transition: all .25s ease;
-    transition: all .25s ease-in-out;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
+    transition: all 0.25s ease-in-out 0s;
     user-select: none;
 }
 
@@ -116,14 +106,14 @@ a:-webkit-any-link {
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 0;
-    box-shadow: inset 0 0 10px rgb(5 5 20);
+    border-radius: 0px;
+    box-shadow: rgb(5, 5, 20) 0px 0px 10px inset;
     background: rgb(var(--ALPHA));
 }
 
 ::-webkit-scrollbar-track {
     border-radius: 0px;
-    background: rgb(0 0 0 / 0%) url('../images/scrollbar.png') repeat-y !important;
+    background: url("../images/scrollbar.png") repeat-y rgba(0, 0, 0, 0) !important;
 }
 
 ::-webkit-scrollbar:window-inactive {
@@ -143,11 +133,11 @@ a:-webkit-any-link {
 
 .page-sidebar {
     position: relative;
-    background: linear-gradient(to right, rgb(5 5 20 / 50%), rgb(18 19 31 / 50%));
+    background: linear-gradient(to right, rgba(5, 5, 20, 0.5), rgba(18, 19, 31, 0.5));
     width: 20%;
     height: 100vh;
-    border-radius: 0;
-    padding: 0;
+    border-radius: 0px;
+    padding: 0px;
     margin: 0px;
 }
 
@@ -162,7 +152,7 @@ a:-webkit-any-link {
 .page-sidebar .menu li {
     display: block;
     text-align: center;
-    margin: 0;
+    margin: 0px;
     height: auto;
     line-height: 3.5rem;
     position: relative;
@@ -174,8 +164,8 @@ a:-webkit-any-link {
     display: block;
     color: white;
     height: 3.5rem;
-    font-size: 1.10rem;
-    border-radius: 0 5px 5px 0;
+    font-size: 1.1rem;
+    border-radius: 0px 5px 5px 0px;
     justify-content: center;
     align-items: center;
     text-indent: 3.5rem;
@@ -183,7 +173,7 @@ a:-webkit-any-link {
 
 .menu .link i {
     text-indent: 0em;
-    background-color: rgb(0 0 0 / 15%);
+    background-color: rgba(0, 0, 0, 0.15);
     position: absolute;
     top: 5px;
     left: 5px;
@@ -193,20 +183,20 @@ a:-webkit-any-link {
     vertical-align: middle;
     width: 3.5rem;
     line-height: calc(3.5rem - 10px);
-    transition: background-color 1000ms ease-in-out;
+    transition: background-color 1000ms ease-in-out 0s;
 }
 
 .menu li.active .link {
     color: rgb(var(--ALPHA));
-    background-color: rgb(125 125 155 / 25%);
+    background-color: rgba(125, 125, 155, 0.25);
 }
 
-.menu li.active:after {
+.menu li.active::after {
     content: "";
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
     display: flex;
     background: rgb(var(--ALPHA));
     box-shadow: 0 0 5px rgb(var(--ALPHA));
@@ -215,7 +205,7 @@ a:-webkit-any-link {
 
 .menu .link:hover {
     background-color: rgb(var(--ALPHA) / 25%);
-    padding: 0;
+    padding: 0px;
     cursor: pointer;
 }
 
@@ -242,7 +232,8 @@ a:-webkit-any-link {
     padding-top: 40px;
     width: 30%;
     height: 100vh;
-    background: linear-gradient(to right, rgb(18 19 31 / 50%), rgb(5 5 20 / 50%));
+    background: linear-gradient(to right, rgba(18, 19, 31, 0.5), rgba(5, 5, 20, 0.5));
+    transition: all 2s ease-out 0s;
 }
 
 .page-content .player-exp {
@@ -254,32 +245,32 @@ a:-webkit-any-link {
 }
 
 .page-content .player-exp>.pw.progress {
-    border-radius: 0;
-    background: rgb(18 19 31 / 50%);
+    border-radius: 0px;
+    background: rgba(18, 19, 31, 0.5);
 }
 
 .header {
     background: rgb(18, 19, 31);
-    box-shadow: 2.5px 2.5px 5px 0px rgb(0 0 0 / 25%);
+    box-shadow: rgba(0, 0, 0, 0.25) 2.5px 2.5px 5px 0px;
     line-height: 1;
-    padding: .25em .5em;
+    padding: 0.25em 0.5em;
     font-size: 50px;
     text-align: center;
     font-weight: bold;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
 }
 
 input[type="text"] {
     width: 100%;
     max-width: -webkit-fill-available;
-    padding: 1em .5em;
-    margin: 5px 0;
+    padding: 1em 0.5em;
+    margin: 5px 0px;
     font-size: 1rem;
     color: white;
-    background: rgb(255 255 255 / 15%);
+    background: rgba(255, 255, 255, 0.15);
     border: none;
-    outline: none !important;
     border-radius: 5px;
+    outline: none !important;
 }
 
 ::-webkit-input-placeholder {
@@ -296,9 +287,8 @@ input[type="text"] {
 
 .page-tabs>.pw.buttons .pw.button {
     border: none;
-    border-radius: 0 !important;
+    border-radius: 0px !important;
 }
-
 
 #DIV-STATS .pw.segment.avatar {
     display: contents;
@@ -307,19 +297,19 @@ input[type="text"] {
 #LEADERBOARD>.pw.segments>.pw.segment:nth-child(1) {
     min-width: 5%;
     max-width: 5%;
-    padding: 0;
+    padding: 0px;
 }
 
 #LEADERBOARD>.pw.segments>.pw.segment:nth-child(2) {
     min-width: 25%;
     max-width: 25%;
-    padding: 0;
+    padding: 0px;
 }
 
 #LEADERBOARD>.pw.segments>.pw.segment:nth-child(4) {
     min-width: 10%;
     max-width: 10%;
-    padding: 0;
+    padding: 0px;
 }
 
 #LEADERBOARD>.pw.segments>.pw.segment:nth-child(3),
@@ -328,37 +318,37 @@ input[type="text"] {
 #LEADERBOARD>.pw.segments>.pw.segment:nth-child(7) {
     min-width: 15%;
     max-width: 15%;
-    padding: 0;
+    padding: 0px;
 }
 
 .type_card {
     min-width: 50% !important;
-    padding: 0 !important;
+    padding: 0px !important;
 }
 
 .type_card .card {
     position: relative;
     display: flex;
-    background: rgb(18 19 31 / 50%);
+    height: 100%;
     justify-content: center;
     align-items: center;
     min-height: 260px;
     border-radius: 5px;
     overflow: hidden;
-    transition: 0.5s;
+    transition: all 0.5s ease 0s;
 }
 
 .type_card:first-child .card {
-    margin: 0 .5rem 0 0;
+    margin: 0px 0.5rem 0px 0px;
 }
 
 .type_card:last-child .card {
-    margin: 0 0 0 .5rem;
+    margin: 0px 0px 0px 0.5rem;
 }
 
 .type_card .card_content {
     position: relative;
-    margin: 0 auto;
+    margin: 0px auto;
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -367,8 +357,8 @@ input[type="text"] {
 
 .type_card .card_content .number {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     height: 100%;
     width: 100%;
 }
@@ -376,29 +366,35 @@ input[type="text"] {
 .type_card .card_content .number #EnemySprite,
 .type_card .card_content .number #PlayerSprite {
     margin: 5px;
+    height: 140px;
+    width: 140px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }
 
 .type_card .card_content .number img {
-    margin: 0;
+    margin: 0px;
     border-radius: 50%;
 }
 
 .type_card .card_content .number h2 {
     position: absolute;
     font-weight: 700;
-    font-size: .75rem;
+    font-size: 0.75rem;
     vertical-align: middle;
-    margin: 0;
+    margin: 0px;
     top: -10%;
-    left: 0;
-    right: 0;
+    left: 0px;
+    right: 0px;
     text-align: center;
-    transition: 0.5s;
+    transition: all 0.5s ease 0s;
 }
 
 .type_card .card_content .number h2 span {
-    transition: 0.5s;
-    font-size: .65rem;
+    transition: all 0.5s ease 0s;
+    font-size: 0.65rem;
     color: white;
 }
 
@@ -407,16 +403,20 @@ input[type="text"] {
     font-size: 1rem;
     text-align: center;
     text-transform: uppercase;
-    transition: 0.5s;
+    transition: all 0.5s ease 0s;
 }
 
 .type_card .text:first-child {
-    margin-top: 0;
+    margin-top: 0px;
 }
 
 .type_card .text:last-child {
     min-height: 3rem;
-    margin-bottom: 0;
+    margin-bottom: 0px;
+}
+
+.type_card .text:last-child>span:not(.label):first-child {
+    line-height: 26px;
 }
 
 .type_card svg {
@@ -442,32 +442,32 @@ input[type="text"] {
 }
 
 .type_card #PlayerCard.card .Percentage {
-    stroke-dashoffset: calc(455 - (455 * 100) / 100);
-    stroke: #0fb13a;
-    transition: stroke-dashoffset 250ms ease;
+    stroke-dashoffset: calc(0);
+    stroke: rgb(15, 177, 58);
+    transition: stroke-dashoffset 250ms ease 0s;
 }
 
 .type_card #EnemyCard.card .Percentage {
-    stroke-dashoffset: calc(455 - (455 * 100) / 100);
-    stroke: #b30e0e;
+    stroke-dashoffset: calc(0);
+    stroke: rgb(179, 14, 14);
 }
 
-img[src*="E.png"]:before,
-.error-img:before {
-    content: "?" !important;
+img[src*="E.png"]::before,
+.error-img::before {
     font-size: 50px;
     line-height: 100px;
     color: var(--red);
-    text-shadow: 0 0 5px;
+    text-shadow: 0px 0px 5px;
+    content: "?" !important;
 }
 
 .equipment .pw.segment[id*="armor"],
 .equipment .pw.segment[id="MainWeapon"],
 .equipment .pw.segment[id="SpecialWeapon"] {
     --QUALITY: var(--Error);
-    margin: .5em;
-    background: rgb(18 19 31 / 65%);
-    padding: 0;
+    margin: 0.5em;
+    background: rgba(18, 19, 31, 0.65);
+    padding: 0px;
     border-radius: 5px;
     box-shadow: 0 0 10px 0 var(--QUALITY), 0 0 0 1.5px var(--QUALITY), inset 0 0 5px 1.5px var(--QUALITY) !important;
 }
@@ -479,7 +479,7 @@ img[src*="E.png"]:before,
 }
 
 .equipment h4 {
-    margin: 0;
+    margin: 0px;
     display: inline-block;
 }
 
@@ -488,16 +488,16 @@ img[src*="E.png"]:before,
 }
 
 .equipment .pw.segment>div .pw.segment {
-    padding: 0;
+    padding: 0px;
 }
 
 .equipment>.pw.segments {
-    margin: 0;
+    margin: 0px;
     flex-wrap: wrap;
 }
 
 .equipment>.pw.segments>.pw.segment>.pw.segments {
-    margin: .25em;
+    margin: 0.25em;
 }
 
 #DIV-INVENTORY>.pw.sticked.segments {
@@ -509,7 +509,7 @@ img[src*="E.png"]:before,
 }
 
 #DIV-PRESTIGE #Upgrades .pw.segments {
-    flex-wrap: wrap
+    flex-wrap: wrap;
 }
 
 #DIV-PRESTIGE #Upgrades .pw.segment {
@@ -526,13 +526,11 @@ img[src*="E.png"]:before,
     display: block;
     line-height: 5.5em;
     text-align: center;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
     user-select: none;
 }
 
 .pw.grey.button>.pw.yellow {
-    text-shadow: 0 0 2.5px #0c0a15;
+    text-shadow: rgb(12, 10, 21) 0px 0px 2.5px;
 }
 
 #DIV-COMBAT>.pw.message {
@@ -543,13 +541,8 @@ img[src*="E.png"]:before,
     box-shadow: none;
 }
 
-.page-content div[id^="DIV-"]>.pw.message>.pw.horizontal.divider:first-child,
-.page-content div[id^="DIV-"].pw.message>.pw.horizontal.divider:first-child {
-    margin: 0 0 .5rem;
-}
-
 .page-content div[id^="DIV-"].pw.message {
-    background: rgb(18 19 31 / 65%);
+    background: rgba(18, 19, 31, 0.65);
     padding: 5px 0px;
 }
 
@@ -558,67 +551,64 @@ img[src*="E.png"]:before,
 }
 
 div[id^="INVENTORY-"]>.pw.message {
-    padding: 0 .5em;
-    border-radius: 0;
-    margin-bottom: 0;
-    background: rgb(18 19 31 / 50%);
+    padding: 0px 0.5em;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    background: rgba(18, 19, 31, 0.5);
 }
 
 div[id^="INVENTORY-"]>.pw.message:not(:last-child) {
-    border-bottom: 1px solid rgb(255 255 255 / 15%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 #PLAYER-ETA+.pw.sticked.segments>.pw.segment {
-    margin: 0;
+    margin: 0px;
 }
 
-div[id^=MISSIONS-]>.pw.segment.dark,
-div[id=DIV-EXPLORE]>.pw.segment.dark {
-    background-color: rgb(42 43 58 / 30%);
-    padding: 0;
+div[id^="MISSIONS-"]>.pw.segment.dark,
+div[id="DIV-EXPLORE"]>.pw.segment.dark {
+    background-color: rgba(42, 43, 58, 0.3);
+    padding: 0px;
 }
 
-div[id=DIV-EXPLORE]>.pw.segment.active {
-    padding: 0;
+div[id="DIV-EXPLORE"]>.pw.segment.active {
+    padding: 0px;
 }
 
-div[id^=MISSIONS-]>.pw.segment.dark>h3,
-div[id=DIV-EXPLORE]>.pw.segment.dark>h3 {
-    background-color: rgb(42 43 58 / 25%);
-    margin: 0;
-    border-radius: 5px 5px 0 0;
+div[id^="MISSIONS-"]>.pw.segment.dark>h3,
+div[id="DIV-EXPLORE"]>.pw.segment.dark>h3 {
+    background-color: rgba(42, 43, 58, 0.25);
+    margin: 0px;
+    border-radius: 5px 5px 0px 0px;
 }
 
-div[id=DIV-EXPLORE]>.pw.segment.active>h3 {
+div[id="DIV-EXPLORE"]>.pw.segment.active>h3 {
     background-color: rgb(var(--green) / 10%);
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0px 0px;
 }
 
-div[id^=MISSIONS-]>.pw.segment.dark>.pw.fluid.button,
-div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button {
-    background-color: rgb(42 43 58 / 25%);
-    margin: 0;
-    border-radius: 0 0 5px 5px;
+div[id^="MISSIONS-"]>.pw.segment.dark>.pw.fluid.button,
+div[id="DIV-EXPLORE"]>.pw.segment.dark>.pw.fluid.button {
+    background-color: rgba(42, 43, 58, 0.25);
+    margin: 0px;
+    border-radius: 0px 0px 5px 5px;
 }
 
-div[id^=MISSIONS-]>.pw.segment.dark>.pw.fluid.button:hover,
-div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
-    background-color: rgb(42 43 58 / 50%);
+div[id^="MISSIONS-"]>.pw.segment.dark>.pw.fluid.button:hover,
+div[id="DIV-EXPLORE"]>.pw.segment.dark>.pw.fluid.button:hover {
+    background-color: rgba(42, 43, 58, 0.5);
 }
 
 .background {
     position: fixed;
     z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0px;
     background: rgb(17, 15, 31);
 }
 
-.background:after {
+.background::after {
     content: "";
-    background: center / cover no-repeat linear-gradient(to bottom, rgb(17 15 31 / 90%) 50%, transparent);
+    background: linear-gradient(rgba(17, 15, 31, 0.9) 50%, transparent) center center / cover no-repeat;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -631,10 +621,9 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
     padding: 5px;
 }
 
-
 .pw.equipment {
-    flex: calc(50% - 10px);
-    background: rgb(18 19 31 / 50%);
+    flex: 1 1 calc(50% - 10px);
+    background: rgba(18, 19, 31, 0.5);
     display: flex;
     flex-direction: column;
     font-size: 16px;
@@ -650,9 +639,8 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
     box-shadow: none;
     padding: 0px 0px 5px;
     margin-bottom: 0px;
-    justify-content: center;
+    place-content: center;
     align-items: center;
-    align-content: center;
 }
 
 .pw.equipment>.content {
@@ -673,21 +661,21 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
     height: 80px;
 }
 
-.pw.equipment>.content>.icon:before {
-    top: -5px;
-    left: -5px;
+.pw.equipment>.content>.icon::before {
+    top: 0px;
+    left: 0px;
     position: absolute;
     content: " ";
     padding: 5px;
     width: 80px;
     height: 80px;
-    background: rgb(0 0 0 / 10%);
-    box-shadow: 5px 5px 5px -5px rgb(28 29 47), inset 5px 5px 5px -2.5px rgb(12 13 23);
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: rgb(28, 29, 47) 5px 5px 5px -5px, rgb(12, 13, 23) 5px 5px 5px -2.5px inset;
     border-radius: 5px;
 }
 
 .pw.equipment>.content>.icon>.image>img {
-    margin: 0;
+    margin: 0px;
 }
 
 .pw.equipment>.content>.description {
@@ -704,13 +692,13 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
     padding: 5px;
     width: 35px;
     height: 35px;
-    background: rgb(0 0 0 / 10%);
-    box-shadow: 5px 5px 5px -5px rgb(28 29 47), inset 5px 5px 5px -2.5px rgb(12 13 23);
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: rgb(28, 29, 47) 5px 5px 5px -5px, rgb(12, 13, 23) 5px 5px 5px -2.5px inset;
     border-radius: 5px;
 }
 
 .pw.equipment>.content>.relic>img {
-    margin: 0;
+    margin: 0px;
 }
 
 .pw.equipment-grid {
@@ -719,7 +707,7 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
     gap: 10px;
 }
 
-.pw.armor.grids[data-variant='vertical'] {
+.pw.armor.grids[data-variant="vertical"] {
     grid-template-columns: repeat(1, minmax(150px, 1fr));
 }
 
@@ -742,22 +730,71 @@ div[id=DIV-EXPLORE]>.pw.segment.dark>.pw.fluid.button:hover {
     margin-right: 5px;
     width: 30px;
     height: 30px;
-    background: rgb(0 0 0 / 10%);
-    box-shadow: 5px 5px 5px -5px rgb(28 29 47), inset 5px 5px 5px -2.5px rgb(12 13 23);
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: rgb(28, 29, 47) 5px 5px 5px -5px, rgb(12, 13, 23) 5px 5px 5px -2.5px inset;
     border-radius: 5px;
 }
 
 img {
-    pointer-events: none
+    pointer-events: none;
 }
 
 .page-tabs>.pw.fluid.buttons {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     z-index: 1;
+}
+
+.pw.page.story .page-content {
+    width: 70%;
+}
+
+.pw.page.story .page-tabs {
+    width: 15%;
+}
+
+.pw.page.story .page-tabs>div {
+    position: relative;
+    top: 0px;
+    left: 100%;
+    width: 100%;
+}
+
+.pw.page.story .page-sidebar {
+    width: 15%;
+}
+
+.pw.page.story .page-sidebar>div:not(.labels):not(.credits) {
+    position: relative;
+    top: 0px;
+    right: 100%;
+    width: 100%;
 }
 
 .pw.page .page-tabs .scroller {
     height: calc(100% - 40px);
+}
+
+.pw.equipment .description {
+    color: rgb(189, 189, 189);
+}
+
+.pw.equipment .description>.text {
+    color: rgb(255, 255, 255);
+}
+
+.labels {
+    text-align: center;
+    position: absolute;
+    bottom: 3rem;
+    left: 1rem;
+    right: 1rem;
+}
+
+.pw.page.story .labels,
+.pw.page.story .page-content #DIV-COMBAT .type_card .card,
+.pw.page.story .page-content #DIV-COMBAT #EQUIPMENT,
+.pw.page.story .page-content #DIV-COMBAT #BUTTONS_COMBAT {
+    display: none !important;
 }

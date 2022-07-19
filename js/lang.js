@@ -136,6 +136,7 @@ var language = {
             Credits: "Credits",
             Missions: "Missions",
             Exploration: "Exploration",
+            Guild: "Guild",
         },
         STATUS: {
             NotStarted: "Not Started",
@@ -190,11 +191,16 @@ var language = {
             NextArmorUnlock: "Next armor piece unlocked at level [LEVEL].",
             Equipment: "Equipment",
             LootItem: "1 [QUALITY] equipment ",
+            LootRelic: "1 [QUALITY] relic ",
+            LootGem: "1 [QUALITY] gem ",
             Lv: "Lv.",
             ThrowAway: "Throw Away",
             Cover: "Next cover in [COUNT].",
             Retreat: "Next retreat in [COUNT].",
-            MaxLevelForArea: "You've reached the maximum level for this area, please check the next available missions."
+            MaxLevelForArea: "You've reached the maximum level for this area, please check the next available missions.",
+            Titles: "Titles",
+            Bank: "Bank",
+            Shop: "Shop"
         },
         FORMAT: {
             ENEMIES: "[CLASS] [NAME]"
@@ -229,6 +235,11 @@ var language = {
             "Life bonus of [BONUS]",
             "Minimal drop quality [BONUS]",
             "Max Score +[BONUS]",
+        ],
+        REWARDS: [
+        "Currently set to <span class='pw green'>show all rewards</span>.", 
+        "Currently set to <span class='pw red'>hide all rewards</span>.",
+        "Currently set to <span class='pw yellow'>show only rewards with loot</span>."
         ]
     },
     FR: {
@@ -259,7 +270,7 @@ var language = {
             1: ['Forêt des Ombres', 'Vous êtes maintenant dans une forêt inconnue... Une forêt sombre et glauque sans personne en vue.<br>Vous décidez de vite partir de là, au risque d\'y perdre la vie.'],
             2: ['Chemin Perdu', 'Vous arrivez au bout de la forêt et découvrez un petit chemin caché derrière un grand arbre.<br>Il semble y avoir une lumière au loin et peut-être enfin des réponses.'],
             3: ['Ville de Galarius', 'Vous arrivez dans une ville où vivent de nombreuses personnes de races différentes : Humains, Nains et même des Elfes.<br>Il semble que vous puissiez trouver une aide ici... ou peut-être simplement une personne qui puisse vous dire comment retourner dans votre monde.'],
-            4: ['Montagn sans Fin', 'Un des habitants vous conseille de partir vers le nord et de rejoindre la capitale royale en passant par les montagnes...<br>Vous voilà donc dans les montagnes dites "sans fin".'],
+            4: ['Montagne sans Fin', 'Un des habitants vous conseille de partir vers le nord et de rejoindre la capitale royale en passant par les montagnes.<br>Vous voilà donc dans les montagnes dites "sans fin".'],
             5: ['Grotte Obscure', 'Vous arrivez à l\'entrée d\'une obscure grotte.<br>Elle semble étroite mais elle est beaucoup plus rapide et moins dangereuse que les montagnes.'],
             6: ['Route Impériale', 'Vous arrivez enfin au bout de la grotte, fatigués mais en un seul morceau.<br>Vous apercevez déjà une ville immense au bout de la route.'],
             7: ['Ville d\'Imperium', 'Vous arrivez à la capitale; Le Roi, ayant entendu parler de votre histoire, réclame une audience immédiate.'],
@@ -268,8 +279,8 @@ var language = {
             10: ['Monde Corrompu', 'Vous avez réussi à franchir le portail... Mais où donc êtes-vous arrivé ?'],
             11: ['Forteresse Corrompue', 'Vous voyez une immense forteresse remplie uniquement de démons; Vous ressentez le besoin de purifier cet endroit.'],
             12: ['Forteresse Corrompue - Sous-sol', 'Il y a une porte qui donne accès à un autre niveau ; vous ressentez le besoin de nettoyer cet endroit également.'],
-            13: ['Forteresse Corrompue - Le Coeur', 'Au dernier étage, vous trouvez le coeur de la forteresse, là d\'où la corruption commence... Détruisez-le.'],
-            14: ['Portail Noir', 'Juste après avoir détruit le coeur de la forteresse, un autre portail apparaît, celui-ci noir et froid comme la glace.<br><br><center>Une nouvelle histoire commence.</center>'],
+            13: ['Forteresse Corrompue - Noyau', 'Au dernier étage, vous trouvez le noyau de la forteresse, là d\'où la corruption commence... Détruisez-le.'],
+            14: ['Portail Noir', 'Juste après avoir détruit le noyau de la forteresse, un autre portail apparaît, celui-ci noir et froid comme la glace.<br><br><center>Une nouvelle histoire commence.</center>'],
             15: ['Portail Noir II', 'En avançant, le passage devient encore plus obscur et froid. On peut seulement distinguer une lumière au loin...'],
             16: ['Lumière d\'Elysia', 'En sortant de l\'autre côté du portail, vous atterrissez dans un nouveau monde, dans la ville d\'Elysia.<br>Ce monde semble relativement beau; pourquoi ne pas l\'explorer un peu ?'],
             17: ['Lune Rouge à Elysia', 'Elysia est une ville vivante, paisible et remplie uniquement d\'humains pour autant que vous puissiez en témoigner.<br>En parcourant la ville, vous entendez un cri; En arrivant au son, vous voyez un homme sucer le sang de quelqu\'un dans l\'ombre d\'une ruelle... Un Vampire !'],
@@ -281,7 +292,7 @@ var language = {
             23: ['Pont Immortel', "Ces vampires semblent plus difficiles à tuer que ceux de la cité.<br>Un énorme château se profile au bout du pont, vous continuez donc à vous battre pour le franchir."],
             24: ['Château des Vampires', 'C\'est ici : Le Château des Vampires. Puisque vous êtes arrivés, il est temps de purifier cet endroit répugnant !'],
             25: ['Château des Vampires - Tour', 'Vous découvrez qu\'une des tours du château abrite de nombreux et puissants Vampires.<br>Cela va prendre plus de temps que vous ne le pensiez pour faire le ménage.'],
-            26: ['Château des Vampires - Coeur', 'Vous avez atteint le coeur; en détruisant celui-ci, ce monde aura presque enfin atteint la paix.<br>Mais d\'abord, vous devrez tuer les vampires qui le protège encore !'],
+            26: ['Château des Vampires - Noyau', 'Vous avez atteint le noyau; en détruisant celui-ci, ce monde aura presque enfin atteint la paix.<br>Mais d\'abord, vous devrez tuer les vampires qui le protège encore !'],
         },
         BOSSES_NAMES: [
             'Âme Pure',
@@ -368,6 +379,7 @@ var language = {
             Credits: "Crédits",
             Missions: "Missions",
             Exploration: "Exploration",
+            Guild: "Guilde",
         },
         STATUS: {
             NotStarted: "Non commencée",
@@ -422,11 +434,16 @@ var language = {
             NextArmorUnlock: "Prochaine pièce d'armure débloquée au niveau [LEVEL].",
             Equipment: "Équipement",
             LootItem: "1 équipement [QUALITY]",
+            LootRelic: "1 relique [QUALITY]",
+            LootGem: "1 gemme [QUALITY]",
             Lv: "Niv.",
             ThrowAway: "Jeter",
             Cover: "Prochaine couverture dans [COUNT].",
             Retreat: "Prochaine fuite dans [COUNT].",
-            MaxLevelForArea: "Vous avez atteint le niveau maximal pour cette zone, veuillez regarder les missions disponibles."
+            MaxLevelForArea: "Vous avez atteint le niveau maximal pour cette zone, veuillez regarder les missions disponibles.",
+            Titles: "Titres",
+            Bank: "Banque",
+            Shop: "Boutique"
         },
         FORMAT: {
             ENEMIES: "[NAME] [CLASS]",
@@ -461,6 +478,11 @@ var language = {
             "Bonus de vie de [BONUS]",
             "Qualité minimale des objets [BONUS]",
             "Score maximal +[BONUS]",
+        ],
+        REWARDS: [
+        "Actuellement définis pour <span class='pw green'>afficher toutes les récompenses</span>.",
+        "Actuellement définis pour <span class='pw red'>cacher toutes les récompenses</span>.",
+        "Actuellement définis pour <span class='pw yellow'>n'afficher que les récompenses avec du butin</span>."
         ]
     }
 };

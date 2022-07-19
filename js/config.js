@@ -1,7 +1,7 @@
 var GLOBALS = {
     NAME: "AlphaRPG",
-    VERSION: "3.3",
-    BETA: 12,
+    VERSION: "3.4",
+    BETA: 2,
     RELICS_NAMES: [],
     THREATS: [],
     ARMORS_NAMES: {
@@ -157,7 +157,7 @@ var Game = {
     Upgrades: [0, 0, 0, 0],
     Dimension: 1,
     DIMENSION_MULTIPLIERS: [0, 0, 0, 1], //POWER, LIFE, XP, DIFFICULTY
-    Avatar: random(1, 50),
+    Avatar: random(1, 65),
     config: [1, 1, 0, 1, 0, 0],
     LastEscape: 0,
     Sprite: 0,

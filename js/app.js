@@ -1,15 +1,34 @@
-/* Ideas & Future updates :
+/* 
+-- Ideas & Future updates --
 
-1     | Divine items with unique skills. (Old divines will now be legendaries)
-2     | Guild : Gain fame in the guild to obtain a cool new rank badge and also to earn some more money.
-3     | Shop  : Selling the best weapons & armors of the game, unique-class items would have skills embedded into them
-4 [?] | Bank  : May be put as a guild feature; put your money in a safe so that you don't lose it when dying.
-5 [?] | Crafting system for Gems Weapons, Armors and maybe Relics under some circumstances.
-6 [?] | Adding achievements
-7 [?] | Titles : Unlocking titles under certains conditions, example: kill 1k mobs in a fortress to unlock the "HERO" title.
-8     | Bug testing the game
+1 [?] | Divine items with unique skills.
+2 [*] | Guild : Gain fame in the guild to obtain a cool new rank badge and also to earn some more money.
+3 [*] | Shop  : Selling the best weapons & armors of the game, unique-class items would have skills embedded into them
+4 [?] | Types : Add elemental types to enemies
+5 [*] | Bank  : May be put as a guild feature; put your money in a safe so that you don't lose it when dying.
+6 [?] | Crafting system for Weapons, Armors & misc items like healing potions
+7 [?] | Adding achievements
+8 [*] | Titles : Unlocking titles under certain conditions, example: killing 1k mobs in a fortress unlocks the "HERO" title.
+9     | Bug testing the game
 
-[?] Features listed with a ? mark may be abandonned/modified in future updates
+[?] These ideas could be abandonned or modified 
+[*] These features will be coming in the next update
+
+
+-- Missions dialogues --
+
+  [ 50%] create an animation (done just need to make the JS or CSS animation)
+  [  0%] create a new dialogues view 
+  [  0%] create & animate 2 buttons (return and next) (0%)
+
+
+-- Ideas for loot attributes --
+
+  deals X% more damage against X class enemies
+  Enable mind control after X seconds (120s by default)
+  enemies have X% chances to drop 10%/20% more special attacks
+  adds X slots to inventory
+  enemies have X% chances to drop 10%/20% more money
 
 */
 
@@ -56,14 +75,14 @@ var APP = {
 };
 
 $(document).ready(function () {
-    if (GLOBALS.BETA) GLOBALS.VERSION = `${GLOBALS.VERSION} BETA ${GLOBALS.BETA}`;
-    if (location.href.match(/(:5500).*/)) GLOBALS.VERSION = "dev";
+    if (location.href.match(/(:5500).*/)) GLOBALS.VERSION = GLOBALS.VERSION + " (dev)";
+    else if (GLOBALS.BETA) GLOBALS.VERSION = `${GLOBALS.VERSION} BETA ${GLOBALS.BETA}`;
     document.title = GLOBALS.NAME;
     $("#game_title").html(GLOBALS.NAME + "<span class='sub'>" + GLOBALS.VERSION + "</span>");
     ResetTheme(0);
     if (localStorage.getItem("Alpha") !== null) load();
     SELECT_LANGUAGE();
-    if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin" && !$("#LOGIN-NOTICE").hasClass("active") && GLOBALS.VERSION != "dev") LOGIN("RETURN");
+    if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin" && !$("#LOGIN-NOTICE").hasClass("active") && !GLOBALS.VERSION.endsWith('(dev)')) LOGIN("RETURN");
     if (Game.username != "Default") {
         $("#GAME").show();
         $("#INTRODUCTION").hide();
@@ -83,7 +102,7 @@ $(document).ready(function () {
     CompleteMission();
     filter(0);
     $('.pw.checkbox').each(function () {
-        if ($(this).attr("data-id") < 5 || $(this).attr("data-id") == 11) {
+        if ($(this).attr("data-id") < 5 || $(this).attr("data-id") == 11 || $(this).attr("data-id") == 12) {
             let TOGGLE = Game.config[$(this).attr("data-id")] == 1 ? "checked" : "unchecked";
             $(this).attr("data-check", TOGGLE);
         } else {
@@ -92,8 +111,8 @@ $(document).ready(function () {
         }
     });
     $("#VERSION_TEXT").html("AlphaRPG v" + GLOBALS.VERSION);
-    $("#avatar").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
-    $("#avatar2").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
+    $("#avatar").attr("src", `images/avatars/avatar (${Game.Avatar}).png`);
+    $("#avatar2").attr("src", `images/avatars/avatar (${Game.Avatar}).png`);
     GenArmors();
     GenWeapons();
     ResetLeaderBoard();
@@ -123,7 +142,7 @@ const UpdateEngine = function () {
         UpdateGame();
     }
     if (APP.lastCloudSave < 180) APP.lastCloudSave++;
-    else SendStats();
+    else if (APP.LoggedIn == 1 && APP.Email != "none") SendStats();
     if (Game.LastEscape >= 1) {
         Game.LastEscape--;
         $("#NextRetreat").html(`${language[APP.LANG].MISC.Retreat.split("[COUNT]").join(toHHMMSS(Game.LastEscape))}`);
@@ -131,7 +150,10 @@ const UpdateEngine = function () {
     if (APP.LastCover > 1) {
         APP.LastCover--;
         $("#NextCover").html(`${language[APP.LANG].MISC.Cover.split("[COUNT]").join(toHHMMSS(APP.LastCover))}`);
-    } else $("#NextCover").html("");
+    } else {
+        $("#NextCover").html("");
+        APP.LastCover = 0;
+    }
     if (Game.xp[0] < 0) Game.xp[0] = 0;
     for (let UPC = 0; UPC < 4; UPC++) {
         if (typeof (Game.MaxUPC[UPC]) === 'undefined') Game.MaxUPC[UPC] = 0;
@@ -166,38 +188,38 @@ const UpdateEngine = function () {
         }
     }
     if (Game.Emp > 50) Game.Emp = 50;
-    let ONLINEICON = "<i class='pw red far fa-circle'></i>";
-    if (Game.username != "Default" && location.href.match(/(alpha.purplewizard.space).*/) && Game.username != "Default" && Game.username != null && APP.LoggedIn == 1 && APP.Email != "none") ONLINEICON = "<i class='pw alpha fas fa-circle'></i>";
+    let ONLINEICON = "<i title='Offline' class='pw red far fa-circle'></i>";
+    if (Game.username != "Default" && location.href.match(/(purplewizard.space).*/) && Game.username != "Default" && Game.username != null && APP.LoggedIn == 1 && APP.Email != "none") ONLINEICON = "<i title='Online' class='pw alpha fas fa-circle'></i>";
     $("#PlayerID").html("<div class='pw alpha'>" + ONLINEICON + Game.username + " <span class='pw white inline label'>" + LEVEL + "</span></div>");
-    $("#PlayerSprite").html("<img class='pw small image' src='images/avatars/avatar" + Game.Avatar + ".jpg'>");
+    $("#PlayerSprite").html("<img class='pw small image' src='images/avatars/avatar (" + Game.Avatar + ").png'>");
     if (APP.ScoreModeEnabled == 0) {
         for (let ARMOR in Game.Armors) {
             if (Game.Armors[ARMOR] > Game.Level) {
-                console.log("ERROR 001");
+                LOG("ERROR", "code 001", "white; background-color: rgb(185 20 20)");
                 ErrorArmor(ARMOR);
             }
         }
         if (Game.Weapons.Main[3] > Game.Level) {
-            console.log("ERROR 002");
+            LOG("ERROR", "code 002", "white; background-color: rgb(185 20 20)");
             ErrorArmor(5);
         }
         if (Game.Weapons.Special[3] > Game.Level) {
-            console.log("ERROR 003");
+            LOG("ERROR", "code 003", "white; background-color: rgb(185 20 20)");
             ErrorArmor(6);
         }
     } else {
         for (let ARMOR in Game.Armors) {
             if (Game.Armors[ARMOR] > APP.MaxScore) {
-                console.log("ERROR 004");
+                LOG("ERROR", "code 004", "white; background-color: rgb(185 20 20)");
                 ErrorArmor(ARMOR);
             }
         }
         if (Game.Weapons.Main[3] > APP.MaxScore) {
-            console.log("ERROR 005");
+            LOG("ERROR", "code 005", "white; background-color: rgb(185 20 20)");
             ErrorArmor(5);
         }
         if (Game.Weapons.Special[3] > APP.MaxScore) {
-            console.log("ERROR 006");
+            LOG("ERROR", "code 006", "white; background-color: rgb(185 20 20)");
             ErrorArmor(6);
         }
     }
@@ -274,36 +296,42 @@ const UpdateGame = function () {
     for (var IV in Game.inventory) {
         if (typeof Game.inventory[IV].name === "undefined" || typeof Game.inventory[IV].class === "undefined" || typeof Game.inventory[IV].type === "undefined") {
             RemoveItem(IV);
-            console.log("ERROR 007");
+            if (Game.isInFight == 2) POPUP_CLOSE();
+            LOG("ERROR", "code 007", "white; background-color: rgb(185 20 20)");
         }
         if (Game.Level < 10 && Game.inventory[IV].class == 'Uncommon') {
             RemoveItem(IV);
-            console.log("ERROR 008");
+            if (Game.isInFight == 2) POPUP_CLOSE();
+            LOG("ERROR", "code 008", "white; background-color: rgb(185 20 20)");
         }
         if (Game.Level < 15 && Game.inventory[IV].class == 'Rare') {
             RemoveItem(IV);
-            console.log("ERROR 009");
+            if (Game.isInFight == 2) POPUP_CLOSE();
+            LOG("ERROR", "code 009", "white; background-color: rgb(185 20 20)");
         }
         if (Game.Level < 20 && Game.inventory[IV].class == 'Epic') {
             RemoveItem(IV);
-            console.log("ERROR 010");
+            if (Game.isInFight == 2) POPUP_CLOSE();
+            LOG("ERROR", "code 010", "white; background-color: rgb(185 20 20)");
         }
         if (Game.Level < 30 && Game.inventory[IV].class == 'Exotic' || Game.Level < 30 && Game.inventory[IV].class == 'Legendary') {
             RemoveItem(IV);
-            console.log("ERROR 011");
+            if (Game.isInFight == 2) POPUP_CLOSE();
+            LOG("ERROR", "code 011", "white; background-color: rgb(185 20 20)");
         }
         if (Game.inventory[IV].type == 0) {
             RemoveItem(IV);
-            console.log("ERROR 012");
+            if (Game.isInFight == 2) POPUP_CLOSE();
+            LOG("ERROR", "code 012", "white; background-color: rgb(185 20 20)");
         }
-        if (IV >= Game.MaxInv) RemoveItem(IV);
+        if (IV >= Game.MaxInv) { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
         if (typeof Game.inventory[IV] !== 'undefined') {
-            if (Game.AutoRemove[0] == 1 && Game.inventory[IV].class == "Normal") RemoveItem(IV);
-            else if (Game.AutoRemove[1] == 1 && Game.inventory[IV].class == "Common") RemoveItem(IV);
-            else if (Game.AutoRemove[2] == 1 && Game.inventory[IV].class == "Uncommon") RemoveItem(IV);
-            else if (Game.AutoRemove[3] == 1 && Game.inventory[IV].class == "Rare") RemoveItem(IV);
-            else if (Game.AutoRemove[4] == 1 && Game.inventory[IV].class == "Epic") RemoveItem(IV);
-            else if (Game.AutoRemove[5] == 1 && Game.inventory[IV].class == "Exotic") RemoveItem(IV);
+            if (Game.AutoRemove[0] == 1 && Game.inventory[IV].class == "Normal") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
+            else if (Game.AutoRemove[1] == 1 && Game.inventory[IV].class == "Common") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
+            else if (Game.AutoRemove[2] == 1 && Game.inventory[IV].class == "Uncommon") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
+            else if (Game.AutoRemove[3] == 1 && Game.inventory[IV].class == "Rare") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
+            else if (Game.AutoRemove[4] == 1 && Game.inventory[IV].class == "Epic") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
+            else if (Game.AutoRemove[5] == 1 && Game.inventory[IV].class == "Exotic") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
         }
     }
     if (!Game.MissionStarted[0] && (Game.Location == 11 || Game.Location == 17)) Game.Location--;
@@ -347,9 +375,10 @@ const UpdateUI = function () {
         $("#WTUNLOCK").html("");
     }
     var shards = Game.Level < APP.MaxLevel ? "0" : Math.round(APP.Ranking / 10 - 30);
+    shards = shards <= 0 ? "0" : shards;
     var completedstory = APP.LastMission == APP.TotalMissions ? "<span class='pw alpha'>Yes</span>" : "<span class='pw red'>Not Yet</span>";
-    $("#WTShards").html("Score Required : <span class='pw alpha'><i class='fad fa-dice-d20'></i>" + (((30 + (Game.Dimension * 5)) * 10) - 5) + "</span><br>Story completed : " + completedstory + "<br>Fragments reward : <span class='pw alpha'><i class='fal fa-dna'></i>" + shards + "</span>");
-    $("#CurrWT").html("Current Dimension : <span class='pw alpha'><i class='globe icon'></i>" + Game.Dimension + "</span>");
+    $("#WTShards").html("Score required : <span class='pw alpha'><i class='fad fa-dice-d20'></i>" + (((30 + (Game.Dimension * 5)) * 10) - 5) + "</span><br>Completed story : " + completedstory + "<br>Fragments reward : <span class='pw alpha'><i class='fal fa-dna'></i>" + shards + "</span>");
+    $("#CurrWT").html("Current dimension : <span class='pw alpha'><i class='globe icon'></i>" + Game.Dimension + "</span>");
     let UPGRADES_IDs = ["XPMULTPRICE", "POWERMULTPRICE", "LIFEMULTPRICE", "INVUPGPRICE"];
     let UPGRADE_TEXT = [];
     let CAN_AFFORD_UPGRADE = [];
@@ -375,6 +404,7 @@ const UpdateUI = function () {
     }
     if (Game.isInFight != 2 || Game.isInFight != 3) APP.LastMission = CompletedMissions;
     SET_CURRENT_TASK();
+    $("#REWARDS_CURRENT_CONFIG").html(language[APP.LANG].REWARDS[Game.config[2]]);
     if ($('#DIV-COMBAT').is(":visible")) $("#DIV-REWARDS").hide();
     if (APP.LoggedIn == 1) $("#CloudTimer").html("Last cloud sync " + toHHMMSS(APP.lastCloudSave) + " ago, as <span class='pw alpha'>" + Game.username + "</span>.");
     else $("#CloudTimer").html("Cloud sync disabled.");
@@ -408,11 +438,11 @@ const SET_CURRENT_TASK = function () {
 };
 
 const DEFINE_BODY_ATTRIBUTES = function () {
-    $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("../images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
+    $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://purplewizard.space/AlphaRPG/images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
     $("body").attr("style", `--ALPHA: ${Game.Theme};`);
 };
 
-function GET_EQUIPMENT_RANK () {
+function GET_EQUIPMENT_RANK() {
     let RANKING = Game.Weapons.Main[3] + Game.Weapons.Special[3];
     let divisor = 2;
     for (let armor = 1; armor < 5; armor++) {
@@ -426,4 +456,8 @@ function GET_EQUIPMENT_RANK () {
         }
     }
     APP.Ranking = Math.floor((RANKING / divisor) * 10);
+}
+
+function TOGGLE_STORY() {
+    $("#GAME").toggleClass("story");
 }

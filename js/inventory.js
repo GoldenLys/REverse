@@ -18,8 +18,8 @@ const GenInventory = function () {
         let RELIC = "";
         if (Game.inventory[ITEM].relictype !== 5) {
             RELIC = "<i class='pw yellow fas fa-stars'></i> ";
-            if (Game.inventory[ITEM].relictype === 1) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(fix(Game.inventory[ITEM].bonus, 2));
-            else if (Game.inventory[ITEM].relictype === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(fix(Game.inventory[ITEM].bonus, 2));
+            if (Game.inventory[ITEM].relictype === 1) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(fix(Game.inventory[ITEM].bonus, 3));
+            else if (Game.inventory[ITEM].relictype === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(fix(Game.inventory[ITEM].bonus, 3));
             else if (Game.inventory[ITEM].relictype === 3) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(`<span class='${Game.inventory[ITEM].bonus}'>${Game.inventory[ITEM].bonus}</span>`);
             else if (Game.inventory[ITEM].relictype === 4) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(fix(Game.inventory[ITEM].bonus, 1));
         }
@@ -107,12 +107,12 @@ const GenArmors = function () {
         let RELIC = "";
         let RELIC_ICON = "";
         if (Game.RELICS[ARMOR][1] !== 5) {
-            RELIC = "<i class='pw yellow fas fa-stars'></i> ";
+            RELIC = "<span class='text'><i class='pw yellow fas fa-stars'></i> ";
             RELIC_ICON = `<img class='pw centered mini image' src='${GET_ICON_ID("Relic", Game.RELICS[ARMOR][1])}'></div>`;
-            if (Game.RELICS[ARMOR][1] === 1) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join(fix(Game.RELICS[ARMOR][2], 2));
-            else if (Game.RELICS[ARMOR][1] === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join(fix(Game.RELICS[ARMOR][2], 2));
-            else if (Game.RELICS[ARMOR][1] === 3) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join(`<span class='${Game.RELICS[ARMOR][2]}'>${Game.RELICS[ARMOR][2]}</span>`);
-            else if (Game.RELICS[ARMOR][1] === 4) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join(fix(Game.RELICS[ARMOR][2], 1));
+            if (Game.RELICS[ARMOR][1] === 1) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + fix(Game.RELICS[ARMOR][2], 3) + '</span>');
+            else if (Game.RELICS[ARMOR][1] === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + fix(Game.RELICS[ARMOR][2], 3) + '</span>');
+            else if (Game.RELICS[ARMOR][1] === 3) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join(`<span class='${Game.RELICS[ARMOR][2]}'>${Game.RELICS[ARMOR][2]}</span></span>`);
+            else if (Game.RELICS[ARMOR][1] === 4) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + fix(Game.RELICS[ARMOR][2], 1) + '</span>');
         }
 
         //DEFINE CONTENT
@@ -142,14 +142,22 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
         MULTIPLIERS: [_.random(1.00, 1.05, true), _.random(1.15, 1.20, true), _.random(1.25, 1.30, true), _.random(1.35, 1.40, true), _.random(1.50, 1.60, true), _.random(1.75, 1.85, true), _.random(1.95, 2.10, true)],
         RARITIES: {
             Normal: [1, 1],
-            Common: [2, 2000],
-            Uncommon: [3, 5000],
-            Rare: [4, 7000],
-            Epic: [5, 8500],
-            Exotic: [6, 9500],
-            Legendary: [7, 9850]
+            Common: [2, 3050],
+            Uncommon: [3, 5550],
+            Rare: [4, 7300],
+            Epic: [5, 8550],
+            Exotic: [6, 9550],
+            Legendary: [7, 9900]
         },
-        RELIC_MULTIPLIERS: [_.random(0.01, 0.025, true), _.random(0.025, 0.05, true), _.random(0.05, 0.10, true), _.random(0.10, 0.15, true), _.random(0.15, 0.20, true), _.random(0.20, 0.25, true), _.random(0.25, 0.30, true)],
+        RELIC_MULTIPLIERS: [
+            _.random(0.001, 0.01, true),//0.1% - 1%
+            _.random(0.01, 0.015, true),  //1%   - 1.5%
+            _.random(0.015, 0.025, true),   //1.5% - 2.5%
+            _.random(0.025, 0.030, true),  //2.5% - 3%
+            _.random(0.04, 0.05, true),   //4%   - 5%
+            _.random(0.05, 0.10, true),   //5%   - 10%
+            _.random(0.1, 0.15, true)     //10%  - 15%
+        ],
         RELIC_SCORE_MUTLIPLIERS: [_.random(1, 5), _.random(6, 10), _.random(11, 15), _.random(16, 20), _.random(21, 25), _.random(26, 50), _.random(51, 100)],
         GEMS_MULTIPLIERS: {
             Normal: _.random(1.0, 1.5, true),
@@ -182,41 +190,44 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
     for (var RELIC in Game.RELICS) { // IF PLAYER HAS A MINIMAL RARITY RELIC THEN USE IT HERE
         if (Game.RELICS[RELIC][1] == 3 && BASE_LUCK < ITEM_CONFIG.RARITIES[Game.RELICS[RELIC][2]][1]) BASE_LUCK = ITEM_CONFIG.RARITIES[Game.RELICS[RELIC][2]][1];
     }
-    if (APP.ScoreModeEnabled == 1 && BASE_LUCK < 7000) { // IF IN SCORE MODE REPLACE ALL LOW CLASS ITEMS WITH HIGH CLASS ONES
+    if (APP.ScoreModeEnabled == 1 && BASE_LUCK < 7300) { // IF IN SCORE MODE REPLACE ALL LOW CLASS ITEMS WITH HIGH CLASS ONES
         let LUCK_PER_TYPES = {
-            0: 7000,
-            1: 7000,
-            2: 7000,
-            3: 7000,
-            4: 7000,
-            5: 8500,
-            6: 8500,
-            7: 9850
+            0: 7300,
+            1: 7300,
+            2: 7300,
+            3: 7300,
+            4: 7300,
+            5: 8550,
+            6: 8550,
+            7: 9900
         };
         BASE_LUCK = LUCK_PER_TYPES[Game.Enemy[1]];
         if (LEVEL > APP.MaxScore) LEVEL = APP.MaxScore;
-        if (Game.MissionStarted[0] && GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) BASE_LUCK = Game.Enemy == 7 ? 9850 : 9500; // IF IN A FORTRESS GENERATE AN EXOTIC OR BETTER
+        if (Game.MissionStarted[0] && GLOBALS.MISSIONS[Game.MissionStarted[1]][3] == 2) BASE_LUCK = Game.Enemy == 7 ? 9900 : 9550; // IF IN A FORTRESS GENERATE AN EXOTIC OR BETTER
     } else {
         if (LEVEL > Game.Level && APP.ScoreModeEnabled == 0) LEVEL = Game.Level;
         if (LEVEL > GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0) LEVEL = GLOBALS.LOCATIONS[Game.Location][2];
     }
     let MAX_LUCK = ITEM_CONFIG.RARITIES[CLASSES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]]][1]; // DEFINE THE MAXIMUM DROP QUALITY TO LOCATION MAX
-    if (_.inRange(Game.Level, 0, 4) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 0) MAX_LUCK = 1999; // NORMAL
-    if (_.inRange(Game.Level, 4, 10) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 1) MAX_LUCK = 4999; // COMMON
-    if (_.inRange(Game.Level, 10, 15) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 2) MAX_LUCK = 6999; // UNCOMMON
-    if (_.inRange(Game.Level, 15, 20) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 3) MAX_LUCK = 8499; // RARE
-    if (_.inRange(Game.Level, 20, 30) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 4) MAX_LUCK = 9499; // EPIC
-    if (_.inRange(Game.Level, 30, 35) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 5) MAX_LUCK = 9849; // EXOTIC
+    if (_.inRange(Game.Level, 0, 4) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 0) MAX_LUCK = 3049; // NORMAL
+    if (_.inRange(Game.Level, 4, 10) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 1) MAX_LUCK = 5549; // COMMON
+    if (_.inRange(Game.Level, 10, 15) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 2) MAX_LUCK = 7299; // UNCOMMON
+    if (_.inRange(Game.Level, 15, 20) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 3) MAX_LUCK = 8549; // RARE
+    if (_.inRange(Game.Level, 20, 30) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 4) MAX_LUCK = 9549; // EPIC
+    if (_.inRange(Game.Level, 30, 35) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 5) MAX_LUCK = 9899; // EXOTIC
     if (_.inRange(Game.Level, 35, 36) && GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3] >= 5) MAX_LUCK = 10000; // LEGENDARY
     if (BASE_LUCK > MAX_LUCK) BASE_LUCK = MAX_LUCK;
     let LUCK = _.random(BASE_LUCK, MAX_LUCK);
+    //  N            C            U        R            Ep           Ex       L         
+    // 0-30.5% > 30.5-55.5% > 55.5-73% > 73-85.5% > 85.5-95.5% > 95.5-99% > 99-100%
+    //  30.5%        25%        17.5%      12.5%        10%          3.5%     1%
     ITEM.class = "Normal";
-    if (_.inRange(LUCK, 2000, 5000)) ITEM.class = "Common";
-    if (_.inRange(LUCK, 5000, 7000)) ITEM.class = "Uncommon";
-    if (_.inRange(LUCK, 7000, 8500)) ITEM.class = "Rare";
-    if (_.inRange(LUCK, 8500, 9500)) ITEM.class = "Epic";
-    if (_.inRange(LUCK, 9500, 9850)) ITEM.class = "Exotic";
-    if (_.inRange(LUCK, 9850, 10001)) ITEM.class = "Legendary";
+    if (_.inRange(LUCK, 3050, 5550)) ITEM.class = "Common";
+    if (_.inRange(LUCK, 5550, 7300)) ITEM.class = "Uncommon";
+    if (_.inRange(LUCK, 7300, 8550)) ITEM.class = "Rare";
+    if (_.inRange(LUCK, 8550, 9550)) ITEM.class = "Epic";
+    if (_.inRange(LUCK, 9550, 9900)) ITEM.class = "Exotic";
+    if (_.inRange(LUCK, 9900, 10001)) ITEM.class = "Legendary";
     if (OBJECT == "Armor") { // GENERATE AN ARMOR
         if (LEVEL > APP.MaxScore) LEVEL = APP.MaxScore;
         ITEM.LEVEL = LEVEL;
@@ -279,6 +290,7 @@ const newItem = function (OBJECT, LEVEL, CLASS) {
     } else if (OBJECT == "Relic") { // GENERATE A RELIC
         let RelicType = Game.Level > 10 ? _.random(0, 2) : _.random(0, 1);
         if (APP.ScoreModeEnabled == 1) RelicType = _.random(0, 3);
+        if (CLASS === "Normal") RelicType = _.random(0, 1);
         // ARES - POWER BONUS
         if (RelicType == 0) ITEM.bonus = ITEM_CONFIG.RELIC_MULTIPLIERS[ITEM_CONFIG.RARITIES[ITEM.class][0] - 1];
         // YGGDRASIL - LIFE BONUS
@@ -325,7 +337,10 @@ const EquipItem = function (ITEM, TYPE) {
             if (RELIC != 0) RELIC_BUTTON[RELIC] = Game.Armors[RELIC][0] ? `<div onclick="ConfirmRelic(${RELIC}, ${ITEM});" class="pw alpha button">Apply on ${ARMOR_TYPES[RELIC]}</div>` : ``;
         }
         POPUP("Select a Relic Slot", "<div class='pw fluid vertical buttons'>" + RELIC_BUTTON[1] + RELIC_BUTTON[2] + RELIC_BUTTON[3] + RELIC_BUTTON[4] + "</div>", 0);
-    } else if (TYPE == 4) PREVIEW_WEAPON(Game.inventory[ITEM].TYPE2, ITEM);
+    } else if (TYPE == 4) {
+        console.table(Game.inventory[ITEM]);
+        PREVIEW_WEAPON(Game.inventory[ITEM].TYPE2, ITEM);
+    }
     else if (TYPE == 5) {
         for (let WEAPON in Game.Weapons) {
             let NUMBER = 4;
@@ -349,7 +364,7 @@ const PREVIEW_ARMOR = function (ARMOR, ITEM) {
             NEW: ["none", "none", "none", "", "", ""]
         }
     };
-    var TIER = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>"; 
+    var TIER = APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>";
     for (var CURRENT = 3; CURRENT < 6; CURRENT++) {
         if (CONFIG.NEW_ARMOR[CURRENT] != CONFIG.OLD_ARMOR[CURRENT]) {
             CONFIG.COLORS.OLD[CURRENT] = CONFIG.OLD_ARMOR[CURRENT] > CONFIG.NEW_ARMOR[CURRENT] ? "pw green" : "pw red";
@@ -431,16 +446,17 @@ const ConfirmRelic = function (RELIC, ITEM) {
     let IRCOLOR2 = Game.RELICS[RELIC][1] == 5 ? "pw green" : "pw red";
     if (Game.RELICS[RELIC][1] == Game.inventory[ITEM].relictype && Game.RELICS[RELIC][2] > Game.inventory[ITEM].bonus) IRCOLOR = "pw green";
     if (Game.RELICS[RELIC][1] == Game.inventory[ITEM].relictype && Game.RELICS[RELIC][2] < Game.inventory[ITEM].bonus) IRCOLOR2 = "pw green";
+    let FORMAT = Game.inventory[ITEM].relicType <= 1 ? 2 : 3;
     let DESCS = ["-",
-        "Power bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RELICS[RELIC][2], 2) + "</span>",
-        "Life bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RELICS[RELIC][2], 2) + "</span>",
+        "Power bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RELICS[RELIC][2], FORMAT) + "</span>",
+        "Life bonus of <span class='" + IRCOLOR + "'>" + fix(Game.RELICS[RELIC][2], FORMAT) + "</span>",
         "Minimal drop quality <span class='" + Game.RELICS[RELIC][2] + "'>" + Game.RELICS[RELIC][2] + "</span>",
         "Max Score +<span class='" + IRCOLOR + "'>" + fix(Game.RELICS[RELIC][2], 1) + "</span>",
         "-"
     ];
     let DESCS2 = ["-",
-        "Power bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[ITEM].bonus, 2) + "</span>",
-        "Life bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[ITEM].bonus, 2) + "</span>",
+        "Power bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[ITEM].bonus, FORMAT) + "</span>",
+        "Life bonus of <span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[ITEM].bonus, FORMAT) + "</span>",
         "Minimal drop quality <span class='" + Game.inventory[ITEM].bonus + "'>" + Game.inventory[ITEM].bonus + "</span>",
         "Max Score +<span class='" + IRCOLOR2 + "'>" + fix(Game.inventory[ITEM].bonus, 1) + "</span>",
         "-"
@@ -601,12 +617,12 @@ const CHECK_EQUIPMENT = function () {
         MULTIPLIERS: [1.05, 1.20, 1.30, 1.40, 1.60, 1.85, 2.10],
         RARITIES: {
             Normal: [1, 1],
-            Common: [2, 2000],
-            Uncommon: [3, 5000],
-            Rare: [4, 7000],
-            Epic: [5, 8500],
-            Exotic: [6, 9500],
-            Legendary: [7, 9850]
+            Common: [2, 3050],
+            Uncommon: [3, 5550],
+            Rare: [4, 7300],
+            Epic: [5, 8550],
+            Exotic: [6, 9550],
+            Legendary: [7, 9900]
         },
         GEMS_MULTIPLIER: {
             Normal: 1.5,
@@ -616,7 +632,16 @@ const CHECK_EQUIPMENT = function () {
             Epic: 7.5,
             Exotic: 9,
             Legendary: 10
-        }
+        },
+        RELIC_MULTIPLIERS: {
+            Normal: 0.01,
+            Common: 0.015,
+            Uncommon: 0.025,
+            Rare: 0.30,
+            Epic: 0.05,
+            Exotic: 0.10,
+            Legendary: 0.15
+        },
     };
 
     let MAX_QUALITY = APP.ScoreModeEnabled == 1 ? "Legendary" : QUALITIES[GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][3]];
@@ -686,6 +711,19 @@ const CHECK_EQUIPMENT = function () {
         }
         if (Game.Weapons[WEAPON][4] < 0) Game.Weapons[WEAPON][4] = Math.floor(MAX_VALUE);
         if (Game.WeaponUpgrades[WEAPON] < 0) Game.WeaponUpgrades[WEAPON] = 0;
+    }
+
+    for (let RELIC in Game.RELICS) {
+        if (RELIC != 0) {
+            let MAX_VALUE = ITEM_CONFIG.RELIC_MULTIPLIERS[MAX_QUALITY];
+            if (Game.RELICS[RELIC][1] == 1 || Game.RELICS[RELIC][1] == 2) {
+                let MAX_ITEM_VALUE = ITEM_CONFIG.RELIC_MULTIPLIERS[Game.RELICS[RELIC][0]];
+                if (Game.RELICS[RELIC][2] > MAX_VALUE || Game.RELICS[RELIC][2] > MAX_ITEM_VALUE) {
+                    LOG(`Auto scaling the multiplier of the ${RELIC} relic`, `${fix(Game.RELICS[RELIC][2], 3)} out of ${fix(MAX_ITEM_VALUE, 3)} / ${fix(MAX_VALUE, 3)}.`, "white; background-color: rgb(58 59 70)");
+                    Game.RELICS[RELIC][2] = MAX_ITEM_VALUE;
+                }
+            }
+        }
     }
 };
 

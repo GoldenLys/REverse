@@ -1,6 +1,5 @@
 function DYNAMICS() {
     $("#menu").on("click", "div", function () {
-        APP.MIND_CONTROL[1] = 0;
         hideMenuTabs();
         TOP10();
     });
@@ -145,25 +144,32 @@ function DYNAMICS() {
     });
 
     $("#missions").on("click", function () {
-        $("#exploration").attr("class", "pw button");
         $("#missions").attr("class", "pw button active");
+        $("#exploration").attr("class", "pw button");
+        $("#guild").attr("class", "pw button");
         GenMissions();
         SelectTAB("MISSIONS");
-        APP.MIND_CONTROL[1] = 0;
     });
 
     $("#exploration").on("click", function () {
-        $("#exploration").attr("class", "pw button active");
         $("#missions").attr("class", "pw button");
+        $("#exploration").attr("class", "pw button active");
+        $("#guild").attr("class", "pw button");
         GenExplorationMenu();
         SelectTAB("EXPLORE");
-        APP.MIND_CONTROL[1] = 0;
+    });
+
+    $("#guild").on("click", function () {
+        $("#missions").attr("class", "pw button");
+        $("#exploration").attr("class", "pw button");
+        $("#guild").attr("class", "pw button active");
+        GenGuildMenu();
+        SelectTAB("GUILD");
     });
 
     $(".link").bind("click", function (e) {
         e.preventDefault();
         OpenLink($(this).attr("data-url"));
-        APP.MIND_CONTROL[1] = 0;
     });
 
     $(".menu li").bind("click", function (e) {
@@ -178,14 +184,12 @@ function DYNAMICS() {
             OPEN_MENU($(this).data("menu"), TOGGLE);
             if ($(this).data("menu") == "INVENTORY") GenInventory();
         }
-        APP.MIND_CONTROL[1] = 0;
     });
 
     $(".pw.dropdown .name").bind("click", function (e) {
         e.preventDefault();
         let TOGGLE = $(this).parent().attr("data-open") === "open" ? "closed" : "open";
         $(this).parent().attr("data-open", TOGGLE);
-        APP.MIND_CONTROL[1] = 0;
     });
 
     $(".pw.checkbox").bind("click", function (e) {
@@ -201,6 +205,21 @@ function DYNAMICS() {
         }
         if ($(this).attr("data-id") == 11) Game.config[5] = CONFIG;
         APP.MIND_CONTROL[1] = 0;
+    });
+
+    $("#ShowAllRewards").on("click", function () {
+        Game.config[2] = 0;
+        UpdateUI();
+    });
+
+    $("#SkipAllRewards").on("click", function () {
+        Game.config[2] = 1;
+        UpdateUI();
+    });
+
+    $("#SkipNoItemsRewards").on("click", function () {
+        Game.config[2] = 2;
+        UpdateUI();
     });
 
     $("#LanguageSelector_French").on("click", function () {

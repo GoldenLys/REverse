@@ -143,7 +143,8 @@ const CLOSE_MENUS = function () {
 function SelectTAB(TAB) {
     let TABS = [
         ["EXPLORE", "exploration"],
-        ["MISSIONS", "missions"]
+        ["MISSIONS", "missions"],
+        ["GUILD", "guild"]
     ];
     for (let T in TABS) {
         if (TABS[T][0] != TAB) {
@@ -181,14 +182,14 @@ function GetEXPPercent() {
 // GAME FUNCTIONS
 const CHANGE_AVATAR = function (TYPE) {
     if (TYPE == 0) {
-        if (Game.Avatar <= 1) Game.Avatar = 50;
+        if (Game.Avatar <= 1) Game.Avatar = 65;
         else Game.Avatar--;
     } else {
-        if (Game.Avatar == 0 || Game.Avatar >= 50) Game.Avatar = 1;
+        if (Game.Avatar == 0 || Game.Avatar >= 65) Game.Avatar = 1;
         else Game.Avatar++;
     }
-    $("#avatar").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
-    $("#avatar2").attr("src", `images/avatars/avatar${Game.Avatar}.jpg`);
+    $("#avatar").attr("src", `images/avatars/avatar (${Game.Avatar}).png`);
+    $("#avatar2").attr("src", `images/avatars/avatar (${Game.Avatar}).png`);
 };
 
 function helpScore() {
@@ -211,15 +212,19 @@ function GenExplorationMenu() {
         if (Game.MissionStarted[0] || Game.Location == E) BTN = "";
         let LOCATION_COLOR = Game.Location != E ? "pw segment dark" : "pw segment active";
         if (GLOBALS.LOCATIONS[E][1] < Game.Level + 1 && E != 11 && E != 17) {
-            let CONTENT = (`<div class='text-center ${LOCATION_COLOR}'>
+            $("#DIV-EXPLORE").append(`<div class='text-center ${LOCATION_COLOR}'>
             <h3>${GLOBALS.LOCATIONS[E][0]}<span class='pw white'> - ${language[APP.LANG].MISC.Lv} ${LEVEL}</span>
             <div class="pw subtitle"><i class='far fa-dot-circle'></i> ${UNLOCKTEXT}</div></h3>
             <div class="pw inline green label"><i class='fas fa-sack icon'></i> <span class='${QUALITY}'>${language[APP.LANG].QUALITIES[QUALITY]}</span></div>
-            ${BTN}
-            </div>`);
-            $("#DIV-EXPLORE").append(CONTENT);
+            ${BTN}</div>`);
         }
     }
+}
+
+function GenGuildMenu() {
+    $("#DIV-EXPLORE").html("");
+    let QUALITIES = ["Normal", "Common", "Uncommon", "Rare", "Epic", "Exotic", "Legendary"];
+    // WORK IN PROGRESS
 }
 
 function hideRewards() {
@@ -286,7 +291,7 @@ function WelcomeNext() {
             ChangeStep(1);
             Game.class = APP.WelcomeData[2];
             $("#namehelp").html("");
-            $("#WELCOME_DATA").html(`<img class='pw centered medium image' src='images/avatars/avatar${Game.Avatar}.jpg'>${APP.WelcomeData[1]}<div class='pw inline label'>Level 1</div><div class="pw alpha inline label">${APP.WelcomeData[2]}</div>`);
+            $("#WELCOME_DATA").html(`<img class='pw centered medium image' src='images/avatars/avatar (${Game.Avatar}).png'>${APP.WelcomeData[1]}<div class='pw inline label'>Level 1</div><div class="pw alpha inline label">${APP.WelcomeData[2]}</div>`);
             $("#WelcomeNext").html("Start <i class='fal fa-arrow-right'></i>");
         }
     }
@@ -425,7 +430,7 @@ const MIND_CONTROL = function () {
         APP.MIND_CONTROL[0] = false;
         POPUP_CLOSE();
         LOG("Mind Control", "Closing rewards", "white; background-color: rgb(20 185 80)");
-    }
+    } else $("#MIND_CONTROL").html("");
 };
 
 const LOG = function (TITLE, MESSAGE, COLOR) {
@@ -461,13 +466,14 @@ const SELECT_LANGUAGE = function () {
     $("#run-btn").html('<i class="fas fa-running"></i> ' + language[APP.LANG].ACTIONS.RunAway);
 
     $("#inventory").html('<i class="fas fa-sack icon"></i> ' + language[APP.LANG].MENUS.Inventory);
-    $("#prestige").html('<i class="far fa-portal-enter"></i> ' + language[APP.LANG].MENUS.Dimension);
+    $("#prestige").html('<i class="far fa-portal-enter icon"></i> ' + language[APP.LANG].MENUS.Dimension);
     $("#statistics").html('<i class="fas fa-clipboard list icon"></i> ' + language[APP.LANG].MENUS.Statistics);
     $("#leaderboard").html('<i class="fas fa-trophy icon"></i> ' + language[APP.LANG].MENUS.Leaderboard);
     $("#settings").html('<i class="fas fa-cogs icon"></i> ' + language[APP.LANG].MENUS.Settings);
-    $("#credits").html('<i class="fas fa-popcorn"></i> ' + language[APP.LANG].MENUS.Credits);
-    $("#missions").html('<i class="far fa-dot-circle"></i> ' + language[APP.LANG].MENUS.Missions);
-    $("#exploration").html('<i class="fas fa-map-marked-alt icon"></i> ' + language[APP.LANG].MENUS.Exploration);
+    $("#credits").html('<i class="fas fa-popcorn icon"></i> ' + language[APP.LANG].MENUS.Credits);
+    $("#missions").html('<i class="far fa-dot-circle icon"></i> ' + language[APP.LANG].MENUS.Missions);
+    $("#exploration").html('<i class="fa-solid fa-earth-europe icon"></i> ' + language[APP.LANG].MENUS.Exploration);
+    $("#guild").html('<i class="fa-solid fa-circle-star icon"></i> ' + language[APP.LANG].MENUS.Guild);
 
     $("#MainWeaponType").html(language[APP.LANG].MISC.MainWeapon);
     $("#SpecialWeaponType").html(language[APP.LANG].MISC.SpecialWeapon);
@@ -517,6 +523,9 @@ const SELECT_LANGUAGE = function () {
     $("#DIV-STATS>div:nth-child(4)>div>.segments:nth-child(8)>.segment.text-left").html(language[APP.LANG].STATS.Ratio);
     $("#DIV-STATS>div:nth-child(4)>div>.segments:nth-child(9)>.segment.text-left").html(language[APP.LANG].STATS.TotalKills);
     $("#DIV-STATS>div:nth-child(4)>div>.segments:nth-child(10)>.segment.text-left").html(language[APP.LANG].STATS.TotalDeaths);
+    $("#GUILD_TITLES_NAME").html(language[APP.LANG].MISC.Titles);
+    $("#GUILD_BANK_NAME").html(language[APP.LANG].MISC.Bank);
+    $("#GUILD_SHOP_NAME").html(language[APP.LANG].MISC.Shop);
     GenInventory();
     UpdateUI();
 };
@@ -537,14 +546,14 @@ const QUALITY_ID = function (QUALITY) {
 };
 
 const GET_ICON_ID = function (TYPE, CLASS) {
-        if (TYPE != 0) {
+    if (TYPE != 0) {
         let ICON = "";
         let ARMORS = ["", "Helmets", "Armors", "Shields", "Boots"];
         let TYPES = {
             "Main": [4, 5, 4, 4, 5, 5, 5],
             "Special": [4, 4, 5, 4, 5, 5, 5],
             "Helmets": [4, 5, 5, 6, 7, 6, 7],
-            "Armors": [6, 6, 5, 5, 6, 6, 6],
+            "Armors": [6, 6, 5, 4, 6, 6, 6],
             "Shields": [4, 4, 4, 4, 4, 3, 4],
             "Boots": [7, 7, 6, 4, 5, 5, 4]
         };

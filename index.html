@@ -8,17 +8,17 @@
     <meta content="website" property="og:type" />
     <meta content="AlphaRPG" property="og:title" />
     <meta content="en_US" property="og:locale" />
-    <meta content="Incremental Game by Purple Wizard" property="og:description" />
-    <meta content="http://alpha.purplewizard.space/images/avatars/avatar34.jpg" property="og:image" />
+    <meta content="Incremental RPG game, fight monsters and follow the story to get powerful items" property="og:description" />
+    <meta name="theme-color" content="#13F1D2">
+    <meta content="https://purplewizard.space/AlphaRPG/images/logo.png" property="og:image" />
     <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link async href="css/vars.css?v=3.312" rel="stylesheet" />
-    <link async href="css/base.css?v=3.312" rel="stylesheet" />
-    <link async href="css/style.css?v=3.312" rel="stylesheet" />
-    <link async href="css/palette.css?v=3.312" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link async href="css/vars.css?v=3.45" rel="stylesheet" />
+    <link async href="css/base.css?v=3.45" rel="stylesheet" />
+    <link async href="css/style.css?v=3.45" rel="stylesheet" />
+    <link async href="css/palette.css?v=3.45" rel="stylesheet" />
 </head>
 
 <body>
@@ -33,8 +33,7 @@
                     <div class="link" data-url="#" id="prestige"><i class="far fa-portal-enter"></i> Dimension</div>
                 </li>
                 <li data-menu="STATS">
-                    <div class="link" data-url="#" id="statistics"><i class="fas fa-clipboard list icon"></i> Statistics
-                    </div>
+                    <div class="link" data-url="#" id="statistics"><i class="fas fa-clipboard list icon"></i> Statistics</div>
                 </li>
                 <li data-menu="LEADERBOARD">
                     <div class="link" data-url="#" id="leaderboard"><i class="fas fa-trophy icon"></i> Leaderboard</div>
@@ -46,8 +45,7 @@
                     <div class="link" data-url="#" id="credits"><i class="fas fa-popcorn"></i> Credits</div>
                 </li>
                 <li data-menu="#">
-                    <div class="link" data-url="https://discord.com/invite/SBuYeHh"><i class="fab fa-discord"></i>
-                        Discord</div>
+                    <div class="link" data-url="https://discord.com/invite/SBuYeHh"><i class="fab fa-discord"></i> Discord</div>
                 </li>
             </div>
             <div class="pw sticked segments text-center">
@@ -59,6 +57,18 @@
                 <div class="pw segment yellow" id="NextRetreat"></div>
                 <div class="pw segment yellow" id="NextCover"></div>
             </div>
+            <div class="labels">
+                <div class="pw inline alpha label" id="LABEL_EXP">
+                </div>
+                <div class="pw inline green label">
+                    <i class="fas fa-dollar-sign pw green"></i><span id="LABEL_CASH"></span>
+                </div>
+                <div class="pw inline blue label">
+                    <i class="fal fa-dna pw blue"></i> <span id="LABEL_SHARDS"></span>
+                </div>
+                <div class="pw inline white label" id="LABEL_INVENTORY">
+                </div>
+            </div>
             <div class="credits">
                 <div class="game-title" id="game_title">AlphaRPG</div>
             </div>
@@ -66,22 +76,7 @@
         <div class="page-content">
             <div class="scroller">
                 <div id="DIV-COMBAT">
-                    <div class="pw message no-animation">
-                        <h3 class="pw horizontal divider" id="PLAYER-ETA"></h3>
-                        <div class="text-center">
-                            <div class="pw inline alpha label" id="LABEL_EXP">
-                            </div>
-                            <div class="pw inline green label" style="display: none;">
-                                <i class="fas fa-dollar-sign pw green"></i>
-                                <span id="LABEL_CASH"></span>
-                            </div>
-                            <div class="pw inline blue label">
-                                <i class="fal fa-dna pw blue"></i> <span id="LABEL_SHARDS"></span>
-                            </div>
-                            <div class="pw inline white label" id="LABEL_INVENTORY">
-                            </div>
-                        </div>
-                    </div>
+                    <h3 class="pw horizontal divider" id="PLAYER-ETA"></h3>
                     <div class="pw horizontal segments">
                         <div class="pw segment type_card">
                             <div class="card" id="PlayerCard">
@@ -99,8 +94,7 @@
                                     </div>
                                     <h2 class="text">
                                         <span id="PlayerLife"></span>
-                                        <span class="pw inline label" id="PlayerDamage"
-                                            style="display: none;"></span><br />
+                                        <span class="pw inline label" id="PlayerDamage" style="display: none;"></span><br />
                                         <span id="PlayerPower"></span>
                                     </h2>
                                 </div>
@@ -255,37 +249,37 @@
                     <h3 class="pw horizontal divider"><i class="fas fa-trash"></i> Auto Remove</h3>
                     <div class="pw horizontal sticked segments">
                         <div class="pw segment">
-                            <div class="pw checkbox" data-check="unchecked" data-id="5" id="RM1">
+                            <div class="pw checkbox dark" data-check="unchecked" data-id="5" id="RM1">
                                 <input tabindex="0" type="checkbox" />
                                 <label class="text Normal">Normal</label>
                             </div>
                         </div>
                         <div class="pw segment">
-                            <div class="pw checkbox" data-check="unchecked" data-id="6" id="RM2">
+                            <div class="pw checkbox dark" data-check="unchecked" data-id="6" id="RM2">
                                 <input tabindex="0" type="checkbox" />
                                 <label class="text Common">Common</label>
                             </div>
                         </div>
                         <div class="pw segment">
-                            <div class="pw checkbox" data-check="unchecked" data-id="7" id="RM3">
+                            <div class="pw checkbox dark" data-check="unchecked" data-id="7" id="RM3">
                                 <input tabindex="0" type="checkbox" />
                                 <label class="text Uncommon">Uncommon</label>
                             </div>
                         </div>
                         <div class="pw segment">
-                            <div class="pw checkbox" data-check="unchecked" data-id="8" id="RM4">
+                            <div class="pw checkbox dark" data-check="unchecked" data-id="8" id="RM4">
                                 <input tabindex="0" type="checkbox" />
                                 <label class="text Rare">Rare</label>
                             </div>
                         </div>
                         <div class="pw segment">
-                            <div class="pw checkbox" data-check="unchecked" data-id="9" id="RM5">
+                            <div class="pw checkbox dark" data-check="unchecked" data-id="9" id="RM5">
                                 <input tabindex="0" type="checkbox" />
                                 <label class="text Epic">Epic</label>
                             </div>
                         </div>
                         <div class="pw segment">
-                            <div class="pw checkbox" data-check="unchecked" data-id="10" id="RM6">
+                            <div class="pw checkbox dark" data-check="unchecked" data-id="10" id="RM6">
                                 <input tabindex="0" type="checkbox" />
                                 <label class="text Exotic">Exotic</label>
                             </div>
@@ -320,19 +314,16 @@
                     <div id="WTShards"></div>
                     <div class="pw red label">
                         <h4 class="pw red">Information</h4>
-                        By passing through the dimensional rift you will lose your current equipment and mission
-                        progress.
+                        By passing through the dimensional rift you will lose your current equipment and missions progression.
                         <br />The story will be reset and the difficulty will increase by 5%.
                     </div>
                     <h4 class="pw horizontal divider">Benefits for each new dimension</h4>
                     <div class="pw inline green label">+50 maximum score</div>
                     <div class="pw inline green label">3% more experience</div>
                     <div class="pw inline green label">+2 inventory slots</div>
-                    <div class="pw inline green label">Unlocking of the Mind Control (idle mode)</div>
-                    <div class="pw fluid blue button" id="WTBTN"><i class="far fa-portal-enter"></i> Dimensional Rift
-                    </div>
-                    <h3 class="pw horizontal divider"><i class="fal fa-arrow-alt-circle-up"></i> Dimensional Bonuses
-                    </h3>
+                    <div class="pw inline green label">Unlocks the Mind Control (idle mode)</div>
+                    <div class="pw fluid blue button" id="WTBTN"><i class="far fa-portal-enter"></i> Dimensional Rift</div>
+                    <h3 class="pw horizontal divider"><i class="fal fa-arrow-alt-circle-up"></i> Dimensional Bonuses</h3>
                     <span class="pw label blue" id="ShardsNumber"></span>
                     <div id="Upgrades">
                         <div class="pw horizontal dark segments">
@@ -508,9 +499,9 @@
                         Leaderboard
                     </h3>
                     <h4 class="text-center" id="CloudTimer"></h4>
-                    <div class="pw checkbox" data-id="4" id="OnlyMyVersion">
+                    <div class="pw checkbox dark" data-id="4" id="OnlyMyVersion">
                         <input tabindex="0" type="checkbox" />
-                        <label class="text">Hide players from older versions</label>
+                        <label class="text">Hide old versions players</label>
                     </div>
                     <div class="pw fluid button" id="Reload">Refresh</div>
                     <div id="LEADERBOARD"></div>
@@ -539,7 +530,7 @@
                     </div>
                     <div class="pw horizontal segments">
                         <div class="pw segment">
-                            <img class="pw centered medium image" id="avatar" src="images/avatars/avatar7.jpg" />
+                            <img class="pw centered medium image" id="avatar" src="images/avatars/avatar (7).png" />
                             <div class="pw fluid buttons">
                                 <div class="pw grey button" id="AVATAR_PREVIOUS">
                                     <i class="fal fa-arrow-square-left"></i>
@@ -557,10 +548,6 @@
                             <div class="pw checkbox" data-check="checked" data-id="1" id="AlertToggle2">
                                 <input tabindex="0" type="checkbox" />
                                 <label class="text">Confirmation for changing Relics.</label>
-                            </div>
-                            <div class="pw checkbox" data-id="2" id="SkipRewards">
-                                <input tabindex="0" type="checkbox" />
-                                <label class="text">Skip monster rewards.</label>
                             </div>
                             <div class="pw checkbox" data-check="checked" data-id="3" id="AutoMissions">
                                 <input tabindex="0" type="checkbox" />
@@ -580,6 +567,17 @@
                     </div>
                     <div class="pw segments">
                         <div class="pw segment">
+                            <h3 class="pw horizontal divider"> <i class="fa-solid fa-treasure-chest"></i> Skip rewards</h3>
+                            You can choose to skip all rewards or only when there is no item dropped
+                            <div class="pw invisible divider"></div>
+                            <div class="pw fluid buttons">
+                                <div class="pw green button" id="ShowAllRewards">Show all</div>
+                                <div class="pw red button" id="SkipAllRewards">Hide all</div>
+                                <div class="pw yellow button" id="SkipNoItemsRewards">Only with loot</div>
+                            </div>
+                            <span class="pw inline label" id="REWARDS_CURRENT_CONFIG"></span>
+                        </div>
+                        <div class="pw segment">
                             <h3 class="pw horizontal divider"> <i class="fal fa-terminal"></i> Promotional Codes</h3>
                             If you have a promotional code enter it here.
                             <input id="promocode" maxlength="6" placeholder="Abc123" type="text" />
@@ -591,8 +589,7 @@
                             <div class="content">
                                 <div class="hex-color">
                                     <div class="text">#</div>
-                                    <input disabled id="color-name" maxlength="6" minlength="3" placeholder="000000"
-                                        type="text" value />
+                                    <input disabled id="color-name" maxlength="6" minlength="3" placeholder="000000" type="text" value />
                                 </div>
                                 <div class="divider"></div>
                                 <div class="selector red noselect" id="selector-red">
@@ -600,8 +597,7 @@
                                         <div class="value">19</div>
                                     </div>
                                     <div class="button minus"><i class="fal fa-minus"></i></div>
-                                    <input class="color-range red" id="range-red" max="255" min="0" type="range"
-                                        value="19" />
+                                    <input class="color-range red" id="range-red" max="255" min="0" type="range" value="19" />
                                     <div class="button plus"><i class="fal fa-plus"></i></div>
                                 </div>
                                 <div class="selector green noselect" id="selector-green">
@@ -609,8 +605,7 @@
                                         <div class="value">241</div>
                                     </div>
                                     <div class="button minus"><i class="fal fa-minus"></i></div>
-                                    <input class="color-range green" id="range-green" max="255" min="0" type="range"
-                                        value="241" />
+                                    <input class="color-range green" id="range-green" max="255" min="0" type="range" value="241" />
                                     <div class="button plus"><i class="fal fa-plus"></i></div>
                                 </div>
                                 <div class="selector blue noselect" id="selector-blue">
@@ -618,8 +613,7 @@
                                         <div class="value">210</div>
                                     </div>
                                     <div class="button minus"><i class="fal fa-minus"></i></div>
-                                    <input class="color-range blue" id="range-blue" max="255" min="0" type="range"
-                                        value="210" />
+                                    <input class="color-range blue" id="range-blue" max="255" min="0" type="range" value="210" />
                                     <div class="button plus"> <i class="fal fa-plus"></i></div>
                                 </div>
                             </div>
@@ -633,7 +627,7 @@
                     <div class="link" data-url="https://github.com/GoldenLys">Purple Wizard </div>.<br />
                     <div class="pw inline label"><i class="pw discord fab fa-discord"></i> Purple Wizard#0984</div>
                     <div class="pw inline label"><i class="pw reddit fab fa-reddit"></i> u/Aizen45</div>
-                    <br />Huge thanks to <b>Tiwaz</b> and <b>Pedter</b> for their help !<br /> <br />
+                    <br />Huge thanks to <b>Tiwaz</b> and <b>Pedter</b> for their help during the early development!<br /> <br />
                     <div class="link" data-url="https://github.com/GoldenLys/AlphaRPG">
                         <i class="fas fa-code"></i> Source Code
                     </div>
@@ -644,8 +638,9 @@
             <div class="pw fluid buttons">
                 <div class="pw button active" data-url="#" id="missions"><i class="far fa-dot-circle"></i> Missions
                 </div>
-                <div class="pw button" data-url="#" id="exploration">
-                    <i class="fas fa-map-marked-alt icon"></i> Exploration
+                <div class="pw button" data-url="#" id="exploration"><i class="fa-solid fa-earth-europe icon"></i> Exploration
+                </div>
+                <div class="pw button" data-url="#" id="guild"><i class="fa-solid fa-circle-star icon"></i> Guild
                 </div>
             </div>
             <div class="scroller">
@@ -665,6 +660,31 @@
                     </div>
                 </div>
                 <div class="pw segments" id="DIV-EXPLORE" style="display: none;">
+                </div>
+                <div class="pw segments" id="DIV-GUILD" style="display: none;">
+                    <div class="pw segment dark text-center">
+                        <h3 class="text-center pw red">Work in Progress
+                            <div class="pw subtitle red">This part of the game will be available in a future update</div>
+                        </h3>
+                    </div>
+                    <div class="pw dropdown text-center" data-open="open">
+                        <h3 class="name" id="GUILD_TITLES_NAME">Titles</h3>
+                        <div class="content">
+                            <div id="TITLES"></div>
+                        </div>
+                    </div>
+                    <div class="pw dropdown text-center" data-open="open">
+                        <h3 class="name" id="GUILD_BANK_NAME">Bank</h3>
+                        <div class="content">
+                            <div id="TITLES"></div>
+                        </div>
+                    </div>
+                    <div class="pw dropdown text-center" data-open="open">
+                        <h3 class="name" id="GUILD_SHOP_NAME">Shop</h3>
+                        <div class="content">
+                            <div id="TITLES"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -719,16 +739,14 @@
             <br />But beware: there are also powerful monsters that you will need to fight wisely; it's up to you to
             find your own way to do so! 😉<br />
             If you have any question don't hesitate to join our
-            <a class="link" data-url="https://discord.com/invite/SBuYeHh">
-                <i class="fab fa-discord"></i> discord server</a>.<br />
-            Okay, so now we need to know who your character will be...
+            <a class="link" data-url="https://discord.com/invite/SBuYeHh"><i class="fab fa-discord"></i> discord</a>.
+            <br />Okay, so now we need to know who your character will be...
         </div>
         <div class="pw message text-center no-animation" id="tutorial-2" style="display: none;">
             <h2>Username</h2>Enter your desired username for your character (3-16 alphanumerical characters).<br />
             Write "Neo" to generate a random name.<br />
             <input id="PlayerName" maxlength="16" placeholder="Neo" type="text" />
-            <br />
-            <span id="namehelp"></span>
+            <br /><span id="namehelp"></span>
         </div>
         <div class="pw message text-center no-animation" id="tutorial-3" style="display: none;">
             <h2>Avatar</h2>
@@ -745,15 +763,15 @@
         </div>
         <div class="pw message text-center no-animation" id="tutorial-4" style="display: none;">
             <h2>Class</h2>
-            You now require a class, which will define your basic skills. <br />
-            You will eventually be able to gain the bonuses granted by each class.
+            You now require a class, which will define your basic skills.
+            <br />You will eventually be able to gain the bonuses granted by each class.
             <div class="pw horizontal segments">
                 <div class="pw segment" id="ChooseWarrior">
                     <div class="pw message" id="warrior">
                         <h3>WARRIOR</h3>
                         <div class="content">
-                            Warriors form the frontline of any fight. They deal the most damage.<br />
-                            (+5% Damages)
+                            Warriors form the frontline of any fight. They deal the most damage.
+                            <br />(+5% Damages)
                         </div>
                     </div>
                 </div>
@@ -761,8 +779,8 @@
                     <div class="pw message" id="paladin">
                         <h3>PALADIN</h3>
                         <div class="content">
-                            Paladins fight for justice. They protect the weak with their strong shield.<br />
-                            (+5% Armor)
+                            Paladins fight for justice. They protect the weak with their strong shield.
+                            <br />(+5% Armor)
                         </div>
                     </div>
                 </div>
@@ -770,9 +788,9 @@
                     <div class="pw message" id="ninja">
                         <h3>NINJA</h3>
                         <div class="content">
-                            Ninjas are elite fighters, planning and plotting before the fight.<br />
-                            They can learn the basics faster than anyone.<br />
-                            (+5% Bonus Experience)
+                            Ninjas are elite fighters, planning and plotting before the fight.
+                            <br />They can learn the basics faster than anyone.
+                            <br />(+5% Bonus Experience)
                         </div>
                     </div>
                 </div>
@@ -826,17 +844,17 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-analytics-compat.js"></script>
-    <script src="js/functions.js?v=3.312" type="text/javascript"></script>
-    <script src="js/config.js?v=3.312" type="text/javascript"></script>
-    <script src="js/lang.js?v=3.312" type="text/javascript"></script>
-    <script src="js/stats.js?v=3.312" type="text/javascript"></script>
-    <script src="js/combat.js?v=3.312" type="text/javascript"></script>
-    <script src="js/inventory.js?v=3.312" type="text/javascript"></script>
-    <script src="js/dimension.js?v=3.312" type="text/javascript"></script>
-    <script src="js/missions.js?v=3.312" type="text/javascript"></script>
-    <script src="js/events.js?v=3.312" type="text/javascript"></script>
-    <script src="js/app.js?v=3.312" type="text/javascript"></script>
-    <script src="js/palette.js?v=3.312" type="text/javascript"></script>
+    <script src="js/functions.js?v=3.45" type="text/javascript"></script>
+    <script src="js/config.js?v=3.45" type="text/javascript"></script>
+    <script src="js/lang.js?v=3.45" type="text/javascript"></script>
+    <script src="js/stats.js?v=3.45" type="text/javascript"></script>
+    <script src="js/combat.js?v=3.45" type="text/javascript"></script>
+    <script src="js/inventory.js?v=3.45" type="text/javascript"></script>
+    <script src="js/dimension.js?v=3.45" type="text/javascript"></script>
+    <script src="js/missions.js?v=3.45" type="text/javascript"></script>
+    <script src="js/events.js?v=3.45" type="text/javascript"></script>
+    <script src="js/app.js?v=3.45" type="text/javascript"></script>
+    <script src="js/palette.js?v=3.45" type="text/javascript"></script>
 </body>
 
 </html>

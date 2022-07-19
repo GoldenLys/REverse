@@ -2,7 +2,7 @@ const UPDATE_STATS = function () {
     let DEATHS = Game.Loses == 0 ? 1 : Game.Loses;
 
     // GENERAL
-    $("#namestat").html("<img class='pw mini image' src='images/avatars/avatar" + Game.Avatar + ".jpg'><span style='color: rgb(" + Game.Theme + ");'>" + Game.username + "</span>");
+    $("#namestat").html("<img class='pw mini image' src='images/avatars/avatar (" + Game.Avatar + ").png'><span style='color: rgb(" + Game.Theme + ");'>" + Game.username + "</span>");
     $("#playtimestat").html(toHHMMSS(Game.PlayTime));
     $("#Levelstat").html("<span class='pw alpha'>" + fix(Game.Level, 0) + "</span>/" + APP.MaxLevel);
     $("#Classstat").html(Game.class);
@@ -63,9 +63,9 @@ function login() {
         var user = result.user;
         APP.Email = user.email;
         POPUP_CLOSE();
+        APP.LoggedIn = 1;
+        SendStats();
     });
-    APP.LoggedIn = 1;
-    SendStats();
     UpdateGame();
 }
 
@@ -121,7 +121,7 @@ function NewUserData(old) {
 function ReadDB() {
     var ref = database.ref("users");
     var CXD = database.ref("codes");
-    CXD.on("child_added", function () {});
+    CXD.on("child_added", function () { });
     APP.Leader = 0;
     id = 0;
     ResetLeaderBoard();
@@ -153,7 +153,7 @@ function UpdateDB(snapshot) {
             var DEATHS = snapshot.val().Deaths == 0 ? 1 : snapshot.val().Deaths;
             $("#LEADERBOARD").append("<div id='leader-" + id + "' class='pw horizontal segments " + isPlayer + "'>" +
                 `<div class='pw segment'>#${id}</div>` +
-                `<div class='pw segment avatar' style='color:rgb(${Theme});'><img class='pw mini centered image' src='images/avatars/avatar${Avatar}.jpg'>${snapshot.key}</div>` +
+                `<div class='pw segment avatar' style='color:rgb(${Theme});'><img class='pw mini centered image' src='images/avatars/avatar (${Avatar}).png'>${snapshot.key}</div>` +
                 `<div class='pw segment'><i class='fad fa-dice-d20'></i>${fix(snapshot.val().Ranking, 0)} (${fix(snapshot.val().Level, 0)})</div>` +
                 `<div class='pw segment'>${fix(snapshot.val().WT, 1)}</div>` +
                 `<div class='pw segment'>${fix(snapshot.val().CorePower, "auto")}</div>` +
