@@ -1,7 +1,7 @@
 var GLOBALS = {
     NAME: "AlphaRPG",
     VERSION: "3.4",
-    BETA: 2,
+    BETA: 3,
     RELICS_NAMES: [],
     THREATS: [],
     ARMORS_NAMES: {

@@ -76,7 +76,7 @@ function filter(f) {
 }
 
 function ResetLeaderBoard() {
-    $("#LEADERBOARD").html(`<div class="pw horizontal segments dark">\
+    $("#LEADERBOARD").html(`<div class="pw horizontal segments dark header-segment">\
         <div class="pw segment">Rank</div>\
         <div class="pw segment">Name</div>\
         <div class="pw segment"><a class="link" data-url="#" onclick="filter(1);">Ranking</a></div>\

@@ -90,7 +90,7 @@ $(document).ready(function () {
         UpdateEngine();
         GenMissions();
         CHECK_EQUIPMENT();
-        WP_UPDATE();
+        LOAD_THEME();
     }
     Game.isInFight = 0;
     APP.MIND_CONTROL[1] = 0;

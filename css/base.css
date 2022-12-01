@@ -427,6 +427,22 @@
     border-left: none;
 }
 
+.pw.horizontal.dark.segments.header-segment>.segment {
+    display: flex;
+    height: 2.5em;
+    line-height: 16px;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#namestat {
+    display: inline-flex;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 .pw.button {
     cursor: pointer;
     display: inline-block;
@@ -860,6 +876,7 @@
 }
 
 .pw.dropdown[data-open="open"]>.content {
+    position: relative;
     display: block;
 }
 
@@ -871,7 +888,7 @@
 .pw.segments.active {
     color: white;
     border-radius: 5px;
-    margin: 0.5em;
+    margin: 0 0.5em;
     background-color: rgba(0, 0, 0, 0.15);
 }
 
@@ -906,11 +923,10 @@
 .pw.horizontal.segments>.segment.light {
     align-self: center;
     text-align: center;
-    line-height: 2.5em;
     vertical-align: middle;
     justify-content: center;
     white-space: nowrap;
-    height: 2.5em;
+    height: auto;
     padding: 0.5em 1em;
 }
 
@@ -928,7 +944,9 @@
     display: flex;
     text-overflow: ellipsis;
     overflow: hidden;
-    justify-content: left !important;
+    justify-content: flex-start !important;
+    align-content: center;
+    align-items: center;
 }
 
 .pw.segment.avatar img {
@@ -1189,4 +1207,16 @@
 .pw.nostack.buttons .pw.button {
     font-size: 1rem;
     padding: 0.75em 1em;
+}
+
+.pw.horizontal.segments.dark:nth-child(2n) {
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.pw.horizontal.segments.dark:first-child {
+    margin-top: 0.5em;
+}
+
+.pw.horizontal.segments.dark:last-child {
+    margin-bottom: 0.5em;
 }

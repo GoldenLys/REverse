@@ -290,10 +290,6 @@ input[type="text"] {
     border-radius: 0px !important;
 }
 
-#DIV-STATS .pw.segment.avatar {
-    display: contents;
-}
-
 #LEADERBOARD>.pw.segments>.pw.segment:nth-child(1) {
     min-width: 5%;
     max-width: 5%;

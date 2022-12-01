@@ -279,7 +279,7 @@ function WelcomeNext() {
         $(".footer").show();
         if (Game.username == "Default") Game.username = APP.WelcomeData[1];
         Game.isInFight = 0;
-        LOGIN("FIRST_TIME");
+        if (!GLOBALS.VERSION.endsWith('(dev)')) LOGIN("FIRST_TIME");
         save();
     }
     if (APP.WelcomeData[0] == 4) {

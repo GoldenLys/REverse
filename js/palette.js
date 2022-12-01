@@ -1,4 +1,4 @@
-(function () {
+function DYNAMICS_ColorPalette() {
     $("#range-red").bind('input', function () {
         document.documentElement.style.setProperty('--EDITOR_RED', $("#range-red").val());
         APP.PICKER[0] = $("#range-red").val();
@@ -54,12 +54,27 @@
         document.body.removeChild(SELECTED);
         window.getSelection().removeAllRanges();
     });
-})();
+}
 
 const WP_CHANGE = function (TYPE, PARAM) {
     if (!PARAM && APP.PICKER[TYPE] > 0) APP.PICKER[TYPE]--;
     else if (PARAM && APP.PICKER[TYPE] < 255) APP.PICKER[TYPE]++;
     $("#range-" + APP.TYPES[TYPE]).val(APP.PICKER[TYPE]);
+    WP_UPDATE();
+};
+
+const LOAD_THEME = function () {
+    let theme = Game.Theme.split(" ");
+    $("#range-red").val(theme[0]);
+    APP.PICKER[0] = $("#range-red").val();
+    document.documentElement.style.setProperty('--EDITOR_RED', $("#range-red").val());
+    $("#range-green").val(theme[1]);
+    APP.PICKER[1] = $("#range-green").val();
+    document.documentElement.style.setProperty('--EDITOR_GREEN', $("#range-green").val());
+    $("#range-blue").val(theme[2]);
+    APP.PICKER[2] = $("#range-blue").val();
+    document.documentElement.style.setProperty('--EDITOR_BLUE', $("#range-blue").val());
+    DYNAMICS_ColorPalette();
     WP_UPDATE();
 };
 
