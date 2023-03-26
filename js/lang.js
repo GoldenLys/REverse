@@ -24,7 +24,7 @@ var language = {
         WEAPONS_TYPE: ["Sword", "Dagger"],
         MISSIONS: {
             0: ['White Light', 'A white light dazzles you but you quickly understand that this place is not the Earth, no walls, no sky...<br> But blinding lights all around you.<br> It\'s time to wake up !'],
-            1: ['Shadow Forest', 'You are now in an unknown forest... A dark and creepy forest with one in sight.<br>Vous décidez de vite partir de là, at the risk of losing your life.'],
+            1: ['Shadow Forest', 'You are now in an unknown forest... A dark and creepy forest with no one in sight.<br>You decide to leave that place right now, even at the risk of losing your life.'],
             2: ['Lost Path', 'You arrive at the end of the forest and discover a little path hidden behind a big tree.<br>There seems to be a light in the distance and perhaps finally some answers.'],
             3: ['Galarius City', 'You reach a city with many people from a variety of different races: humans, dwarves and even elves.<br>It seems like you might be able to find some help here... or maybe just someone who can tell you how to get back to your world.'],
             4: ['Endless mountain', 'One of the locals advises you to go north and reach the royal capital through the mountains...<br>So here you are in the so-called "endless" mountains.'],

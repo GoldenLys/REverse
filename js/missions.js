@@ -14,7 +14,7 @@ function GenMissions() {
         if (TYPES[GLOBALS.MISSIONS[M][6]] === language[APP.LANG].MISC.Gem) QUALITY = language[APP.LANG].MISC.LootGem;
         QUALITY = QUALITY.split("[QUALITY]").join("<span class='" + GLOBALS.MISSIONS[M][7] + "'>" + language[APP.LANG].QUALITIES[GLOBALS.MISSIONS[M][7]] + "</span>");
         let UNLOCKED = Game.Level >= GLOBALS.MISSIONS[M][2] ? "pw green" : "pw red";
-        let BTN = "<div class='pw fluid darkgrey button' onclick='mission(" + M + ");' >" + language[APP.LANG].ACTIONS.LaunchMission + " <i class='" + UNLOCKED + " fal fa-arrow-right'></i></div>";
+        let BTN = "<div class='pw fluid darkgrey button' onclick='Launch_Mission(" + M + ");' >" + language[APP.LANG].ACTIONS.LaunchMission + " <i class='" + UNLOCKED + " fal fa-arrow-right'></i></div>";
 
         if (Game.MissionStarted[0] && Game.MissionStarted[1] == M && Game.MissionsCompleted[M] == 0) BTN = "<div class='pw fluid darkgrey button' onclick='ResetMission();' >" + language[APP.LANG].ACTIONS.CancelMission + " <i class='pw green fal fa-arrow-right'></i></div>";
         if (Game.MissionsCompleted[M] == 1 && GLOBALS.MISSIONS[M][3] != 2) BTN = "<div class='pw fluid darkgrey button' onclick='MissionStory(" + M + ");' >" + language[APP.LANG].ACTIONS.Story + " <i class='pw green fal fa-arrow-right'></i></div>";
@@ -41,8 +41,8 @@ function MissionStory(id) {
     POPUP("Mission Story", GLOBALS.MISSIONS[id][1]);
 }
 
-// START MISSIONS
-function mission(id) {
+// LAUNCH MISSIONS
+function Launch_Mission(id) {
     if (!Game.MissionStarted[0] && Game.Level >= GLOBALS.MISSIONS[id][2]) {
         Game.MissionStarted = [true, id, 0, 0, 0];
         Game.isInFight = 0;

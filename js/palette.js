@@ -1,44 +1,36 @@
 function DYNAMICS_ColorPalette() {
-    $("#range-red").bind('input', function () {
-        document.documentElement.style.setProperty('--EDITOR_RED', $("#range-red").val());
-        APP.PICKER[0] = $("#range-red").val();
+    const setProperty = (color, value) => {
+        document.documentElement.style.setProperty(color, value);
         WP_UPDATE();
+    };
+
+    const changeValue = (index, increase) => {
+        const value = parseInt(APP.PICKER[index]);
+        const newValue = increase ? value + 1 : value - 1;
+        if (newValue >= 0 && newValue <= 255) {
+            APP.PICKER[index] = newValue;
+            setProperty(`--EDITOR_${color[index]}`, newValue);
+        }
+    };
+
+    const color = ["RED", "GREEN", "BLUE"];
+
+    ["red", "green", "blue"].forEach((color, index) => {
+        $(`#range-${color}`).bind("input", function () {
+            setProperty(`--EDITOR_${color.toUpperCase()}`, $(`#range-${color}`).val());
+            APP.PICKER[index] = $(`#range-${color}`).val();
+            WP_UPDATE();
+        });
     });
 
-    $("#range-green").bind('input', function () {
-        document.documentElement.style.setProperty('--EDITOR_GREEN', $("#range-green").val());
-        APP.PICKER[1] = $("#range-green").val();
-        WP_UPDATE();
-    });
+    ["red", "green", "blue"].forEach((color, index) => {
+        $(`#selector-${color} .button.minus`).on("click", function () {
+            changeValue(index, false);
+        });
 
-    $("#range-blue").bind('input', function () {
-        document.documentElement.style.setProperty('--EDITOR_BLUE', $("#range-blue").val());
-        APP.PICKER[2] = $("#range-blue").val();
-        WP_UPDATE();
-    });
-
-    $("#selector-red .button.minus").on("click", function () {
-        WP_CHANGE(0, false);
-    });
-
-    $("#selector-red .button.plus").on("click", function () {
-        WP_CHANGE(0, true);
-    });
-
-    $("#selector-green .button.minus").on("click", function () {
-        WP_CHANGE(1, false);
-    });
-
-    $("#selector-green .button.plus").on("click", function () {
-        WP_CHANGE(1, true);
-    });
-
-    $("#selector-blue .button.minus").on("click", function () {
-        WP_CHANGE(2, false);
-    });
-
-    $("#selector-blue .button.plus").on("click", function () {
-        WP_CHANGE(2, true);
+        $(`#selector-${color} .button.plus`).on("click", function () {
+            changeValue(index, true);
+        });
     });
 
     $("#button-validate").on("click", function () {
@@ -46,22 +38,15 @@ function DYNAMICS_ColorPalette() {
     });
 
     $(".hex-color #copy").on("click", function () {
-        let SELECTED = document.createElement('textarea');
-        SELECTED.value = "#" + $("#color-name").attr("placeholder");
-        document.body.appendChild(SELECTED);
-        SELECTED.select();
-        document.execCommand('copy');
-        document.body.removeChild(SELECTED);
+        let selected = document.createElement("textarea");
+        selected.value = "#" + $("#color-name").attr("placeholder");
+        document.body.appendChild(selected);
+        selected.select();
+        document.execCommand("copy");
+        document.body.removeChild(selected);
         window.getSelection().removeAllRanges();
     });
 }
-
-const WP_CHANGE = function (TYPE, PARAM) {
-    if (!PARAM && APP.PICKER[TYPE] > 0) APP.PICKER[TYPE]--;
-    else if (PARAM && APP.PICKER[TYPE] < 255) APP.PICKER[TYPE]++;
-    $("#range-" + APP.TYPES[TYPE]).val(APP.PICKER[TYPE]);
-    WP_UPDATE();
-};
 
 const LOAD_THEME = function () {
     let theme = Game.Theme.split(" ");

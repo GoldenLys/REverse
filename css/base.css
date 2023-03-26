@@ -31,6 +31,7 @@
     align-items: center;
     justify-content: center;
     transition: visibility 0s ease 0s, background-color 250ms ease 0s;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -93,6 +94,7 @@
 }
 
 .pw.page {
+    position: relative;
     display: flex;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
@@ -123,6 +125,10 @@
     border-radius: 5px;
     background: rgb(18, 19, 31);
     transition: all 0.2s ease 0s;
+}
+.page-content div[id^="DIV-"].pw.message.combat {
+    background: transparent;
+    padding: 0 10px;
 }
 
 .full-width {
@@ -156,6 +162,7 @@
     margin: 0.5rem;
     max-width: 100%;
     background-color: transparent;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -244,6 +251,7 @@
     color: rgb(var(--ALPHA));
     padding: 0px;
     transition: all 0.25s ease-in-out 0s;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -263,6 +271,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: rgba(255, 255, 255, 0.85);
+    -webkit-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
@@ -290,7 +299,7 @@
     display: table;
     white-space: nowrap;
     height: auto;
-    margin: 1rem 0px;
+    margin: 2px 0px;
     text-align: center;
 }
 
@@ -457,6 +466,7 @@
     padding: 0.5em 1em;
     border-radius: 5px;
     text-transform: none;
+    -webkit-user-select: none;
     user-select: none;
     transition: all 0.25s ease-in-out 0s, font-size 0s ease 0s;
 }
@@ -669,6 +679,7 @@
     align-items: center;
     justify-content: center;
     transition: visibility 0s ease 0s, background-color 250ms ease 0s;
+    -webkit-user-select: none;
     user-select: none;
     top: 0px !important;
     left: 0px !important;
@@ -859,6 +870,7 @@
 
 .pw.dropdown>.name {
     margin: 0.5em 0px 0px;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -972,6 +984,7 @@
     padding: 0.5em 1em 0.5em 45px;
     border-radius: 5px;
     text-transform: none;
+    -webkit-user-select: none;
     user-select: none;
     transition: all 0.25s ease-in-out 0s, font-size 0s ease 0s;
     display: flex;

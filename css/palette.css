@@ -105,6 +105,7 @@
     position: absolute;
     top: 0;
     left: 3rem;
+    width: auto;
     right: 3rem;
     bottom: 0;
     line-height: 3rem;

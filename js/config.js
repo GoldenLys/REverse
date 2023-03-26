@@ -1,7 +1,7 @@
 var GLOBALS = {
     NAME: "AlphaRPG",
-    VERSION: "3.4",
-    BETA: 3,
+    VERSION: "3.5",
+    BETA: 1,
     RELICS_NAMES: [],
     THREATS: [],
     ARMORS_NAMES: {
@@ -123,8 +123,8 @@ var Game = {
     Weapons: {
         // 0     1      2     3      4      5
         // NAME, CLASS, GEMS, LEVEL, POWER, ICON
-        Main: ["Training Sword", "Normal", 0, 1, 10, ],
-        Special: ["Training Dagger", "Normal", 0, 1, 10]
+        Main: ["Makeshift Stick", "Normal", 0, 1, 10, ],
+        Special: ["Makeshift Dagger", "Normal", 0, 1, 10]
     },
     RELICS: [
         // 0           1      2     3   

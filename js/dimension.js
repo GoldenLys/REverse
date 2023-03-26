@@ -37,8 +37,8 @@ const ConfirmWT = function () {
             ["Normal", 5, 0],
             ["Normal", 5, 0]
         ];
-        Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10, "Default"];
-        Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10, "Default"];
+        Game.Weapons.Main = ["Makeshift Stick", "Normal", 0, 1, 10, "Default"];
+        Game.Weapons.Special = ["Makeshift Dagger", "Normal", 0, 1, 10, "Default"];
         Game.isInFight = 0;
         Game.MissionsCompleted = [];
         Game.Location = 0;
@@ -54,7 +54,7 @@ const ConfirmWT = function () {
         hideRewards();
         CLOSE_MENUS();
         POPUP_CLOSE();
-        mission(0);
+        Launch_Mission(0);
     }
 };
 

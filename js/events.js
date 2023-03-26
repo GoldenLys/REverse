@@ -185,6 +185,10 @@ function DYNAMICS() {
             if ($(this).data("menu") == "INVENTORY") GenInventory();
         }
     });
+    
+    $(".pw.button.heading-close").bind("click", function (e) {
+        CLOSE_MENUS();
+    });
 
     $(".pw.dropdown .name").bind("click", function (e) {
         e.preventDefault();

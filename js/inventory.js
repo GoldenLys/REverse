@@ -338,7 +338,6 @@ const EquipItem = function (ITEM, TYPE) {
         }
         POPUP("Select a Relic Slot", "<div class='pw fluid vertical buttons'>" + RELIC_BUTTON[1] + RELIC_BUTTON[2] + RELIC_BUTTON[3] + RELIC_BUTTON[4] + "</div>", 0);
     } else if (TYPE == 4) {
-        console.table(Game.inventory[ITEM]);
         PREVIEW_WEAPON(Game.inventory[ITEM].TYPE2, ITEM);
     }
     else if (TYPE == 5) {
@@ -537,8 +536,8 @@ function UPGRADE_WEAPON(WEAPON, ITEM) {
 
 // DESTROY EQUIPMENT
 function DestroyWeapon(WEAPON) {
-    if (WEAPON == "Main") Game.Weapons.Main = ["Training Sword", "Normal", 0, 1, 10, "Default"];
-    else Game.Weapons.Special = ["Training Dagger", "Normal", 0, 1, 10, "Default"];
+    if (WEAPON == "Main") Game.Weapons.Main = ["Makeshift Stick", "Normal", 0, 1, 10, "Default"];
+    else Game.Weapons.Special = ["Makeshift Dagger", "Normal", 0, 1, 10, "Default"];
     CHECK_EQUIPMENT();
     POPUP_CLOSE();
     GenInventory();
@@ -713,13 +712,20 @@ const CHECK_EQUIPMENT = function () {
         if (Game.WeaponUpgrades[WEAPON] < 0) Game.WeaponUpgrades[WEAPON] = 0;
     }
 
+    let ARMORS = {
+        1: "Helmet",
+        2: "Breastplate",
+        3: "Shield",
+        4: "Boots"
+    };
+
     for (let RELIC in Game.RELICS) {
         if (RELIC != 0) {
             let MAX_VALUE = ITEM_CONFIG.RELIC_MULTIPLIERS[MAX_QUALITY];
             if (Game.RELICS[RELIC][1] == 1 || Game.RELICS[RELIC][1] == 2) {
                 let MAX_ITEM_VALUE = ITEM_CONFIG.RELIC_MULTIPLIERS[Game.RELICS[RELIC][0]];
                 if (Game.RELICS[RELIC][2] > MAX_VALUE || Game.RELICS[RELIC][2] > MAX_ITEM_VALUE) {
-                    LOG(`Auto scaling the multiplier of the ${RELIC} relic`, `${fix(Game.RELICS[RELIC][2], 3)} out of ${fix(MAX_ITEM_VALUE, 3)} / ${fix(MAX_VALUE, 3)}.`, "white; background-color: rgb(58 59 70)");
+                    LOG(`Auto scaling the relic of the ${ARMORS[RELIC]}`, `${fix(Game.RELICS[RELIC][2], 3)} out of ${fix(MAX_ITEM_VALUE, 3)} ▶ ${fix(MAX_VALUE, 3)}.`, "white; background-color: rgb(58 59 70)");
                     Game.RELICS[RELIC][2] = MAX_ITEM_VALUE;
                 }
             }

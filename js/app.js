@@ -17,7 +17,7 @@
 
 -- Missions dialogues --
 
-  [ 50%] create an animation (done just need to make the JS or CSS animation)
+  [100%] create an animation
   [  0%] create a new dialogues view 
   [  0%] create & animate 2 buttons (return and next) (0%)
 
@@ -29,6 +29,11 @@
   enemies have X% chances to drop 10%/20% more special attacks
   adds X slots to inventory
   enemies have X% chances to drop 10%/20% more money
+
+  NEW DATAS : 
+ * FACTIONS PER AREAS
+ * RELATIONS PER FACTIONS
+ * STORY CHOICES IMPACTING WHICH FACTION YOU WILL SIDE WITH
 
 */
 
@@ -127,7 +132,7 @@ const UpdateEngine = function () {
     if (Game.Level >= APP.MaxLevel && APP.LastMission >= APP.TotalMissions) APP.ScoreModeEnabled = 1;
     else APP.ScoreModeEnabled = 0;
     if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined' && Game.Enemy[0] != "boss") Game.Enemy[0] = 0;
-    if (Game.Level == 1 && !Game.MissionStarted[0] && Game.MissionsCompleted[0] == 0 && Game.config[3] == 1 && $("#INTRODUCTION").is(":hidden") && !$("#LOGIN-NOTICE").hasClass("active")) mission(0);
+    if (!Game.MissionStarted[0] && Game.MissionsCompleted[0] == 0 && Game.config[3] == 1 && $("#INTRODUCTION").is(":hidden") && !$("#LOGIN-NOTICE").hasClass("active")) Launch_Mission(0);
     if (Game.isInFight == 1) $("#EnemySprite").html("<img class='pw medium image' src='images/Monsters/" + Game.Location + "-" + Game.Enemy[0] + ".png'>");
     if (APP.CoreLife > APP.CoreBaseLife) {
         APP.CoreLife = APP.CoreBaseLife;
@@ -235,106 +240,103 @@ const UpdateEngine = function () {
 };
 
 const UpdateGame = function () {
-    let counter = 0;
-    for (var M in GLOBALS.MISSIONS) {
-        if (GLOBALS.MISSIONS[M][3] != 2) counter++;
+    Game.Dimension = Math.min(Game.Dimension, 50);
+
+    for (let D = 1; D < 7; D++) {
+        if (Game.Defeated[D] === null) Game.Defeated[D] = 0;
     }
-    APP.TotalMissions = counter;
-    if (Game.Dimension > 50) Game.Dimension = 50;
-    APP.MaxLevel = 35;
-    APP.MaxScore = (APP.MaxLevel + (Game.Dimension * 5) - 5);
-    for (var D = 1; D < 7; D++) {
-        if (Game.Defeated[D] == null) Game.Defeated[D] = 0;
-    }
+
     Game.DIMENSION_MULTIPLIERS[0] = 0;
     Game.DIMENSION_MULTIPLIERS[1] = 0;
-    for (let R in Game.RELICS) {
-        if (Game.RELICS[R][1] == 1) Game.DIMENSION_MULTIPLIERS[0] += Game.RELICS[R][2];
-        else Game.DIMENSION_MULTIPLIERS[0] += 0;
-        if (Game.RELICS[R][1] == 2) Game.DIMENSION_MULTIPLIERS[1] += Game.RELICS[R][2];
-        else Game.DIMENSION_MULTIPLIERS[1] += 0;
-        if (Game.RELICS[R][1] == 4) APP.MaxScore += (Game.RELICS[R][2] / 10);
+    for (const RELIC in Game.RELICS) {
+        if (Game.RELICS[RELIC][1] === 1) Game.DIMENSION_MULTIPLIERS[0] += Game.RELICS[RELIC][2];
+        else if (Game.RELICS[RELIC][1] === 2) Game.DIMENSION_MULTIPLIERS[1] += Game.RELICS[RELIC][2];
+        else if (Game.RELICS[RELIC][1] === 4) APP.MaxScore += Game.RELICS[RELIC][2] / 10;
     }
-    if (Game.isInFight == 1 && Game.class == "none") {
+
+    if (Game.isInFight === 1 && Game.class === "none") {
         Game.username = "Default";
         Backup = "Default";
         ResetTheme(1);
-        save();
     }
-    Game.DIMENSION_MULTIPLIERS[2] = (Game.Dimension * 0.03) - 0.03; // EXPMULT
-    Game.DIMENSION_MULTIPLIERS[3] = (Game.Dimension * 0.05) + 0.95; // DIFFICULTYMULT
+
+    Game.DIMENSION_MULTIPLIERS[2] = Game.Dimension * 0.03 - 0.03; // EXPMULT
+    Game.DIMENSION_MULTIPLIERS[3] = Game.Dimension * 0.05 + 0.95; // DIFFICULTYMULT
     Backup = Object.freeze(Game.username);
-    Game.xp[2] = Game.Upgrades[0] * 0.01 + 1;
     APP.PowerMult = Game.Upgrades[1] * 0.01 + 1;
     APP.LifeMult = Game.Upgrades[2] * 0.01 + 1;
-    Game.MaxInv = (Game.Dimension * 2) + 18 + (Game.Upgrades[3] * 1);
-    if (typeof (Game.MissionStarted[4]) === 'undefined') Game.MissionStarted[4] = 0;
-    if (Game.isInFight == 0) {
+    Game.MaxInv = Game.Dimension * 2 + 18 + (Game.Upgrades[3] * 1);
+
+    if (typeof Game.MissionStarted[4] === "undefined") Game.MissionStarted[4] = 0;
+    if (Game.isInFight === 0) {
         APP.CoreLife = APP.CoreBaseLife;
-        GenEnemy();
+        Game.Enemy = GenEnemy();
+        Game.isInFight = 1;
+        $("#EnemySprite").html("<img class='pw medium image' src='images/Monsters/" + Game.Location + "-" + Game.Enemy[0] + ".png'>");
+        $("#EnemyDamage").html("").hide();
+        $("#PlayerDamage").html("").hide();
+        UpdateGame();
     }
     APP.CoreBaseLife = 0;
     APP.TotalWeaponsUpgrades = 0;
     APP.TotalArmorsUpgrades = 0;
     GET_EQUIPMENT_RANK();
     APP.TotalWeaponsUpgrades += Game.WeaponUpgrades.Main + Game.WeaponUpgrades.Special;
-    if (LATEST_LOCATION_UNLOCKED() !== "none" && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0] && Game.Level >= GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][2] && Game.username != "Default" && Game.isInFight == 1) {
-        for (M in GLOBALS.MISSIONS) {
-            if (Game.MissionsCompleted[M] == 0 && Game.MissionsCompleted[GLOBALS.MISSIONS[M][9]] == 1 && GLOBALS.MISSIONS[M][3] != 2 && Game.Level >= GLOBALS.MISSIONS[M][2]) {
+
+    let TotalMissionsCount = 0;
+    for (const mission in GLOBALS.MISSIONS) {
+        if (mission[3] !== 2) TotalMissionsCount++;
+        Game.MissionsCompleted[mission] = Game.MissionsCompleted[mission] === "undefined" || Game.MissionsCompleted[mission] === null ? 0 : Game.MissionsCompleted[mission];
+        if (LATEST_LOCATION_UNLOCKED() !== "none" && APP.ScoreModeEnabled === 0 && !Game.MissionStarted[0] && Game.Level >= GLOBALS.LOCATIONS[LATEST_LOCATION_UNLOCKED()][2] && Game.username !== "Default" && Game.isInFight === 1) {
+            if (Game.MissionsCompleted[mission] === 0 && Game.MissionsCompleted[GLOBALS.MISSIONS[mission][9]] === 1 && GLOBALS.MISSIONS[mission][3] !== 2 && Game.Level >= GLOBALS.MISSIONS[mission][2]) {
                 GenMissions();
-                if (Game.config[3] == 1 && !$("#POPUP").hasClass("active")) mission(M);
+                if (Game.config[3] === 1 && !$("#POPUP").hasClass("active")) Launch_Mission(mission);
             }
         }
     }
+    APP.TotalMissions = TotalMissionsCount;
+
     APP.CoreBaseLife = Math.round(APP.CoreBaseLife * (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1]));
     APP.WeaponsPower = Math.round(Game.Weapons.Main[4] * (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     APP.SpecialPower = Math.round((Game.Weapons.Main[4] + Game.Weapons.Special[4]) * (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
-    for (var M2 in GLOBALS.MISSIONS) {
-        if (Game.MissionsCompleted[M2] == null) Game.MissionsCompleted[M2] = 0;
-    }
+
     if (Game.MissionStarted[0]) Game.Location = GLOBALS.MISSIONS[Game.MissionStarted[1]][8];
-    for (var IV in Game.inventory) {
-        if (typeof Game.inventory[IV].name === "undefined" || typeof Game.inventory[IV].class === "undefined" || typeof Game.inventory[IV].type === "undefined") {
-            RemoveItem(IV);
-            if (Game.isInFight == 2) POPUP_CLOSE();
+    else if (Game.Location === 11 || Game.Location === 17) Game.Location--;
+
+    for (let i = 0; i < Game.inventory.length; i++) {
+        const item = Game.inventory[i];
+        if (item !== undefined) {
+            switch (item.class) {
+                case "Normal":
+                    if (Game.AutoRemove[0] === 1) RemoveItem(i);
+                    break;
+                case "Common":
+                    if (Game.AutoRemove[1] === 1) RemoveItem(i);
+                    break;
+                case "Uncommon":
+                    if (Game.AutoRemove[2] === 1) RemoveItem(i);
+                    break;
+                case "Rare":
+                    if (Game.AutoRemove[3] === 1) RemoveItem(i);
+                    break;
+                case "Epic":
+                    if (Game.AutoRemove[4] === 1 || (Game.Level < 30 && item.class === "Exotic")) RemoveItem(i);
+                    break;
+                case "Legendary":
+                    if (Game.Level < 30) RemoveItem(i);
+                    break;
+            }
+
+            if (item.type === 0 || i >= Game.MaxInv) RemoveItem(i);
+            else if (Game.Level < 10 && item.class === "Uncommon") RemoveItem(i);
+            else if (Game.Level < 15 && item.class === "Rare") RemoveItem(i);
+            else if (Game.Level < 20 && item.class === "Epic") RemoveItem(i);
+            else if (Game.Level < 30 && (item.class === "Exotic" || item.class === "Legendary")) RemoveItem(i);
+        } else {
             LOG("ERROR", "code 007", "white; background-color: rgb(185 20 20)");
-        }
-        if (Game.Level < 10 && Game.inventory[IV].class == 'Uncommon') {
-            RemoveItem(IV);
-            if (Game.isInFight == 2) POPUP_CLOSE();
-            LOG("ERROR", "code 008", "white; background-color: rgb(185 20 20)");
-        }
-        if (Game.Level < 15 && Game.inventory[IV].class == 'Rare') {
-            RemoveItem(IV);
-            if (Game.isInFight == 2) POPUP_CLOSE();
-            LOG("ERROR", "code 009", "white; background-color: rgb(185 20 20)");
-        }
-        if (Game.Level < 20 && Game.inventory[IV].class == 'Epic') {
-            RemoveItem(IV);
-            if (Game.isInFight == 2) POPUP_CLOSE();
-            LOG("ERROR", "code 010", "white; background-color: rgb(185 20 20)");
-        }
-        if (Game.Level < 30 && Game.inventory[IV].class == 'Exotic' || Game.Level < 30 && Game.inventory[IV].class == 'Legendary') {
-            RemoveItem(IV);
-            if (Game.isInFight == 2) POPUP_CLOSE();
-            LOG("ERROR", "code 011", "white; background-color: rgb(185 20 20)");
-        }
-        if (Game.inventory[IV].type == 0) {
-            RemoveItem(IV);
-            if (Game.isInFight == 2) POPUP_CLOSE();
-            LOG("ERROR", "code 012", "white; background-color: rgb(185 20 20)");
-        }
-        if (IV >= Game.MaxInv) { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
-        if (typeof Game.inventory[IV] !== 'undefined') {
-            if (Game.AutoRemove[0] == 1 && Game.inventory[IV].class == "Normal") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
-            else if (Game.AutoRemove[1] == 1 && Game.inventory[IV].class == "Common") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
-            else if (Game.AutoRemove[2] == 1 && Game.inventory[IV].class == "Uncommon") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
-            else if (Game.AutoRemove[3] == 1 && Game.inventory[IV].class == "Rare") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
-            else if (Game.AutoRemove[4] == 1 && Game.inventory[IV].class == "Epic") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
-            else if (Game.AutoRemove[5] == 1 && Game.inventory[IV].class == "Exotic") { RemoveItem(IV); if (Game.isInFight == 2) POPUP_CLOSE(); }
+            RemoveItem(i);
         }
     }
-    if (!Game.MissionStarted[0] && (Game.Location == 11 || Game.Location == 17)) Game.Location--;
     UpdateUI();
     save();
 };

@@ -15,10 +15,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link async href="css/vars.css?v=3.4.3" rel="stylesheet" />
-    <link async href="css/base.css?v=3.4.3" rel="stylesheet" />
-    <link async href="css/style.css?v=3.4.3" rel="stylesheet" />
-    <link async href="css/palette.css?v=3.4.3" rel="stylesheet" />
+    <link async href="css/vars.css?v=3.5.0" rel="stylesheet" />
+    <link async href="css/base.css?v=3.5.0" rel="stylesheet" />
+    <link async href="css/style.css?v=3.5.0" rel="stylesheet" />
+    <link async href="css/palette.css?v=3.5.0" rel="stylesheet" />
 </head>
 
 <body>
@@ -75,7 +75,7 @@
         </div>
         <div class="page-content">
             <div class="scroller">
-                <div id="DIV-COMBAT">
+                <div class="pw message combat no-animation text-center" id="DIV-COMBAT">
                     <h3 class="pw horizontal divider" id="PLAYER-ETA"></h3>
                     <div class="pw horizontal segments">
                         <div class="pw segment type_card">
@@ -244,6 +244,7 @@
                     </div>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-INVENTORY">
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
                     <h3 class="pw horizontal divider" id="EQUIPMENT_COUNTER"><i class="fas fa-user"></i> Equipment</h3>
                     <div class="pw horizontal segments" id="EQUIPPED_ITEMS"></div>
                     <h3 class="pw horizontal divider"><i class="fas fa-trash"></i> Auto Remove</h3>
@@ -309,6 +310,7 @@
                     </div>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-PRESTIGE">
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
                     <h3 class="pw horizontal divider"><i class="far fa-portal-enter"></i> Dimension</h3>
                     <div id="CurrWT"></div>
                     <div id="WTShards"></div>
@@ -367,6 +369,7 @@
                     </div>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-STATS">
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
                     <h3 class="pw horizontal divider"><i class="fas fa-clipboard list icon"></i> Statistics</h3>
                     <div class="pw dropdown text-center" data-open="open">
                         <h3 class="name">General</h3>
@@ -494,6 +497,7 @@
                     </div>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-LEADERBOARD">
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
                     <h3 class="pw horizontal divider">
                         <i class="fas fa-trophy icon"></i>
                         Leaderboard
@@ -517,6 +521,7 @@
                     </h3>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-SETTINGS">
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
                     <div class="pw horizontal divider"><i class="fas fa-cogs"></i> Settings</div>
                     <div class="pw horizontal segments">
                         <div class="pw segment">
@@ -622,6 +627,7 @@
                     </div>
                 </div>
                 <div class="pw message text-center" id="DIV-CREDITS">
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
                     <h3 class="pw horizontal divider"><i class="fas fa-popcorn"></i> Credits</h3>
                     <span id="VERSION_TEXT"></span> made with 💖 by
                     <div class="link" data-url="https://github.com/GoldenLys">Purple Wizard </div>.<br />
@@ -844,17 +850,17 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-analytics-compat.js"></script>
-    <script src="js/functions.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/config.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/lang.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/stats.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/combat.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/inventory.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/dimension.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/missions.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/events.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/app.js?v=3.4.3" type="text/javascript"></script>
-    <script src="js/palette.js?v=3.4.3" type="text/javascript"></script>
+    <script src="js/functions.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/config.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/lang.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/stats.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/combat.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/inventory.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/dimension.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/missions.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/events.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/app.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/palette.js?v=3.5.0" type="text/javascript"></script>
 </body>
 
 </html>
