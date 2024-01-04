@@ -95,6 +95,8 @@
 
 .pw.page {
     position: relative;
+    top: 0;
+    left: 0;
     display: flex;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
@@ -126,6 +128,7 @@
     background: rgb(18, 19, 31);
     transition: all 0.2s ease 0s;
 }
+
 .page-content div[id^="DIV-"].pw.message.combat {
     background: transparent;
     padding: 0 10px;
@@ -262,6 +265,10 @@
     padding: 0.25rem 0.5rem;
 }
 
+.menu>.link-container>.link:hover {
+    padding: 0 0;
+}
+
 .pw.divider {
     font-size: 1rem;
     margin: 1rem 0px;
@@ -278,6 +285,7 @@
 
 .pw.divider:not(.horizontal):not(.vertical):not(.invisible) {
     height: 2px;
+    min-height: 2px;
     background-image: linear-gradient(to right, transparent, rgba(140, 140, 140, 0.5), transparent);
 }
 
@@ -296,10 +304,12 @@
 }
 
 .pw.horizontal.divider {
+    font-family: 'Montserrat-Alt1', sans-serif;
+    font-weight: 400;
     display: table;
     white-space: nowrap;
     height: auto;
-    margin: 2px 0px;
+    margin: .5rem 0px;
     text-align: center;
 }
 
@@ -528,6 +538,11 @@
     border-radius: 5px;
 }
 
+.pw.fluid.vertical.sticky.buttons>.pw.button {
+    margin: 0px;
+    border-radius: 0px;
+}
+
 .pw.fluid.button {
     display: block;
     margin: 2.5px 0px 0px;
@@ -621,6 +636,11 @@
 
 .pw.button.transparent {
     opacity: 0.5;
+}
+
+.pw.button.transparent i.fa-beat-fade {
+    animation: none;
+    -webkit-animation: none;
 }
 
 .pw.buttons .pw.button.active {
@@ -839,6 +859,8 @@
 }
 
 .pw.label {
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
     display: block;
     margin: 0.25em 0px;
     padding: 0.25em 0.5em;
@@ -860,7 +882,7 @@
 }
 
 .pw.dropdown>.name::before {
-    font-family: "Font Awesome 5 Pro";
+    font-family: "Font Awesome 6 Pro";
     font-weight: 900;
     line-height: 1;
     content: "";
@@ -950,6 +972,8 @@
 .pw.segment>h6 {
     margin: 0px;
     line-height: 1.5;
+    font-family: 'Montserrat-Alt1', sans-serif;
+    font-weight: 400;
 }
 
 .pw.segment.avatar {
@@ -990,11 +1014,46 @@
     display: flex;
     flex: 1 1 auto;
     margin: 0.5em;
+    align-items: center;
+    justify-content: center;
 }
 
 .pw.checkbox.dark {
-    background-color: rgba(42, 43, 58, 0.3);
+    z-index: 26;
+    background-color: transparent;
     color: white;
+    padding: 0.5em 1em 0.5em 1em;
+}
+
+.pw.checkbox.dark[data-check="unchecked"]>input {
+    background: rgb(var(--darkgrey));
+    box-shadow: inset 0px 0px 0px 1px rgb(var(--white));
+}
+
+.pw.checkbox.dark[data-check="checked"]>input {
+    background: rgb(var(--darkgrey));
+    box-shadow: inset 0px 0px 0px 1px rgb(var(--red));
+}
+
+.pw.checkbox.dark>input {
+    display: block;
+    width: 100%;
+    background: rgb(var(--darkgrey));
+    z-index: 0;
+}
+
+.pw.checkbox.dark[data-check="unchecked"]>input::after {
+    display: block;
+    content: "";
+}
+
+.pw.checkbox.dark[data-check="checked"]>input::after {
+    display: block;
+    content: "";
+}
+
+.pw.checkbox.dark>.text {
+    z-index: 1;
 }
 
 .pw.checkbox>input {
@@ -1120,6 +1179,10 @@
     margin: 0px;
 }
 
+.pw.segment.margin {
+    margin: 0.5em 0.5em;
+}
+
 .pw.button-container {
     display: inline-block;
     min-width: 3em;
@@ -1141,16 +1204,19 @@
     display: inline-block;
 }
 
-.pw.vertical.buttons>.pw.button {
-    display: block;
-}
-
-.pw.vertical.buttons .pw.button:first-child {
+.pw.fluid.vertical.sticky.buttons .pw.button:first-of-type,
+.pw.vertical.buttons .pw.button:first-of-type {
     border-radius: 5px 5px 0px 0px;
 }
 
-.pw.vertical.buttons .pw.button:last-child {
+.pw.fluid.vertical.sticky.buttons .pw.button:last-of-type:first-of-type,
+.pw.vertical.buttons .pw.button:last-of-type:first-of-type {
     border-radius: 0px 0px 5px 5px;
+}
+
+.pw.fluid.vertical.sticky.buttons .pw.button:last-of-type:first-of-type,
+.pw.vertical.buttons .pw.button:last-of-type:first-of-type {
+    border-radius: 5px;
 }
 
 @media (min-width: 1024px) {
@@ -1211,6 +1277,8 @@
 }
 
 .pw.subtitle {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
     text-transform: uppercase;
     font-size: 0.75em;
     line-height: 1em;
@@ -1232,4 +1300,8 @@
 
 .pw.horizontal.segments.dark:last-child {
     margin-bottom: 0.5em;
+}
+
+.pw.subtitle.dark {
+    opacity: 0.65;
 }

@@ -1,7 +1,9 @@
-function DYNAMICS_ColorPalette() {
+import FUNCTIONS from './index.js';
+
+function LOAD_PALETTE_VIEW() {
     const setProperty = (color, value) => {
         document.documentElement.style.setProperty(color, value);
-        WP_UPDATE();
+        UPDATE_PALETTE_VIEW();
     };
 
     const changeValue = (index, increase) => {
@@ -19,7 +21,7 @@ function DYNAMICS_ColorPalette() {
         $(`#range-${color}`).bind("input", function () {
             setProperty(`--EDITOR_${color.toUpperCase()}`, $(`#range-${color}`).val());
             APP.PICKER[index] = $(`#range-${color}`).val();
-            WP_UPDATE();
+            UPDATE_PALETTE_VIEW();
         });
     });
 
@@ -48,7 +50,7 @@ function DYNAMICS_ColorPalette() {
     });
 }
 
-const LOAD_THEME = function () {
+export const LOAD_THEME = function () {
     let theme = Game.Theme.split(" ");
     $("#range-red").val(theme[0]);
     APP.PICKER[0] = $("#range-red").val();
@@ -59,13 +61,13 @@ const LOAD_THEME = function () {
     $("#range-blue").val(theme[2]);
     APP.PICKER[2] = $("#range-blue").val();
     document.documentElement.style.setProperty('--EDITOR_BLUE', $("#range-blue").val());
-    DYNAMICS_ColorPalette();
-    WP_UPDATE();
+    LOAD_PALETTE_VIEW();
+    UPDATE_PALETTE_VIEW();
 };
 
-const WP_UPDATE = function () {
+const UPDATE_PALETTE_VIEW = function () {
     Game.Theme = `${APP.PICKER[0]} ${APP.PICKER[1]} ${APP.PICKER[2]}`;
-    DEFINE_BODY_ATTRIBUTES();
+    FUNCTIONS.APP.DEFINE_BODY_ATTRIBUTES();
     $(".button-validate").attr("style", "background-color: " + Game.Theme + ";");
     for (let COLOR in APP.PICKER) {
         $("#selector-" + APP.TYPES[COLOR] + " .value").html(APP.PICKER[COLOR]);
@@ -75,11 +77,10 @@ const WP_UPDATE = function () {
 };
 
 // THEME FUNCTIONS
-
-const ResetTheme = function (code) {
+export const RESET_THEME = function (code) {
     if (code != 2) Game.Theme = "19 241 210";
-    DEFINE_BODY_ATTRIBUTES();
-    if (code == 1) save();
+    FUNCTIONS.APP.DEFINE_BODY_ATTRIBUTES();
+    if (code == 1) FUNCTIONS.MAIN.SAVE_DATA()
 };
 
 const rgbToHex = function (rgb) {

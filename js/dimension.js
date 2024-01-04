@@ -1,13 +1,15 @@
+import FUNCTIONS from './index.js';
+
 //PRESTIGE FUNCTIONS
-const ChangeWT = function () {
-    POPUP("Do you really want to go through the rift?", `You will lose your current equipment and mission progress but gain the following benefits: <br>
+export const ChangeWT = function () {
+    FUNCTIONS.MAIN.POPUP("Do you really want to go through the rift?", `You will lose your current equipment and mission progress but gain the following benefits: <br>
 <div class="pw inline label">Maximum score increased to  <i class='fad fa-dice-d20'></i>${(APP.MaxScore + 5) * 10}</div>
 <div class="pw inline label">+3% experience gain</div>
 <div class="pw inline label">Inventory capacity increased to  ${Game.MaxInv + 2}</div>
 <div class="pw inline label">${Math.round(APP.Ranking / 10 - 30)} Dimensional Fragments</div>`, 2);
 };
 
-const ConfirmWT = function () {
+export const ConfirmWT = function () {
     if (Game.Level >= APP.MaxLevel && APP.Ranking >= (((30 + (Game.Dimension * 5)) * 10) - 5) && APP.LastMission >= APP.TotalMissions) {
         Game.Dimension++;
         Game.xp = [0, 100, 1];
@@ -39,7 +41,7 @@ const ConfirmWT = function () {
         ];
         Game.Weapons.Main = ["Makeshift Stick", "Normal", 0, 1, 10, "Default"];
         Game.Weapons.Special = ["Makeshift Dagger", "Normal", 0, 1, 10, "Default"];
-        Game.isInFight = 0;
+        Game.isInFight = false;
         Game.MissionsCompleted = [];
         Game.Location = 0;
         Game.MissionStarted = [false, 0, 0, 0, 0];
@@ -51,46 +53,46 @@ const ConfirmWT = function () {
         $("#RM5").attr("data-check", "unchecked");
         $("#RM6").attr("data-check", "unchecked");
         APP.MIND_CONTROL[1] = 0;
-        hideRewards();
-        CLOSE_MENUS();
-        POPUP_CLOSE();
-        Launch_Mission(0);
+        FUNCTIONS.MAIN.hideRewards();
+        FUNCTIONS.MAIN.CLOSE_MENUS();
+        FUNCTIONS.MAIN.POPUP_CLOSE();
+        FUNCTIONS.MISSIONS.LAUNCH_MISSION(0);
     }
 };
 
-const GET_MAX_UPGRADES = function (CLASS) {
+export const GET_MAX_UPGRADES = function (CLASS) {
     let CONFIG = [{
-            Normal: 0,
-            Common: 0,
-            Uncommon: _.random(0, 1),
-            Rare: _.random(1, 2),
-            Epic: _.random(2, 3),
-            Exotic: _.random(3, 4),
-            Legendary: _.random(4, 5)
-        },
-        {
-            Normal: _.random(0, 1),
-            Common: _.random(0, 2),
-            Uncommon: _.random(1, 2),
-            Rare: _.random(2, 3),
-            Epic: _.random(3, 4),
-            Exotic: _.random(3, 5),
-            Legendary: _.random(5, 6)
-        },
+        Normal: 0,
+        Common: 0,
+        Uncommon: _.random(0, 1),
+        Rare: _.random(1, 2),
+        Epic: _.random(2, 3),
+        Exotic: _.random(3, 4),
+        Legendary: _.random(4, 5)
+    },
+    {
+        Normal: _.random(0, 1),
+        Common: _.random(0, 2),
+        Uncommon: _.random(1, 2),
+        Rare: _.random(2, 3),
+        Epic: _.random(3, 4),
+        Exotic: _.random(3, 5),
+        Legendary: _.random(5, 6)
+    },
     ];
     return CONFIG[APP.ScoreModeEnabled][CLASS];
 };
 
-const DIMENSIONAL_UPGRADE = function (TYPE) {
-    let COST = GetMultPrice(TYPE);
+export const DIMENSIONAL_UPGRADE = function (TYPE) {
+    let COST = GET_DIMENSIONAL_SHARDS_PRICE(TYPE);
     if (Game.Shards >= COST && COST !== Infinity) {
         Game.Shards -= COST;
         Game.Upgrades[TYPE]++;
-        UpdateGame();
+        FUNCTIONS.APP.UpdateGame();
     }
 };
 
-const GetMultPrice = function (UPGRADE) {
+export const GET_DIMENSIONAL_SHARDS_PRICE = function (UPGRADE) {
     if (typeof Game.Upgrades[UPGRADE] !== "number") Game.Upgrades[UPGRADE] = 0;
     let SHARDS = Infinity;
     let TIERS = {

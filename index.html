@@ -6,19 +6,16 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="ie=edge" http-equiv="X-UA-Compatible" />
     <meta content="website" property="og:type" />
-    <meta content="AlphaRPG" property="og:title" />
+    <meta content="REverse" property="og:title" />
     <meta content="en_US" property="og:locale" />
     <meta content="Incremental RPG game, fight monsters and follow the story to get powerful items" property="og:description" />
     <meta name="theme-color" content="#13F1D2">
-    <meta content="https://purplewizard.space/AlphaRPG/images/logo.png" property="og:image" />
+    <meta content="https://purplewizard.space/REverse/images/logo.png" property="og:image" />
     <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link async href="css/vars.css?v=3.5.0" rel="stylesheet" />
-    <link async href="css/base.css?v=3.5.0" rel="stylesheet" />
-    <link async href="css/style.css?v=3.5.0" rel="stylesheet" />
-    <link async href="css/palette.css?v=3.5.0" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="webfonts/Montserrat-Alt1.css">
 </head>
 
 <body>
@@ -26,27 +23,27 @@
     <div class="pw page" id="GAME" style="display: none;">
         <div class="page-sidebar">
             <div class="menu">
-                <li data-menu="INVENTORY">
+                <div class="link-container" data-menu="INVENTORY">
                     <div class="link" data-url="#" id="inventory"><i class="fas fa-sack icon"></i> Inventory</div>
-                </li>
-                <li data-menu="PRESTIGE">
+                </div>
+                <div class="link-container" data-menu="PRESTIGE">
                     <div class="link" data-url="#" id="prestige"><i class="far fa-portal-enter"></i> Dimension</div>
-                </li>
-                <li data-menu="STATS">
+                </div>
+                <div class="link-container" data-menu="STATS">
                     <div class="link" data-url="#" id="statistics"><i class="fas fa-clipboard list icon"></i> Statistics</div>
-                </li>
-                <li data-menu="LEADERBOARD">
+                </div>
+                <div class="link-container" data-menu="LEADERBOARD">
                     <div class="link" data-url="#" id="leaderboard"><i class="fas fa-trophy icon"></i> Leaderboard</div>
-                </li>
-                <li data-menu="SETTINGS">
+                </div>
+                <div class="link-container" data-menu="SETTINGS">
                     <div class="link" data-url="#" id="settings"><i class="fas fa-cogs icon"></i> Settings</div>
-                </li>
-                <li data-menu="CREDITS">
+                </div>
+                <div class="link-container" data-menu="CREDITS">
                     <div class="link" data-url="#" id="credits"><i class="fas fa-popcorn"></i> Credits</div>
-                </li>
-                <li data-menu="#">
+                </div>
+                <div class="link-container" data-menu="#">
                     <div class="link" data-url="https://discord.com/invite/SBuYeHh"><i class="fab fa-discord"></i> Discord</div>
-                </li>
+                </div>
             </div>
             <div class="pw sticked segments text-center">
                 <div class="pw segment green" id="MIND_CONTROL"></div>
@@ -70,11 +67,19 @@
                 </div>
             </div>
             <div class="credits">
-                <div class="game-title" id="game_title">AlphaRPG</div>
+                <div class="game-title" id="game_title">RE<span class="pw alpha">verse</span>
+                    <span id="game_version" class="sub">verse</span>
+                </div>
             </div>
         </div>
         <div class="page-content">
             <div class="scroller">
+                <div class="pw message story-container text-center" id="DIV-STORY">
+                    <h3 class="pw horizontal story divider"><i class="fa-solid fa-book-sparkles"></i> <span class="text-center pw white" id="story-title"></span></h3>
+                    <h3 id="story-text" class="text-center"></h3>
+                    <div id="story-buttons" class="pw fluid vertical sticky buttons">
+                    </div>
+                </div>
                 <div class="pw message combat no-animation text-center" id="DIV-COMBAT">
                     <h3 class="pw horizontal divider" id="PLAYER-ETA"></h3>
                     <div class="pw horizontal segments">
@@ -89,7 +94,7 @@
                                         </svg>
                                         <div class="number">
                                             <div id="PlayerSprite"></div>
-                                            <h2>100<span>%</span></h2>
+                                            <h2></h2>
                                         </div>
                                     </div>
                                     <h2 class="text">
@@ -112,7 +117,7 @@
                                         </svg>
                                         <div class="number">
                                             <div id="EnemySprite"></div>
-                                            <h2>100<span>%</span></h2>
+                                            <h2></h2>
                                         </div>
                                     </div>
                                     <h2 class="text">
@@ -155,9 +160,9 @@
                                         <div class="description"></div>
                                     </div>
                                     <div class="footer">
-                                        <div class="ThrowButton">
-                                            <div class="pw fluid red button"><i class="fas fa-trash"></i> Throw away
-                                            </div>
+                                        <div class="pw fluid buttons">
+                                            <div class="pw fluid red Throw button"><i class="fas fa-trash"></i> Throw away</div>
+                                            <div class="pw fluid grey Unequip button"><i class="fa-solid fa-circle-minus"></i> Unequip</div>
                                         </div>
                                     </div>
                                 </div>
@@ -170,9 +175,9 @@
                                         <div class="description"></div>
                                     </div>
                                     <div class="footer">
-                                        <div class="ThrowButton">
-                                            <div class="pw fluid red button"><i class="fas fa-trash"></i> Throw away
-                                            </div>
+                                        <div class="pw fluid buttons">
+                                            <div class="pw fluid red Throw button"><i class="fas fa-trash"></i> Throw away</div>
+                                            <div class="pw fluid grey Unequip button"><i class="fa-solid fa-circle-minus"></i> Unequip</div>
                                         </div>
                                     </div>
                                 </div>
@@ -185,9 +190,9 @@
                                         <div class="relic"></div>
                                     </div>
                                     <div class="footer">
-                                        <div class="ThrowButton">
-                                            <div class="pw fluid red button"><i class="fas fa-trash"></i> Throw away
-                                            </div>
+                                        <div class="pw fluid buttons">
+                                            <div class="pw fluid red Throw button"><i class="fas fa-trash"></i> Throw away</div>
+                                            <div class="pw fluid grey Unequip button"><i class="fa-solid fa-circle-minus"></i> Unequip</div>
                                         </div>
                                     </div>
                                 </div>
@@ -199,9 +204,9 @@
                                         <div class="relic"></div>
                                     </div>
                                     <div class="footer">
-                                        <div class="ThrowButton">
-                                            <div class="pw fluid red button"><i class="fas fa-trash"></i> Throw away
-                                            </div>
+                                        <div class="pw fluid buttons">
+                                            <div class="pw fluid red Throw button"><i class="fas fa-trash"></i> Throw away</div>
+                                            <div class="pw fluid grey Unequip button"><i class="fa-solid fa-circle-minus"></i> Unequip</div>
                                         </div>
                                     </div>
                                 </div>
@@ -213,9 +218,9 @@
                                         <div class="relic"></div>
                                     </div>
                                     <div class="footer">
-                                        <div class="ThrowButton">
-                                            <div class="pw fluid red button"><i class="fas fa-trash"></i> Throw away
-                                            </div>
+                                        <div class="pw fluid buttons">
+                                            <div class="pw fluid red Throw button"><i class="fas fa-trash"></i> Throw away</div>
+                                            <div class="pw fluid grey Unequip button"><i class="fa-solid fa-circle-minus"></i> Unequip</div>
                                         </div>
                                     </div>
                                 </div>
@@ -227,9 +232,9 @@
                                         <div class="relic"></div>
                                     </div>
                                     <div class="footer">
-                                        <div class="ThrowButton">
-                                            <div class="pw fluid red button"><i class="fas fa-trash"></i> Throw away
-                                            </div>
+                                        <div class="pw fluid buttons">
+                                            <div class="pw fluid red Throw button"><i class="fas fa-trash"></i> Throw away</div>
+                                            <div class="pw fluid grey Unequip button"><i class="fa-solid fa-circle-minus"></i> Unequip</div>
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +249,7 @@
                     </div>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-INVENTORY">
-                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-square-arrow-up-right fa-beat-fade"></i></div>
                     <h3 class="pw horizontal divider" id="EQUIPMENT_COUNTER"><i class="fas fa-user"></i> Equipment</h3>
                     <div class="pw horizontal segments" id="EQUIPPED_ITEMS"></div>
                     <h3 class="pw horizontal divider"><i class="fas fa-trash"></i> Auto Remove</h3>
@@ -290,27 +295,27 @@
                     </h3>
                     <div class="pw dropdown text-center" data-open="open">
                         <h3 class="name" id="WEAPONS_COUNT">Weapons</h3>
-                        <div class="content active" id="INVENTORY-Weapon"></div>
+                        <div class="content active" id="INVENTORY-WEAPON"></div>
                     </div>
                     <div class="pw dropdown text-center" data-open="open">
                         <h3 class="name" id="ARMORS_COUNT">Armor</h3>
-                        <div class="content active" id="INVENTORY-Armor"></div>
+                        <div class="content active" id="INVENTORY-ARMOR"></div>
                     </div>
                     <div class="pw dropdown text-center" data-open="open">
                         <h3 class="name" id="POWER_GEMS_COUNT">Power Gems</h3>
-                        <div class="content active" id="INVENTORY-Gem0"></div>
+                        <div class="content active" id="INVENTORY-POWER_GEM"></div>
                     </div>
                     <div class="pw dropdown text-center" data-open="open">
                         <h3 class="name" id="LIFE_GEMS_COUNT">Life Gems</h3>
-                        <div class="content active" id="INVENTORY-Gem1"></div>
+                        <div class="content active" id="INVENTORY-LIFE_GEM"></div>
                     </div>
                     <div class="pw dropdown text-center" data-open="open">
                         <h3 class="name" id="RELICS_COUNT">Relics</h3>
-                        <div class="content active" id="INVENTORY-Relic"></div>
+                        <div class="content active" id="INVENTORY-RELIC"></div>
                     </div>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-PRESTIGE">
-                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-square-arrow-up-right fa-beat-fade"></i></div>
                     <h3 class="pw horizontal divider"><i class="far fa-portal-enter"></i> Dimension</h3>
                     <div id="CurrWT"></div>
                     <div id="WTShards"></div>
@@ -324,6 +329,7 @@
                     <div class="pw inline green label">3% more experience</div>
                     <div class="pw inline green label">+2 inventory slots</div>
                     <div class="pw inline green label">Unlocks the Mind Control (idle mode)</div>
+                    <div class="pw inline green label">Dimensional Fragments</div>
                     <div class="pw fluid blue button" id="WTBTN"><i class="far fa-portal-enter"></i> Dimensional Rift</div>
                     <h3 class="pw horizontal divider"><i class="fal fa-arrow-alt-circle-up"></i> Dimensional Bonuses</h3>
                     <span class="pw label blue" id="ShardsNumber"></span>
@@ -331,12 +337,14 @@
                         <div class="pw horizontal dark segments">
                             <div class="pw segment">Name</div>
                             <div class="pw segment">Current bonus</div>
-                            <div class="pw segment">Price</div>
                             <div class="pw segment">Upgrade</div>
+                            <div class="pw segment">Price</div>
+                            <div class="pw segment">Action</div>
                         </div>
                         <div class="pw horizontal dark segments">
                             <div class="pw segment">Experience Multiplier</div>
                             <div class="pw segment" id="XPMULTVAL"></div>
+                            <div class="pw segment" id="XPUPBONUS"><span class="pw green">+1%</span></div>
                             <div class="pw segment" id="XPMULTPRICE"></div>
                             <div class="pw segment">
                                 <div class="pw link" data-url="#" id="UPGRADE_0">Purchase</div>
@@ -345,6 +353,7 @@
                         <div class="pw horizontal dark segments">
                             <div class="pw segment">Damage Multiplier</div>
                             <div class="pw segment" id="POWERMULTVAL"></div>
+                            <div class="pw segment" id="POWERUPBONUS"><span class="pw green">+1%</span></div>
                             <div class="pw segment" id="POWERMULTPRICE"></div>
                             <div class="pw segment">
                                 <div class="pw link" data-url="#" id="UPGRADE_1">Purchase</div>
@@ -353,6 +362,7 @@
                         <div class="pw horizontal dark segments">
                             <div class="pw segment">Armor Multiplier</div>
                             <div class="pw segment" id="LIFEMULTVAL"></div>
+                            <div class="pw segment" id="LIFEUPBONUS"><span class="pw green">+1%</span></div>
                             <div class="pw segment" id="LIFEMULTPRICE"></div>
                             <div class="pw segment">
                                 <div class="pw link" data-url="#" id="UPGRADE_2">Purchase</div>
@@ -361,6 +371,7 @@
                         <div class="pw horizontal dark segments">
                             <div class="pw segment">Inventory Capacity</div>
                             <div class="pw segment" id="INVUPGVAL"></div>
+                            <div class="pw segment" id="INVUPBONUS"><span class="pw green">+1</span></div>
                             <div class="pw segment" id="INVUPGPRICE"></div>
                             <div class="pw segment">
                                 <div class="pw link" data-url="#" id="UPGRADE_3">Purchase</div>
@@ -369,7 +380,7 @@
                     </div>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-STATS">
-                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-square-arrow-up-right fa-beat-fade"></i></div>
                     <h3 class="pw horizontal divider"><i class="fas fa-clipboard list icon"></i> Statistics</h3>
                     <div class="pw dropdown text-center" data-open="open">
                         <h3 class="name">General</h3>
@@ -404,7 +415,7 @@
                             </div>
                             <div class="pw horizontal dark segments">
                                 <div class="pw segment text-left">
-                                    <div class="link" data-url="#" onclick=" helpScore()">Equipment Score</div>
+                                    <div id="helpscore" class="link" data-url="#">Equipment Score</div>
                                 </div>
                                 <div class="pw segment text-right" id="Scorestat"></div>
                             </div>
@@ -474,11 +485,11 @@
                                 <div class="pw segment text-right" id="Defeat5"></div>
                             </div>
                             <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"><span class="Enemy6">BOSS</span> Kills</div>
+                                <div class="pw segment text-left"><span class="Enemy6">MASTER</span> Kills</div>
                                 <div class="pw segment text-right" id="Defeat6"></div>
                             </div>
                             <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"><span class="Enemy7">GOD</span> Kills</div>
+                                <div class="pw segment text-left"><span class="Enemy7">LEGEND</span> Kills</div>
                                 <div class="pw segment text-right" id="Defeat7"></div>
                             </div>
                             <div class="pw horizontal dark segments">
@@ -497,7 +508,7 @@
                     </div>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-LEADERBOARD">
-                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-square-arrow-up-right fa-beat-fade"></i></div>
                     <h3 class="pw horizontal divider">
                         <i class="fas fa-trophy icon"></i>
                         Leaderboard
@@ -521,7 +532,7 @@
                     </h3>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-SETTINGS">
-                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-square-arrow-up-right fa-beat-fade"></i></div>
                     <div class="pw horizontal divider"><i class="fas fa-cogs"></i> Settings</div>
                     <div class="pw horizontal segments">
                         <div class="pw segment">
@@ -627,14 +638,14 @@
                     </div>
                 </div>
                 <div class="pw message text-center" id="DIV-CREDITS">
-                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-arrow-up-right-from-square"></i></div>
+                    <div class="pw fluid red button heading-close" data-link="return_to_game">Return to the game <i class="fa-regular fa-square-arrow-up-right fa-beat-fade"></i></div>
                     <h3 class="pw horizontal divider"><i class="fas fa-popcorn"></i> Credits</h3>
                     <span id="VERSION_TEXT"></span> made with 💖 by
-                    <div class="link" data-url="https://github.com/GoldenLys">Purple Wizard </div>.<br />
-                    <div class="pw inline label"><i class="pw discord fab fa-discord"></i> Purple Wizard#0984</div>
+                    <div class="link" data-url="https://github.com/GoldenLys">Nebulys </div>.<br />
+                    <div class="pw inline label"><i class="pw discord fab fa-discord"></i> nebulys</div>
                     <div class="pw inline label"><i class="pw reddit fab fa-reddit"></i> u/Aizen45</div>
                     <br />Huge thanks to <b>Tiwaz</b> and <b>Pedter</b> for their help during the early development!<br /> <br />
-                    <div class="link" data-url="https://github.com/GoldenLys/AlphaRPG">
+                    <div class="link" data-url="https://github.com/GoldenLys/REverse">
                         <i class="fas fa-code"></i> Source Code
                     </div>
                 </div>
@@ -659,7 +670,7 @@
                         </div>
                     </div>
                     <div class="pw dropdown text-center" data-open="open">
-                        <h3 class="name" id="mcount"></h3>
+                        <h3 class="name" id="MISSIONS_COMPLETED_COUNT"></h3>
                         <div class="content">
                             <div id="MISSIONS-COMPLETED"></div>
                         </div>
@@ -672,6 +683,12 @@
                         <h3 class="text-center pw red">Work in Progress
                             <div class="pw subtitle red">This part of the game will be available in a future update</div>
                         </h3>
+                    </div>
+                    <div class="pw dropdown text-center" data-open="open">
+                        <h3 class="name" id="GUILD_QUESTS_NAME">Quests</h3>
+                        <div class="content">
+                            <div id="QUESTS"></div>
+                        </div>
                     </div>
                     <div class="pw dropdown text-center" data-open="open">
                         <h3 class="name" id="GUILD_TITLES_NAME">Titles</h3>
@@ -698,13 +715,13 @@
     <!--INTRODUCTION-->
     <div id="INTRODUCTION">
         <div class="header">
-            AlphaRPG
+            REverse
             <div class="pw fluid steps">
                 <div class="step active" id="step1">
                     <i class="fal fa-question-square"></i>
                     <div class="content">
                         <div class="title">Welcome</div>
-                        <div class="description">Welcome to AlphaRPG</div>
+                        <div class="description">Welcome to REverse</div>
                     </div>
                 </div>
                 <div class="step" id="step2">
@@ -738,15 +755,15 @@
             </div>
         </div>
         <div class="pw message text-center no-animation" id="tutorial-1">
-            <h2>Introduction</h2>Welcome to AlphaRPG, a game made by Purple Wizard.
+            <h2>Introduction</h2>Welcome to REverse, a game created by Purple Wizard.
             <br />The main goal of this game is to fight enemies and progress through the story to gain
             <b>EQUIPMENT</b> and <b>EXPERIENCE</b>.
-            <br />You'll discover & explore a new world called Alpha filled with many cities & monsters!
-            <br />But beware: there are also powerful monsters that you will need to fight wisely; it's up to you to
+            <br />You'll discover & explore a new world filled with many adventures !
+            <br />But be aware: there are powerful monsters that you will need to fight wisely; it's up to you to
             find your own way to do so! 😉<br />
             If you have any question don't hesitate to join our
             <a class="link" data-url="https://discord.com/invite/SBuYeHh"><i class="fab fa-discord"></i> discord</a>.
-            <br />Okay, so now we need to know who your character will be...
+            <br />Okay, so before we start we need to know more about you.
         </div>
         <div class="pw message text-center no-animation" id="tutorial-2" style="display: none;">
             <h2>Username</h2>Enter your desired username for your character (3-16 alphanumerical characters).<br />
@@ -769,15 +786,14 @@
         </div>
         <div class="pw message text-center no-animation" id="tutorial-4" style="display: none;">
             <h2>Class</h2>
-            You now require a class, which will define your basic skills.
-            <br />You will eventually be able to gain the bonuses granted by each class.
+            You will need to select a class, which gives you a different starting bonus per class.
             <div class="pw horizontal segments">
                 <div class="pw segment" id="ChooseWarrior">
                     <div class="pw message" id="warrior">
                         <h3>WARRIOR</h3>
                         <div class="content">
                             Warriors form the frontline of any fight. They deal the most damage.
-                            <br />(+5% Damages)
+                            <br />(+5% Damage)
                         </div>
                     </div>
                 </div>
@@ -794,7 +810,7 @@
                     <div class="pw message" id="ninja">
                         <h3>NINJA</h3>
                         <div class="content">
-                            Ninjas are elite fighters, planning and plotting before the fight.
+                            Ninjas are elite fighters, planning and plotting everything before they fight.
                             <br />They can learn the basics faster than anyone.
                             <br />(+5% Bonus Experience)
                         </div>
@@ -842,25 +858,11 @@
             <div class="text" id="notice-text"></div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" type="text/javascript"></script>
     <script src="https://kit.fontawesome.com/7ebbff149a.js" crossorigin="anonymous"></script>
     <script src="libs/numeral.min.js" type="text/javascript"></script>
     <script src="libs/lodash.min.js" type="text/javascript"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-analytics-compat.js"></script>
-    <script src="js/functions.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/config.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/lang.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/stats.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/combat.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/inventory.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/dimension.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/missions.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/events.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/app.js?v=3.5.0" type="text/javascript"></script>
-    <script src="js/palette.js?v=3.5.0" type="text/javascript"></script>
+    <script src="js/index.js" type="module"></script>
 </body>
 
 </html>
