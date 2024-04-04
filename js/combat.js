@@ -237,7 +237,7 @@ export const WinFight = function () {
         let EXP_TEXT = APP.ScoreModeEnabled == 0 ? "<div class='pw inline alpha label'>" + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.floor(expGain), "auto") + " " + language[APP.LANG].MISC.EXP + "</div>" : "";
         if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] || Game.MissionStarted[0] && Game.Level >= GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].LEVEL) EXP_TEXT = "";
         let content = [
-            `<span class='pw alpha'> ${language[APP.LANG].MISC.Defeated}</span>`.split("[ENEMY]").join(Game.Enemy[1] > 5 ? GLOBALS.BOSSES_NAMES[Game.Location] : GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]),
+            `<span class='pw alpha'> ${language[APP.LANG].MISC.Defeated}</span>`.split("[ENEMY]").join(Game.Enemy[0]),
             `${language[APP.LANG].MISC.YouDefeated}
 <br>${language[APP.LANG].MISC.CurrentRatio} ${FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Wins / DEATHS, 4)}
 <br><br>${EXP_TEXT} ${LEVELUP} ${EMP} <div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>${ToAddCash}</div>${LOOTS}`
@@ -253,17 +253,16 @@ export const WinFight = function () {
 
 export const LoseFight = function () {
     Game.Loses++;
-    let DEATHS = Math.max(Game.Loses, 1);
     let EXP_DESC = APP.ScoreModeEnabled == 0 ? `${language[APP.LANG].MISC.LostExp}<br>` : "";
     Game.xp[0] = FUNCTIONS.MAIN.CalcEXP(Game.Level - 1);
     let DEFEATED = language[APP.LANG].MISC.DefeatedBy;
     if (Game.MissionStarted[0] && GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].TYPE == 2) {
         Game.MissionStarted = [false, 0, 0, 0, 0];
-        FUNCTIONS.MAIN.NOTICE(`<span class='pw red'>${language[APP.LANG].MISC.FortressFailed}</span>`, language[APP.LANG].MISC.FortressFailedMessage);
+        FUNCTIONS.MAIN.NOTICE(`<span class='pw red'>${language[APP.LANG].MISC.DungeonFailed}</span>`, language[APP.LANG].MISC.DungeonFailedMessage);
         Game.Location = 0;
     } else {
-        const defeatedBy = `<span class="Enemy${Game.Enemy[1]}">${GLOBALS.THREATS[Game.Enemy[1]]} ${Game.Enemy[1] > 5 ? GLOBALS.BOSSES_NAMES[Game.Location] : GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]}</span>`;
-        FUNCTIONS.MAIN.NOTICE(`${DEFEATED.split("[ENEMY]").join(defeatedBy)}`, `${EXP_DESC}${language[APP.LANG].MISC.CurrentRatio} <span class='pw red'>${FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Wins / DEATHS, "auto")}</span>`);
+        const defeatedBy = `<span class="Enemy${Game.Enemy[1]}">${GLOBALS.THREATS[Game.Enemy[1]]} ${Game.Enemy[0]}</span>`;
+        FUNCTIONS.MAIN.NOTICE(`${DEFEATED.split("[ENEMY]").join(defeatedBy)}`, `${EXP_DESC}${language[APP.LANG].MISC.CurrentRatio} <span class='pw red'>${FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Wins / Math.max(Game.Loses, 1), "auto")}</span>`);
     }
     $("#BUTTONS_COMBAT").hide();
     $("#RESPAWNING").show();
@@ -296,7 +295,7 @@ export const UpdateCombat = function () {
     let ENEMY_LIFE_COLOR = Game.Enemy[5] < Game.Enemy[4] / 2 ? " pw orange" : " pw green";
     if (APP.CoreLife <= Game.Enemy[3]) PLAYER_LIFE_COLOR = " pw red";
     if (Game.Enemy[5] < Game.Enemy[4] / 3) ENEMY_LIFE_COLOR = " pw red";
-    $("#EnemyTitle").html(`<span class='Enemy${Game.Enemy[1]}'>${language[APP.LANG].FORMAT.ENEMIES.split("[NAME]").join(Game.Enemy[1] > 5 ? GLOBALS.BOSSES_NAMES[Game.Location] : GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]).split("[CLASS]").join(GLOBALS.THREATS[Game.Enemy[1]])}</span><span class='pw white inline label'>${APP.ScoreModeEnabled == 0 ? ` ${language[APP.LANG].MISC.Level} ` : ` ${language[APP.LANG].MISC.Score} <i class='fad fa-dice-d20'></i>`} ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.ScoreModeEnabled == 0 ? Math.round(Game.Enemy[2]) : Math.floor(Game.Enemy[2] * 10), 0)}</span>`);
+    $("#EnemyTitle").html(`<span class='Enemy${Game.Enemy[1]}'>${language[APP.LANG].FORMAT.ENEMIES.split("[NAME]").join(Game.Enemy[0]).split("[CLASS]").join(GLOBALS.THREATS[Game.Enemy[1]])}</span><span class='pw white inline label'>${APP.ScoreModeEnabled == 0 ? ` ${language[APP.LANG].MISC.Level} ` : ` ${language[APP.LANG].MISC.Score} <i class='fad fa-dice-d20'></i>`} ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.ScoreModeEnabled == 0 ? Math.round(Game.Enemy[2]) : Math.floor(Game.Enemy[2] * 10), 0)}</span>`);
     $("#EnemyPower").html("<i class='pw blue fas fa-sword'></i> " + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Enemy[3], "auto"));
     $("#EnemyLife").html(`<i class='pw red fas fa-heart'></i> <span class='${ENEMY_LIFE_COLOR}'>${FUNCTIONS.MAIN.FORMAT_NUMBER(FUNCTIONS.MAIN.GetEnemyHPPercent(), "auto")}%</span>`);
     $("#PlayerLife").html(`<i class='pw red fas fa-heart'></i> <span class='${PLAYER_LIFE_COLOR}'>${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.CoreLife, "auto")}</span>/${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.CoreBaseLife, "auto")} `);
@@ -389,9 +388,31 @@ export const Create_Enemy = function () {
     ENEMY[4] *= Game.DIMENSION_MULTIPLIERS[3];
     ENEMY[5] = ENEMY[4];
     //DEFINE ENEMY NAME
-    ENEMY[0] = ENEMY[1] >= 6 ? "boss" : Math.floor(Math.random() * GLOBALS.ENEMIES_NAMES[Game.Location].length);
-    if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][ENEMY[0]]) === 'undefined' && ENEMY[0] != "boss") ENEMY[0] = 0;
+    ENEMY[0] = ENEMY[1] >= 6 ? Get_Random_Monster_Name(Game.Location, true) : Get_Random_Monster_Name(Game.Location, false);
     return ENEMY;
+};
+
+export const Get_Random_Monster_Name = function (location, isBoss) {
+    const monstersAtLocation = GLOBALS.MONSTERS.filter(monster => 
+        monster.location === location && monster.isBoss === isBoss);
+
+    if (monstersAtLocation.length === 0) {
+        console.log('No monsters found at the specified location that match the criteria.');
+        return null;
+    }
+
+    const randomIndex = Math.floor(Math.random() * monstersAtLocation.length);
+    return monstersAtLocation[randomIndex].name;
+};
+
+export const Get_Monster_Image_By_Name = function (name) {
+    const monster = GLOBALS.MONSTERS.find(monster => monster.name === name);
+    if (monster) {
+        return monster.imageUrl;
+    } else {
+        console.log('No monster found with the specified name.');
+        return null; // or 'url_to_default_image' ?
+    }
 };
 
 export const Generate_Enemies_List = function () {
@@ -408,7 +429,7 @@ export const LOG_ENEMIES = function () {
     let ENEMIES = {};
     for (var ENEMY in APP.Enemies) {
         //MEMO: 0.NAME, 1.CLASS, 2.LEVEL, 3.POWER, 4.LIFE, 5.CURRENTLIFE
-        ENEMIES[ENEMY] = `${language[APP.LANG].FORMAT.ENEMIES.split("[NAME]").join(APP.Enemies[ENEMY][1] > 5 ? GLOBALS.BOSSES_NAMES[Game.Location] : GLOBALS.ENEMIES_NAMES[Game.Location][APP.Enemies[ENEMY][0]]).split("[CLASS]").join(GLOBALS.THREATS[APP.Enemies[ENEMY][1]])}${APP.ScoreModeEnabled == 0 ? ` ${language[APP.LANG].MISC.Level} ` : ` ${language[APP.LANG].MISC.Score}`} ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.ScoreModeEnabled == 0 ? Math.round(APP.Enemies[ENEMY][2]) : Math.floor(APP.Enemies[ENEMY][2] * 10), 0)} with ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.Enemies[ENEMY][3], "auto")} ATK POWER and ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.Enemies[ENEMY][4], "auto")} LIFE`;
+        ENEMIES[ENEMY] = `${language[APP.LANG].FORMAT.ENEMIES.split("[NAME]").join(APP.Enemies[ENEMY][1] > 5 ? Get_Random_Monster_Name(Game.Location, true) : Get_Random_Monster_Name(Game.Location, false)).split("[CLASS]").join(GLOBALS.THREATS[APP.Enemies[ENEMY][1]])}${APP.ScoreModeEnabled == 0 ? ` ${language[APP.LANG].MISC.Level} ` : ` ${language[APP.LANG].MISC.Score}`} ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.ScoreModeEnabled == 0 ? Math.round(APP.Enemies[ENEMY][2]) : Math.floor(APP.Enemies[ENEMY][2] * 10), 0)} with ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.Enemies[ENEMY][3], "auto")} ATK POWER and ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.Enemies[ENEMY][4], "auto")} LIFE`;
     }
     console.table(ENEMIES);
 };

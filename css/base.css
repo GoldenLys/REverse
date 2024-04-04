@@ -852,7 +852,7 @@
 
 .pw.sticked.segments .segment {
     margin: 5px 5px 0px;
-    padding: 0px;
+    padding: 0px 5px;
     line-height: 1.5em;
     border-radius: 5px;
     background-color: rgba(18, 19, 31, 0);

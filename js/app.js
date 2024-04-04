@@ -95,13 +95,12 @@ export const UpdateEngine = function () {
     UpdateGame();
     Game.PlayTime++;
     APP.ScoreModeEnabled = Game.Level >= APP.MaxLevel && APP.LastMission >= APP.TotalMissions ? 1 : 0;
-    if (typeof (GLOBALS.ENEMIES_NAMES[Game.Location][Game.Enemy[0]]) === 'undefined' && Game.Enemy[0] !== "boss") Game.Enemy[0] = 0;
     if (!Game.MissionStarted[0] && Game.MissionsCompleted[0] === 0 && Game.config[3] === 1 && $("#INTRODUCTION").is(":hidden") && !$("#LOGIN-NOTICE").hasClass("active")) FUNCTIONS.MISSIONS.LAUNCH_MISSION(0);
     if (Game.MissionStarted[0] && Game.MissionsCompleted[0] === 0 && !FUNCTIONS.MISSIONS.IS_STORY_FINISHED(Game.MissionStarted[1]) && !$("#GAME").hasClass("story")) {
         Game.Choices[Game.MissionStarted[1]] = Game.Choices[Game.MissionStarted[1]] == "undefined" || Game.Choices[Game.MissionStarted[1]] == null ? [[null]] : Game.Choices[Game.MissionStarted[1]];
         FUNCTIONS.MISSIONS.TOGGLE_STORY(Game.MissionStarted[1])
     }
-    if (Game.isInFight) $("#EnemySprite").html(`<img class='pw medium image' src='images/Monsters/${Game.Location}-${Game.Enemy[0]}.png'>`);
+    if (Game.isInFight) $("#EnemySprite").html(`<img class='pw medium image' src='${FUNCTIONS.COMBAT.Get_Monster_Image_By_Name(Game.Enemy[0])}'>`);
     if (APP.CoreLife > APP.CoreBaseLife) {
         APP.CoreLife = APP.CoreBaseLife;
         UpdateUI();
@@ -131,7 +130,6 @@ export const UpdateEngine = function () {
         Game.Level = 1;
         Game.xp[0] = 0;
     } else if (Game.Level < APP.MaxLevel) {
-
         // if current experience is higher than exp required and not in mission
         if (Game.xp[0] >= Game.xp[1] && !Game.MissionStarted[0]) {
             Game.Level++;
@@ -142,7 +140,7 @@ export const UpdateEngine = function () {
         } else if (Game.xp[0] < FUNCTIONS.MAIN.CalcEXP(Game.Level - 1) && Game.Level > 1) {
             Game.xp[0] = FUNCTIONS.MAIN.CalcEXP(Game.Level - 1);
         // if current level is less than the last finished mission required level
-        } else if (Game.Level < GLOBALS.MISSIONS.LIST[APP.LastMission-1].LEVEL) {
+        } else if (APP.LastMission > 0 && Game.Level < GLOBALS.MISSIONS.LIST[APP.LastMission-1].LEVEL) {
             Game.Level = GLOBALS.MISSIONS.LIST[APP.LastMission-1].LEVEL;
         }
         Game.xp[1] = FUNCTIONS.MAIN.CalcEXP(Game.Level);
@@ -165,11 +163,7 @@ export const UpdateEngine = function () {
     Game.Armors[3][0] = Game.Level >= 20;
     Game.Armors[4][0] = Game.Level >= 30;
     APP.ScoreModeEnabled === 0 && Game.inventory.forEach((element, index) => {
-        if (index > Game.MaxInv) {
-            Game.inventory.splice(index, 1);
-        } else if (Game.inventory[index].LEVEL > Game.Level) {
-            Game.inventory.splice(index, 1);
-        }
+        if (index > Game.MaxInv || Game.inventory[index].LEVEL > Game.Level) Game.inventory.splice(index, 1);
     });
     for (let x in [5, 6]) Game.Weapons.Main[x] > (APP.ScoreModeEnabled === 0 ? Game.Level : APP.MaxScore) && (FUNCTIONS.MAIN.LOG("ERROR", "code 00" + (x + 2), "white; background-color: rgb(185 20 20)"), FUNCTIONS.INVENTORY.ErrorArmor(x));
     if (Game.isInFight && APP.CoreLife <= 0 && !RESPAWN_TIMER[1]) FUNCTIONS.COMBAT.LoseFight();
@@ -205,7 +199,7 @@ export const UpdateGame = function () {
         APP.CoreLife = APP.CoreBaseLife;
         Game.Enemy = FUNCTIONS.COMBAT.Create_Enemy();
         Game.isInFight = true;
-        $("#EnemySprite").html("<img class='pw medium image' src='images/Monsters/" + Game.Location + "-" + Game.Enemy[0] + ".png'>");
+        $("#EnemySprite").html("<img class='pw medium image' src='" + FUNCTIONS.COMBAT.Get_Monster_Image_By_Name(Game.Enemy[0]) + "'>");
         $("#EnemyDamage").html("").hide();
         $("#PlayerDamage").html("").hide();
         UpdateGame();
@@ -361,7 +355,7 @@ const SET_CURRENT_TASK = function () {
             if (GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].OBJECTIVE - Game.MissionStarted[2] === 1) $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-dot-circle'></i> " + language[APP.LANG].TASKS.Mission[0] + "</div>" + language[APP.LANG].TASKS.Mission[2].split("[COUNT]").join(GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].OBJECTIVE - Game.MissionStarted[2]).split("[LOCATION]").join(GLOBALS.LOCATIONS[GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].LOCATION][0]).split("[CLASS]").join(`<span class='Enemy6'>${GLOBALS.THREATS[6]}</span>`));
             else $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-dot-circle'></i> " + language[APP.LANG].TASKS.Mission[0] + "</div>" + language[APP.LANG].TASKS.Mission[1].split("[COUNT]").join(GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].OBJECTIVE - Game.MissionStarted[2]).split("[LOCATION]").join(GLOBALS.LOCATIONS[GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].LOCATION][0]));
         }
-        else if (GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].TYPE == 2) $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-bullseye'></i> " + language[APP.LANG].TASKS.Fortress[0] + "</div>" + language[APP.LANG].TASKS.Fortress[1].split("[COUNT]").join(GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].OBJECTIVE - Game.MissionStarted[2]).split("[LOCATION]").join(GLOBALS.LOCATIONS[GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].LOCATION][0]));
+        else if (GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].TYPE == 2) $("#PLAYER-ETA").html("<div class='pw inline label'><i class='far fa-bullseye'></i> " + language[APP.LANG].TASKS.Dungeon[0] + "</div>" + language[APP.LANG].TASKS.Dungeon[1].split("[COUNT]").join(GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].OBJECTIVE - Game.MissionStarted[2]).split("[LOCATION]").join(GLOBALS.LOCATIONS[GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].LOCATION][0]));
     } else $("#PLAYER-ETA").html("<div class='pw inline label'><i class='fas fa-map-marked-alt icon'></i> " + language[APP.LANG].TASKS.Exploration[0] + "</div>" + language[APP.LANG].TASKS.Exploration[1].split("[LOCATION]").join(language[APP.LANG].LOCATIONS[Game.Location]));
 };
 
@@ -382,7 +376,7 @@ export const UPDATE_STATS = function () {
     $("#Rankstat").html(APP.Leader + "/" + APP.LastId);
     $("#Ratiostat").html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Wins / DEATHS, 4));
     $("#Versionstat").html("v" + GLOBALS.VERSION);
-    $("#fortressstat").html(Game.FortressesCleared);
+    $("#fortressstat").html(Game.DungeonsCleared);
     $("#lifestat").html("<i class='pw red fas fa-heart'></i>" + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.round(APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])), 1) + " <span class='pw inline label'>+" + FUNCTIONS.MAIN.FORMAT_NUMBER(APP.CoreBaseLife - Math.round(APP.CoreBaseLife / (APP.LifeMult + Game.DIMENSION_MULTIPLIERS[1])), 1) + "</span>");
     $("#powerstat").html("<i class='pw blue fas fa-sword'></i>" + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.round(APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])), 1) + " <span class='pw inline label'>+" + FUNCTIONS.MAIN.FORMAT_NUMBER(APP.WeaponsPower - Math.round(APP.WeaponsPower / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0])), 1) + "</span>");
 

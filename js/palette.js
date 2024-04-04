@@ -18,7 +18,7 @@ function LOAD_PALETTE_VIEW() {
     const color = ["RED", "GREEN", "BLUE"];
 
     ["red", "green", "blue"].forEach((color, index) => {
-        $(`#range-${color}`).bind("input", function () {
+        $(`#range-${color}`).on("input", function () {
             setProperty(`--EDITOR_${color.toUpperCase()}`, $(`#range-${color}`).val());
             APP.PICKER[index] = $(`#range-${color}`).val();
             UPDATE_PALETTE_VIEW();
@@ -86,7 +86,7 @@ export const RESET_THEME = function (code) {
 const rgbToHex = function (rgb) {
     let hex = Number(rgb).toString(16);
     if (hex.length < 2) hex = "0" + hex;
-    if (hex == 0) hex = "00";
+    if (hex === "0") hex = "00";
     return hex;
 };
 

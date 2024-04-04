@@ -164,16 +164,16 @@ export function DYNAMICS() {
         FUNCTIONS.MAIN.SelectTAB("GUILD");
     });
 
-    $(".link").bind("click", function (e) {
+    $(".link").on("click", function (e) {
         e.preventDefault();
         FUNCTIONS.MAIN.OpenLink($(this).attr("data-url"));
     });
 
-    $("#helpscore").bind("click", function (e) {
+    $("#helpscore").on("click", function (e) {
         FUNCTIONS.MAIN.POPUP("Score Tutorial", "1) Score is calculated by averaging the score of your equipped items (weapons and armor).<br>Picking the equipment with the highest score will allow faster progression through Dimensions even if your damage and life are slightly lower.<br><br>2) Your current score dictates the score of newly dropped loot.<br><br>3) Your score is limited by your current Dimension and (if applicable) your equipped relics. You can view your maximum score in Statistics.");
     });
 
-    $(".menu .link-container").bind("click", function (e) {
+    $(".menu .link-container").on("click", function (e) {
         e.preventDefault();
         let TOGGLE = $(this).hasClass("active") ? "" : "active";
         FUNCTIONS.MAIN.CLOSE_MENUS();
@@ -187,17 +187,17 @@ export function DYNAMICS() {
         }
     });
 
-    $(`.pw.button[data-link="return_to_game"]`).bind("click", function (e) {
+    $(`.pw.button[data-link="return_to_game"]`).on("click", function (e) {
         FUNCTIONS.MAIN.CLOSE_MENUS();
     })
 
-    $(".pw.dropdown .name").bind("click", function (e) {
+    $(".pw.dropdown .name").on("click", function (e) {
         e.preventDefault();
         let TOGGLE = $(this).parent().attr("data-open") === "open" ? "closed" : "open";
         $(this).parent().attr("data-open", TOGGLE);
     });
 
-    $(".pw.checkbox").bind("click", function (e) {
+    $(".pw.checkbox").on("click", function (e) {
         e.preventDefault();
         let TOGGLE = $(this).attr("data-check") === "checked" ? "unchecked" : "checked";
         let CONFIG = $(this).attr("data-check") === "checked" ? 0 : 1;

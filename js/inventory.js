@@ -22,8 +22,7 @@ export const GenInventory = function () {
         let RELIC = "";
         if (Game.inventory[ITEM].relictype !== 5) {
             RELIC = "<i class='pw yellow fas fa-stars'></i> ";
-            if (Game.inventory[ITEM].relictype === 1) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.inventory[ITEM].bonus, 3));
-            else if (Game.inventory[ITEM].relictype === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.inventory[ITEM].bonus, 3));
+            if (Game.inventory[ITEM].relictype === 1 || Game.inventory[ITEM].relictype === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.inventory[ITEM].bonus, 3));
             else if (Game.inventory[ITEM].relictype === 3) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(`<span class='${Game.inventory[ITEM].bonus}'>${Game.inventory[ITEM].bonus}</span>`);
             else if (Game.inventory[ITEM].relictype === 4) RELIC = RELIC + language[APP.LANG].RELICS[Game.inventory[ITEM].relictype].split("[BONUS]").join(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.inventory[ITEM].bonus, 1));
         }
@@ -103,7 +102,7 @@ export const GenWeapons = function () {
         Game.Weapons[WEAPON][0] = Game.Weapons[WEAPON][0].split(language[APP.LANG].MISC.Weapon).join(language[APP.LANG].WEAPONS_TYPE[`${WEAPON === "Main" ? 0 : 1}`]).split(language.EN.MISC.Weapon).join(language.EN.WEAPONS_TYPE[`${WEAPON === "Main" ? 0 : 1}`]);
         let MAX_GEMS = WEAPON === "Main" ? Game.MaxUPC[4] : Game.MaxUPC[5];
         let GEMS = Game.Weapons[WEAPON][2] > 0 ? `<div class="pw inline orange label"><span class="pw orange">+${Game.Weapons[WEAPON][2]}</span></div>` : "";
-        let GEMS_SLOTS = (MAX_GEMS - Game.Weapons[WEAPON][2]) > 0 ? `<div class="pw inline orange label"><i class='pw orange fad fa-gem'></i> <span class='${MAX_GEMS - Game.Weapons[WEAPON][2] ? "" : "pw green"}'>${MAX_GEMS - Game.Weapons[WEAPON][2]}</span></div> ` : "";
+        let GEMS_SLOTS = (MAX_GEMS - Game.Weapons[WEAPON][2]) > 0 ? `<div class="pw inline orange label"><i class='pw orange fad fa-gem'></i> <span class='${(MAX_GEMS - Game.Weapons[WEAPON][2]) > 0 ? "" : "pw green"}'>${MAX_GEMS - Game.Weapons[WEAPON][2]}</span></div> ` : "";
 
         //DEFINE CONTENT
         $(`#${WEAPON}Weapon>.header`).html(`${Game.Weapons[WEAPON][0]}${GEMS}
@@ -125,14 +124,13 @@ export const GenArmors = function () {
 
         let MAX_GEMS = Game.MaxUPC[ARMOR - 1];
         let GEMS = Game.Armors[ARMOR][5] > 0 ? `<div class="pw inline orange label"><span class="pw orange">+${Game.Armors[ARMOR][5]}</span></div>` : "";
-        let GEMS_SLOTS = (MAX_GEMS - Game.Armors[ARMOR][5]) > 0 ? `<div class="pw inline orange label"><i class='pw orange fad fa-gem'></i> <span class='${MAX_GEMS - Game.Armors[ARMOR][5] ? "" : "pw green"}'>${MAX_GEMS - Game.Armors[ARMOR][5]}</span></div> ` : "";
+        let GEMS_SLOTS = (MAX_GEMS - Game.Armors[ARMOR][5]) > 0 ? `<div class="pw inline orange label"><i class='pw orange fad fa-gem'></i> <span class='${(MAX_GEMS - Game.Armors[ARMOR][5]) > 0 ? "" : "pw green"}'>${MAX_GEMS - Game.Armors[ARMOR][5]}</span></div> ` : "";
         let RELIC = "";
         let RELIC_ICON = "";
         if (Game.RELICS[ARMOR][1] !== 5) {
             RELIC = "<span class='text'><i class='pw yellow fas fa-stars'></i> ";
             RELIC_ICON = `<img class='pw centered mini image' src='${FUNCTIONS.MAIN.GET_ICON_ID("Relic", Game.RELICS[ARMOR][1])}'></div>`;
-            if (Game.RELICS[ARMOR][1] === 1) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[ARMOR][2], 3) + '</span>');
-            else if (Game.RELICS[ARMOR][1] === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[ARMOR][2], 3) + '</span>');
+            if (Game.RELICS[ARMOR][1] === 1 ||Game.RELICS[ARMOR][1] === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[ARMOR][2], 3) + '</span>');
             else if (Game.RELICS[ARMOR][1] === 3) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join(`<span class='${Game.RELICS[ARMOR][2]}'>${Game.RELICS[ARMOR][2]}</span></span>`);
             else if (Game.RELICS[ARMOR][1] === 4) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[ARMOR][2], 1) + '</span>');
         }
@@ -730,7 +728,7 @@ export const CHECK_EQUIPMENT = function () {
                 FUNCTIONS.MAIN.LOG(`Auto scaling of the ${GLOBALS.ARMORS_TYPE[ARMOR]}`, `${Game.Armors[ARMOR][4]} out of ${FUNCTIONS.MAIN.CURRENT_MAX_ITEM_LEVEL()}.`, "white; background-color: rgb(58 59 70)");
                 Game.Armors[ARMOR][4] = FUNCTIONS.MAIN.CURRENT_MAX_ITEM_LEVEL();
             }
-            if (isNaN(Game.Armors[ARMOR][4])) Game.Armors[ARMOR][4] = Number(Game.Armors[ARMOR][4]);
+            if (Number.isNaN(Game.Armors[ARMOR][4])) Game.Armors[ARMOR][4] = Number(Game.Armors[ARMOR][4]);
             if (Game.Armors[ARMOR][6].includes("undefined")) Game.Armors[ARMOR][6] = FUNCTIONS.MAIN.GET_ICON_ID(ARMOR, Game.Armors[ARMOR][2]);
             if ((Game.Armors[ARMOR][3] - Game.ArmorUpgrades[ARMOR]) > MAX_VALUE) {
                 FUNCTIONS.MAIN.LOG(`Auto scaling of the ${GLOBALS.ARMORS_TYPE[ARMOR]}`, `${Game.Armors[ARMOR][3]} out of ${Math.floor(MAX_VALUE)}.`, "white; background-color: rgb(58 59 70)");
@@ -756,7 +754,7 @@ export const CHECK_EQUIPMENT = function () {
             FUNCTIONS.MAIN.LOG(`Auto scaling of the ${WEAPON} weapon`, `${Game.Weapons[WEAPON][3]} out of ${FUNCTIONS.MAIN.CURRENT_MAX_ITEM_LEVEL()}.`, "white; background-color: rgb(58 59 70)");
             Game.Weapons[WEAPON][3] = FUNCTIONS.MAIN.CURRENT_MAX_ITEM_LEVEL();
         }
-        if (isNaN(Game.Weapons[WEAPON][3])) Game.Weapons[WEAPON][3] = Number(Game.Weapons[WEAPON][3]);
+        if (Number.isNaN(Game.Weapons[WEAPON][3])) Game.Weapons[WEAPON][3] = Number(Game.Weapons[WEAPON][3]);
         if (Game.Weapons[WEAPON][5].includes("undefined")) Game.Weapons[WEAPON][5] = FUNCTIONS.MAIN.GET_ICON_ID(WEAPON, Game.Weapons[WEAPON][1]);
         if ((Game.Weapons[WEAPON][4] - Game.WeaponUpgrades[WEAPON]) > MAX_VALUE) {
             FUNCTIONS.MAIN.LOG(`Auto scaling of the ${WEAPON} weapon`, `${Game.Weapons[WEAPON][4]} out of ${Math.floor(MAX_VALUE)}.`, "white; background-color: rgb(58 59 70)");

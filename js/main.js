@@ -445,9 +445,6 @@ export const SELECT_LANGUAGE = function () {
         GLOBALS.LOCATIONS[L][0] = language[APP.LANG].LOCATIONS[L];
     }
 
-    GLOBALS.BOSSES_NAMES = language[APP.LANG].BOSSES_NAMES;
-    GLOBALS.ENEMIES_NAMES = language[APP.LANG].ENEMIES_NAMES;
-
     $("#attack-btn").html('<i class="fas fa-sword"></i> ' + language[APP.LANG].ACTIONS.Main);
     $("#special-btn").html('<i class="fas fa-swords"></i> ' + language[APP.LANG].ACTIONS.Special);
     $("#cover-btn").html('<i class="fas fa-shield"></i> ' + language[APP.LANG].ACTIONS.Cover);
@@ -500,7 +497,7 @@ export const SELECT_LANGUAGE = function () {
     $("#DIV-STATS>div:nth-child(3)>div>.segments:nth-child(7)>.segment.text-left").html(language[APP.LANG].STATS.TotalLife);
     $("#DIV-STATS>div:nth-child(3)>div>.segments:nth-child(8)>.segment.text-left>.link").html(language[APP.LANG].STATS.EquipmentScore);
     $("#DIV-STATS>div:nth-child(3)>div>.segments:nth-child(9)>.segment.text-left").html(language[APP.LANG].STATS.DimensionalDiffculty);
-    $("#DIV-STATS>div:nth-child(3)>div>.segments:nth-child(10)>.segment.text-left").html(language[APP.LANG].STATS.FortressesDefeated);
+    $("#DIV-STATS>div:nth-child(3)>div>.segments:nth-child(10)>.segment.text-left").html(language[APP.LANG].STATS.DungeonsDefeated);
     $("#DIV-STATS>div:nth-child(3)>div>.segments:nth-child(11)>.segment.text-left").html(language[APP.LANG].STATS.MainWeaponDamage);
     $("#DIV-STATS>div:nth-child(3)>div>.segments:nth-child(12)>.segment.text-left").html(language[APP.LANG].STATS.SpecialWeaponDamage);
     $("#DIV-STATS>div:nth-child(3)>div>.segments:nth-child(13)>.segment.text-left").html(language[APP.LANG].STATS.HelmetBaseLife);

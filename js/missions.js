@@ -1,7 +1,7 @@
 import FUNCTIONS from './index.js';
 
 export function GENERATE_MISSION_VIEW() {
-    $("#MISSIONS-CURRENT, #MISSIONS-FORTRESSES, #MISSIONS-COMPLETED").empty();
+    $("#MISSIONS-CURRENT, #MISSIONS-DUNGEONS, #MISSIONS-COMPLETED").empty();
     const types = ["", language[APP.LANG].MISC.Gem, language[APP.LANG].MISC.Relic];
     let fortresses = 0, missionsCompleted = 0;
     const notYetUnlocked = `<h3 class="text-center pw red">Not yet available<div class="pw subtitle red">Continue the story to unlock this</div></h3>`,
@@ -38,11 +38,11 @@ export function GENERATE_MISSION_VIEW() {
         if (missionData.LEVEL <= Game.Level && missionData.TYPE == 2 && (Game.MissionsCompleted[missionData.REQUIRED] == 1 || missionData.REQUIRED == -1)) {
             fortresses++;
             const content = `<h3 class='${unlocked}'>${missionData.NAME}</h3><div class='ui pw alpha label'>${missionData.REWARDS[0] > 0 ? `<i class='pw blue fal fa-dna'></i>${FUNCTIONS.MAIN.FORMAT_NUMBER(missionData.REWARDS[0], 1)} Fragment${missionData.REWARDS[0] > 1 ? "s" : ""}<br>` : ""}${quality}</div>${btn}`;
-            $("#MISSIONS-FORTRESSES").append(content);
+            $("#MISSIONS-DUNGEONS").append(content);
         }
     }
 
-    if (fortresses === 0) $("#MISSIONS-FORTRESSES").append(notYetUnlocked);
+    if (fortresses === 0) $("#MISSIONS-DUNGEONS").append(notYetUnlocked);
     if (missionsCompleted === 0) $("#MISSIONS-COMPLETED").append(continueStory);
 }
 
@@ -82,7 +82,11 @@ export function TOGGLE_STORY(id, replay) {
 export function STORY_CHOICE(choice, consequence) {
     let CURRENT_CHOICE = GET_LAST_STORY_CHOICE(Game.MissionStarted[1]);
     let divider = $("#story-text div").length > 0 ? "<div class='pw divider'></div>" : "";
+
+    //If the current choice is "undefined" or null, it sets the choice to [null]. Otherwise, it keeps the choice as is.
     Game.Choices[Game.MissionStarted[1]][consequence] = Game.Choices[Game.MissionStarted[1]][consequence] == "undefined" || Game.Choices[Game.MissionStarted[1]][consequence] == null ? [null] : Game.Choices[Game.MissionStarted[1]][consequence];
+    
+    
     if (GLOBALS.MISSIONS.CHOICES[Game.MissionStarted[1]][CURRENT_CHOICE][1][0] !== "continue") $("#story-text").append("<div class='pw subtitle dark'>" + GLOBALS.MISSIONS.CHOICES[Game.MissionStarted[1]][CURRENT_CHOICE][1][0][0] + "</div>");
     Game.Choices[Game.MissionStarted[1]][CURRENT_CHOICE] = choice;
     if (GLOBALS.MISSIONS.CHOICES[Game.MissionStarted[1]][CURRENT_CHOICE][1][0] !== "end") Game.Choices[Game.MissionStarted[1]][Number(CURRENT_CHOICE) + 1] = null; 
@@ -94,6 +98,7 @@ export function STORY_CHOICE(choice, consequence) {
 export function END_STORY() {
     let CURRENT_CHOICE = GET_LAST_STORY_CHOICE(Game.MissionStarted[1]);
     Game.Choices[Game.MissionStarted[1]][CURRENT_CHOICE] = "end";
+    Game.isInFight = true;
     FUNCTIONS.MAIN.CLOSE_MENUS();
 }
 
@@ -142,7 +147,7 @@ export function END_MISSION() {
     if (mission.REWARDS[1] === 0 && Game.MissionStarted[3] === 0) FUNCTIONS.INVENTORY.newItem(0, APP.Ranking, mission.REWARDS[2]), Game.MissionStarted[3] = 1;
     if (mission[6] === 2 && Game.MissionStarted[3] === 0 && mission.TYPE === 2) FUNCTIONS.INVENTORY.newItem("Relic", null, mission.REWARDS[2]), Game.MissionStarted[3] = 1;
     const TITLE = mission.TYPE === 2 ?
-        "<h3 class='pw horizontal divider'>Fortress Cleared</h3>" :
+        "<h3 class='pw horizontal divider'>Dungeon Cleared</h3>" :
         "<h3 class='pw horizontal divider'>Mission Completed</h3>";
 
     $("#POPUP").hasClass("active") ? $("#popup-text").append(`${TITLE} ${DESCRIPTION}`) : FUNCTIONS.MAIN.NOTICE(TITLE, DESCRIPTION);
@@ -150,7 +155,7 @@ export function END_MISSION() {
         // HIDE MISSION REWARDS
         Game.MissionsCompleted[Game.MissionStarted[1]] = 1;
         if (GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].TYPE == 2) {
-            Game.FortressesCleared++;
+            Game.DungeonsCleared++;
             Game.Shards += GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].REWARDS[0];
         }
         Game.MissionStarted = [false, 0, 0, 0, 0];
