@@ -95,12 +95,12 @@ export const UpdateEngine = function () {
     UpdateGame();
     Game.PlayTime++;
     APP.ScoreModeEnabled = Game.Level >= APP.MaxLevel && APP.LastMission >= APP.TotalMissions ? 1 : 0;
-    if (!Game.MissionStarted[0] && Game.MissionsCompleted[0] === 0 && Game.config[3] === 1 && $("#INTRODUCTION").is(":hidden") && !$("#LOGIN-NOTICE").hasClass("active")) FUNCTIONS.MISSIONS.LAUNCH_MISSION(0);
-    if (Game.MissionStarted[0] && Game.MissionsCompleted[0] === 0 && !FUNCTIONS.MISSIONS.IS_STORY_FINISHED(Game.MissionStarted[1]) && !$("#GAME").hasClass("story")) {
+    if (!Game.MissionStarted[0] && Game.MissionsCompleted[Game.MissionStarted[1]] === 0 && Game.config[3] === 1 && $("#INTRODUCTION").is(":hidden") && !$("#LOGIN-NOTICE").hasClass("active")) FUNCTIONS.MISSIONS.LAUNCH_MISSION(0);
+    if (Game.MissionStarted[0] && Game.MissionsCompleted[Game.MissionStarted[1]] === 0 && !FUNCTIONS.MISSIONS.IS_STORY_FINISHED(Game.MissionStarted[1]) && !$("#GAME").hasClass("story")) {
         Game.Choices[Game.MissionStarted[1]] = Game.Choices[Game.MissionStarted[1]] == "undefined" || Game.Choices[Game.MissionStarted[1]] == null ? [[null]] : Game.Choices[Game.MissionStarted[1]];
         FUNCTIONS.MISSIONS.TOGGLE_STORY(Game.MissionStarted[1])
     }
-    if (Game.isInFight) $("#EnemySprite").html(`<img class='pw medium image' src='${FUNCTIONS.COMBAT.Get_Monster_Image_By_Name(Game.Enemy[0])}'>`);
+    if (Game.isInFight) $("#EnemySprite").html(`<img class='pw medium image' style='${FUNCTIONS.COMBAT.Get_Monster_Image_Position_By_Name(Game.Enemy[0])}' src='${FUNCTIONS.COMBAT.Get_Monster_Image_By_Name(Game.Enemy[0])}'>`);
     if (APP.CoreLife > APP.CoreBaseLife) {
         APP.CoreLife = APP.CoreBaseLife;
         UpdateUI();
@@ -199,7 +199,7 @@ export const UpdateGame = function () {
         APP.CoreLife = APP.CoreBaseLife;
         Game.Enemy = FUNCTIONS.COMBAT.Create_Enemy();
         Game.isInFight = true;
-        $("#EnemySprite").html("<img class='pw medium image' src='" + FUNCTIONS.COMBAT.Get_Monster_Image_By_Name(Game.Enemy[0]) + "'>");
+        $("#EnemySprite").html(`<img class='pw medium image' style='${FUNCTIONS.COMBAT.Get_Monster_Image_Position_By_Name(Game.Enemy[0])}' src='${FUNCTIONS.COMBAT.Get_Monster_Image_By_Name(Game.Enemy[0])}'>`);
         $("#EnemyDamage").html("").hide();
         $("#PlayerDamage").html("").hide();
         UpdateGame();

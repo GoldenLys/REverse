@@ -415,6 +415,17 @@ export const Get_Monster_Image_By_Name = function (name) {
     }
 };
 
+export const Get_Monster_Image_Position_By_Name  = function (name) {
+    const monster = GLOBALS.MONSTERS.find(monster => monster.name === name);
+    if (monster) {
+        return `transform: translate(${monster.imagePos[0]}%, ${monster.imagePos[1]}%)`;
+    } else {
+        console.log('No monster found with the specified name.');
+        return null; // or 'transform: translate(0%, 0%)' ?
+    }
+};
+
+
 export const Generate_Enemies_List = function () {
     // CREATE ENEMIES LIST
     APP.Enemies = {};

@@ -1,7 +1,7 @@
 window.GLOBALS = {
     NAME: "REverse",
     VERSION: "3.6",
-    BETA: 7,
+    BETA: 8,
     RELICS_NAMES: [],
     THREATS: [],
     ARMORS_NAMES: {
@@ -17,64 +17,65 @@ window.GLOBALS = {
     WEAPONS_TYPE: [],
     MONSTERS: [
         // Bosses
-        { name: 'Pure Soul', location: 0, imageUrl: 'images/Monsters/pure_soul.png', isBoss: true },
-        { name: 'Living Mushroom', location: 1, imageUrl: 'images/Monsters/living_mushroom.png', isBoss: true },
-        { name: 'Rampaging Boar', location: 2, imageUrl: 'images/Monsters/rampaging_boar.png', isBoss: true },
-        { name: 'Grand Larcenist', location: 3, imageUrl: 'images/Monsters/grand_larcenist.png', isBoss: true },
-        { name: 'Skeleton King', location: 4, imageUrl: 'images/Monsters/skeleton_king.png', isBoss: true },
+        { name: 'Pure Soul', location: 0, imageUrl: 'images/Monsters/pure_soul.png', imagePos: [0, 0], isBoss: true },
+        { name: 'Living Mushroom', location: 1, imageUrl: 'images/Monsters/living_mushroom.png', imagePos: [0, 0], isBoss: true },
+        { name: 'Rampaging Boar', location: 2, imageUrl: 'images/Monsters/rampaging_boar.png', imagePos: [0, 0], isBoss: true },
+        { name: 'Grand Larcenist', location: 3, imageUrl: 'images/Monsters/grand_larcenist.png', imagePos: [0, 0], isBoss: true },
+        { name: 'Skeleton King', location: 4, imageUrl: 'images/Monsters/skeleton_king.png', imagePos: [0, 0], isBoss: true },
+        { name: 'Goblin Knight', location: 5, imageUrl: 'images/Monsters/goblin_knight.png', imagePos: [0, 0], isBoss: true },
 
-        { name: 'Pink Slime', location: 5, imageUrl: 'url_to_pink_slime_image', isBoss: true },
-        { name: 'Spider Queen', location: 6, imageUrl: 'url_to_spider_queen_image', isBoss: true },
-        { name: 'Black Mage', location: 7, imageUrl: 'url_to_black_mage_image', isBoss: true },
-        { name: 'Ghoul', location: 8, imageUrl: 'url_to_ghoul_image', isBoss: true },
-        { name: 'Poltergeist', location: 9, imageUrl: 'url_to_poltergeist_image', isBoss: true },
-        { name: 'Sentient Dullahan', location: 10, imageUrl: 'url_to_sentient_dullahan_image', isBoss: true },
-        { name: 'Demon Lord', location: 11, imageUrl: 'url_to_demon_lord_image', isBoss: true },
-        { name: 'Powerful Skeleton', location: 12, imageUrl: 'url_to_powerful_skeleton_image', isBoss: true },
-        { name: "Jack-o'-lantern", location: 13, imageUrl: 'url_to_jack_o_lantern_image', isBoss: true },
-        { name: 'Vampire Lord', location: 14, imageUrl: 'url_to_vampire_lord_image_1', isBoss: true },
-        { name: 'Big Fish-Man', location: 15, imageUrl: 'url_to_big_fish_man_image', isBoss: true },
-        { name: 'Vampire King', location: 17, imageUrl: 'url_to_vampire_king_image', isBoss: true },
+
+        { name: 'Spider Queen', location: 6, imageUrl: 'url_to_spider_queen_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Black Mage', location: 7, imageUrl: 'url_to_black_mage_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Ghoul', location: 8, imageUrl: 'url_to_ghoul_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Poltergeist', location: 9, imageUrl: 'url_to_poltergeist_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Sentient Dullahan', location: 10, imageUrl: 'url_to_sentient_dullahan_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Demon Lord', location: 11, imageUrl: 'url_to_demon_lord_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Powerful Skeleton', location: 12, imageUrl: 'url_to_powerful_skeleton_image', imagePos: [0, 0], isBoss: true },
+        { name: "Jack-o'-lantern", location: 13, imageUrl: 'url_to_jack_o_lantern_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Vampire Lord', location: 14, imageUrl: 'url_to_vampire_lord_image_1', imagePos: [0, 0], isBoss: true },
+        { name: 'Big Fish-Man', location: 15, imageUrl: 'url_to_big_fish_man_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Vampire King', location: 17, imageUrl: 'url_to_vampire_king_image', imagePos: [0, 0], isBoss: true },
 
         // Enemies
-        { name: 'Kind Soul', location: 0, imageUrl: 'images/Monsters/kind_soul.png', isBoss: false },
-        { name: 'Evil Soul', location: 0, imageUrl: 'images/Monsters/evil_soul.png', isBoss: false },
+        { name: 'Kind Soul', location: 0, imageUrl: 'images/Monsters/kind_soul.png', imagePos: [0, 0], isBoss: false },
+        { name: 'Evil Soul', location: 0, imageUrl: 'images/Monsters/evil_soul.png', imagePos: [0, 0], isBoss: false },
 
-        { name: 'Treant Sapling', location: 1, imageUrl: 'images/Monsters/treant_sapling.png', isBoss: false },
-        { name: 'Wolf', location: 1, imageUrl: 'images/Monsters/wolf.png', isBoss: false },
+        { name: 'Treant Sapling', location: 1, imageUrl: 'images/Monsters/treant_sapling.png', imagePos: [2.5, 0], isBoss: false },
+        { name: 'Wolf', location: 1, imageUrl: 'images/Monsters/wolf.png', imagePos: [2.5, -15], isBoss: false },
 
-        { name: 'Brutal Hog', location: 2, imageUrl: 'images/Monsters/boar.png', isBoss: false },
-        { name: 'Vicious Tusk', location: 2, imageUrl: 'images/Monsters/boar.png', isBoss: false },
-        { name: 'Wild Tusk', location: 2, imageUrl: 'images/Monsters/boar.png', isBoss: false },
+        { name: 'Brutal Hog', location: 2, imageUrl: 'images/Monsters/boar.png', imagePos: [0, 0], isBoss: false },
+        { name: 'Vicious Tusk', location: 2, imageUrl: 'images/Monsters/boar.png', imagePos: [0, 0], isBoss: false },
+        { name: 'Wild Tusk', location: 2, imageUrl: 'images/Monsters/boar.png', imagePos: [0, 0], isBoss: false },
 
-        { name: 'Swindler', location: 3, imageUrl: 'images/Monsters/swindler.png', isBoss: false },
-        { name: 'Thief', location: 3, imageUrl: 'images/Monsters/thief.png', isBoss: false },
+        { name: 'Swindler', location: 3, imageUrl: 'images/Monsters/swindler.png', imagePos: [0, 15], isBoss: false },
+        { name: 'Thief', location: 3, imageUrl: 'images/Monsters/thief.png', imagePos: [0, 15], isBoss: false },
 
-        { name: 'Skeleton', location: 4, imageUrl: 'images/Monsters/skeleton.png', isBoss: false },
-        { name: 'Skeleton Warrior', location: 4, imageUrl: 'images/Monsters/skeleton_warrior.png', isBoss: false },
+        { name: 'Skeleton', location: 4, imageUrl: 'images/Monsters/skeleton.png', imagePos: [0, 0], isBoss: false },
+        { name: 'Skeleton Warrior', location: 4, imageUrl: 'images/Monsters/skeleton_warrior.png', imagePos: [0, 0], isBoss: false },
+
+        { name: 'Goblin Archer', location: 5, imageUrl: 'images/Monsters/goblin_archer.png', imagePos: [0, 0], isBoss: false },
+        { name: 'Goblin Worker', location: 5, imageUrl: 'images/Monsters/goblin_worker.png', imagePos: [0, 0], isBoss: false },
 
 
-        { name: 'Blue Slime', location: 5, imageUrl: 'url_to_blue_slime_image', isBoss: false },
-        { name: 'Black Slime', location: 5, imageUrl: 'url_to_black_slime_image', isBoss: false },
-        { name: 'Yellow Slime', location: 5, imageUrl: 'url_to_yellow_slime_image', isBoss: false },
-        { name: 'Spider', location: 6, imageUrl: 'url_to_spider_image', isBoss: false },
-        { name: 'Fire Mage', location: 7, imageUrl: 'url_to_fire_mage_image', isBoss: false },
-        { name: 'Water Mage', location: 7, imageUrl: 'url_to_water_mage_image', isBoss: false },
-        { name: 'Zombie', location: 8, imageUrl: 'url_to_zombie_image', isBoss: false },
-        { name: 'Burning Zombie', location: 8, imageUrl: 'url_to_burning_zombie_image', isBoss: false },
-        { name: 'Ghost', location: 9, imageUrl: 'url_to_ghost_image', isBoss: false },
-        { name: 'Crying Ghost', location: 9, imageUrl: 'url_to_crying_ghost_image', isBoss: false },
-        { name: 'Dullahan', location: 10, imageUrl: 'url_to_dullahan_image', isBoss: false },
-        { name: 'Minor Rank Demon', location: 11, imageUrl: 'url_to_minor_rank_demon_image', isBoss: false },
-        { name: 'Middle Rank Demon', location: 11, imageUrl: 'url_to_middle_rank_demon_image', isBoss: false },
-        { name: 'Higher Rank Demon', location: 11, imageUrl: 'url_to_higher_rank_demon_image', isBoss: false },
-        { name: 'Skeleton', location: 12, imageUrl: 'url_to_skeleton_image', isBoss: false },
-        { name: 'Decrepit Skeleton', location: 12, imageUrl: 'url_to_decrepit_skeleton_image', isBoss: false },
-        { name: 'Burnt Skeleton', location: 12, imageUrl: 'url_to_burnt_skeleton_image', isBoss: false },
-        { name: 'Fish-Man', location: 15, imageUrl: 'url_to_fish_man_image', isBoss: false },
-        { name: 'Vampire', location: 14, imageUrl: 'url_to_vampire_image', isBoss: false },
-        { name: 'Noble Vampire', location: 16, imageUrl: 'url_to_noble_vampire_image', isBoss: false },
-        { name: 'Vampire Lord', location: 16, imageUrl: 'url_to_vampire_lord_image_2', isBoss: false },
+        { name: 'Spider', location: 6, imageUrl: 'url_to_spider_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Fire Mage', location: 7, imageUrl: 'url_to_fire_mage_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Water Mage', location: 7, imageUrl: 'url_to_water_mage_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Zombie', location: 8, imageUrl: 'url_to_zombie_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Burning Zombie', location: 8, imageUrl: 'url_to_burning_zombie_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Ghost', location: 9, imageUrl: 'url_to_ghost_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Crying Ghost', location: 9, imageUrl: 'url_to_crying_ghost_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Dullahan', location: 10, imageUrl: 'url_to_dullahan_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Minor Rank Demon', location: 11, imageUrl: 'url_to_minor_rank_demon_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Middle Rank Demon', location: 11, imageUrl: 'url_to_middle_rank_demon_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Higher Rank Demon', location: 11, imageUrl: 'url_to_higher_rank_demon_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Skeleton', location: 12, imageUrl: 'url_to_skeleton_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Decrepit Skeleton', location: 12, imageUrl: 'url_to_decrepit_skeleton_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Burnt Skeleton', location: 12, imageUrl: 'url_to_burnt_skeleton_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Fish-Man', location: 15, imageUrl: 'url_to_fish_man_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Vampire', location: 14, imageUrl: 'url_to_vampire_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Noble Vampire', location: 16, imageUrl: 'url_to_noble_vampire_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Vampire Lord', location: 16, imageUrl: 'url_to_vampire_lord_image_2', imagePos: [0, 0], isBoss: false },
     ],
     LOCATIONS: {
         // 0     1          2          3                  4                5           6
@@ -82,6 +83,7 @@ window.GLOBALS = {
         0: ["White Light", 1, 4, 0, 0, {
             loot: ["none"],
         }, "0.jpg"],
+
         1: ["Shadow Forest", 4, 7, 1, 1, {
             loot: ["none"],
         }, "1.jpg"],
@@ -93,13 +95,16 @@ window.GLOBALS = {
         3: ["Galarius City", 9, 12, 2, 3, {
             loot: ["none"],
         }, "3.jpg"],
+
         4: ["Ancient Ruins", 12, 15, 2, 4, {
             loot: ["none"],
         }, "4.jpg"],
-        /*
-        5: ["The Dark Cave", 15, 19, 3, 5, {
+        
+        5: ["Secluded Valley", 15, 19, 3, 5, {
             loot: ["none"],
         }, "5.jpg"],
+
+        /*
         6: ["Empire Road", 19, 22, 3, 6, {
             loot: ["none"],
         }, "6.jpg"],
@@ -138,13 +143,13 @@ window.GLOBALS = {
         }, "17.jpg"]
         */
     },
-    CODES: ["N4M3rs", "Wiz478", "1LUV17", "F0RC3D", "R3T0RN", "S4Vn0w", "H4d65M", "R3SET"],
+    CODES: ["", "N4M3rs", "Wiz478", "1LUV17", "F0RC3D", "R3T0RN", "S4Vn0w", "H4d65M", "R3SET"],
 };
 
 GLOBALS.MISSIONS = {
     LIST: [
         {
-            NAME: "The White Light",
+            NAME: "The Abyssal Awakening",
             LEVEL: 1,
             REWARDS: [200, 0, "Normal"],
             LOCATION: 0,
@@ -153,7 +158,7 @@ GLOBALS.MISSIONS = {
             REQUIRED: -1
         },
         {
-            NAME: "A Shadow Forest",
+            NAME: "The Unknown Crossing",
             LEVEL: 4,
             REWARDS: [250, 0, "Common"],
             LOCATION: 1,
@@ -161,9 +166,8 @@ GLOBALS.MISSIONS = {
             TYPE: 1,
             REQUIRED: 0
         },
-
         {
-            NAME: "A Lost Path",
+            NAME: "Encountering the Unknown",
             LEVEL: 7,
             REWARDS: [500, 0, "Common"],
             LOCATION: 2,
@@ -189,9 +193,8 @@ GLOBALS.MISSIONS = {
              TYPE: 2,
              REQUIRED: 3
          },
-         /*
          {
-             NAME: "",
+             NAME: "A Moment of Serenity",
              LEVEL: 15,
              REWARDS: [1500, 0, "Rare"],
              LOCATION: 5,
@@ -199,6 +202,7 @@ GLOBALS.MISSIONS = {
              TYPE: 1,
              REQUIRED: 4
          },
+         /*
          {
              NAME: "",
              LEVEL: 19,
@@ -415,11 +419,11 @@ GLOBALS.MISSIONS = {
             ],
             1: [
                 "But one question remains, where are you ?",
-                [["It seems that i'll get isekai'd to another world.", [true, 2]], ["Maybe i'm going to heaven... Should i make a harem ?", ['harem', 2]]]
+                [["It seems that i'll get isekai'd to another world.", [true, 2]], ["Maybe i'm going to heaven... Should i make a harem ?", ["harem", 2]]]
             ],
             2: [
                 "The only things you see are trees. an unknown, dark and creepy forest with no one in sight.",
-                [["You decide to leave this place right now, even at the risk of losing your life in the unknown.", [true, 3]], ["You decide to stay here, till someone comes to help.", [false, 4]]]
+                [["You decide to leave this place right now, even at the risk of losing your life in the unknown.", [true, 3]], ["You decide to stay here, till someone comes to rescue you.", [false, 4]]]
             ],
             3: [
                 "With a deep breath, you took your first step into the unknown.<br>The world around you shimmered with an otherworldly glow as you realized that you really had crossed over into a place unlike any you had ever seen before. And so, with equal parts excitement and trepidation, your adventure began.",
@@ -485,27 +489,27 @@ GLOBALS.MISSIONS = {
             ],
             2: [
                 "Choosing to mingle in the marketplace, the lively banter of vendors peddling their wares entertains you. Their strange yet fascinating products catch your eye.",
-                ["An intriguing day at the market!", [true, 3]]
+                [["An intriguing day at the market!", [true, 3]]]
             ],
             3: [
                 "In the midst of your enchantment, you feel a sudden jolt. Looking down, you find your satchel missing! A thief bumps into you and, just as swiftly, disappears into the crowd with your belongings.",
-                ["Chase after the thief!", ["lawbringer", 4], "Let it go and learn from the experience.", ["loser", 5]]
+                [["Chase after the thief!", ["lawbringer", 4]], ["Let it go and learn from the experience.", ["loser", 5]]]
             ],
             4: [
                 "You make a quick decision and dash after the thief. After a breathless chase, you corner him in an alley. You manage to retrieve your satchel - a hard-earned victory in this foreign city.",
-                ["Phew. That was intense!", [true, 7]]
+                [["Phew. That was intense!", [true, 7]]]
             ],
             5: [
                 "Accepting the loss of your satchel, you learn a valuable lesson about vigilance. The city, while welcoming, also has its pitfalls. This fuels you to become stronger and warier.",
-                ["A bitter lesson, but a lesson nonetheless.", [true, 7]]
+                [["A bitter lesson, but a lesson nonetheless.", [true, 7]]]
             ],
             6: [
                 "Opting for the tavern over the crowded marketplace, you find a cozy corner and a welcoming barkeep. The warm glow of the hearth accompanies the laughter and music that fill the place.",
-                ["I could get used to this.", [true, 7]]
+                [["I could get used to this.", [true, 7]]]
             ],
             7: [
                 "The day, filled with excitement and learning, comes to an end. As you retreat to your room for a rest, you feel an unmistakable part of the tapestry of this vibrant city. Your dreams are filled with anticipation of tomorrow's adventures.",
-                ["What a day! Ready for the next adventure.", [true, 8]]
+                [["What a day! Ready for the next adventure.", [true, 8]]]
             ],
             8: [
                 "Whether your day was marked by the chase of a thief or the warmth of a tavern, it was but the start of your grand adventure. Tomorrow, you resolve to further explore the city and its myriad opportunities.",
@@ -527,7 +531,7 @@ GLOBALS.MISSIONS = {
             ],
             3: [
                 "Gathering a group of seasoned adventurers adds to your sense of security. Together, you embark on a journey filled with wonder and potential danger. Through the twists and turns of the forest, you reach the rumored ruins.",
-                ["The journey has been long but rewarding!", [true, 4]]
+                [["The journey has been long but rewarding!", [true, 4]]]
             ],
             4: [
                 "Upon reaching the ancient ruins, you find yourself in awe of their grandeur. The crumbling stones carry tales of civilizations long past. As you delve deeper into the ruins, your heart races with anticipation.",
@@ -535,22 +539,60 @@ GLOBALS.MISSIONS = {
             ],
             5: [
                 "Suddenly, you come across an inscription on a moss-covered stone. It speaks of an impending disaster, foretold by an ancient prophecy. The ominous words send chills down your spine.",
-                ["Translate the inscription and uncover its meaning!", [true, 6], "Leave the inscription undisturbed.", ["ignore", 7]]
+                [["Translate the inscription and uncover its meaning!", [true, 6]], ["Leave the inscription undisturbed.", ["ignore", 7]]]
             ],
             6: [
-                "Your translation reveals a prophecy that speaks of a great darkness threatening to engulf the world. The only hope lies in finding the 'Crystal of Light' hidden deep within the ruins.",
-                ["Search for the Crystal of Light!", [true, 8]]
+                "Your translation reveals a prophecy that speaks of a great darkness threatening to engulf the world. The only hope lies in finding the 'Crystal of Darkness' hidden deep within the ruins.",
+                [["Search for the Crystal of Darkness!", [true, 8]]]
             ],
             7: [
                 "Ignoring the inscription and pressing on, you continue your exploration of the ancient ruins. The sense of unease lingers, but the allure of discovery keeps you going.",
                 ["end"]
             ],
             8: [
-                "Following the cryptic clues left by the ancient civilization, your group finally locates the Crystal of Light. With a feeling of triumph and relief, you grasp the crystal in your hands.",
-                ["The prophecy has been thwarted!", [true, 9]]
+                "Following the cryptic clues left by the ancient civilization, your are able to finally locate the Crystal of Darkness. With a feeling of triumph and relief, you grasp the crystal in your hands.",
+                [["The prophecy has been thwarted!", [true, 9]]]
             ],
             9: [
-                "Your adventure has come to an end, but the memories of this day will remain etched in your mind forever. As you make your way back to the city, you can't help but wonder what other secrets lie hidden within these ancient ruins.",
+                "Your adventure has come to an end, but the memories of this day will remain etched in your mind forever. As you make your way back to the city, you can't help but wonder what other secrets lie hidden within these ancient ruins and this world.",
+                ["end"]
+            ]
+        },
+        6: {
+            0: [
+                "You emerge from the ancient ruins, your heart pounding with excitement. As you take a moment to catch your breath, the sight before you is a welcome relief.",
+                ["continue"]
+            ],
+            1: [
+                "As you take in the view, your thoughts turn to the mysterious crystal you've discovered. You can't help but wonder about its true nature and purpose. Maybe someone in the city can help you.",
+                [["Return to the city to find information about the Crystal.", [true, 2]]]
+            ],
+            2: [
+                "You enter the bustling city, your mind preoccupied with thoughts of the crystal. As you navigate through the crowded streets, you come across a friendly shopkeeper that tells you someone called the Sage in the north might know something about the Crystal.",
+                ["continue"]
+            ],
+            3: [
+                "As you continue your journey after leaving the city, a secluded and verdant valley unfolds before you. The tranquility of this scene is a stark contrast to the chaos of the ruins you saw. You can hear the soothing sound of water cascading down from the cliffs above, forming a pristine lake that shimmers in the natural sunlight.",
+                ["continue"]
+            ],
+            5: [
+                "Leaving the tranquility of the valley behind, you embark on a quest to seek out the sage you've heard of. Deciding to leave the crystal behind for now, you explore the verdant valley. The lush greenery and calm lake offer a soothing respite from the rigors of your journey.",
+                ["continue"]
+            ],
+            6: [
+                "As you wander through the valley, you come across various creatures - some friendly, others not so much. You encounter a group of villagers who are being terrorized by a band of goblins. They beg for your help in driving them away.",
+                [["Decide to aid the villagers and prove your courage.", ["goblin_slayer", 7]], ["Yeah.. not sure about helping anyone for now, let's move on.", ["guilt", 9]]]
+            ],
+            7: [
+                "With a sense of determination, you charge towards the goblins. The battle is fierce, but your quick thinking and strategic prowess enable you to emerge victorious.",
+                [["You continue on your quest to find the Sage Tower.", [true, 8]]]
+            ],
+            8: [
+                "Your courage and determination earn you a reputation among the villagers, who share tales of your deeds far and wide. With renewed vigor, you press onward in your quest to seek out the sage and uncover the secrets of the mysterious crystal.",
+                ["end"]
+            ],
+            9: [
+                "You choose to ignore the pleas for help from the villagers, continuing on your quest to find the sage with a heavy conscience.",
                 ["end"]
             ]
         }

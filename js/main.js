@@ -437,10 +437,6 @@ export const SELECT_LANGUAGE = function () {
     GLOBALS.ARMORS_TYPE = language[APP.LANG].ARMORS_TYPE;
     GLOBALS.WEAPONS_TYPE = language[APP.LANG].WEAPONS_TYPE;
 
-    for (let M in GLOBALS.MISSIONS.LIST) {
-        GLOBALS.MISSIONS.LIST[M].NAME = language[APP.LANG].MISSIONS[M][0];
-    }
-
     for (let L in GLOBALS.LOCATIONS) {
         GLOBALS.LOCATIONS[L][0] = language[APP.LANG].LOCATIONS[L];
     }

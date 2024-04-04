@@ -98,7 +98,9 @@ export function STORY_CHOICE(choice, consequence) {
 export function END_STORY() {
     let CURRENT_CHOICE = GET_LAST_STORY_CHOICE(Game.MissionStarted[1]);
     Game.Choices[Game.MissionStarted[1]][CURRENT_CHOICE] = "end";
-    Game.isInFight = true;
+
+    // Remove fight state so that the game generates a new enemy
+    Game.isInFight = false;
     FUNCTIONS.MAIN.CLOSE_MENUS();
 }
 

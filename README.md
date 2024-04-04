@@ -9,9 +9,9 @@ REverse (formerly known as AlphaRPG) is an incremental RPG game where you fight 
 Story Overhaul  | Detail
 ------------- | -------------
 ✅ | Created an animated new dialogues view 
-✅ | Renamed the game to "REverse" and added a new font 
-50%  | Replace all old monsters with new lore-accurate ones
-50%  | Create a new story with multiple choices
+✅ | Renamed the game to "REverse" and added a new font
+60%  | Replace all old monsters with new lore-accurate ones
+60%  | Create a new story with multiple choices
 
 New Features | Detail
 ------------- | -------------
@@ -20,7 +20,7 @@ New Features | Detail
   
 Changes | Detail
 ------------- | -------------
-✅ | Cap max relic to 3 and life/damage to 1 relic only 
+✅ | Capped max relic to 3 and life/damage relics to 1 
 ✅ | New experience per level formula (less grind between missions while retaining a difficulty, might need some adjustments)
 ✅ | "Anti-cheat" will now check for equipement level anomalies
 ✅ | MASTER enemies level during missions have been capped to the player's level +1

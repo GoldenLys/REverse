@@ -407,6 +407,7 @@ input[type="text"] {
     justify-content: center;
     align-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .type_card .card_content .number img {
