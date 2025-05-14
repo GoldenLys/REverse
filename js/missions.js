@@ -37,7 +37,7 @@ export function GENERATE_MISSION_VIEW() {
 
         if (missionData.LEVEL <= Game.Level && missionData.TYPE == 2 && (Game.MissionsCompleted[missionData.REQUIRED] == 1 || missionData.REQUIRED == -1)) {
             fortresses++;
-            const content = `<h3 class='${unlocked}'>${missionData.NAME}</h3><div class='ui pw alpha label'>${missionData.REWARDS[0] > 0 ? `<i class='pw blue fal fa-dna'></i>${FUNCTIONS.MAIN.FORMAT_NUMBER(missionData.REWARDS[0], 1)} Fragment${missionData.REWARDS[0] > 1 ? "s" : ""}<br>` : ""}${quality}</div>${btn}`;
+            const content = `<div class='pw segment margin dark text-center'><h3 class='${unlocked}'>${missionData.NAME} - ${language[APP.LANG].MISC.Lv} ${reqLevel} ${status}</h3><div class='ui pw inline label'>${missionData.REWARDS[0] > 0 ? `<i class='pw blue fal fa-dna'></i>${FUNCTIONS.MAIN.FORMAT_NUMBER(missionData.REWARDS[0], 1)} Fragment${missionData.REWARDS[0] > 1 ? "s" : ""}</div>` : ""}<div class='pw inline label'>${quality}</div>${btn}</div>`;
             $("#MISSIONS-DUNGEONS").append(content);
         }
     }
@@ -63,7 +63,7 @@ export function TOGGLE_STORY(id, replay) {
     replay = replay || false;
     if ($("#GAME").hasClass("story")) {
         APP.StoryView = false;
-        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://purplewizard.space/REverse/images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
+        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://nebulys.eu/REverse/images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
         $("#GAME").removeClass("story");
         $("#BACKGROUND").removeClass("story-bg");
         FUNCTIONS.MAIN.CLOSE_MENUS();
@@ -72,7 +72,7 @@ export function TOGGLE_STORY(id, replay) {
         $("#GAME").addClass("story");
         $("#BACKGROUND").addClass("story-bg");
         FUNCTIONS.MAIN.OPEN_MENU("STORY", "active");
-        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://purplewizard.space/REverse/images/Locations/${GLOBALS.LOCATIONS[GLOBALS.MISSIONS.LIST[id].LOCATION][6]}");`);
+        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://nebulys.eu/REverse/images/Locations/${GLOBALS.LOCATIONS[GLOBALS.MISSIONS.LIST[id].LOCATION][6]}");`);
         $("#story-title").html(GLOBALS.MISSIONS.LIST[id].NAME);
         $("#story-text").html("<div class='pw subtitle'>" + GLOBALS.MISSIONS.CHOICES[id][0][0] + "</div>");
         if (!replay) DEFINE_STORY_CHOICES();
@@ -197,4 +197,32 @@ export function GET_TOTAL_STORY_CHOICE_FOR_MISSION(MISSION) {
 export function IS_STORY_FINISHED(STORY) {
     const CHOICES_LIST = Game.Choices[STORY]; // get the nested array to check
     return CHOICES_LIST.includes("end"); // check if the string "end" is present in the array
+}
+
+
+export function IS_NEXT_MISSION_AVAILABLE() {
+    if (Game.MissionStarted[0] || APP.ScoreModeEnable) return false;
+    else {
+        for (let i = 0; i < Game.MissionsCompleted.length; i++) {
+            if (Game.MissionsCompleted[i] === 0 &&
+                Game.MissionsCompleted[GLOBALS.MISSIONS.LIST[i].REQUIRED] === 1 &&
+                Game.Level >= GLOBALS.MISSIONS.LIST[i].LEVEL) {
+                return true; // Found the first mission with value 0 that is unlocked
+            }
+        }
+    return false; // No available missions found
+    }
+}
+
+export const COUNT_DUNGEONS = function (TYPE) {
+    let COMPLETED_DUNGEONS = 0;
+    let TOTAL_DUNGEONS = 0;
+    for (let M in GLOBALS.MISSIONS.LIST) {
+        if (GLOBALS.MISSIONS.LIST[M].TYPE === 2) {
+            if (Game.MissionsCompleted[M] == 1) COMPLETED_DUNGEONS++;
+            TOTAL_DUNGEONS++;
+        }
+    }
+    if (TYPE === "completed") return COMPLETED_DUNGEONS;
+    else return TOTAL_DUNGEONS;
 }

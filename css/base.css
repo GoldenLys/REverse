@@ -1,3 +1,15 @@
+.amatic-sc-regular {
+    font-family: "Amatic SC", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.amatic-sc-bold {
+    font-family: "Amatic SC", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;
@@ -263,6 +275,7 @@
     color: white;
     border-radius: 2.5px;
     padding: 0.25rem 0.5rem;
+    text-shadow: rgb(0 0 0) 0px 0px 2.5px;
 }
 
 .menu>.link-container>.link:hover {
@@ -289,6 +302,14 @@
     background-image: linear-gradient(to right, transparent, rgba(140, 140, 140, 0.5), transparent);
 }
 
+.pw.reverse.divider:not(.horizontal):not(.vertical):not(.invisible) {
+    height: 5px;
+    min-height: 5px;
+    border-radius: 1.25px;
+    background-image: none;
+    background-color: rgb(19 241 210);
+}
+
 .pw.invisible.divider {
     margin: 0.5em 0px;
     height: 0px;
@@ -304,7 +325,7 @@
 }
 
 .pw.horizontal.divider {
-    font-family: 'Montserrat-Alt1', sans-serif;
+    font-family: "Lemonada", cursive;
     font-weight: 400;
     display: table;
     white-space: nowrap;
@@ -434,6 +455,10 @@
     padding: 5px 10px;
 }
 
+.pw.equal.segments>.segment {
+    width: 50%;
+}
+
 .pw.horizontal.segments>.segment {
     -webkit-box-flex: 1;
     flex: 1 1 auto;
@@ -521,6 +546,11 @@
 
 .pw.buttons>.pw.button[style="display: none;"]+.pw.button,
 .pw.nostack.buttons .pw.button {
+    border-radius: 5px;
+}
+
+.pw.buttons .pw.button.rounded,
+.pw.button.rounded {
     border-radius: 5px;
 }
 
@@ -891,6 +921,7 @@
 }
 
 .pw.dropdown>.name {
+    font-family: "Lemonada", cursive;
     margin: 0.5em 0px 0px;
     -webkit-user-select: none;
     user-select: none;
@@ -972,13 +1003,14 @@
 .pw.segment>h6 {
     margin: 0px;
     line-height: 1.5;
-    font-family: 'Montserrat-Alt1', sans-serif;
+    font-family: "Lemonada", cursive;
     font-weight: 400;
 }
 
 .pw.segment.avatar {
     display: flex;
     text-overflow: ellipsis;
+    font-family: "Lemonada", cursive;
     overflow: hidden;
     justify-content: flex-start !important;
     align-content: center;
@@ -1277,8 +1309,8 @@
 }
 
 .pw.subtitle {
-    font-family: "Inter", sans-serif;
-    font-weight: 600;
+    font-family: "Lemonada", cursive;
+    font-weight: 400;
     text-transform: uppercase;
     font-size: 0.75em;
     line-height: 1em;

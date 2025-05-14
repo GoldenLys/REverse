@@ -12,7 +12,7 @@ FUNCTIONS.CLOUD = CLOUD;
 import * as COMBAT from "./combat.js";
 FUNCTIONS.COMBAT = COMBAT;
 
-import * as INVENTORY from "./inventory.js"; //TODO
+import * as INVENTORY from "./inventory.js";
 FUNCTIONS.INVENTORY = INVENTORY;
 
 import * as DIMENSION from "./dimension.js";

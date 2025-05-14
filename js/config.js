@@ -1,7 +1,7 @@
 window.GLOBALS = {
     NAME: "REverse",
     VERSION: "3.6",
-    BETA: 8,
+    BETA: 11,
     RELICS_NAMES: [],
     THREATS: [],
     ARMORS_NAMES: {
@@ -20,8 +20,8 @@ window.GLOBALS = {
         { name: 'Pure Soul', location: 0, imageUrl: 'images/Monsters/pure_soul.png', imagePos: [0, 0], isBoss: true },
         { name: 'Living Mushroom', location: 1, imageUrl: 'images/Monsters/living_mushroom.png', imagePos: [0, 0], isBoss: true },
         { name: 'Rampaging Boar', location: 2, imageUrl: 'images/Monsters/rampaging_boar.png', imagePos: [0, 0], isBoss: true },
-        { name: 'Grand Larcenist', location: 3, imageUrl: 'images/Monsters/grand_larcenist.png', imagePos: [0, 0], isBoss: true },
-        { name: 'Skeleton King', location: 4, imageUrl: 'images/Monsters/skeleton_king.png', imagePos: [0, 0], isBoss: true },
+        { name: 'Grand Larcenist', location: 3, imageUrl: 'images/Monsters/grand_larcenist.png', imagePos: [0, 15], isBoss: true },
+        { name: 'Skeleton King', location: 4, imageUrl: 'images/Monsters/skeleton_king.png', imagePos: [2.5, 5], isBoss: true },
         { name: 'Goblin Knight', location: 5, imageUrl: 'images/Monsters/goblin_knight.png', imagePos: [0, 0], isBoss: true },
 
 
@@ -51,8 +51,8 @@ window.GLOBALS = {
         { name: 'Swindler', location: 3, imageUrl: 'images/Monsters/swindler.png', imagePos: [0, 15], isBoss: false },
         { name: 'Thief', location: 3, imageUrl: 'images/Monsters/thief.png', imagePos: [0, 15], isBoss: false },
 
-        { name: 'Skeleton', location: 4, imageUrl: 'images/Monsters/skeleton.png', imagePos: [0, 0], isBoss: false },
-        { name: 'Skeleton Warrior', location: 4, imageUrl: 'images/Monsters/skeleton_warrior.png', imagePos: [0, 0], isBoss: false },
+        { name: 'Skeleton', location: 4, imageUrl: 'images/Monsters/skeleton.png', imagePos: [0, 2.5], isBoss: false },
+        { name: 'Skeleton Warrior', location: 4, imageUrl: 'images/Monsters/skeleton_warrior.png', imagePos: [0, 2.5], isBoss: false },
 
         { name: 'Goblin Archer', location: 5, imageUrl: 'images/Monsters/goblin_archer.png', imagePos: [0, 0], isBoss: false },
         { name: 'Goblin Worker', location: 5, imageUrl: 'images/Monsters/goblin_worker.png', imagePos: [0, 0], isBoss: false },
@@ -185,13 +185,22 @@ GLOBALS.MISSIONS = {
             REQUIRED: 2
         },
         {
+            NAME: "Exploring the city",
+            LEVEL: 11,
+            REWARDS: [1000, 0, "Uncommon"],
+            LOCATION: 3,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 3
+        },
+        {
              NAME: "The Mysterious Prophecy",
              LEVEL: 12,
-             REWARDS: [1000, 0, "Uncommon"],
+             REWARDS: [2, 0, "Uncommon"],
              LOCATION: 4,
              OBJECTIVE: 20,
              TYPE: 2,
-             REQUIRED: 3
+             REQUIRED: 4
          },
          {
              NAME: "A Moment of Serenity",
@@ -200,7 +209,7 @@ GLOBALS.MISSIONS = {
              LOCATION: 5,
              OBJECTIVE: 10,
              TYPE: 1,
-             REQUIRED: 4
+             REQUIRED: 5
          },
          /*
          {

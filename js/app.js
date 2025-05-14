@@ -1,4 +1,5 @@
 import FUNCTIONS from './index.js';
+import { LOG } from './main.js';
 
 window.APP = {
     WelcomeData: [1, "Neo", "None"],
@@ -13,7 +14,7 @@ window.APP = {
     CoreBaseLife: 100,
     TotalWeaponsUpgrades: 0,
     TotalArmorsUpgrades: 0,
-    Leader: 0,
+    LEADERBOARD_POSITION: 0,
     MaxLevel: 35,
     MaxScore: 35,
     TotalMissions: 0,
@@ -113,7 +114,13 @@ export const UpdateEngine = function () {
         Game.Level = GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].LEVEL;
         UpdateGame();
     }
-    APP.lastCloudSave = APP.lastCloudSave < 180 ? APP.lastCloudSave++ : APP.LoggedIn === 1 && APP.Email !== "none" ? FUNCTIONS.CLOUD.SEND_STATS() : APP.lastCloudSave;
+    if (APP.LoggedIn === 1 && APP.Email !== "none") {
+        if (APP.lastCloudSave < 180) {
+            APP.lastCloudSave++;
+        } else {
+            FUNCTIONS.CLOUD.SEND_STATS();
+        }
+    }
     Game.LastEscape ? ($("#NextRetreat").html(language[APP.LANG].MISC.Retreat.split("[COUNT]").join(FUNCTIONS.MAIN.toHHMMSS(Game.LastEscape -= 1)))) : ($("#NextRetreat").html(""));
     APP.LastCover ? ($("#NextCover").html(language[APP.LANG].MISC.Cover.split("[COUNT]").join(FUNCTIONS.MAIN.toHHMMSS(APP.LastCover -= 1)))) : ($("#NextCover").html(""), APP.LastCover = 0);
     Game.xp[0] < 0 && (Game.xp[0] = 0);
@@ -136,28 +143,33 @@ export const UpdateEngine = function () {
         // if player is in mission and level equals current location max level but current experience is higher than the experience required to reach the current level
         } else if (Game.Level === GLOBALS.LOCATIONS[Game.Location][2] && Game.MissionStarted[0] && Game.xp[0] > FUNCTIONS.MAIN.CalcEXP(GLOBALS.LOCATIONS[Game.Location][2])) {
             Game.xp[0] = FUNCTIONS.MAIN.CalcEXP(Game.Level);
+            LOG("(1) LEVEL", "RE-CALCULATE EXP", "rgb(0 0 0 / 65%); background-color: rgb(224 225 226);");
         // if current experience is less than the experience required to reach the current level and current is higher than 1
         } else if (Game.xp[0] < FUNCTIONS.MAIN.CalcEXP(Game.Level - 1) && Game.Level > 1) {
             Game.xp[0] = FUNCTIONS.MAIN.CalcEXP(Game.Level - 1);
+            LOG("(2) LEVEL", "RE-CALCULATE EXP", "rgb(0 0 0 / 65%); background-color: rgb(224 225 226);");
         // if current level is less than the last finished mission required level
         } else if (APP.LastMission > 0 && Game.Level < GLOBALS.MISSIONS.LIST[APP.LastMission-1].LEVEL) {
             Game.Level = GLOBALS.MISSIONS.LIST[APP.LastMission-1].LEVEL;
+            LOG("(3) LEVEL", "RE-CALCULATE LEVEL", "rgb(0 0 0 / 65%); background-color: rgb(224 225 226);");
         }
         Game.xp[1] = FUNCTIONS.MAIN.CalcEXP(Game.Level);
     } else if (Game.Level > APP.MaxLevel) {
         Game.Level = APP.MaxLevel;
         if (Game.Level > GLOBALS.MISSIONS.LIST[APP.LastMission-1].LEVEL) {
             Game.Level = GLOBALS.MISSIONS.LIST[APP.LastMission-1].LEVEL;
+            LOG("(4) LEVEL", "RE-CALCULATE LEVEL", "rgb(0 0 0 / 65%); background-color: rgb(224 225 226);");
         }
     }
-    if (APP.ScoreModeEnabled === 0 && Game.Level > GLOBALS.LOCATIONS[Game.Location][2]) {
+    if (APP.ScoreModeEnabled === 0 && Game.Level > GLOBALS.LOCATIONS[FUNCTIONS.MAIN.LATEST_LOCATION_UNLOCKED()][2]) {
         Game.Level = GLOBALS.LOCATIONS[Game.Location][2];
         Game.xp[0] = FUNCTIONS.MAIN.CalcEXP(Game.Level);
+        LOG("(5) LEVEL", "RE-CALCULATE LEVEL + EXP", "rgb(0 0 0 / 65%); background-color: rgb(224 225 226);");
     }
     if (Game.Emp > 50) Game.Emp = 50;
-    let ONLINEICON = "<i title='Offline' class='pw red far fa-circle'></i>";
-    location.href.match(/(purplewizard.space).*/) && (Game.username !== null && Game.username !== "Default") && (APP.LoggedIn === 1 && APP.Email !== "none") && (ONLINEICON = "<i title='Online' class='pw alpha fas fa-circle'></i>");
-    $("#PlayerID").html(`<div class='pw alpha'>${ONLINEICON}${Game.username} <span class='pw white inline label'>${LEVEL}</span></div>`);
+    //let ONLINEICON = "<i title='Offline' class='pw red far fa-circle'></i>";
+    //location.href.match(/(nebulys.eu).*/) && (Game.username !== null && Game.username !== "Default") && (APP.LoggedIn === 1 && APP.Email !== "none") && (ONLINEICON = "<i title='Online' class='pw alpha fas fa-circle'></i>");
+    $("#PlayerID").html(`<div class='pw alpha'>${FUNCTIONS.CLOUD.GET_TROPHY_ICON()} ${Game.username} <span class='pw inline label level-number'>${LEVEL}</span></div>`);
     $("#PlayerSprite").html(`<img class='pw small image' src='images/avatars/avatar (${Game.Avatar}).png'>`);
     Game.Armors[2][0] = Game.Level >= 10;
     Game.Armors[3][0] = Game.Level >= 20;
@@ -189,7 +201,7 @@ export const UpdateGame = function () {
         FUNCTIONS.PALETTE.RESET_THEME(1);
     }
     Game.DIMENSION_MULTIPLIERS[2] = Game.Dimension * 0.03 - 0.03; // EXPMULT
-    Game.DIMENSION_MULTIPLIERS[3] = Game.Dimension * 0.05 + 0.95; // DIFFICULTYMULT
+    Game.DIMENSION_MULTIPLIERS[3] = Game.Dimension * 0.015 + 0.985; // DIFFICULTYMULT
     Backup = Object.freeze(Game.username);
     APP.PowerMult = Game.Upgrades[1] * 0.01 + 1;
     APP.LifeMult = Game.Upgrades[2] * 0.01 + 1;
@@ -295,6 +307,11 @@ export const UpdateUI = function () {
             $("#LABEL_EXP").html("Max Level");
         }
     }
+    let completedMissions = 0;
+    for (let M in GLOBALS.MISSIONS.LIST) {
+        if (GLOBALS.MISSIONS.LIST[M].TYPE != 2 && Game.MissionsCompleted[M] == 1) completedMissions++;
+    }
+    APP.LastMission = completedMissions;
     const ranking = (((30 + (Game.Dimension * 5)) * 10) - 5);
     if (Game.Level >= APP.MaxLevel && APP.Ranking >= ranking && APP.LastMission >= APP.TotalMissions) {
         $("#WTBTN").show();
@@ -319,26 +336,24 @@ export const UpdateUI = function () {
         else UPGRADE_TEXT[UPGRADE] = `<i class='fal fa-dna'></i>${FUNCTIONS.DIMENSION.GET_DIMENSIONAL_SHARDS_PRICE(UPGRADE)}`;
         $(`#${UPGRADES_IDs[UPGRADE]}`).html(`<span class='${CAN_AFFORD_UPGRADE[UPGRADE]}'>${UPGRADE_TEXT[UPGRADE]}</span>`);
     }
-    $("#TOPNEXT").html(`${APP.LEADERBOARD.PAGE + 1} <i class='large arrow alternate circle right outline icon'></i>`);
-    $("#TOPPREVIOUS").html(`<i class='large arrow alternate circle left outline icon'></i> ${APP.LEADERBOARD.PAGE - 1}`);
+    $("#TOPNEXT").html(`${APP.LEADERBOARD.PAGE + 1} <i class="fa-solid fa-square-arrow-down"></i>`);
+    $("#TOPPREVIOUS").html(`<i class="fa-solid fa-square-arrow-up"></i> ${APP.LEADERBOARD.PAGE - 1}`);
     const isNextPageEnabled = APP.LEADERBOARD.RANGES[1] + 1 <= APP.LastId;
-    $("#TOPNEXT").attr('class', `pw button${isNextPageEnabled ? "" : " disabled"}`);
-    $("#TOPPREVIOUS").attr('class', `pw button${APP.LEADERBOARD.PAGE == 1 ? " disabled" : ""}`);
-    $("#LowScore").html((Game.Level - 5) * 10 >= APP.Ranking ? "Using low level armor, upgrade your equipment." : "");
-    let completedMissions = 0;
-    for (let M in GLOBALS.MISSIONS.LIST) {
-        if (GLOBALS.MISSIONS.LIST[M].TYPE != 2 && Game.MissionsCompleted[M] == 1) completedMissions++;
-    }
-    APP.LastMission = completedMissions;
+    $("#TOPNEXT").attr('class', `pw grey button ${isNextPageEnabled ? (APP.LEADERBOARD.PAGE == 1 ? "rounded" : "") : "disabled"}`);
+    $("#TOPPREVIOUS").attr('class', `pw grey button ${APP.LEADERBOARD.PAGE == 1 ? "disabled" : (isNextPageEnabled == 1 ? "" : "rounded")}`);
+    $("#LowScore").html((Game.Level - 5) * 10 >= APP.Ranking ? "Your current armor is outdated! Upgrade it now for better performance." : (Game.Level - 2) * 10 >= APP.Ranking ? "Enemies are growing stronger. Upgrade your equipment to keep up." : "");
     SET_CURRENT_TASK();
     $("#REWARDS_CURRENT_CONFIG").html(language[APP.LANG].REWARDS[Game.config[2]]);
     if ($('#DIV-COMBAT').is(":visible")) $("#DIV-REWARDS").hide();
     if (APP.LoggedIn == 1) $("#CloudTimer").html("<i title='Online' class='pw alpha fas fa-circle'></i> Last cloud sync " + FUNCTIONS.MAIN.toHHMMSS(APP.lastCloudSave) + " ago, as <span class='pw alpha'>" + Game.username + "</span>.");
     else $("#CloudTimer").html("<i title='Offline' class='pw red far fa-circle'></i> Cloud sync disabled.");
+    if (APP.LEADERBOARD_POSITION > 0) $('#IS_PLAYER_IN_LEADERBOARD').html(APP.LEADERBOARD_POSITION <= 10 ? `You are now among the top players! Your current position is #${APP.LEADERBOARD_POSITION}.` : `You have made it to the leaderboard! Your current position is #${APP.LEADERBOARD_POSITION}.`);
     $("#LABEL_INVENTORY").html("<i class='fas fa-sack'></i> " + Game.inventory.length + "/" + Game.MaxInv);
     $("#LABEL_CASH").html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Cash, 1));
     $("#MISSIONS_COMPLETED_COUNT").html("Missions completed (" + APP.LastMission + "/" + APP.TotalMissions + ")");
+    $("#DUNGEONS_COMPLETED_COUNT").html("Dungeons (" + FUNCTIONS.MISSIONS.COUNT_DUNGEONS("completed") + "/" + FUNCTIONS.MISSIONS.COUNT_DUNGEONS("total") + ")");
     if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0]) $("#MaxPOSLVL").html(`${language[APP.LANG].MISC.MaxLevelForArea}`);
+    if (FUNCTIONS.MISSIONS.IS_NEXT_MISSION_AVAILABLE()) $("#IS_MISSION_AVAILABLE").html(`${language[APP.LANG].MISC.AvailableMission}`);
     else $("#MaxPOSLVL").html("");
     if ($('#DIV-INVENTORY').is(":visible")) {
         $("#DIV-REWARDS").hide();
@@ -372,8 +387,8 @@ export const UPDATE_STATS = function () {
     $("#Levelstat").html("<span class='pw alpha'>" + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Level, 0) + "</span>/" + APP.MaxLevel);
     $("#Classstat").html(Game.class);
     $("#Scorestat").html("<span class='pw alpha'><i class='fad fa-dice-d20'></i>" + FUNCTIONS.MAIN.FORMAT_NUMBER(APP.Ranking, 0) + "</span>/" + (APP.MaxScore * 10));
-    $("#Difficultystat").html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.DIMENSION_MULTIPLIERS[3], 2));
-    $("#Rankstat").html(APP.Leader + "/" + APP.LastId);
+    $("#Difficultystat").html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.DIMENSION_MULTIPLIERS[3], 3));
+    $("#Rankstat").html(APP.LEADERBOARD_POSITION + "/" + APP.LastId);
     $("#Ratiostat").html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Wins / DEATHS, 4));
     $("#Versionstat").html("v" + GLOBALS.VERSION);
     $("#fortressstat").html(Game.DungeonsCleared);
@@ -395,7 +410,7 @@ export const UPDATE_STATS = function () {
 
     // LOCATIONS
     $("#locations-stats").html("");
-    for (var L in GLOBALS.LOCATIONS) $("#locations-stats").append(`<div class="pw dark horizontal segments" id="defeatloc${L}"><div class='pw segment text-left'>${GLOBALS.LOCATIONS[L][0]}</div><div class='pw segment text-right'>${language[APP.LANG].STATS.Defeated.split("[COUNT]").join(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.DefeatedByLocation[L], 1))}</div></div>`);
+    for (var L in GLOBALS.LOCATIONS) $("#locations-stats").append(`<div class="pw dark horizontal equal segments" id="defeatloc${L}"><div class='pw segment text-right'>${GLOBALS.LOCATIONS[L][0]}</div><div class='pw segment text-left'>${language[APP.LANG].STATS.Defeated.split("[COUNT]").join(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.DefeatedByLocation[L], 1))}</div></div>`);
     // KILLS
     for (var D in Game.Defeated) {
         if (D != 0) $("#Defeat" + D).html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Defeated[D], "auto"));

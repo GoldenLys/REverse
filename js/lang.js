@@ -5,7 +5,7 @@ window.language = {
         ARMORS_NAMES: {
             Normal: ['Tiny [ARMOR]', 'Cursed [ARMOR]', 'Ruined [ARMOR]', 'Damaged [ARMOR]', 'Unusable [ARMOR]', 'Rusty [ARMOR]', 'Weakened [ARMOR]', 'Broken [ARMOR]'],
             Common: ['Cheap [ARMOR]', 'Small [ARMOR]', 'Fragile [ARMOR]', 'Chipped [ARMOR]', 'Weak [ARMOR]', 'Used [ARMOR]', 'Battered [ARMOR]', 'Worn [ARMOR]'],
-            Uncommon: ['Acceptable [ARMOR]', 'Big [ARMOR]', 'Expensive [ARMOR]', 'Luminous [ARMOR]', 'Undamaged [ARMOR]', 'Clean [ARMOR]', 'Basic [ARMOR]', 'Fresh [ARMOR]'],
+            Uncommon: ['Expensive [ARMOR]', 'Strange [ARMOR]', 'Quirky [ARMOR]', 'Unusual [ARMOR]', 'Undamaged [ARMOR]', 'Clean [ARMOR]', 'Primitive [ARMOR]', 'Fresh [ARMOR]'],
             Rare: ['Nice [ARMOR]', 'Good [ARMOR]', 'Premium [ARMOR]', 'Resistant [ARMOR]', 'Strong [ARMOR]', 'Durable [ARMOR]', 'Polished [ARMOR]', 'Powerful [ARMOR]'],
             Epic: ['Master [ARMOR]', 'Expert [ARMOR]', 'Guardian [ARMOR]', 'Perfect [ARMOR]', 'Balanced [ARMOR]', 'Indestructible [ARMOR]', 'Advanced [ARMOR]', 'Shiny [ARMOR]'],
             Exotic: ['Infinite [ARMOR]', 'Magic [ARMOR]', 'Sacred [ARMOR]', 'Blessed [ARMOR]', 'Ancient [ARMOR]', '[ARMOR] of Alpha', 'Fantastic [ARMOR]', 'Incredible [ARMOR]'],
@@ -14,11 +14,11 @@ window.language = {
         WEAPONS_NAMES: {
             Normal: ['Tiny [WEAPON]', 'Cursed [WEAPON]', 'Ruined [WEAPON]', 'Damaged [WEAPON]', 'Unusable [WEAPON]', 'Rusty [WEAPON]', 'Weakened [WEAPON]', 'Broken [WEAPON]'],
             Common: ['Cheap [WEAPON]', 'Small [WEAPON]', 'Fragile [WEAPON]', 'Chipped [WEAPON]', 'Weak [WEAPON]', 'Used [WEAPON]', 'Battered [WEAPON]', 'Worn [WEAPON]'],
-            Uncommon: ['Acceptable [WEAPON]', 'Big [WEAPON]', 'Expensive [WEAPON]', 'Luminous [WEAPON]', 'Undamaged [WEAPON]', 'Clean [WEAPON]', 'Basic [WEAPON]', 'Fresh [WEAPON]'],
+            Uncommon: ['Big [WEAPON]', 'Strange [WEAPON]', 'Quirky [WEAPON]', 'Unusual [WEAPON]', 'Undamaged [WEAPON]', 'Clean [WEAPON]', 'Primitive [WEAPON]', 'Fresh [WEAPON]'],
             Rare: ['Nice [WEAPON]', 'Good [WEAPON]', 'Premium [WEAPON]', 'Sharp [WEAPON]', 'Resistant [WEAPON]', 'Durable [WEAPON]', 'Polished [WEAPON]', 'Powerful [WEAPON]'],
             Epic: ['Master [WEAPON]', 'Expert [WEAPON]', 'Guardian [WEAPON]', 'Perfect [WEAPON]', 'Balanced [WEAPON]', 'Indestructible [WEAPON]', 'Advanced [WEAPON]', 'Shiny [WEAPON]'],
             Exotic: ['Infinite [WEAPON]', 'Magic [WEAPON]', 'Sacred [WEAPON]', 'Blessed [WEAPON]', 'Ancient [WEAPON]', '[WEAPON] of Alpha', 'Fantastic [WEAPON]', 'Incredible [WEAPON]'],
-            Divine: ['Unreal [WEAPON]', 'Eternal [WEAPON]', '[WEAPON] of Angels', '[WEAPON] of Legend', 'Holy [WEAPON]', 'Celestial [WEAPON]', 'Fairy [WEAPON]', '[WEAPON] of Destiny', 'Transcendent [WEAPON]']
+            Legendary: ['Unreal [WEAPON]', 'Eternal [WEAPON]', '[WEAPON] of Angels', '[WEAPON] of Legend', 'Holy [WEAPON]', 'Celestial [WEAPON]', 'Fairy [WEAPON]', '[WEAPON] of Destiny', 'Transcendent [WEAPON]']
         },
         ARMORS_TYPE: ["", "Helmet", "Chestplate", "Shield", "Boots"],
         WEAPONS_TYPE: ["Sword", "Dagger", "Axe", "Stick", "Bow", "Crossbow"],
@@ -98,7 +98,7 @@ window.language = {
             Relics: "Relics",
             Recovering: "Recovering",
             Missed: "MISSED",
-            Level: "Level",
+            Level: "Lv.",
             Score: "Score",
             LevelUp: "LEVEL UP",
             Respawning: "Respawning in [COUNT] [SECONDS]",
@@ -130,6 +130,7 @@ window.language = {
             Cover: "Next cover in [COUNT].",
             Retreat: "Next retreat in [COUNT].",
             MaxLevelForArea: "Maximum level has been reached for this area, please check the next available mission.",
+            AvailableMission: "New mission unlocked! Are you ready to continue your adventure?",
             Quests: "Quests",
             Titles: "Titles",
             Bank: "Bank",
@@ -306,6 +307,7 @@ window.language = {
             Cover: "Prochaine couverture dans [COUNT].",
             Retreat: "Prochaine fuite dans [COUNT].",
             MaxLevelForArea: "Vous avez atteint le niveau maximal pour cette zone, veuillez regarder les missions disponibles.",
+            AvailableMission: "Une mission est disponible pour continuer l'histoire.",
             Quests: "Quêtes",
             Titles: "Titres",
             Bank: "Banque",

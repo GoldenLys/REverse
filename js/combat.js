@@ -133,12 +133,10 @@ export const WinFight = function () {
         let LOOTS = "";
         let EMP = "";
         let LEVELUP = "";
-        let expGain = 0;
+        let expGain = Game.Enemy[2] * 10 * ((Game.Enemy[1] * 15 / 100) + Game.xp[2]);
         if (!Game.MissionStarted[0]) {
-            expGain = Game.Enemy[1] * Game.Enemy[2] * 10 * Game.xp[2];
             expGain = _.random(expGain * 0.65, expGain);
         } else {
-            expGain = Game.Enemy[2] + Game.Enemy[2] * 10 * Game.xp[2];
             if (GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].TYPE == 2) expGain = _.random(expGain * 0.85, expGain * 1.05);
             else expGain = _.random(expGain * 0.85, expGain);
         }
@@ -240,7 +238,7 @@ export const WinFight = function () {
             `<span class='pw alpha'> ${language[APP.LANG].MISC.Defeated}</span>`.split("[ENEMY]").join(Game.Enemy[0]),
             `${language[APP.LANG].MISC.YouDefeated}
 <br>${language[APP.LANG].MISC.CurrentRatio} ${FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Wins / DEATHS, 4)}
-<br><br>${EXP_TEXT} ${LEVELUP} ${EMP} <div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>${ToAddCash}</div>${LOOTS}`
+<br><br>${EXP_TEXT} ${LEVELUP} ${EMP} <div class='pw inline green label'><i class='fas fa-dollar-sign pw green'></i>${ToAddCash}</div><div id='LOOTS' data-count="${COUNTED_LOOTS}">${LOOTS}</div>`
         ];
         if (Game.config[2] == 0 || Game.config[2] == 2 && COUNTED_LOOTS >= 1) FUNCTIONS.MAIN.POPUP(content[0], content[1].split("[COUNT]").join(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Defeated[Game.Enemy[1]], 1)).split("[CLASS]").join(`<span class='Enemy${Game.Enemy[1]}'>${ThreatLevel}</span>`), 0);
         else FUNCTIONS.MAIN.hideRewards();
@@ -295,9 +293,9 @@ export const UpdateCombat = function () {
     let ENEMY_LIFE_COLOR = Game.Enemy[5] < Game.Enemy[4] / 2 ? " pw orange" : " pw green";
     if (APP.CoreLife <= Game.Enemy[3]) PLAYER_LIFE_COLOR = " pw red";
     if (Game.Enemy[5] < Game.Enemy[4] / 3) ENEMY_LIFE_COLOR = " pw red";
-    $("#EnemyTitle").html(`<span class='Enemy${Game.Enemy[1]}'>${language[APP.LANG].FORMAT.ENEMIES.split("[NAME]").join(Game.Enemy[0]).split("[CLASS]").join(GLOBALS.THREATS[Game.Enemy[1]])}</span><span class='pw white inline label'>${APP.ScoreModeEnabled == 0 ? ` ${language[APP.LANG].MISC.Level} ` : ` ${language[APP.LANG].MISC.Score} <i class='fad fa-dice-d20'></i>`} ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.ScoreModeEnabled == 0 ? Math.round(Game.Enemy[2]) : Math.floor(Game.Enemy[2] * 10), 0)}</span>`);
+    $("#EnemyTitle").html(`<span class='Enemy${Game.Enemy[1]}'>${language[APP.LANG].FORMAT.ENEMIES.split("[NAME]").join(Game.Enemy[0]).split("[CLASS]").join(GLOBALS.THREATS[Game.Enemy[1]])}</span><span class='pw inline label level-number'>${APP.ScoreModeEnabled == 0 ? ` ${language[APP.LANG].MISC.Level} ` : ` ${language[APP.LANG].MISC.Score} <i class='fad fa-dice-d20'></i>`}  <span class="${GET_DIFFICULTY_COLOR(Game.Level, Math.round(Game.Enemy[2]))}"> ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.ScoreModeEnabled == 0 ? Math.round(Game.Enemy[2]) : Math.floor(Game.Enemy[2] * 10), 0)}</span></span>`);
     $("#EnemyPower").html("<i class='pw blue fas fa-sword'></i> " + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Enemy[3], "auto"));
-    $("#EnemyLife").html(`<i class='pw red fas fa-heart'></i> <span class='${ENEMY_LIFE_COLOR}'>${FUNCTIONS.MAIN.FORMAT_NUMBER(FUNCTIONS.MAIN.GetEnemyHPPercent(), "auto")}%</span>`);
+    $("#EnemyLife").html(`<i class='pw red fas fa-heart'></i> <span class='${ENEMY_LIFE_COLOR}'>${FUNCTIONS.MAIN.FORMAT_NUMBER(FUNCTIONS.MAIN.GetEnemyHPPercent(), "auto")}%</span> ${(location.href.match(/(:5500).*/)) ? "(" + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Enemy[5], 1) + ")" : ""}`);
     $("#PlayerLife").html(`<i class='pw red fas fa-heart'></i> <span class='${PLAYER_LIFE_COLOR}'>${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.CoreLife, "auto")}</span>/${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.CoreBaseLife, "auto")} `);
     $("#PlayerPower").html(`<i class='pw blue fas fa-sword'></i> ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.WeaponsPower, "auto")} <span class='sub'>(<i class='pw yellow fas fa-swords'></i> ${FUNCTIONS.MAIN.FORMAT_NUMBER(APP.SpecialPower, "auto")})</span>`);
     $("#special-btn").html(`<i class='fas fa-swords'></i> ${FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Emp, 0)} ${Game.Emp > 1 ? language[APP.LANG].ACTIONS.Specials : language[APP.LANG].ACTIONS.Special}`).attr("class", Game.Emp < 1 ? "pw darkgrey button transparent" : "pw yellow button");
@@ -315,16 +313,16 @@ export const Create_Enemy = function () {
     let BasePower = Math.round((APP.WeaponsPower - Game.WeaponUpgrades.Main / 2) / (APP.PowerMult + Game.DIMENSION_MULTIPLIERS[0]));
     if (BasePower < 10) BasePower = 10;
     let MULTIPLIERS = {
-        LIFE: APP.ScoreModeEnabled === 0 ? [1.05, 1.25, 1.5, 2, 2.5, 3.5, 5] : [2, 2.75, 3, 3.5, 4, 5, 7.5],
+        LIFE: APP.ScoreModeEnabled === 0 ? [1.05, 1.15, 1.25, 1.5, 1.75, 2.0, 2.5] : [2, 2.5, 2.75, 3, 3.5, 4, 5],
         POWER: [
-            APP.ScoreModeEnabled === 0 ? [0.9, 0.95, 1, 1, 1, 1, 1] : [1, 1, 1, 1, 1, 1, 1],
-            APP.ScoreModeEnabled === 0 ? [1, 1, 1, 1.05, 1.15, 1.25, 1.35] : [1, 1, 1.10, 1.15, 1.25, 1.5, 2.5]
+            APP.ScoreModeEnabled === 0 ? [0.9, 0.925, 0.95, 0.975, 0.985, 1, 1] : [1, 1, 1, 1, 1, 1, 1],
+            APP.ScoreModeEnabled === 0 ? [1, 1, 1, 1.025, 1.05, 1.10, 1.15] : [1, 1, 1.05, 1.10, 1.15, 1.25, 1.5]
         ]
     };
 
     let EChance = APP.ScoreModeEnabled === 1 ? _.random(300, 700) : _.random(0, 700);
     if (APP.ScoreModeEnabled === 0 && !Game.MissionStarted[0]) EChance = _.random(0, 685);
-    if (GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].TYPE === 2 && EChance < 600) EChance = 600;
+    if (GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].TYPE === 2 && EChance < 450) EChance = _.random(450, 700);
     if (Game.MissionStarted[2] === GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].OBJECTIVE - 1) EChance = 700;
 
     // DEFINE ENEMY CLASS
@@ -363,13 +361,7 @@ export const Create_Enemy = function () {
     }
     if (EnemyLevel < 1) EnemyLevel = 1;
     EnemyLevel = EnemyLevel / 10;
-    if (APP.ScoreModeEnabled == 0) {
-        if (EnemyLevel < GLOBALS.LOCATIONS[Game.Location][1]) EnemyLevel = GLOBALS.LOCATIONS[Game.Location][1];
-        if (EnemyLevel > GLOBALS.LOCATIONS[Game.Location][2]) EnemyLevel = GLOBALS.LOCATIONS[Game.Location][2];
-        if (EnemyLevel > Game.Level + 20) EnemyLevel = Game.Level + 20;
-    }
 
-    EnemyLevel = EnemyLevel / 10;
     if (APP.ScoreModeEnabled == 0) {
         if (EnemyLevel < GLOBALS.LOCATIONS[Game.Location][1]) EnemyLevel = GLOBALS.LOCATIONS[Game.Location][1];
         if (EnemyLevel > GLOBALS.LOCATIONS[Game.Location][2]) EnemyLevel = GLOBALS.LOCATIONS[Game.Location][2];
@@ -445,8 +437,26 @@ export const LOG_ENEMIES = function () {
     console.table(ENEMIES);
 };
 
-export const UPDATE_LOOT_VIEW = function () {
+export const UPDATE_LOOT_VIEW = function (REMOVE_ITEM) {
+    REMOVE_ITEM ? $("#LOOTS").attr("data-count", Number($("#LOOTS").attr("data-count")) - 1) : "";
     $("#POPUP").find('.pw.message.item').each(function () {
-        if (this && !Game.inventory[$(this).attr("data-itemid")]) $(this).remove();
+        let LOOT_COUNT = Number($("#LOOTS").attr("data-count"));
+        $("#LOOTS").html("");
+        for (let i = 0; i < LOOT_COUNT; i++) {
+            $("#LOOTS").append(`<div data-itemid="${Game.inventory.length - (i+1)}" class="pw message item">` + $(`#ITEM-${Game.inventory.length - (i+1)}`).html() + "</div>");
+        }
     });
+};
+
+export const GET_DIFFICULTY_COLOR = (playerLevel, enemyLevel) => {
+    let DIFFICULTY = Number(enemyLevel - playerLevel);
+    let COLOR = "pw white";
+
+    if (DIFFICULTY >= 3) COLOR = "pw red";         // if enemy level is higher than the player level by 3 or more
+    else if (DIFFICULTY == 2) COLOR = "pw orange"; // if enemy level is higher than the player level by 2
+    else if (DIFFICULTY == 1) COLOR = "pw yellow"; // if enemy level is higher than the player level by 1
+
+    if (DIFFICULTY < -1 ) COLOR = "pw green";     // if enemy level is inferior to the player level by 2 or more
+    else if (DIFFICULTY <= 0) COLOR = "pw white"; // else if enemy level is inferior or equal to the player level by 1 or more  
+    return COLOR;
 };

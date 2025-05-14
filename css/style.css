@@ -10,6 +10,11 @@ body {
     --white: 255 255 255;
     --black: 5 5 5;
     --ALPHA: 19 241 210;
+    --platinum: rgb(171, 241, 255);
+    --gold: rgb(255 211 42);
+    --silver: rgb(125 125 125);
+    --copper: rgb(255 135 66);
+    --coal: rgb(77 77 77);
 }
 
 ::selection {
@@ -68,7 +73,7 @@ p.right {
 }
 
 .game-title {
-    font-family: 'Montserrat-Alt1', sans-serif;
+    font-family: "Lemonada", cursive;
     font-weight: 400;
     font-size: 1.25rem;
 }
@@ -398,6 +403,10 @@ input[type="text"] {
     width: 100%;
 }
 
+.type_card .card span.pw.white {
+    font-family: "Lemonada", cursive;
+}
+
 .type_card .card_content .number #EnemySprite,
 .type_card .card_content .number #PlayerSprite {
     margin: 5px;
@@ -408,6 +417,7 @@ input[type="text"] {
     align-content: center;
     align-items: center;
     overflow: hidden;
+    border-radius: 50%;
 }
 
 .type_card .card_content .number img {
@@ -435,6 +445,7 @@ input[type="text"] {
 }
 
 .type_card .text {
+    font-family: "Lemonada", cursive;
     font-weight: bold;
     font-size: 1rem;
     text-align: center;
@@ -444,7 +455,7 @@ input[type="text"] {
 
 .type_card .text:first-child {
     margin-top: 0px;
-    font-family: 'Montserrat-Alt1', sans-serif;
+    font-family: "Lemonada", cursive;
     font-weight: 400;
 }
 
@@ -680,7 +691,7 @@ div[id="DIV-EXPLORE"]>.pw.segment.dark>.pw.fluid.button:hover {
 }
 
 .pw.equipment>.header {
-    font-family: 'Montserrat-Alt1', sans-serif;
+    font-family: "Lemonada", cursive;
     display: inline-flex;
     font-size: initial;
     font-weight: 400;
@@ -861,6 +872,13 @@ img {
     color: rgb(255, 255, 255);
 }
 
+div[id^="INVENTORY-"] > .pw.message .pw.inline.red.label,
+div[id^="INVENTORY-"] > .pw.message .pw.inline.blue.label,
+.pw.equipment .pw.inline.red.label,
+.pw.equipment .pw.inline.blue.label {
+    font-family: "Lemonada", cursive;
+}
+
 .labels {
     text-align: center;
     position: absolute;
@@ -951,6 +969,7 @@ img {
         right: 0;
         top: 0;
         bottom: 0;
+        height: auto;
     }
 
     .page-sidebar {
@@ -969,15 +988,19 @@ img {
     .page-sidebar>.menu .link {
         font-size: 0;
         line-height: 0;
+        height: 10vh;
+        text-indent: 10vh;
     }
 
     .page-sidebar>.menu .link>i {
-        font-size: 1.1rem;
-        line-height: 3.5rem;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        font-size: 5vh;
+        line-height: 10vh;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        background-color: transparent;
+        width: 100%;
     }
 
     .menu .link-container.active::after {
@@ -1007,4 +1030,57 @@ img {
     #LEADERBOARD>.pw.segments>.pw.segment.avatar {
         justify-content: center !important;
     }
+}
+
+#LEADERBOARD>#leader-1 {
+    background-color: rgb(171 241 255 / 25%);
+}
+
+.pw.platinum {
+    color: var(--platinum);
+}
+
+#LEADERBOARD>#leader-2 {
+    background-color: rgb(255 211 42 / 25%);
+}
+
+.pw.gold {
+    color: var(--gold);
+}
+
+#LEADERBOARD>#leader-3 {
+    background-color: rgb(204 192 192 / 25%);
+}
+
+.pw.silver {
+    color: var(--silver);
+}
+
+#LEADERBOARD>#leader-4 {
+    background-color: rgb(255 135 66 / 25%);
+}
+
+.pw.copper {
+    color: var(--copper);
+}
+
+#LEADERBOARD>#leader-5 {
+    background-color: rgb(77 77 77 / 25%);
+}
+
+.pw.coal {
+    color: var(--coal);
+}
+
+#LEADERBOARD>div[id^=leader-] {
+    text-shadow: rgb(0 0 0) 0px 0px 2.5px;
+}
+
+.pw.label.level-number {
+    background-color: rgb(var(--white) / 15%);
+    font-family: "Lemonada", cursive;
+}
+
+.level-number>span.pw.white {
+    text-shadow: 0px 0px 2.5px !important;
 }

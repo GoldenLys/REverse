@@ -53,7 +53,7 @@ export const GenInventory = function () {
                 I.DESC = "<div class='pw inline blue label'><i class='pw blue fas fa-sword'></i> " + Game.inventory[ITEM].power + "</div>";
                 COUNTERS[2]++;
             }
-            let IS_LEVEL_SET = I.LEVEL != "" ? "<div class='pw inline label'>" + I.LEVEL + "</div>" : "";
+            let IS_LEVEL_SET = I.LEVEL != "" ? "<div class='pw inline label level-number'>" + I.LEVEL + "</div>" : "";
 
             let ICON = FUNCTIONS.MAIN.GET_QUALITY_NUMBER(Game.inventory[ITEM].class) == "E" ? "<div class='pw image error-img'></div>" : "<img class='icon' src='" + Game.inventory[ITEM].icon + "'></img>";
             $("#INVENTORY-" + Game.inventory[ITEM].type).append(`<div id="ITEM-${ITEM}" class="pw message item"><div class="pw horizontal segments">
@@ -106,7 +106,7 @@ export const GenWeapons = function () {
 
         //DEFINE CONTENT
         $(`#${WEAPON}Weapon>.header`).html(`${Game.Weapons[WEAPON][0]}${GEMS}
-<div class="pw inline label">${APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.floor(Game.Weapons[WEAPON][3]), 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i> " + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.floor(Game.Weapons[WEAPON][3] * 10), 0)}</div>
+<div class="pw inline label level-number">${APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.floor(Game.Weapons[WEAPON][3]), 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i> " + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.floor(Game.Weapons[WEAPON][3] * 10), 0)}</div>
 <div class="pw inline label ${Game.Weapons[WEAPON][1]}">${language[APP.LANG].QUALITIES[Game.Weapons[WEAPON][1]]}</div>`);
         if (FUNCTIONS.MAIN.GET_QUALITY_NUMBER(Game.Weapons[WEAPON][1]) == "E") $(`#${WEAPON}Weapon>.content>.icon`).html("<div class='pw image error-img'></div>");
         else $(`#${WEAPON}Weapon>.content>.icon`).html("<img class='pw centered tiny image " + Game.Weapons[WEAPON][1] + "' src='" + Game.Weapons[WEAPON][5] + "'></img>");
@@ -137,7 +137,7 @@ export const GenArmors = function () {
 
         //DEFINE CONTENT
         $(`#Armor${ARMOR}>.header`).html(`${Game.Armors[ARMOR][1]}${GEMS}
-<div class="pw inline label">${APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.floor(Game.Armors[ARMOR][4]), 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i> " + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.floor(Game.Armors[ARMOR][4] * 10), 0)}</div>
+<div class="pw inline label level-number">${APP.ScoreModeEnabled == 0 ? language[APP.LANG].MISC.Level + " " + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.floor(Game.Armors[ARMOR][4]), 0) : language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i> " + FUNCTIONS.MAIN.FORMAT_NUMBER(Math.floor(Game.Armors[ARMOR][4] * 10), 0)}</div>
 <div class="pw inline label ${Game.Armors[ARMOR][2]}">${language[APP.LANG].QUALITIES[Game.Armors[ARMOR][2]]}</div>`);
 
         if (FUNCTIONS.MAIN.GET_QUALITY_NUMBER(Game.Armors[ARMOR][2]) == "E") $(`#Armor${ARMOR}>.content>.icon`).html("<div class='pw image error-img'></div>");
@@ -505,16 +505,6 @@ export const ConfirmRelic = function (RELIC, ITEM) {
     else InstallRelic(RELIC, ITEM);
 };
 
-/*export const InstallRelic = function (RELIC, ITEM) {
-    Game.RELICS[RELIC] = [Game.inventory[ITEM].class, Game.inventory[ITEM].relictype, Game.inventory[ITEM].bonus];
-    if (ITEM <= Game.MaxInv) RemoveItem(ITEM);
-    if ($('#DIV-INVENTORY').is(":visible")) FUNCTIONS.MAIN.POPUP_CLOSE();
-    else FUNCTIONS.MAIN.hideRewards();
-    FUNCTIONS.MAIN.POPUP_CLOSE();
-    GenInventory();
-};*/
-
-
 export const InstallRelic = function (RELIC, ITEM) {
     if (Game.RELICS[RELIC][1] !== Game.inventory[ITEM].relictype && !CHECK_RELICS_LIMIT(Game.inventory[ITEM].relictype)) {
         alert('You can\'t equip more than one power or life relic');
@@ -527,7 +517,6 @@ export const InstallRelic = function (RELIC, ITEM) {
     FUNCTIONS.MAIN.POPUP_CLOSE();
     GenInventory();
 };
-
 
 // UPGRADE EQUIPMENT
 export function UPGRADE_ARMOR(ARMOR, ITEM) {
@@ -627,7 +616,7 @@ export const RemoveItem = function (ITEM) {
         if (ITEM >= Game.inventory.length) Game.inventory.splice(ITEM - 1, 1);
         else Game.inventory.splice(ITEM, 1);
     } else Game.inventory.splice(ITEM, 1);
-    if ($("#POPUP").find('.pw.message.item').length > 0) FUNCTIONS.COMBAT.UPDATE_LOOT_VIEW();
+    if ($("#POPUP").find('.pw.message.item').length > 0) FUNCTIONS.COMBAT.UPDATE_LOOT_VIEW(true);
     GenInventory();
     FUNCTIONS.APP.UpdateGame();
 };

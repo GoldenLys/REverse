@@ -10,12 +10,11 @@
     <meta content="en_US" property="og:locale" />
     <meta content="REverse is an incremental RPG game where you fight monsters while following a story to get powerful items and constantly upgrade your equipment to fight more efficiently." property="og:description" />
     <meta name="theme-color" content="#13F1D2">
-    <meta content="https://purplewizard.space/REverse/images/logo.png" property="og:image" />
+    <meta content="https://nebulys.eu/REverse/images/logo.png" property="og:image" />
     <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="webfonts/Montserrat-Alt1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lemonada:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -51,6 +50,7 @@
                 <div class="pw segment green" id="WTUNLOCK"></div>
                 <div class="pw segment red" id="LowScore"></div>
                 <div class="pw segment red" id="MaxPOSLVL"></div>
+                <div class="pw segment yellow" id="IS_MISSION_AVAILABLE"></div>
                 <div class="pw segment yellow" id="NextRetreat"></div>
                 <div class="pw segment yellow" id="NextCover"></div>
             </div>
@@ -322,7 +322,7 @@
                     <div class="pw red label">
                         <h4 class="pw red">Information</h4>
                         By passing through the dimensional rift you will lose your current equipment and missions progression.
-                        <br />The story will be reset and the difficulty will increase by 5%.
+                        <br />The story will be reset and the difficulty will increase by 1.5%.
                     </div>
                     <h4 class="pw horizontal divider">Benefits for each new dimension</h4>
                     <div class="pw inline green label">+50 maximum score</div>
@@ -385,124 +385,127 @@
                     <div class="pw dropdown text-center" data-open="open">
                         <h3 class="name">General</h3>
                         <div class="content active">
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Identification</div>
-                                <div class="pw segment avatar text-right" id="namestat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Identification</div>
+                                <div class="pw segment avatar text-left" id="namestat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Ranking</div>
-                                <div class="pw segment text-right" id="Rankstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Ranking</div>
+                                <div class="pw segment text-left" id="Rankstat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Time Played</div>
-                                <div class="pw segment text-right" id="playtimestat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Time Played</div>
+                                <div class="pw segment text-left" id="playtimestat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Current Level</div>
-                                <div class="pw segment text-right" id="Levelstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Current Level</div>
+                                <div class="pw segment text-left" id="Levelstat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Class</div>
-                                <div class="pw segment text-right" id="Classstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Class</div>
+                                <div class="pw segment text-left" id="Classstat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Main Attack Damage</div>
-                                <div class="pw segment text-right" id="powerstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Main Attack Damage</div>
+                                <div class="pw segment text-left" id="powerstat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Maximum Life</div>
-                                <div class="pw segment text-right" id="lifestat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Maximum Life</div>
+                                <div class="pw segment text-left" id="lifestat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">
                                     <div id="helpscore" class="link" data-url="#">Equipment Score</div>
                                 </div>
-                                <div class="pw segment text-right" id="Scorestat"></div>
+                                <div class="pw segment text-left" id="Scorestat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Dimensional Difficulty</div>
-                                <div class="pw segment text-right" id="Difficultystat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Dimensional Difficulty</div>
+                                <div class="pw segment text-left" id="Difficultystat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Dungeons Defeated</div>
-                                <div class="pw segment text-right" id="fortressstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Dungeons Defeated</div>
+                                <div class="pw segment text-left" id="fortressstat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Main Weapon Damage</div>
-                                <div class="pw segment text-right" id="mainweaponstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Main Weapon Damage</div>
+                                <div class="pw segment text-left" id="mainweaponstat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Special Weapon Damage</div>
-                                <div class="pw segment text-right" id="specialweaponstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Special Weapon Damage</div>
+                                <div class="pw segment text-left" id="specialweaponstat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Helmet Base Life</div>
-                                <div class="pw segment text-right" id="armor1stat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Helmet Base Life</div>
+                                <div class="pw segment text-left" id="armor1stat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Armor Base Life</div>
-                                <div class="pw segment text-right" id="armor2stat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Armor Base Life</div>
+                                <div class="pw segment text-left" id="armor2stat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Shield Base Life</div>
-                                <div class="pw segment text-right" id="armor3stat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Shield Base Life</div>
+                                <div class="pw segment text-left" id="armor3stat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Boots Base Life</div>
-                                <div class="pw segment text-right" id="armor4stat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Boots Base Life</div>
+                                <div class="pw segment text-left" id="armor4stat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Game Version</div>
-                                <div class="pw segment text-right" id="Versionstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Game Version</div>
+                                <div class="pw segment text-left" id="Versionstat"></div>
                             </div>
                         </div>
                     </div>
+                    <div class="pw reverse divider"></div>
                     <div class="pw dropdown text-center">
                         <h3 class="name">Locations</h3>
                         <div class="content" id="locations-stats"></div>
                     </div>
+
+                    <div class="pw reverse divider"></div>
                     <div class="pw dropdown text-center">
                         <h3 class="name">Kills</h3>
                         <div class="content">
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"><span class="Enemy1">NORMAL</span> Kills</div>
-                                <div class="pw segment text-right" id="Defeat1"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right"><span class="Enemy1">NORMAL</span> Kills</div>
+                                <div class="pw segment text-left" id="Defeat1"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"><span class="Enemy2">ADVANCED</span> Kills</div>
-                                <div class="pw segment text-right" id="Defeat2"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right"><span class="Enemy2">ADVANCED</span> Kills</div>
+                                <div class="pw segment text-left" id="Defeat2"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"><span class="Enemy3">SUPERIOR</span> Kills</div>
-                                <div class="pw segment text-right" id="Defeat3"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right"><span class="Enemy3">SUPERIOR</span> Kills</div>
+                                <div class="pw segment text-left" id="Defeat3"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"><span class="Enemy4">VETERAN</span> Kills</div>
-                                <div class="pw segment text-right" id="Defeat4"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right"><span class="Enemy4">VETERAN</span> Kills</div>
+                                <div class="pw segment text-left" id="Defeat4"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"><span class="Enemy5">ELITE</span> Kills</div>
-                                <div class="pw segment text-right" id="Defeat5"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right"><span class="Enemy5">ELITE</span> Kills</div>
+                                <div class="pw segment text-left" id="Defeat5"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"><span class="Enemy6">MASTER</span> Kills</div>
-                                <div class="pw segment text-right" id="Defeat6"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right"><span class="Enemy6">MASTER</span> Kills</div>
+                                <div class="pw segment text-left" id="Defeat6"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left"><span class="Enemy7">LEGEND</span> Kills</div>
-                                <div class="pw segment text-right" id="Defeat7"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right"><span class="Enemy7">LEGEND</span> Kills</div>
+                                <div class="pw segment text-left" id="Defeat7"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Ratio (K/D)</div>
-                                <div class="pw segment text-right" id="Ratiostat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Ratio (K/D)</div>
+                                <div class="pw segment text-left" id="Ratiostat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Total Kills</div>
-                                <div class="pw segment text-right" id="Killstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Total Kills</div>
+                                <div class="pw segment text-left" id="Killstat"></div>
                             </div>
-                            <div class="pw horizontal dark segments">
-                                <div class="pw segment text-left">Total Deaths</div>
-                                <div class="pw segment text-right" id="Deathstat"></div>
+                            <div class="pw horizontal dark equal segments">
+                                <div class="pw segment text-right">Total Deaths</div>
+                                <div class="pw segment text-left" id="Deathstat"></div>
                             </div>
                         </div>
                     </div>
@@ -513,22 +516,24 @@
                         <i class="fas fa-trophy icon"></i>
                         Leaderboard
                     </h3>
-                    <h4 class="text-center" id="CloudTimer"></h4>
+                    <div class="pw sticked segments text-center">
+                        <div class="pw segment" id="CloudTimer"></div>
+                        <div class="pw segment yellow" id="IS_PLAYER_IN_LEADERBOARD"></div>
+                    </div>
                     <div class="pw checkbox dark" data-id="4" id="OnlyMyVersion">
                         <input tabindex="0" type="checkbox" />
                         <label class="text">Hide old versions players</label>
                     </div>
-                    <div class="pw fluid button" id="Reload">Refresh</div>
+                    <div class="pw fluid button" id="Reload"><i class="fa-solid fa-arrows-rotate"></i> Refresh</div>
                     <div id="LEADERBOARD"></div>
                     <div class="pw fluid buttons" style="margin: 1px 0px 0px 0px;">
-                        <div class="pw button" id="TOPPREVIOUS"></div>
-                        <div class="pw button" id="TOPNEXT"></div>
+                        <div class="pw red button" id="TOPPREVIOUS"></div>
+                        <div class="pw green button" id="TOPNEXT"></div>
                     </div>
-                    <div class="pw fluid button" id="TOP10">Top 10</div>
+                    <div class="pw fluid darkgrey button" id="TOP10"><i class="fa-sharp fa-solid fa-user-crown"></i> Top 10</div>
                     <h3 class="pw message">
-                        <span class="pw inline green label"><i class="info icon"></i> INFO</span> You can change the
-                        color
-                        of your name by changing the <span class="pw alpha">theme color</span> in the Settings.
+                        <span class="pw inline green label"><i class="info icon"></i> NOTE</span> You can change the
+                        color of your name by changing the <span class="pw alpha">theme color</span> in the Settings.
                     </h3>
                 </div>
                 <div class="pw message no-animation text-center" id="DIV-SETTINGS">
@@ -663,8 +668,8 @@
             <div class="scroller">
                 <div id="DIV-MISSIONS">
                     <div class="pw segments" id="MISSIONS-CURRENT"></div>
-                    <div class="pw dropdown text-center">
-                        <h3 class="name">Dungeons</h3>
+                    <div class="pw dropdown text-center" data-open="open">
+                        <h3 class="name" id="DUNGEONS_COMPLETED_COUNT">Dungeons</h3>
                         <div class="content">
                             <div id="MISSIONS-DUNGEONS"></div>
                         </div>
@@ -858,7 +863,7 @@
             <div class="text" id="notice-text"></div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
     <script src="https://kit.fontawesome.com/7ebbff149a.js" crossorigin="anonymous"></script>
     <script src="libs/numeral.min.js" type="text/javascript"></script>
     <script src="libs/lodash.min.js" type="text/javascript"></script>

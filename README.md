@@ -15,18 +15,23 @@ Story Overhaul  | Detail
 
 New Features | Detail
 ------------- | -------------
-✅ | Added an "unequip" button for armors and weapons
+✅ | Added an "unequip" button for armors and weapons (will be automatic when the crafting update will be available)
 ✅ | Added a "Return to the game" button while in the menus
+✅ | Added an indicator when a mission is ready to be played
   
 Changes | Detail
 ------------- | -------------
+✅ | Leaderboard revamp to highlight top 5 players and show your position if you are ranked 
+✅ | Removed the online icon next to the player's name to replace it with a trophy (top 5) or medal if ranked in the leaderboard
+✅ | Re-balanced the enemies difficulty during missions
 ✅ | Capped max relic to 3 and life/damage relics to 1 
 ✅ | New experience per level formula (less grind between missions while retaining a difficulty, might need some adjustments)
 ✅ | "Anti-cheat" will now check for equipement level anomalies
 ✅ | MASTER enemies level during missions have been capped to the player's level +1
 ✅ | Replaced the monsters health by the percentage of health
+✅ | Repositioned the statistics elements to make their easier to read
 ✅ | Fixed the rewards menu closing while clicking on throw loot 
-✅ | Fixed compatibility with small screen & smartphones
+✅ | Fixed compatibility with small screens & phones
 
 #### v3.7 | Guild update
    Gain fame in the guild to obtain a cool new rank badge and also to earn some more money.
@@ -63,6 +68,7 @@ Progress  | Detail
 Type  | Detail
 ------------- | -------------
 🟩 Shop  | Selling the best weapons & armors of the game, unique-class items would have skills embedded into them
+🟩 Map | An interractive world map and with sub-areas
 🟩 Area system revamp | Create a list of nearby enemies while free-roaming (not in missions)
 🟩 Loot | Add loot to specific monsters and locations
 🟩 Crafting | system for Weapons, Armors & misc items like healing potions
@@ -74,7 +80,6 @@ Type  | Detail
 🟨 Divine items | New Divine items class with unique skills embedded into them.
 🟨 Hordes  | Fight multiple enemies at the same time
 🟨 Skills  | Skills for fighting abilities or material gathering like mining, sword prowess for example
-
 🟪 Bugfixing | testing and fix the game whenever a new bug is found
                     
 ## Ideas for divine items attributes

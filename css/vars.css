@@ -18,42 +18,49 @@
 }
 
 .Enemy1 {
+    font-family: "Lemonada", cursive;
     color: var(--E1) !important;
     text-shadow: 0px 0px 3px var(--E1) !important;
     border-color: var(--E1) !important;
 }
 
 .Enemy2 {
+    font-family: "Lemonada", cursive;
     color: var(--E2) !important;
     text-shadow: 0px 0px 3px var(--E2) !important;
     border-color: var(--E2) !important;
 }
 
 .Enemy3 {
+    font-family: "Lemonada", cursive;
     color: var(--E3) !important;
     text-shadow: 0px 0px 3px var(--E3) !important;
     border-color: var(--E3) !important;
 }
 
 .Enemy4 {
+    font-family: "Lemonada", cursive;
     color: var(--E4) !important;
     text-shadow: 0px 0px 3px var(--E4) !important;
     border-color: var(--E4) !important;
 }
 
 .Enemy5 {
+    font-family: "Lemonada", cursive;
     color: var(--E5) !important;
     text-shadow: 0px 0px 3px var(--E5) !important;
     border-color: var(--E5) !important;
 }
 
 .Enemy6 {
+    font-family: "Lemonada", cursive;
     color: var(--E6) !important;
     text-shadow: 0px 0px 3px var(--E6) !important;
     border-color: var(--E6) !important;
 }
 
 .Enemy7 {
+    font-family: "Lemonada", cursive;
     color: var(--E7) !important;
     text-shadow: 0px 0px 3px var(--E7) !important;
     border-color: var(--E7) !important;
@@ -121,6 +128,7 @@
 .pw.label.Exotic,
 .pw.label.Legendary,
 .pw.label.Divine {
+    font-family: "Lemonada", cursive;
     position: relative;
     background: transparent;
 }

@@ -43,6 +43,7 @@ export const ConfirmWT = function () {
         Game.Weapons.Special = ["Makeshift Dagger", "Normal", 0, 1, 10, "Default"];
         Game.isInFight = false;
         Game.MissionsCompleted = [];
+        Game.Choices = [];
         Game.Location = 0;
         Game.MissionStarted = [false, 0, 0, 0, 0];
         Game.AutoRemove = [0, 0, 0, 0, 0, 0];
