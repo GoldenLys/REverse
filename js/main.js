@@ -452,7 +452,7 @@ export const SELECT_LANGUAGE = function () {
     $("#leaderboard").html('<i class="fas fa-trophy icon"></i> ' + language[APP.LANG].MENUS.Leaderboard);
     $("#settings").html('<i class="fas fa-cogs icon"></i> ' + language[APP.LANG].MENUS.Settings);
     $("#credits").html('<i class="fas fa-popcorn icon"></i> ' + language[APP.LANG].MENUS.Credits);
-    $("#missions").html('<i class="far fa-dot-circle icon"></i> ' + language[APP.LANG].MENUS.Missions);
+    $("#missions").html('<i class="far fa-dot-circle icon"></i> ' + language[APP.LANG].MENUS.Story);
     $("#exploration").html('<i class="fa-solid fa-earth-europe icon"></i> ' + language[APP.LANG].MENUS.Exploration);
     $("#guild").html('<i class="fa-solid fa-circle-star icon"></i> ' + language[APP.LANG].MENUS.Guild);
 

@@ -15,11 +15,11 @@ export function GENERATE_MISSION_VIEW() {
         const unlocked = Game.Level >= missionData.LEVEL ? "pw green" : "pw red";
 
         let btn;
-        if (Game.MissionStarted[0] && Game.MissionStarted[1] == mission && Game.MissionsCompleted[mission] == 0) {
+        if (Game.MissionStarted[0] && Game.MissionStarted[1] == mission && Game.MissionsCompleted[mission] == 0) { // CANCEL MISSION
             btn = `<div class='pw fluid darkgrey button' onclick='FUNCTIONS.MISSIONS.RESET_MISSION();'>${language[APP.LANG].ACTIONS.CancelMission} <i class='pw green fal fa-arrow-right'></i></div>`;
-        } else if (Game.MissionsCompleted[mission] == 1 && missionData.TYPE != 2) {
-            btn = `<div class='pw fluid darkgrey button' onclick='FUNCTIONS.MISSIONS.REPLAY_STORY(${mission});'>${language[APP.LANG].ACTIONS.Story} <i class='pw green fal fa-arrow-right'></i></div>`;
-        } else if (Game.MissionsCompleted[mission] == 0 && Game.MissionStarted[0] === false) {
+        } else if (Game.MissionsCompleted[mission] == 1) { // REPLAY STORY
+            btn = `<div class='pw fluid darkgrey button' onclick='FUNCTIONS.MISSIONS.REPLAY_STORY(${mission});'>${language[APP.LANG].ACTIONS.RecapStory} <i class='pw green fal fa-arrow-right'></i></div>`;
+        } else if (Game.MissionsCompleted[mission] == 0 && Game.MissionStarted[0] === false) { // START MISSION
             btn = `<div class='pw fluid darkgrey button' onclick='FUNCTIONS.MISSIONS.LAUNCH_MISSION(${mission});'>${language[APP.LANG].ACTIONS.LaunchMission} <i class='${unlocked} fal fa-arrow-right'></i></div>`;
         }
 
@@ -86,7 +86,6 @@ export function STORY_CHOICE(choice, consequence) {
     //If the current choice is "undefined" or null, it sets the choice to [null]. Otherwise, it keeps the choice as is.
     Game.Choices[Game.MissionStarted[1]][consequence] = Game.Choices[Game.MissionStarted[1]][consequence] == "undefined" || Game.Choices[Game.MissionStarted[1]][consequence] == null ? [null] : Game.Choices[Game.MissionStarted[1]][consequence];
     
-    
     if (GLOBALS.MISSIONS.CHOICES[Game.MissionStarted[1]][CURRENT_CHOICE][1][0] !== "continue") $("#story-text").append("<div class='pw subtitle dark'>" + GLOBALS.MISSIONS.CHOICES[Game.MissionStarted[1]][CURRENT_CHOICE][1][0][0] + "</div>");
     Game.Choices[Game.MissionStarted[1]][CURRENT_CHOICE] = choice;
     if (GLOBALS.MISSIONS.CHOICES[Game.MissionStarted[1]][CURRENT_CHOICE][1][0] !== "end") Game.Choices[Game.MissionStarted[1]][Number(CURRENT_CHOICE) + 1] = null; 
@@ -113,7 +112,7 @@ function DEFINE_STORY_CHOICES() {
         else if (CHOICES[CHOICE] == "continue") $("#story-buttons").append(`<div onclick="FUNCTIONS.MISSIONS.STORY_CHOICE('continue', ${Number(CURRENT_CHOICE)+1})" class="pw darkgrey button">Continue <i class="fa-thin fa-square-arrow-right fa-fade"></i></div>`);
         else $("#story-buttons").append(`<div onclick="FUNCTIONS.MISSIONS.STORY_CHOICE('${CHOICE}', ${CHOICES[CHOICE][1][1]})" class="pw darkgrey button">${CHOICES[CHOICE][0]}</div>`);
     }
-    FUNCTIONS.EVENTS.DYNAMICS()
+    FUNCTIONS.EVENTS.DYNAMICS();
 }
 
 export function REPLAY_STORY(mission) {
@@ -129,7 +128,7 @@ export function REPLAY_STORY(mission) {
         }
     }
     $("#story-buttons").html(`<div class="pw darkgrey button" data-link="return_to_game">Close <i class="fa-thin fa-square-x fa-beat-fade"></i></div>`);
-    FUNCTIONS.EVENTS.DYNAMICS()
+    FUNCTIONS.EVENTS.DYNAMICS();
 }
 
 export function END_MISSION() {

@@ -106,7 +106,7 @@ export const UpdateEngine = function () {
         APP.CoreLife = APP.CoreBaseLife;
         UpdateUI();
     }
-    if (Game.isInFight != 2 && APP.CoreLife == null || Game.Enemy[5] == null || Game.Enemy[5] == 0) {
+    if (Game.isInFight != true && APP.CoreLife == null || Game.Enemy[5] == null || Game.Enemy[5] == 0) {
         Game.isInFight = false;
         UpdateGame();
     }
@@ -207,15 +207,7 @@ export const UpdateGame = function () {
     APP.LifeMult = Game.Upgrades[2] * 0.01 + 1;
     Game.MaxInv = Game.Dimension * 2 + 18 + (Game.Upgrades[3] * 1);
     if (typeof Game.MissionStarted[4] === "undefined") Game.MissionStarted[4] = 0;
-    if (!Game.isInFight && !RESPAWN_TIMER[1] && !APP.StoryView) {
-        APP.CoreLife = APP.CoreBaseLife;
-        Game.Enemy = FUNCTIONS.COMBAT.Create_Enemy();
-        Game.isInFight = true;
-        $("#EnemySprite").html(`<img class='pw medium image' style='${FUNCTIONS.COMBAT.Get_Monster_Image_Position_By_Name(Game.Enemy[0])}' src='${FUNCTIONS.COMBAT.Get_Monster_Image_By_Name(Game.Enemy[0])}'>`);
-        $("#EnemyDamage").html("").hide();
-        $("#PlayerDamage").html("").hide();
-        UpdateGame();
-    }
+    FUNCTIONS.COMBAT.CHECK_ENEMY();
     APP.CoreBaseLife = 0;
     APP.TotalWeaponsUpgrades = 0;
     APP.TotalArmorsUpgrades = 0;
@@ -362,6 +354,7 @@ export const UpdateUI = function () {
     if (Game.isInFight == true) FUNCTIONS.COMBAT.UpdateCombat();
     if ($('#DIV-STATS').is(":visible")) UPDATE_STATS();
     FUNCTIONS.PALETTE.RESET_THEME(2);
+    FUNCTIONS.MISSIONS.GENERATE_MISSION_VIEW();
 };
 
 const SET_CURRENT_TASK = function () {

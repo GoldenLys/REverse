@@ -10,7 +10,7 @@ const HEALING = function () {
         default: [40, 65],
         luck: _.random(1, 100)
     };
-
+    CHECK_ENEMY();
     if (!Game.isInFight) Game.isInFight = true;
     if (APP.isCovered) {
         if (APP.CoreLife < APP.CoreBaseLife) {
@@ -59,6 +59,7 @@ export const TAKE_COVER = function () {
 export const MAIN_ATTACK = function () {
     FUNCTIONS.INVENTORY.CHECK_EQUIPMENT();
     FUNCTIONS.INVENTORY.GenInventory();
+    CHECK_ENEMY();
     if (!Game.isInFight) Game.isInFight = true;
     if (APP.isCovered) {
         APP.isCovered = false;
@@ -83,6 +84,7 @@ export const MAIN_ATTACK = function () {
 export const SPECIAL_ATTACK = function () {
     FUNCTIONS.INVENTORY.CHECK_EQUIPMENT();
     FUNCTIONS.INVENTORY.GenInventory();
+    CHECK_ENEMY();
     if (!Game.isInFight) Game.isInFight = true;
     if (APP.isCovered) {
         APP.isCovered = false;
@@ -119,6 +121,19 @@ export const RUN_AWAY = function () {
         else Game.LastEscape = 45;
         APP.CoreLife = APP.CoreBaseLife;
         Game.isInFight = false;
+        FUNCTIONS.APP.UpdateGame();
+    }
+};
+
+export const CHECK_ENEMY = function () {
+    if (APP.StoryView && $("#DIV-STORY").is(":hidden")) APP.StoryView = false;
+    if (!Game.isInFight && RESPAWN_TIMER[1] == false && !APP.StoryView) {
+        APP.CoreLife = APP.CoreBaseLife;
+        Game.Enemy = FUNCTIONS.COMBAT.Create_Enemy();
+        Game.isInFight = true;
+        $("#EnemySprite").html(`<img class='pw medium image' style='${FUNCTIONS.COMBAT.Get_Monster_Image_Position_By_Name(Game.Enemy[0])}' src='${FUNCTIONS.COMBAT.Get_Monster_Image_By_Name(Game.Enemy[0])}'>`);
+        $("#EnemyDamage").html("").hide();
+        $("#PlayerDamage").html("").hide();
         FUNCTIONS.APP.UpdateGame();
     }
 };

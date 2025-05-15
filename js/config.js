@@ -1,7 +1,7 @@
 window.GLOBALS = {
     NAME: "REverse",
     VERSION: "3.6",
-    BETA: 11,
+    BETA: 12,
     RELICS_NAMES: [],
     THREATS: [],
     ARMORS_NAMES: {
@@ -25,7 +25,7 @@ window.GLOBALS = {
         { name: 'Goblin Knight', location: 5, imageUrl: 'images/Monsters/goblin_knight.png', imagePos: [0, 0], isBoss: true },
 
 
-        { name: 'Spider Queen', location: 6, imageUrl: 'url_to_spider_queen_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Spider Queen', location: 6, imageUrl: 'images/Monsters/spider_queen.png', imagePos: [0, 0], isBoss: true },
         { name: 'Black Mage', location: 7, imageUrl: 'url_to_black_mage_image', imagePos: [0, 0], isBoss: true },
         { name: 'Ghoul', location: 8, imageUrl: 'url_to_ghoul_image', imagePos: [0, 0], isBoss: true },
         { name: 'Poltergeist', location: 9, imageUrl: 'url_to_poltergeist_image', imagePos: [0, 0], isBoss: true },
@@ -58,7 +58,7 @@ window.GLOBALS = {
         { name: 'Goblin Worker', location: 5, imageUrl: 'images/Monsters/goblin_worker.png', imagePos: [0, 0], isBoss: false },
 
 
-        { name: 'Spider', location: 6, imageUrl: 'url_to_spider_image', imagePos: [0, 0], isBoss: false },
+        { name: 'Spider', location: 6, imageUrl: 'images/Monsters/spider.png', imagePos: [0, 0], isBoss: false },
         { name: 'Fire Mage', location: 7, imageUrl: 'url_to_fire_mage_image', imagePos: [0, 0], isBoss: false },
         { name: 'Water Mage', location: 7, imageUrl: 'url_to_water_mage_image', imagePos: [0, 0], isBoss: false },
         { name: 'Zombie', location: 8, imageUrl: 'url_to_zombie_image', imagePos: [0, 0], isBoss: false },
@@ -99,12 +99,10 @@ window.GLOBALS = {
         4: ["Ancient Ruins", 12, 15, 2, 4, {
             loot: ["none"],
         }, "4.jpg"],
-        
+
         5: ["Secluded Valley", 15, 19, 3, 5, {
             loot: ["none"],
         }, "5.jpg"],
-
-        /*
         6: ["Empire Road", 19, 22, 3, 6, {
             loot: ["none"],
         }, "6.jpg"],
@@ -141,7 +139,6 @@ window.GLOBALS = {
         17: ["Vampire Castle", 35, 35, 5, 20, {
             loot: ["none"],
         }, "17.jpg"]
-        */
     },
     CODES: ["", "N4M3rs", "Wiz478", "1LUV17", "F0RC3D", "R3T0RN", "S4Vn0w", "H4d65M", "R3SET"],
 };
@@ -149,7 +146,7 @@ window.GLOBALS = {
 GLOBALS.MISSIONS = {
     LIST: [
         {
-            NAME: "The Abyssal Awakening",
+            NAME: "The Abyssal Awakening", //MISSION 1
             LEVEL: 1,
             REWARDS: [200, 0, "Normal"],
             LOCATION: 0,
@@ -158,7 +155,7 @@ GLOBALS.MISSIONS = {
             REQUIRED: -1
         },
         {
-            NAME: "The Unknown Crossing",
+            NAME: "The Unknown Crossing", //MISSION 2
             LEVEL: 4,
             REWARDS: [250, 0, "Common"],
             LOCATION: 1,
@@ -167,7 +164,7 @@ GLOBALS.MISSIONS = {
             REQUIRED: 0
         },
         {
-            NAME: "Encountering the Unknown",
+            NAME: "Encountering the Unknown", //MISSION 3
             LEVEL: 7,
             REWARDS: [500, 0, "Common"],
             LOCATION: 2,
@@ -176,7 +173,7 @@ GLOBALS.MISSIONS = {
             REQUIRED: 1
         },
         {
-            NAME: "Galarius City",
+            NAME: "Galarius City", //MISSION 4
             LEVEL: 9,
             REWARDS: [750, 0, "Uncommon"],
             LOCATION: 3,
@@ -185,7 +182,7 @@ GLOBALS.MISSIONS = {
             REQUIRED: 2
         },
         {
-            NAME: "Exploring the city",
+            NAME: "Exploring the city", //MISSION 5
             LEVEL: 11,
             REWARDS: [1000, 0, "Uncommon"],
             LOCATION: 3,
@@ -194,216 +191,215 @@ GLOBALS.MISSIONS = {
             REQUIRED: 3
         },
         {
-             NAME: "The Mysterious Prophecy",
-             LEVEL: 12,
-             REWARDS: [2, 0, "Uncommon"],
-             LOCATION: 4,
-             OBJECTIVE: 20,
-             TYPE: 2,
-             REQUIRED: 4
-         },
-         {
-             NAME: "A Moment of Serenity",
-             LEVEL: 15,
-             REWARDS: [1500, 0, "Rare"],
-             LOCATION: 5,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 5
-         },
-         /*
-         {
-             NAME: "",
-             LEVEL: 19,
-             REWARDS: [2500, 0, "Rare"],
-             LOCATION: 6,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 5
-         },
-         {
-             NAME: "",
-             LEVEL: 22,
-             REWARDS: [3000, 0, "Rare"],
-             LOCATION: 7,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 6
-         },
-         {
-             NAME: "",
-             LEVEL: 25,
-             REWARDS: [5000, 0, "Epic"],
-             LOCATION: 8,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 7
-         },
-         {
-             NAME: "",
-             LEVEL: 27,
-             REWARDS: [7500, 0, "Epic"],
-             LOCATION: 9,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 8
-         },
-         {
-             NAME: "",
-             LEVEL: 29,
-             REWARDS: [10000, 0, "Epic"],
-             LOCATION: 10,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 9
-         },
-         {
-             NAME: "",
-             LEVEL: 30,
-             REWARDS: [0, 0, "Exotic"],
-             LOCATION: 11,
-             OBJECTIVE: 10,
-             TYPE: 2,
-             REQUIRED: 10
-         },
-         {
-             NAME: "",
-             LEVEL: 30,
-             REWARDS: [0, 2, "Exotic"],
-             LOCATION: 11,
-             OBJECTIVE: 25,
-             TYPE: 2,
-             REQUIRED: 11
-         },
-         {
-             NAME: "",
-             LEVEL: 30,
-             REWARDS: [1, 0, "Exotic"],
-             LOCATION: 11,
-             OBJECTIVE: 50,
-             TYPE: 2,
-             REQUIRED: 12
-         },
-         {
-             NAME: "",
-             LEVEL: 30,
-             REWARDS: [15000, 0, "Exotic"],
-             LOCATION: 12,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 11
-         },
-         {
-             NAME: "",
-             LEVEL: 30,
-             REWARDS: [20000, 0, "Exotic"],
-             LOCATION: 12,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 14
-         },
-         {
-             NAME: "",
-             LEVEL: 31,
-             REWARDS: [25000, 0, "Exotic"],
-             LOCATION: 13,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 15
-         },
-         {
-             NAME: "",
-             LEVEL: 31,
-             REWARDS: [50000, 0, "Exotic"],
-             LOCATION: 13,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 16
-         },
-         {
-             NAME: "",
-             LEVEL: 32,
-             REWARDS: [75000, 0, "Exotic"],
-             LOCATION: 14,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 17
-         },
-         {
-             NAME: "",
-             LEVEL: 32,
-             REWARDS: [100000, 0, "Exotic"],
-             LOCATION: 14,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 18
-         },
-         {
-             NAME: "",
-             LEVEL: 33,
-             REWARDS: [125000, 0, "Exotic"],
-             LOCATION: 15,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 19
-         },
-         {
-             NAME: "",
-             LEVEL: 33,
-             REWARDS: [150000, 0, "Exotic"],
-             LOCATION: 15,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 20
-         },
-         {
-             NAME: "",
-             LEVEL: 34,
-             REWARDS: [175000, 0, "Exotic"],
-             LOCATION: 16,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 21
-         },
-         {
-             NAME: "",
-             LEVEL: 34,
-             REWARDS: [175000, 0, "Exotic"],
-             LOCATION: 16,
-             OBJECTIVE: 10,
-             TYPE: 1,
-             REQUIRED: 22
-         },
-         {
-             NAME: "",
-             LEVEL: 35,
-             REWARDS: [0, 0, "Exotic"],
-             LOCATION: 17,
-             OBJECTIVE: 10,
-             TYPE: 2,
-             REQUIRED: 23
-         },
-         {
-             NAME: "",
-             LEVEL: 35,
-             REWARDS: [1, 2, "Legendary"],
-             LOCATION: 17,
-             OBJECTIVE: 25,
-             TYPE: 2,
-             REQUIRED: 24
-         },
-         {
-             NAME: "",
-             LEVEL: 35,
-             REWARDS: [2, 0, "Legendary"],
-             LOCATION: 17,
-             OBJECTIVE: 50,
-             TYPE: 2,
-             REQUIRED: 25
-         },*/
+            NAME: "The Mysterious Prophecy", //MISSION 6
+            LEVEL: 12,
+            REWARDS: [2, 0, "Uncommon"],
+            LOCATION: 4,
+            OBJECTIVE: 20,
+            TYPE: 2,
+            REQUIRED: 4
+        },
+        {
+            NAME: "A Moment of Serenity", //MISSION 7
+            LEVEL: 15,
+            REWARDS: [1500, 0, "Rare"],
+            LOCATION: 5,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 5
+        },
+        {
+            NAME: "Mission 8",
+            LEVEL: 19,
+            REWARDS: [2500, 0, "Rare"],
+            LOCATION: 6,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 6
+        },
+        {
+            NAME: "Mission 9",
+            LEVEL: 22,
+            REWARDS: [3000, 0, "Rare"],
+            LOCATION: 7,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 7
+        },
+        {
+            NAME: "Mission 10",
+            LEVEL: 25,
+            REWARDS: [5000, 0, "Epic"],
+            LOCATION: 8,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 8
+        },
+        {
+            NAME: "Mission 11",
+            LEVEL: 27,
+            REWARDS: [7500, 0, "Epic"],
+            LOCATION: 9,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 9
+        },
+        {
+            NAME: "Mission 12",
+            LEVEL: 29,
+            REWARDS: [10000, 0, "Epic"],
+            LOCATION: 10,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 10
+        },
+        {
+            NAME: "Mission 13",
+            LEVEL: 30,
+            REWARDS: [0, 0, "Exotic"],
+            LOCATION: 11,
+            OBJECTIVE: 10,
+            TYPE: 2,
+            REQUIRED: 11
+        },
+        {
+            NAME: "Mission 14",
+            LEVEL: 30,
+            REWARDS: [0, 2, "Exotic"],
+            LOCATION: 11,
+            OBJECTIVE: 25,
+            TYPE: 2,
+            REQUIRED: 12
+        },
+        {
+            NAME: "Mission 15",
+            LEVEL: 30,
+            REWARDS: [1, 0, "Exotic"],
+            LOCATION: 11,
+            OBJECTIVE: 50,
+            TYPE: 2,
+            REQUIRED: 13
+        },
+        {
+            NAME: "Mission 16",
+            LEVEL: 30,
+            REWARDS: [15000, 0, "Exotic"],
+            LOCATION: 12,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 14
+        },
+        {
+            NAME: "Mission 17",
+            LEVEL: 30,
+            REWARDS: [20000, 0, "Exotic"],
+            LOCATION: 12,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 15
+        },
+        {
+            NAME: "Mission 18",
+            LEVEL: 31,
+            REWARDS: [25000, 0, "Exotic"],
+            LOCATION: 13,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 16
+        },
+        {
+            NAME: "Mission 19",
+            LEVEL: 31,
+            REWARDS: [50000, 0, "Exotic"],
+            LOCATION: 13,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 17
+        },
+        {
+            NAME: "Mission 20",
+            LEVEL: 32,
+            REWARDS: [75000, 0, "Exotic"],
+            LOCATION: 14,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 18
+        },
+        {
+            NAME: "Mission 21",
+            LEVEL: 32,
+            REWARDS: [100000, 0, "Exotic"],
+            LOCATION: 14,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 19
+        },
+        {
+            NAME: "Mission 22",
+            LEVEL: 33,
+            REWARDS: [125000, 0, "Exotic"],
+            LOCATION: 15,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 20
+        },
+        {
+            NAME: "Mission 23",
+            LEVEL: 33,
+            REWARDS: [150000, 0, "Exotic"],
+            LOCATION: 15,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 21
+        },
+        {
+            NAME: "Mission 24",
+            LEVEL: 34,
+            REWARDS: [175000, 0, "Exotic"],
+            LOCATION: 16,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 22
+        },
+        {
+            NAME: "Mission 25",
+            LEVEL: 34,
+            REWARDS: [175000, 0, "Exotic"],
+            LOCATION: 16,
+            OBJECTIVE: 10,
+            TYPE: 1,
+            REQUIRED: 23
+        },
+        {
+            NAME: "Mission 26",
+            LEVEL: 35,
+            REWARDS: [0, 0, "Exotic"],
+            LOCATION: 17,
+            OBJECTIVE: 10,
+            TYPE: 2,
+            REQUIRED: 24
+        },
+        {
+            NAME: "Mission 27",
+            LEVEL: 35,
+            REWARDS: [1, 2, "Legendary"],
+            LOCATION: 17,
+            OBJECTIVE: 25,
+            TYPE: 2,
+            REQUIRED: 25
+        },
+        {
+            NAME: "Mission 28",
+            LEVEL: 35,
+            REWARDS: [2, 0, "Legendary"],
+            LOCATION: 17,
+            OBJECTIVE: 50,
+            TYPE: 2,
+            REQUIRED: 26
+        },
     ],
     CHOICES: {
-        0: {
+        0: { // MISSION 1
             0: [
                 "Death has claimed you... or so you thought, when an agonizing jolt wracked through your body, collapsing you onto the harsh pavement. The world around you blurred and faded into blackness.",
                 ["continue"]
@@ -421,14 +417,14 @@ GLOBALS.MISSIONS = {
                 ["end"]
             ],
         },
-        1: {
+        1: { // MISSION 2
             0: [
                 "Whatever that blinding light was, it seems that you have reached the end.",
                 ["continue"]
             ],
             1: [
                 "But one question remains, where are you ?",
-                [["It seems that i'll get isekai'd to another world.", [true, 2]], ["Maybe i'm going to heaven... Should i make a harem ?", ["harem", 2]]]
+                [["It seems that i'll get isekai'd to another world.", [true, 2]], ["Maybe i'm going to heaven... And there may be a harem waiting for me ?", ["harem", 2]]]
             ],
             2: [
                 "The only things you see are trees. an unknown, dark and creepy forest with no one in sight.",
@@ -443,7 +439,7 @@ GLOBALS.MISSIONS = {
                 ["end"]
             ]
         },
-        2: {
+        2: { // MISSION 3
             0: [
                 "With each step, the alien beauty of your surroundings becomes more intense. A forest unlike any on Earth, with strange and twisted vegetation.",
                 ["continue"]
@@ -465,14 +461,17 @@ GLOBALS.MISSIONS = {
                 ["end"]
             ]
         },
-        3: {
+        3: { // MISSION 4
             0: [
                 "Driven by your sharp curiosity rather than caged by trepidation, you persist on your journey of exploration. The thought of hostile encounters eases as you find this new world to be more inviting than imagined.",
                 ["continue"]
             ],
             1: [
                 "Eventually, the shimmering outline of a city materializes in your line of sight. As you approach this bustling metropolis, you find inhabitants of this world who hold striking resemblances to the races you knew - humans, dwarves, and even elves!",
-                [["Proceed into the city, prepared for any challenge.", [true, 2]], ["Elect to rest in the nearby forest before daring to enter the city.", [false, 3]]]
+                [
+                    ["Proceed into the city, prepared for any challenge.", [true, 2]],
+                    ["Rest in the nearby forest before daring to enter the city.", [false, 3]]
+                ]
             ],
             2: [
                 "Taking a deep, bolstering breath, you indulge in the city's vibrancy. Multitudes of different races enliven the streets, engulfing you in an extraordinary display of foreign trade and dialogue. The initial disorientation erodes swiftly, replaced by a steadily building curiosity about this novel environment.",
@@ -487,7 +486,7 @@ GLOBALS.MISSIONS = {
                 ["end"]
             ]
         },
-        4: {
+        4: { // MISSION 5
             0: [
                 "As you step into the city, the walls around you resonate with the hustle and bustle of city life. This city and it's people, a cosmopolitan canvas of many races and cultures, quickly accepts you.",
                 [["This place seems great!", [true, 1]], ["This place... feels weird.", [false, 1]]]
@@ -525,7 +524,7 @@ GLOBALS.MISSIONS = {
                 ["end"]
             ]
         },
-        5: {
+        5: { // MISSION 6
             0: [
                 "As you step out of the cozy tavern, a sense of unease creeps over you. The city seems quieter than usual, and an unsettling chill runs down your spine. The bustling metropolis of your past days now feels like a distant memory.",
                 ["continue"]
@@ -567,7 +566,7 @@ GLOBALS.MISSIONS = {
                 ["end"]
             ]
         },
-        6: {
+        6: { // MISSION 7
             0: [
                 "You emerge from the ancient ruins, your heart pounding with excitement. As you take a moment to catch your breath, the sight before you is a welcome relief.",
                 ["continue"]
@@ -584,27 +583,153 @@ GLOBALS.MISSIONS = {
                 "As you continue your journey after leaving the city, a secluded and verdant valley unfolds before you. The tranquility of this scene is a stark contrast to the chaos of the ruins you saw. You can hear the soothing sound of water cascading down from the cliffs above, forming a pristine lake that shimmers in the natural sunlight.",
                 ["continue"]
             ],
-            5: [
+            4: [
                 "Leaving the tranquility of the valley behind, you embark on a quest to seek out the sage you've heard of. Deciding to leave the crystal behind for now, you explore the verdant valley. The lush greenery and calm lake offer a soothing respite from the rigors of your journey.",
                 ["continue"]
             ],
-            6: [
+            5: [
                 "As you wander through the valley, you come across various creatures - some friendly, others not so much. You encounter a group of villagers who are being terrorized by a band of goblins. They beg for your help in driving them away.",
-                [["Decide to aid the villagers and prove your courage.", ["goblin_slayer", 7]], ["Yeah.. not sure about helping anyone for now, let's move on.", ["guilt", 9]]]
+                [["Decide to aid the villagers and prove your courage.", ["goblin_slayer", 6]], ["Yeah.. not sure about helping anyone for now, let's move on.", ["guilt", 8]]]
+            ],
+            6: [
+                "With a sense of determination, you charge towards the goblins. The battle is fierce, but your quick thinking and strategic prowess enable you to emerge victorious.",
+                [["You continue on your quest to find the Sage Tower.", [true, 7]]]
             ],
             7: [
-                "With a sense of determination, you charge towards the goblins. The battle is fierce, but your quick thinking and strategic prowess enable you to emerge victorious.",
-                [["You continue on your quest to find the Sage Tower.", [true, 8]]]
-            ],
-            8: [
                 "Your courage and determination earn you a reputation among the villagers, who share tales of your deeds far and wide. With renewed vigor, you press onward in your quest to seek out the sage and uncover the secrets of the mysterious crystal.",
                 ["end"]
             ],
-            9: [
+            8: [
                 "You choose to ignore the pleas for help from the villagers, continuing on your quest to find the sage with a heavy conscience.",
                 ["end"]
             ]
-        }
+        },
+        7: { // MISSION 8
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        8: { // MISSION 9
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        9: { // MISSION 10
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        10: { // MISSION 11
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        11: { // MISSION 12
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        12: { // MISSION 13
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        13: { // MISSION 14
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        14: { // MISSION 15
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        15: { // MISSION 16
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        16: { // MISSION 17
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        17: { // MISSION 18
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        18: { // MISSION 19
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        19: { // MISSION 20
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        20: { // MISSION 21
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        21: { // MISSION 22
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        22: { // MISSION 23
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        23: { // MISSION 24
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        24: { // MISSION 25
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        25: { // MISSION 26
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        26: { // MISSION 27
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
+        27: { // MISSION 28
+            0: [
+                "WIP",
+                ["end"]
+            ]
+        },
     }
 };
 
