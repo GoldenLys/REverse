@@ -1,7 +1,7 @@
 window.GLOBALS = {
     NAME: "REverse",
     VERSION: "3.6",
-    BETA: 12,
+    BETA: 14,
     RELICS_NAMES: [],
     THREATS: [],
     ARMORS_NAMES: {
@@ -26,16 +26,16 @@ window.GLOBALS = {
 
 
         { name: 'Spider Queen', location: 6, imageUrl: 'images/Monsters/spider_queen.png', imagePos: [0, 0], isBoss: true },
-        { name: 'Black Mage', location: 7, imageUrl: 'url_to_black_mage_image', imagePos: [0, 0], isBoss: true },
-        { name: 'Ghoul', location: 8, imageUrl: 'url_to_ghoul_image', imagePos: [0, 0], isBoss: true },
-        { name: 'Poltergeist', location: 9, imageUrl: 'url_to_poltergeist_image', imagePos: [0, 0], isBoss: true },
-        { name: 'Sentient Dullahan', location: 10, imageUrl: 'url_to_sentient_dullahan_image', imagePos: [0, 0], isBoss: true },
-        { name: 'Demon Lord', location: 11, imageUrl: 'url_to_demon_lord_image', imagePos: [0, 0], isBoss: true },
-        { name: 'Powerful Skeleton', location: 12, imageUrl: 'url_to_powerful_skeleton_image', imagePos: [0, 0], isBoss: true },
-        { name: "Jack-o'-lantern", location: 13, imageUrl: 'url_to_jack_o_lantern_image', imagePos: [0, 0], isBoss: true },
-        { name: 'Vampire Lord', location: 14, imageUrl: 'url_to_vampire_lord_image_1', imagePos: [0, 0], isBoss: true },
-        { name: 'Big Fish-Man', location: 15, imageUrl: 'url_to_big_fish_man_image', imagePos: [0, 0], isBoss: true },
-        { name: 'Vampire King', location: 17, imageUrl: 'url_to_vampire_king_image', imagePos: [0, 0], isBoss: true },
+        { name: 'Black Mage', location: 7, imageUrl: '', imagePos: [0, 0], isBoss: true },
+        { name: 'Ghoul', location: 8, imageUrl: '', imagePos: [0, 0], isBoss: true },
+        { name: 'Poltergeist', location: 9, imageUrl: '', imagePos: [0, 0], isBoss: true },
+        { name: 'Sentient Dullahan', location: 10, imageUrl: '', imagePos: [0, 0], isBoss: true },
+        { name: 'Demon Lord', location: 11, imageUrl: '', imagePos: [0, 0], isBoss: true },
+        { name: 'Powerful Skeleton', location: 12, imageUrl: '', imagePos: [0, 0], isBoss: true },
+        { name: "Jack-o'-lantern", location: 13, imageUrl: '', imagePos: [0, 0], isBoss: true },
+        { name: 'Vampire Lord', location: 14, imageUrl: '', imagePos: [0, 0], isBoss: true },
+        { name: 'Big Fish-Man', location: 15, imageUrl: '', imagePos: [0, 0], isBoss: true },
+        { name: 'Vampire King', location: 17, imageUrl: '', imagePos: [0, 0], isBoss: true },
 
         // Enemies
         { name: 'Kind Soul', location: 0, imageUrl: 'images/Monsters/kind_soul.png', imagePos: [0, 0], isBoss: false },
@@ -59,86 +59,51 @@ window.GLOBALS = {
 
 
         { name: 'Spider', location: 6, imageUrl: 'images/Monsters/spider.png', imagePos: [0, 0], isBoss: false },
-        { name: 'Fire Mage', location: 7, imageUrl: 'url_to_fire_mage_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Water Mage', location: 7, imageUrl: 'url_to_water_mage_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Zombie', location: 8, imageUrl: 'url_to_zombie_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Burning Zombie', location: 8, imageUrl: 'url_to_burning_zombie_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Ghost', location: 9, imageUrl: 'url_to_ghost_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Crying Ghost', location: 9, imageUrl: 'url_to_crying_ghost_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Dullahan', location: 10, imageUrl: 'url_to_dullahan_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Minor Rank Demon', location: 11, imageUrl: 'url_to_minor_rank_demon_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Middle Rank Demon', location: 11, imageUrl: 'url_to_middle_rank_demon_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Higher Rank Demon', location: 11, imageUrl: 'url_to_higher_rank_demon_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Skeleton', location: 12, imageUrl: 'url_to_skeleton_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Decrepit Skeleton', location: 12, imageUrl: 'url_to_decrepit_skeleton_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Burnt Skeleton', location: 12, imageUrl: 'url_to_burnt_skeleton_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Fish-Man', location: 15, imageUrl: 'url_to_fish_man_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Vampire', location: 14, imageUrl: 'url_to_vampire_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Noble Vampire', location: 16, imageUrl: 'url_to_noble_vampire_image', imagePos: [0, 0], isBoss: false },
-        { name: 'Vampire Lord', location: 16, imageUrl: 'url_to_vampire_lord_image_2', imagePos: [0, 0], isBoss: false },
+
+        { name: 'Fire Mage', location: 7, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Water Mage', location: 7, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Zombie', location: 8, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Burning Zombie', location: 8, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Ghost', location: 9, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Crying Ghost', location: 9, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Dullahan', location: 10, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Minor Rank Demon', location: 11, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Middle Rank Demon', location: 11, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Higher Rank Demon', location: 11, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Skeleton', location: 12, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Decrepit Skeleton', location: 12, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Burnt Skeleton', location: 12, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Fish-Man', location: 15, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Vampire', location: 14, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Noble Vampire', location: 16, imageUrl: '', imagePos: [0, 0], isBoss: false },
+        { name: 'Vampire Lord', location: 16, imageUrl: '', imagePos: [0, 0], isBoss: false },
     ],
     LOCATIONS: {
-        // 0     1          2          3                  4                5           6
-        // NAME, MIN LEVEL, MAX LEVEL, MAX DROP QUALITY, MISSION REQUIRED, LOOT (WIP), BACKGROUND
-        0: ["White Light", 1, 4, 0, 0, {
-            loot: ["none"],
-        }, "0.jpg"],
+        // 0     1          2          3                 4                 5
+        // NAME, MIN LEVEL, MAX LEVEL, MAX DROP QUALITY, MISSION REQUIRED, BACKGROUND
+        0: ["White Light", 1, 4, 0, 0, "0.jpg"],
 
-        1: ["Shadow Forest", 4, 7, 1, 1, {
-            loot: ["none"],
-        }, "1.jpg"],
+        1: ["Shadow Forest", 4, 7, 1, 1, "1.jpg"],
 
-        2: ["Lost Path", 7, 9, 1, 2, {
-            loot: ["none"],
-        }, "2.jpg"],
+        2: ["Lost Path", 7, 9, 1, 2, "2.jpg"],
 
-        3: ["Galarius City", 9, 12, 2, 3, {
-            loot: ["none"],
-        }, "3.jpg"],
+        3: ["Galar Town", 9, 12, 2, 3, "3.jpg"],
 
-        4: ["Ancient Ruins", 12, 15, 2, 4, {
-            loot: ["none"],
-        }, "4.jpg"],
+        4: ["Ancient Ruins", 12, 15, 2, 4, "4.jpg"],
 
-        5: ["Secluded Valley", 15, 19, 3, 5, {
-            loot: ["none"],
-        }, "5.jpg"],
-        6: ["Empire Road", 19, 22, 3, 6, {
-            loot: ["none"],
-        }, "6.jpg"],
-        7: ["Imperium City", 22, 25, 3, 7, {
-            loot: ["none"],
-        }, "7.jpg"],
-        8: ["Central V", 25, 27, 4, 8, {
-            loot: ["none"],
-        }, "8.jpg"],
-        9: ["The Red Portal", 27, 29, 4, 9, {
-            loot: ["none"],
-        }, "9.jpg"],
-        10: ["The Corrupted World", 29, 30, 4, 10, {
-            loot: ["none"],
-        }, "10.jpg"],
-        11: ["The Corrupted Dungeon", 29, 30, 5, 10, {
-            loot: ["none"],
-        }, "11.jpg"],
-        12: ["The Black Portal", 30, 31, 5, 14, {
-            loot: ["none"],
-        }, "12.jpg"],
-        13: ["Elysia City", 31, 32, 5, 14, {
-            loot: ["none"],
-        }, "13.jpg"],
-        14: ["Vampire Manor", 32, 33, 5, 20, {
-            loot: ["none"],
-        }, "14.jpg"],
-        15: ["The Red River", 33, 34, 5, 20, {
-            loot: ["none"],
-        }, "15.jpg"],
-        16: ["The Immortal Valley", 34, 35, 5, 20, {
-            loot: ["none"],
-        }, "16.jpg"],
-        17: ["Vampire Castle", 35, 35, 5, 20, {
-            loot: ["none"],
-        }, "17.jpg"]
+        5: ["Secluded Valley", 15, 19, 3, 5, "5.jpg"],
+        6: ["Verdant Highlands", 19, 22, 3, 6, "6.jpg"],
+        7: ["Eldoria City", 22, 25, 3, 7, "7.jpg"],
+        8: ["Central V", 25, 27, 4, 8, "8.jpg"],
+        9: ["The Red Portal", 27, 29, 4, 9, "9.jpg"],
+        10: ["The Corrupted World", 29, 30, 4, 10, "10.jpg"],
+        11: ["The Corrupted Dungeon", 29, 30, 5, 10, "11.jpg"],
+        12: ["The Black Portal", 30, 31, 5, 14, "12.jpg"],
+        13: ["Elysia City", 31, 32, 5, 14, "13.jpg"],
+        14: ["Vampire Manor", 32, 33, 5, 19, "14.jpg"],
+        15: ["The Red River", 33, 34, 5, 20, "15.jpg"],
+        16: ["The Immortal Valley", 34, 35, 5, 20, "16.jpg"],
+        17: ["Vampire Castle", 35, 35, 5, 20, "17.jpg"]
     },
     CODES: ["", "N4M3rs", "Wiz478", "1LUV17", "F0RC3D", "R3T0RN", "S4Vn0w", "H4d65M", "R3SET"],
 };
@@ -166,25 +131,25 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Encountering the Unknown", //MISSION 3
             LEVEL: 7,
-            REWARDS: [500, 0, "Common"],
+            REWARDS: [350, 0, "Common"],
             LOCATION: 2,
             OBJECTIVE: 10,
             TYPE: 1,
             REQUIRED: 1
         },
         {
-            NAME: "Galarius City", //MISSION 4
+            NAME: "Galar Town", //MISSION 4
             LEVEL: 9,
-            REWARDS: [750, 0, "Uncommon"],
+            REWARDS: [450, 0, "Uncommon"],
             LOCATION: 3,
             OBJECTIVE: 10,
             TYPE: 1,
             REQUIRED: 2
         },
         {
-            NAME: "Exploring the city", //MISSION 5
+            NAME: "Exploring the town", //MISSION 5
             LEVEL: 11,
-            REWARDS: [1000, 0, "Uncommon"],
+            REWARDS: [500, 0, "Uncommon"],
             LOCATION: 3,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -202,16 +167,16 @@ GLOBALS.MISSIONS = {
         {
             NAME: "A Moment of Serenity", //MISSION 7
             LEVEL: 15,
-            REWARDS: [1500, 0, "Rare"],
+            REWARDS: [500, 0, "Rare"],
             LOCATION: 5,
             OBJECTIVE: 10,
             TYPE: 1,
             REQUIRED: 5
         },
         {
-            NAME: "Mission 8",
+            NAME: "Mission 8", 
             LEVEL: 19,
-            REWARDS: [2500, 0, "Rare"],
+            REWARDS: [500, 0, "Rare"],
             LOCATION: 6,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -220,7 +185,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 9",
             LEVEL: 22,
-            REWARDS: [3000, 0, "Rare"],
+            REWARDS: [500, 0, "Rare"],
             LOCATION: 7,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -229,7 +194,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 10",
             LEVEL: 25,
-            REWARDS: [5000, 0, "Epic"],
+            REWARDS: [500, 0, "Epic"],
             LOCATION: 8,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -238,7 +203,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 11",
             LEVEL: 27,
-            REWARDS: [7500, 0, "Epic"],
+            REWARDS: [500, 0, "Epic"],
             LOCATION: 9,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -247,7 +212,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 12",
             LEVEL: 29,
-            REWARDS: [10000, 0, "Epic"],
+            REWARDS: [500, 0, "Epic"],
             LOCATION: 10,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -283,7 +248,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 16",
             LEVEL: 30,
-            REWARDS: [15000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 12,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -292,7 +257,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 17",
             LEVEL: 30,
-            REWARDS: [20000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 12,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -301,7 +266,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 18",
             LEVEL: 31,
-            REWARDS: [25000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 13,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -310,7 +275,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 19",
             LEVEL: 31,
-            REWARDS: [50000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 13,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -319,7 +284,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 20",
             LEVEL: 32,
-            REWARDS: [75000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 14,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -328,7 +293,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 21",
             LEVEL: 32,
-            REWARDS: [100000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 14,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -337,7 +302,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 22",
             LEVEL: 33,
-            REWARDS: [125000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 15,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -346,7 +311,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 23",
             LEVEL: 33,
-            REWARDS: [150000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 15,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -355,7 +320,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 24",
             LEVEL: 34,
-            REWARDS: [175000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 16,
             OBJECTIVE: 10,
             TYPE: 1,
@@ -364,7 +329,7 @@ GLOBALS.MISSIONS = {
         {
             NAME: "Mission 25",
             LEVEL: 34,
-            REWARDS: [175000, 0, "Exotic"],
+            REWARDS: [500, 0, "Exotic"],
             LOCATION: 16,
             OBJECTIVE: 10,
             TYPE: 1,

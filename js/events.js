@@ -1,6 +1,8 @@
 import FUNCTIONS from './index.js';
 
 export function DYNAMICS() {
+    $("[id^='#']").off();
+
     $("#RESET_THEME").on("click", function () {
         FUNCTIONS.PALETTE.RESET_THEME(1);
     });
@@ -286,7 +288,7 @@ export function CheckCode(debug) {
             for (var MISSION in GLOBALS.MISSIONS.LIST) {
                 Game.MissionsCompleted[MISSION] = 1;
             }
-        } else if (code === GLOBALS.CODES[10]) {
+        } else if (code === GLOBALS.CODES[8]) {
             $("#codereturn").html("Code Accepted, Reset save.");
             Game.username = "Default";
             Backup = "Default";

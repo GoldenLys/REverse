@@ -122,6 +122,7 @@ export const RUN_AWAY = function () {
         APP.CoreLife = APP.CoreBaseLife;
         Game.isInFight = false;
         FUNCTIONS.APP.UpdateGame();
+        FUNCTIONS.EVENTS.DYNAMICS();
     }
 };
 
@@ -382,16 +383,16 @@ export const Create_Enemy = function () {
         if (EnemyLevel > GLOBALS.LOCATIONS[Game.Location][2]) EnemyLevel = GLOBALS.LOCATIONS[Game.Location][2];
         if (EnemyLevel > Game.Level + 20) EnemyLevel = Game.Level + 20;
         if (Game.MissionStarted[0] && EnemyLevel >= Game.Level + 2) EnemyLevel = Game.Level;
-}
+    }
     // DEFINE ENEMY LEVEL
     ENEMY[2] = FUNCTIONS.MAIN.FORMAT_NUMBER(EnemyLevel, "auto-round");
     // DEFINE ENEMY ATTACK POWER
     ENEMY[3] = Game.Level < 10 && ENEMY[1] >= 4 ? Math.round(_.random(BasePower * MULTIPLIERS.POWER[0][2], BasePower * MULTIPLIERS.POWER[1][ENEMY[1] - 1])) : Math.round(_.random(BasePower * MULTIPLIERS.POWER[0][ENEMY[1] - 1], BasePower * MULTIPLIERS.POWER[1][ENEMY[1] - 1]));
     // DEFINE ENEMY LIFE(5) & MAX LIFE(4)
-    ENEMY[4] = Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] * (0.3 + ENEMY[1]/10) + 100, EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] + 100));
-    if (Game.Armors[1][0] && EnemyLevel >= 10) ENEMY[4] += Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] * (0.3 + ENEMY[1]/10) + 100, ENEMY[4] += EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] + 100));
-    if (Game.Armors[1][0] && EnemyLevel >= 20) ENEMY[4] += Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] * (0.3 + ENEMY[1]/10) + 100, ENEMY[4] += EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] + 100));
-    if (Game.Armors[1][0] && EnemyLevel >= 30) ENEMY[4] += Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] * (0.3 + ENEMY[1]/10) + 100, ENEMY[4] += EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] + 100));
+    ENEMY[4] = Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] * (0.3 + ENEMY[1] / 10) + 100, EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] + 100));
+    if (Game.Armors[1][0] && EnemyLevel >= 10) ENEMY[4] += Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] * (0.3 + ENEMY[1] / 10) + 100, ENEMY[4] += EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] + 100));
+    if (Game.Armors[1][0] && EnemyLevel >= 20) ENEMY[4] += Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] * (0.3 + ENEMY[1] / 10) + 100, ENEMY[4] += EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] + 100));
+    if (Game.Armors[1][0] && EnemyLevel >= 30) ENEMY[4] += Math.round(_.random(EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] * (0.3 + ENEMY[1] / 10) + 100, ENEMY[4] += EnemyLevel * 10 * MULTIPLIERS.LIFE[ENEMY[1] - 1] + 100));
     ENEMY[4] *= Game.DIMENSION_MULTIPLIERS[3];
     ENEMY[5] = ENEMY[4];
     //DEFINE ENEMY NAME
@@ -400,7 +401,7 @@ export const Create_Enemy = function () {
 };
 
 export const Get_Random_Monster_Name = function (location, isBoss) {
-    const monstersAtLocation = GLOBALS.MONSTERS.filter(monster => 
+    const monstersAtLocation = GLOBALS.MONSTERS.filter(monster =>
         monster.location === location && monster.isBoss === isBoss);
 
     if (monstersAtLocation.length === 0) {
@@ -422,7 +423,7 @@ export const Get_Monster_Image_By_Name = function (name) {
     }
 };
 
-export const Get_Monster_Image_Position_By_Name  = function (name) {
+export const Get_Monster_Image_Position_By_Name = function (name) {
     const monster = GLOBALS.MONSTERS.find(monster => monster.name === name);
     if (monster) {
         return `transform: translate(${monster.imagePos[0]}%, ${monster.imagePos[1]}%)`;
@@ -452,17 +453,6 @@ export const LOG_ENEMIES = function () {
     console.table(ENEMIES);
 };
 
-export const UPDATE_LOOT_VIEW = function (REMOVE_ITEM) {
-    REMOVE_ITEM ? $("#LOOTS").attr("data-count", Number($("#LOOTS").attr("data-count")) - 1) : "";
-    $("#POPUP").find('.pw.message.item').each(function () {
-        let LOOT_COUNT = Number($("#LOOTS").attr("data-count"));
-        $("#LOOTS").html("");
-        for (let i = 0; i < LOOT_COUNT; i++) {
-            $("#LOOTS").append(`<div data-itemid="${Game.inventory.length - (i+1)}" class="pw message item">` + $(`#ITEM-${Game.inventory.length - (i+1)}`).html() + "</div>");
-        }
-    });
-};
-
 export const GET_DIFFICULTY_COLOR = (playerLevel, enemyLevel) => {
     let DIFFICULTY = Number(enemyLevel - playerLevel);
     let COLOR = "pw white";
@@ -471,7 +461,7 @@ export const GET_DIFFICULTY_COLOR = (playerLevel, enemyLevel) => {
     else if (DIFFICULTY == 2) COLOR = "pw orange"; // if enemy level is higher than the player level by 2
     else if (DIFFICULTY == 1) COLOR = "pw yellow"; // if enemy level is higher than the player level by 1
 
-    if (DIFFICULTY < -1 ) COLOR = "pw green";     // if enemy level is inferior to the player level by 2 or more
+    if (DIFFICULTY < -1) COLOR = "pw green";     // if enemy level is inferior to the player level by 2 or more
     else if (DIFFICULTY <= 0) COLOR = "pw white"; // else if enemy level is inferior or equal to the player level by 1 or more  
     return COLOR;
 };

@@ -18,7 +18,7 @@ export const GenInventory = function () {
             LEVEL_TYPE: [language[APP.LANG].MISC.Level + " " + Game.inventory[ITEM].level, language[APP.LANG].MISC.Score + " <i class='fad fa-dice-d20'></i>" + Math.floor(Game.inventory[ITEM].level * 10)]
         };
 
-        let AVERAGES = {ARMOR: GET_AVERAGE_EQUIPMENT_ARMOR(), MAIN: Game.Weapons.Main[4], SPECIAL: Game.Weapons.Special[4]};
+        let AVERAGES = { ARMOR: GET_AVERAGE_EQUIPMENT_ARMOR(), MAIN: Game.Weapons.Main[4], SPECIAL: Game.Weapons.Special[4] };
         let RELIC = "";
         if (Game.inventory[ITEM].relictype !== 5) {
             RELIC = "<i class='pw yellow fas fa-stars'></i> ";
@@ -130,7 +130,7 @@ export const GenArmors = function () {
         if (Game.RELICS[ARMOR][1] !== 5) {
             RELIC = "<span class='text'><i class='pw yellow fas fa-stars'></i> ";
             RELIC_ICON = `<img class='pw centered mini image' src='${FUNCTIONS.MAIN.GET_ICON_ID("Relic", Game.RELICS[ARMOR][1])}'></div>`;
-            if (Game.RELICS[ARMOR][1] === 1 ||Game.RELICS[ARMOR][1] === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[ARMOR][2], 3) + '</span>');
+            if (Game.RELICS[ARMOR][1] === 1 || Game.RELICS[ARMOR][1] === 2) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[ARMOR][2], 3) + '</span>');
             else if (Game.RELICS[ARMOR][1] === 3) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join(`<span class='${Game.RELICS[ARMOR][2]}'>${Game.RELICS[ARMOR][2]}</span></span>`);
             else if (Game.RELICS[ARMOR][1] === 4) RELIC = RELIC + language[APP.LANG].RELICS[Game.RELICS[ARMOR][1]].split("[BONUS]").join('' + FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[ARMOR][2], 1) + '</span>');
         }
@@ -616,7 +616,30 @@ export const RemoveItem = function (ITEM) {
         if (ITEM >= Game.inventory.length) Game.inventory.splice(ITEM - 1, 1);
         else Game.inventory.splice(ITEM, 1);
     } else Game.inventory.splice(ITEM, 1);
-    if ($("#POPUP").find('.pw.message.item').length > 0) FUNCTIONS.COMBAT.UPDATE_LOOT_VIEW(true);
+    var ids = $("#POPUP").find('.pw.message.item').map(function () {
+        return $(this).data('itemid');
+    }).get();
+    if (ids.includes(ITEM)) {
+        $("#POPUP").find('.pw.message.item[data-itemid="' + ITEM + '"]').remove();
+        $("#POPUP").find('.pw.message.item').each(function (index) {
+            $(this).data('itemid', index);
+        });
+        $("#POPUP").find('.pw.message.item').map(function () {
+            return $(this).data('itemid');
+        }).get();
+    }
+
+    $("#LOOTS").find(`[data-itemid="${ITEM}"]`).remove();
+    $("#LOOTS").attr("data-count", Number($("#LOOTS").attr("data-count")) - 1);
+    $("#LOOTS").find("[data-itemid]").each(function () {
+        const itemId = $(this).attr("data-itemid");
+        if (!Game.inventory[itemId]) {
+            $(this).remove();
+            $("#LOOTS").attr("data-count", Number($("#LOOTS").attr("data-count")) - 1);
+        }
+    });
+
+    if ($("#POPUP").find('.pw.message.item').length === 0 && Game.config[2] != 0) FUNCTIONS.MAIN.POPUP_CLOSE()
     GenInventory();
     FUNCTIONS.APP.UpdateGame();
 };
@@ -685,6 +708,7 @@ export const CHECK_EQUIPMENT = function () {
     };
 
     let MAX_QUALITY = APP.ScoreModeEnabled == 1 ? "Legendary" : QUALITIES[GLOBALS.LOCATIONS[FUNCTIONS.MAIN.LATEST_LOCATION_UNLOCKED()][3]];
+
     let MAX_GEMS = [0, 0]; // LIFE || POWER
     let ARMOR_STAT = [0, 0];
     // GET AVERAGE ARMOR VALUE
@@ -773,12 +797,12 @@ export const CHECK_EQUIPMENT = function () {
             let MAX_VALUE = ITEM_CONFIG.RELIC_MULTIPLIERS[MAX_QUALITY];
             if (Game.RELICS[RELIC][1] == 1 || Game.RELICS[RELIC][1] == 2) {
                 let MAX_ITEM_VALUE = ITEM_CONFIG.RELIC_MULTIPLIERS[Game.RELICS[RELIC][0]];
-                if (Game.RELICS[RELIC][2] > MAX_VALUE ) {
-                    FUNCTIONS.MAIN.LOG(`Auto scaling the relic of the ${ARMORS[RELIC]}`, `${FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[RELIC][2], 3)} out of ${FUNCTIONS.MAIN.FORMAT_NUMBER(MAX_VALUE, 3)} ▶ ${FUNCTIONS.MAIN.FORMAT_NUMBER(MAX_VALUE, 3)}.`, "white; background-color: rgb(58 59 70)");
+                if (Game.RELICS[RELIC][2] > MAX_VALUE) {
+                    FUNCTIONS.MAIN.LOG(`[E1] Auto scaling the relic of the ${Game.RELICS[RELIC][0]} ${ARMORS[RELIC]}`, `${FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[RELIC][2], 3)} out of ${FUNCTIONS.MAIN.FORMAT_NUMBER(MAX_VALUE, 3)} ▶ ${FUNCTIONS.MAIN.FORMAT_NUMBER(MAX_VALUE, 3)}.`, "white; background-color: rgb(58 59 70)");
                     Game.RELICS[RELIC][2] = MAX_VALUE;
                 }
                 if (Game.RELICS[RELIC][2] > MAX_ITEM_VALUE) {
-                    FUNCTIONS.MAIN.LOG(`Auto scaling the relic of the ${ARMORS[RELIC]}`, `${FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[RELIC][2], 3)} out of ${FUNCTIONS.MAIN.FORMAT_NUMBER(MAX_ITEM_VALUE, 3)} ▶ ${FUNCTIONS.MAIN.FORMAT_NUMBER(MAX_VALUE, 3)}.`, "white; background-color: rgb(58 59 70)");
+                    FUNCTIONS.MAIN.LOG(`[E2] Auto scaling the relic of the ${Game.RELICS[RELIC][0]} ${ARMORS[RELIC]}`, `${FUNCTIONS.MAIN.FORMAT_NUMBER(Game.RELICS[RELIC][2], 3)} out of ${FUNCTIONS.MAIN.FORMAT_NUMBER(MAX_ITEM_VALUE, 3)} ▶ ${FUNCTIONS.MAIN.FORMAT_NUMBER(MAX_VALUE, 3)}.`, "white; background-color: rgb(58 59 70)");
                     Game.RELICS[RELIC][2] = MAX_ITEM_VALUE;
                 }
             }
@@ -830,7 +854,7 @@ export function GET_AVERAGE_EQUIPMENT_ARMOR() {
             divisor++;
         }
     }
-    return FUNCTIONS.MAIN.FORMAT_NUMBER(AVERAGE/divisor, 0);
+    return FUNCTIONS.MAIN.FORMAT_NUMBER(AVERAGE / divisor, 0);
 };
 
 export const CHECK_RELICS_LIMIT = function (relicType) {

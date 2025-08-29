@@ -400,11 +400,11 @@
 }
 
 .message span.pw {
-    text-shadow: 0px 0px 5px;
+    text-shadow: 0px 0px 5px #000;
 }
 
 .message span.pw.white {
-    text-shadow: black 0px 0px 2.5px;
+    text-shadow: 0px 0px 2.5px #000;
 }
 
 .pw.message.selected,

@@ -128,7 +128,7 @@ export const CLOSE_MENUS = function () {
     $("#GAME").removeClass("story");
     $("#DIV-COMBAT").show();
     $(".BUTTONS_ACTIONS").show();
-    $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://nebulys.eu/REverse/images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
+    $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("../images/Locations/${GLOBALS.LOCATIONS[Game.Location][5]}");`);
 };
 
 export function SelectTAB(TAB) {
@@ -392,7 +392,7 @@ export const MIND_CONTROL = function () {
     APP.MIND_CONTROL[1] = APP.MIND_CONTROL[1] > 120 ? 120 : APP.MIND_CONTROL[1] + 1;
     let WAS_ACTIVE = APP.MIND_CONTROL[0];
 
-    if (Game.Dimension > 1 && Game.isInFight && $("#DIV-COMBAT").is(":visible") && APP.MIND_CONTROL[1] > 60 && Game.config[5] === 1) {
+    if (Game.Dimension > 1 && Game.isInFight && $("#DIV-COMBAT").is(":visible") && APP.MIND_CONTROL[1] >= 120 && Game.config[5] === 1) {
         APP.MIND_CONTROL[0] = true;
         if (!WAS_ACTIVE) NOTICE("MIND CONTROL", "Mind control is now active.");
         $("#MIND_CONTROL").html("Mind Control enabled, click on any button to disable it.");
@@ -415,11 +415,14 @@ export const MIND_CONTROL = function () {
                 LOG("Mind Control", "Mind control disabled", "white; background-color: rgb(210 5 43)");
             }
         }
-    } else if (Game.Dimension > 1 && $("#DIV-COMBAT").is(":visible") && APP.MIND_CONTROL[1] > 60 && Game.config[5] === 1) {
+    } else if (Game.Dimension > 1 && $("#DIV-COMBAT").is(":visible") && APP.MIND_CONTROL[1] >= 120 && Game.config[5] === 1) {
         APP.MIND_CONTROL[0] = false;
         POPUP_CLOSE();
         LOG("Mind Control", "Closing rewards", "white; background-color: rgb(20 185 80)");
-    } else $("#MIND_CONTROL").html("");
+    } else {
+        $("#MIND_CONTROL").html("");
+        APP.MIND_CONTROL = [false, 0];
+    }
 };
 
 export const LOG = function (TITLE, MESSAGE, COLOR) {
@@ -544,7 +547,7 @@ export const GET_ICON_ID = function (TYPE, CLASS) {
             "Helmets": [4, 5, 5, 6, 7, 6, 7],
             "Armors": [6, 6, 5, 4, 6, 6, 6],
             "Shields": [4, 4, 4, 4, 4, 3, 4],
-            "Boots": [7, 7, 6, 4, 5, 5, 4]
+            "Boots": [7, 6, 6, 4, 5, 5, 4]
         };
         if (TYPE === "Special" || TYPE === "Main") {
             ICON = `./images/Weapons/${TYPE}/${GET_QUALITY_NUMBER(CLASS)}-${_.random(1, TYPES[TYPE][GET_QUALITY_NUMBER(CLASS)])}.png`;

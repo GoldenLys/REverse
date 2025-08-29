@@ -37,7 +37,10 @@ export function GENERATE_MISSION_VIEW() {
 
         if (missionData.LEVEL <= Game.Level && missionData.TYPE == 2 && (Game.MissionsCompleted[missionData.REQUIRED] == 1 || missionData.REQUIRED == -1)) {
             fortresses++;
-            const content = `<div class='pw segment margin dark text-center'><h3 class='${unlocked}'>${missionData.NAME} - ${language[APP.LANG].MISC.Lv} ${reqLevel} ${status}</h3><div class='ui pw inline label'>${missionData.REWARDS[0] > 0 ? `<i class='pw blue fal fa-dna'></i>${FUNCTIONS.MAIN.FORMAT_NUMBER(missionData.REWARDS[0], 1)} Fragment${missionData.REWARDS[0] > 1 ? "s" : ""}</div>` : ""}<div class='pw inline label'>${quality}</div>${btn}</div>`;
+            const content = `<div class='pw segment margin dark text-center'>
+            <h3 class='${unlocked}'>${missionData.NAME} - ${language[APP.LANG].MISC.Lv} ${reqLevel} ${status}</h3>
+            ${missionData.REWARDS[0] > 0 ? `<div class='ui pw inline label'><i class='pw blue fal fa-dna'></i>${FUNCTIONS.MAIN.FORMAT_NUMBER(missionData.REWARDS[0], 1)} Fragment${missionData.REWARDS[0] > 1 ? "s" : ""}</div>` : ""} 
+            <div class='pw inline label'>${quality}</div>${btn}</div>`;
             $("#MISSIONS-DUNGEONS").append(content);
         }
     }
@@ -146,7 +149,7 @@ export function END_MISSION() {
     const DESCRIPTION = `${REWARDS} <div class="pw inline green label">1 <span class='${mission.REWARDS[2]}'>${mission.REWARDS[2]}</span> ${TYPES[mission.REWARDS[1]]}</div>`;
     APP.GOT_REWARDS = 1;
     if (mission.REWARDS[1] === 0 && Game.MissionStarted[3] === 0) FUNCTIONS.INVENTORY.newItem(0, APP.Ranking, mission.REWARDS[2]), Game.MissionStarted[3] = 1;
-    if (mission[6] === 2 && Game.MissionStarted[3] === 0 && mission.TYPE === 2) FUNCTIONS.INVENTORY.newItem("Relic", null, mission.REWARDS[2]), Game.MissionStarted[3] = 1;
+    if (Game.MissionStarted[3] === 0 && mission.TYPE === 2) FUNCTIONS.INVENTORY.newItem("Relic", null, mission.REWARDS[2]), Game.MissionStarted[3] = 1;
     const TITLE = mission.TYPE === 2 ?
         "<h3 class='pw horizontal divider'>Dungeon Cleared</h3>" :
         "<h3 class='pw horizontal divider'>Mission Completed</h3>";

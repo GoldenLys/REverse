@@ -95,7 +95,7 @@ $(document).ready(function () {
 export const UpdateEngine = function () {
     UpdateGame();
     Game.PlayTime++;
-    APP.ScoreModeEnabled = Game.Level >= APP.MaxLevel && APP.LastMission >= APP.TotalMissions ? 1 : 0;
+    APP.ScoreModeEnabled = Game.Level >= APP.MaxLevel && _.countBy(Game.MissionsCompleted, x => x === 1).true >= APP.TotalMissions ? 1 : 0;
     if (!Game.MissionStarted[0] && Game.MissionsCompleted[Game.MissionStarted[1]] === 0 && Game.config[3] === 1 && $("#INTRODUCTION").is(":hidden") && !$("#LOGIN-NOTICE").hasClass("active")) FUNCTIONS.MISSIONS.LAUNCH_MISSION(0);
     if (Game.MissionStarted[0] && Game.MissionsCompleted[Game.MissionStarted[1]] === 0 && !FUNCTIONS.MISSIONS.IS_STORY_FINISHED(Game.MissionStarted[1]) && !$("#GAME").hasClass("story")) {
         Game.Choices[Game.MissionStarted[1]] = Game.Choices[Game.MissionStarted[1]] == "undefined" || Game.Choices[Game.MissionStarted[1]] == null ? [[null]] : Game.Choices[Game.MissionStarted[1]];
@@ -108,10 +108,6 @@ export const UpdateEngine = function () {
     }
     if (Game.isInFight != true && APP.CoreLife == null || Game.Enemy[5] == null || Game.Enemy[5] == 0) {
         Game.isInFight = false;
-        UpdateGame();
-    }
-    if (Game.MissionStarted[0] && GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].TYPE !== 2 && Game.Level > GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].LEVEL) {
-        Game.Level = GLOBALS.MISSIONS.LIST[Game.MissionStarted[1]].LEVEL;
         UpdateGame();
     }
     if (APP.LoggedIn === 1 && APP.Email !== "none") {
@@ -139,7 +135,8 @@ export const UpdateEngine = function () {
     } else if (Game.Level < APP.MaxLevel) {
         // if current experience is higher than exp required and not in mission
         if (Game.xp[0] >= Game.xp[1] && !Game.MissionStarted[0]) {
-            Game.Level++;
+            // if current level is less than max level for current location and player while not in mission
+            if ((Game.Level+1) <= GLOBALS.LOCATIONS[FUNCTIONS.MAIN.LATEST_LOCATION_UNLOCKED()][2]) Game.Level++;
         // if player is in mission and level equals current location max level but current experience is higher than the experience required to reach the current level
         } else if (Game.Level === GLOBALS.LOCATIONS[Game.Location][2] && Game.MissionStarted[0] && Game.xp[0] > FUNCTIONS.MAIN.CalcEXP(GLOBALS.LOCATIONS[Game.Location][2])) {
             Game.xp[0] = FUNCTIONS.MAIN.CalcEXP(Game.Level);
@@ -305,7 +302,7 @@ export const UpdateUI = function () {
     }
     APP.LastMission = completedMissions;
     const ranking = (((30 + (Game.Dimension * 5)) * 10) - 5);
-    if (Game.Level >= APP.MaxLevel && APP.Ranking >= ranking && APP.LastMission >= APP.TotalMissions) {
+    if (Game.Level >= APP.MaxLevel && APP.Ranking >= ranking && _.countBy(Game.MissionsCompleted, x => x === 1).true  >= APP.TotalMissions) {
         $("#WTBTN").show();
         $("#WTUNLOCK").html(`Dimensional Rift <i class='globe icon'></i> ${Game.Dimension + 1} is opened.`);
     } else {
@@ -313,7 +310,7 @@ export const UpdateUI = function () {
         $("#WTUNLOCK").html("");
     }
     const shards = Game.Level < APP.MaxLevel ? "0" : Math.round(APP.Ranking / 10 - 30) <= 0 ? "0" : Math.round(APP.Ranking / 10 - 30);
-    const completedstory = APP.LastMission == APP.TotalMissions ? `<span class='pw alpha'>Yes</span>` : `<span class='pw red'>Not Yet</span>`;
+    const completedstory = _.countBy(Game.MissionsCompleted, x => x === 1).true == APP.TotalMissions ? `<span class='pw alpha'>Yes</span>` : `<span class='pw red'>Not Yet</span>`;
     $("#WTShards").html(`Score required : <span class='pw alpha'><i class='fad fa-dice-d20'></i>${ranking}</span><br>Completed story : ${completedstory}<br>Fragments reward : <span class='pw alpha'><i class='fal fa-dna'></i>${shards}</span>`);
     $("#CurrWT").html(`Current dimension : <span class='pw alpha'><i class='globe icon'></i>${Game.Dimension}</span>`);
 
@@ -342,7 +339,7 @@ export const UpdateUI = function () {
     if (APP.LEADERBOARD_POSITION > 0) $('#IS_PLAYER_IN_LEADERBOARD').html(APP.LEADERBOARD_POSITION <= 10 ? `You are now among the top players! Your current position is #${APP.LEADERBOARD_POSITION}.` : `You have made it to the leaderboard! Your current position is #${APP.LEADERBOARD_POSITION}.`);
     $("#LABEL_INVENTORY").html("<i class='fas fa-sack'></i> " + Game.inventory.length + "/" + Game.MaxInv);
     $("#LABEL_CASH").html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Cash, 1));
-    $("#MISSIONS_COMPLETED_COUNT").html("Missions completed (" + APP.LastMission + "/" + APP.TotalMissions + ")");
+    $("#MISSIONS_COMPLETED_COUNT").html("Missions completed (" + _.countBy(Game.MissionsCompleted, x => x === 1).true + "/" + APP.TotalMissions + ")");
     $("#DUNGEONS_COMPLETED_COUNT").html("Dungeons (" + FUNCTIONS.MISSIONS.COUNT_DUNGEONS("completed") + "/" + FUNCTIONS.MISSIONS.COUNT_DUNGEONS("total") + ")");
     if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0]) $("#MaxPOSLVL").html(`${language[APP.LANG].MISC.MaxLevelForArea}`);
     if (FUNCTIONS.MISSIONS.IS_NEXT_MISSION_AVAILABLE()) $("#IS_MISSION_AVAILABLE").html(`${language[APP.LANG].MISC.AvailableMission}`);

@@ -10,7 +10,7 @@ export const ChangeWT = function () {
 };
 
 export const ConfirmWT = function () {
-    if (Game.Level >= APP.MaxLevel && APP.Ranking >= (((30 + (Game.Dimension * 5)) * 10) - 5) && APP.LastMission >= APP.TotalMissions) {
+    if (Game.Level >= APP.MaxLevel && APP.Ranking >= (((30 + (Game.Dimension * 5)) * 10) - 5) && _.countBy(Game.MissionsCompleted, x => x === 1).true  >= APP.TotalMissions) {
         Game.Dimension++;
         Game.xp = [0, 100, 1];
         Game.Level = 1;
@@ -164,7 +164,18 @@ export const GET_DIMENSIONAL_SHARDS_PRICE = function (UPGRADE) {
         },
     };
     for (let TIER = 0; TIER < _.size(TIERS[UPGRADE]); TIER++) {
-        if (Game.Upgrades[UPGRADE] >= Number(Object.keys(TIERS[UPGRADE])[TIER])) SHARDS = TIERS[UPGRADE][Number(Object.keys(TIERS[UPGRADE])[TIER])];
+        if (GET_DIMENSIONAL_UPGRADE_LEVEL(UPGRADE) >= Number(Object.keys(TIERS[UPGRADE])[TIER])) SHARDS = TIERS[UPGRADE][Number(Object.keys(TIERS[UPGRADE])[TIER])];
     }
     return SHARDS;
+};
+
+export const GET_DIMENSIONAL_UPGRADE_LEVEL = function (UPGRADE) {
+    if (Game.class === "Warrior" && UPGRADE === 1) {
+        return Game.Upgrades[UPGRADE] - 5;
+    } else if (Game.class === "Paladin" && UPGRADE === 2) {
+        return Game.Upgrades[UPGRADE] - 5;
+    } else if (Game.class === "Ninja" && UPGRADE === 0) {
+        return Game.Upgrades[UPGRADE] - 5;
+    }
+    return Game.Upgrades[UPGRADE];
 };
