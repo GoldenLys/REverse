@@ -1,23 +1,23 @@
-## CHAPTER 1 : 
+## CHAPTER 1 : The Abyssal Awakening
 ### PART 1 :
-Death has claimed you... or so you thought, when an agonizing jolt wracked through your body, collapsing you onto the harsh pavement. The world around you blurred and faded into blackness.
+Death's chill grasp had claimed you, or so it seemed. A searing jolt coursed through your body, sending you crashing onto the unforgiving pavement. Your vision blurred, and the world around you dissolved into an inky blackness.
 
 ### PART 2 :
-And yet, within this obsidian abyss, you sense your existence, a consciousness stirring. You can feel the ethereal strands of your being. But... Wait, what does this mean? Where are you?
-- This must be some bizarre kind of dream… `PART 4`
+Yet, within this dark abyss, a spark of consciousness flickered to life. You sensed the threads of your existence, tenuous and fragile. Questions swirled in the void: What has happened? Where am I? The uncertainty was suffocating.
+- This must be some twisted nightmare... `PART 4`
 - I... I have no idea...
-- This is preposterous! Where is the person in charge? 
+- This is madness! Who or what is behind this?
 
 ### PART 3 :
-Exhaustion washes over you. Succumbing to this overwhelming fatigue, you close your spiritual eyes, letting the darkness envelope you once again.
+Exhaustion washed over you, a crushing weight that threatened to consume your very essence. You closed your spiritual eyes, surrendering to the darkness once more.
 
 ### PART 4 :
-Upon reopening your eyes, you're embraced by a luminous wash of light. Your surroundings are formless, an infinite expanse of incandescent glow. Wherever you are, it's certainly not Earth. An awakening looms. Rise!
+As you reopened your eyes, a radiant light enveloped you, banishing the shadows. Your surroundings remained formless, an endless expanse of incandescent glow. The air vibrated with an otherworldly energy. You knew, with certainty, that you were not on Earth. An awakening loomed, a call to rise and reclaim your place in this mystical realm.
 - `end`
 
 
 
-## CHAPTER 2 : 
+## CHAPTER 2 : The Unknown Crossing
 ### PART 1 :
 Whatever that blinding light was, it seems that you have reached the end.
 
@@ -41,7 +41,7 @@ With a deep breath, you took your first step into the unknown. The world around 
 
 
 
-## CHAPTER 3 :
+## CHAPTER 3 : Encountering the Unknown
 ### PART 1 :
  With each step, the alien beauty of your surroundings becomes more intense. A forest unlike any on Earth, with strange and twisted vegetation.
 
@@ -59,37 +59,37 @@ Prudence wins over curiosity and you decide to maintain distance, marching off i
 
 
 
-## CHAPTER 4 : 
+## CHAPTER 4 : Galar Town
 ### PART 1 :
 Driven by your sharp curiosity rather than caged by trepidation, you persist on your journey of exploration. The thought of hostile encounters eases as you find this new world to be more inviting than imagined.
 
 ### PART 2 :
- Eventually, the shimmering outline of a city materializes in your line of sight. As you approach this bustling metropolis, you find inhabitants of this world who hold striking resemblances to the races you knew - humans, dwarves, and even elves!
-- Proceed into the city, prepared for any challenge.
-- Rest in the nearby forest before daring to enter the city. `PART 4`
+ Eventually, the shimmering outline of a town materializes in your line of sight. As you approach this bustling metropolis, you find inhabitants of this world who hold striking resemblances to the races you knew - humans, dwarves, and even elves!
+- Proceed into the town, prepared for any challenge.
+- Rest in the nearby forest before daring to enter the town. `PART 4`
 
 ### PART 3 :
-Taking a deep, bolstering breath, you indulge in the city's vibrancy. Multitudes of different races enliven the streets, engulfing you in an extraordinary display of foreign trade and dialogue. The initial disorientation erodes swiftly, replaced by a steadily building curiosity about this novel environment.
+Taking a deep, bolstering breath, you indulge in the town's vibrancy. Multitudes of different races enliven the streets, engulfing you in an extraordinary display of foreign trade and dialogue. The initial disorientation erodes swiftly, replaced by a steadily building curiosity about this novel environment.
 - `end`
 
 ### PART 4 :
-Deciding that caution is the better part of valor, you opt to maintain a careful distance from the city. After all, you are a solitary wanderer in an uncharted land.
-Instead, you choose to take a rest in the seclusion of the forest, gathering your thoughts and bolstering your courage before venturing into the heart of this unknown city.
+Deciding that caution is the better part of valor, you opt to maintain a careful distance from the town. After all, you are a solitary wanderer in an uncharted land.
+Instead, you choose to take a rest in the seclusion of the forest, gathering your thoughts and bolstering your courage before venturing into the heart of this unknown town.
 
 ### PART 5 :
-After a peaceful rest under the foreign yet comforting canopy of the forest, you feel rejuvenated, ready to face the next part of your journey. With newfound resolve, you decide to finally head for the city.
+After a peaceful rest under the foreign yet comforting canopy of the forest, you feel rejuvenated, ready to face the next part of your journey. With newfound resolve, you decide to finally head for the town.
 - `end`
 
 
 
-## CHAPTER 5 :
+## CHAPTER 5 : Exploring the town
 ### PART 1 :
- As you step into the city, the walls around you resonate with the hustle and bustle of city life. This city and it's people, a cosmopolitan canvas of many races and cultures, quickly accepts you.
+ As you step into Galar, the walls around you resonate with the hustle and bustle of life. This town and it's people, a cosmopolitan canvas of many races and cultures, quickly accepts you.
 - This place seems great!
 - This place... feels weird.
 
 ### PART 2 : 
-Each step immerses you deeper into this city's heartbeat. Among the marketplace conversations, local tavern camaraderie, and city nightlife, you feel a sense of belonging.
+Each step immerses you deeper into this town's heartbeat. Among the marketplace conversations, local tavern camaraderie, and city nightlife, you feel a sense of belonging.
 - Join the crowd and head to the marketplace.
 - Visit a local tavern to quench your thirst. `PART 7`
  
@@ -124,7 +124,7 @@ Whether your day was marked by the chase of a thief or the warmth of a tavern, i
 
 
 
-## CHAPTER 6 :
+## CHAPTER 6 : The Mysterious Prophecy
 ### PART 1 :
 As you step out of the cozy tavern, a sense of unease creeps over you. The city seems quieter than usual, and an unsettling chill runs down your spine. The bustling metropolis of your past days now feels like a distant memory.
 
@@ -165,7 +165,7 @@ Your adventure has come to an end, but the memories of this day will remain etch
 
 
 
-## CHAPTER 7 :
+## CHAPTER 7 : A Moment of Serenity
 ### PART 1 :
 You emerge from the ancient ruins, your heart pounding with excitement. As you take a moment to catch your breath, the sight before you is a welcome relief.
 
