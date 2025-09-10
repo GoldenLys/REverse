@@ -224,7 +224,7 @@ export function GO_EXPLORE(loc) {
         Game.Location = loc;
         Game.isInFight = false;
         Game.LastEscape = 30;
-        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://nebulys.eu/REverse/images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
+        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://goldenlys.github.io/REverse/REverse/images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
         GenExplorationMenu();
         FUNCTIONS.APP.UpdateGame();
     }

@@ -165,7 +165,7 @@ export const UpdateEngine = function () {
     }
     if (Game.Emp > 50) Game.Emp = 50;
     //let ONLINEICON = "<i title='Offline' class='pw red far fa-circle'></i>";
-    //location.href.match(/(nebulys.eu).*/) && (Game.username !== null && Game.username !== "Default") && (APP.LoggedIn === 1 && APP.Email !== "none") && (ONLINEICON = "<i title='Online' class='pw alpha fas fa-circle'></i>");
+    //location.href.match(/(goldenlys.github.io).*/) && (Game.username !== null && Game.username !== "Default") && (APP.LoggedIn === 1 && APP.Email !== "none") && (ONLINEICON = "<i title='Online' class='pw alpha fas fa-circle'></i>");
     $("#PlayerID").html(`<div class='pw alpha'>${FUNCTIONS.CLOUD.GET_TROPHY_ICON()} ${Game.username} <span class='pw inline label level-number'>${LEVEL}</span></div>`);
     $("#PlayerSprite").html(`<img class='pw small image' src='images/avatars/avatar (${Game.Avatar}).png'>`);
     Game.Armors[2][0] = Game.Level >= 10;

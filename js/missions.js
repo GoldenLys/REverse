@@ -66,7 +66,7 @@ export function TOGGLE_STORY(id, replay) {
     replay = replay || false;
     if ($("#GAME").hasClass("story")) {
         APP.StoryView = false;
-        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://nebulys.eu/REverse/images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
+        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://goldenlys.github.io/REverse/REverse/images/Locations/${GLOBALS.LOCATIONS[Game.Location][6]}");`);
         $("#GAME").removeClass("story");
         $("#BACKGROUND").removeClass("story-bg");
         FUNCTIONS.MAIN.CLOSE_MENUS();
@@ -75,7 +75,7 @@ export function TOGGLE_STORY(id, replay) {
         $("#GAME").addClass("story");
         $("#BACKGROUND").addClass("story-bg");
         FUNCTIONS.MAIN.OPEN_MENU("STORY", "active");
-        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://nebulys.eu/REverse/images/Locations/${GLOBALS.LOCATIONS[GLOBALS.MISSIONS.LIST[id].LOCATION][6]}");`);
+        $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("https://goldenlys.github.io/REverse/REverse/images/Locations/${GLOBALS.LOCATIONS[GLOBALS.MISSIONS.LIST[id].LOCATION][6]}");`);
         $("#story-title").html(GLOBALS.MISSIONS.LIST[id].NAME);
         $("#story-text").html("<div class='pw subtitle'>" + GLOBALS.MISSIONS.CHOICES[id][0][0] + "</div>");
         if (!replay) DEFINE_STORY_CHOICES();
