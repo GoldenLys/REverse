@@ -30,6 +30,9 @@ FUNCTIONS.APP = APP;
 import * as PALETTE from "./palette.js";
 FUNCTIONS.PALETTE = PALETTE;
 
+import * as CLOUD from "./cloud.js";
+FUNCTIONS.CLOUD = CLOUD;
+
 const loadCSS = function(url) {
     var link = document.createElement("link");
     link.rel = "stylesheet";
