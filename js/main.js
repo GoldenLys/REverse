@@ -267,7 +267,6 @@ export function WelcomeNext() {
         if (Game.username == "Default") Game.username = APP.WelcomeData[1];
         Game.Introduction = true;
         Game.isInFight = false;
-        if (!GLOBALS.VERSION.endsWith('(dev)')) LOGIN("FIRST_TIME");
         SAVE_DATA();
     }
     if (APP.WelcomeData[0] == 4) {
@@ -370,13 +369,6 @@ export const POPUP_CLOSE = function () {
     $("#popup-title").html("");
     $("#popup-text").html("");
     FUNCTIONS.MAIN.hideRewards();
-};
-
-export const LOGIN = function (state) {
-    let text = state === "RETURN" ? `<b>Welcome back to <span class='pw alpha'>${GLOBALS.NAME}</span>, ${Game.username}</b><br>Would you like to login ?` : `<b>Hello ${Game.username} !</b><br>It's your first time playing ${GLOBALS.NAME}, would you like to login ?`;
-    $("#wb-title").html(GLOBALS.NAME);
-    $("#wb-text").html(text);
-    $("#LOGIN-NOTICE").attr("class", "popup active");
 };
 
 export const LATEST_LOCATION_UNLOCKED = function () {

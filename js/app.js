@@ -43,7 +43,6 @@ $(document).ready(function () {
     FUNCTIONS.PALETTE.RESET_THEME(0);
     if (localStorage.getItem("REverse") !== null) FUNCTIONS.MAIN.LOAD_SAVE();
     FUNCTIONS.MAIN.SELECT_LANGUAGE();
-    if (Game.username != "Default" && APP.LoggedIn == 0 && APP.Email != "DoNotLogin" && !$("#LOGIN-NOTICE").hasClass("active") && !GLOBALS.VERSION.endsWith('(dev)')) FUNCTIONS.MAIN.LOGIN("RETURN");
     if (Game.username != "Default") {
         $("#GAME").show();
         $("#INTRODUCTION").hide();
@@ -85,7 +84,7 @@ export const UpdateEngine = function () {
     UpdateGame();
     Game.PlayTime++;
     APP.ScoreModeEnabled = Game.Level >= APP.MaxLevel && _.countBy(Game.MissionsCompleted, x => x === 1).true >= APP.TotalMissions ? 1 : 0;
-    if (!Game.MissionStarted[0] && Game.MissionsCompleted[Game.MissionStarted[1]] === 0 && Game.config[3] === 1 && $("#INTRODUCTION").is(":hidden") && !$("#LOGIN-NOTICE").hasClass("active")) FUNCTIONS.MISSIONS.LAUNCH_MISSION(0);
+    if (!Game.MissionStarted[0] && Game.MissionsCompleted[Game.MissionStarted[1]] === 0 && Game.config[3] === 1 && $("#INTRODUCTION").is(":hidden")) FUNCTIONS.MISSIONS.LAUNCH_MISSION(0);
     if (Game.MissionStarted[0] && Game.MissionsCompleted[Game.MissionStarted[1]] === 0 && !FUNCTIONS.MISSIONS.IS_STORY_FINISHED(Game.MissionStarted[1]) && !$("#GAME").hasClass("story")) {
         Game.Choices[Game.MissionStarted[1]] = Game.Choices[Game.MissionStarted[1]] == "undefined" || Game.Choices[Game.MissionStarted[1]] == null ? [[null]] : Game.Choices[Game.MissionStarted[1]];
         FUNCTIONS.MISSIONS.TOGGLE_STORY(Game.MissionStarted[1])
