@@ -127,7 +127,7 @@ export const CLOSE_MENUS = function () {
     $("#GAME").removeClass("story");
     $("#DIV-COMBAT").show();
     $(".BUTTONS_ACTIONS").show();
-    $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("../images/Locations/${GLOBALS.LOCATIONS[Game.Location][5]}");`);
+    $("#BACKGROUND").attr("style", `background: center / cover no-repeat url("./images/Locations/${GLOBALS.LOCATIONS[Game.Location][5]}");`);
 };
 
 export function SelectTAB(TAB) {
