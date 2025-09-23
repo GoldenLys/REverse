@@ -6,9 +6,6 @@ FUNCTIONS.MAIN = MAIN;
 import * as CONFIG from "./config.js";
 import * as LANGUAGE from "./lang.js";
 
-//import * as CLOUD from "./cloud.js";
-//FUNCTIONS.CLOUD = CLOUD;
-
 import * as COMBAT from "./combat.js";
 FUNCTIONS.COMBAT = COMBAT;
 

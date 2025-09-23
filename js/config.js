@@ -1,7 +1,7 @@
 window.GLOBALS = {
     NAME: "REverse",
     VERSION: "3.6",
-    BETA: 14,
+    BETA: 15,
     RELICS_NAMES: [],
     THREATS: [],
     ARMORS_NAMES: {

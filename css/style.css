@@ -334,33 +334,6 @@ input[type="text"] {
     border-radius: 0px 0px 5px 5px !important;
 }
 
-#LEADERBOARD>.pw.segments>.pw.segment:nth-child(1) {
-    min-width: 5%;
-    max-width: 5%;
-    padding: 0px;
-}
-
-#LEADERBOARD>.pw.segments>.pw.segment:nth-child(2) {
-    min-width: 25%;
-    max-width: 25%;
-    padding: 0px;
-}
-
-#LEADERBOARD>.pw.segments>.pw.segment:nth-child(4) {
-    min-width: 10%;
-    max-width: 10%;
-    padding: 0px;
-}
-
-#LEADERBOARD>.pw.segments>.pw.segment:nth-child(3),
-#LEADERBOARD>.pw.segments>.pw.segment:nth-child(5),
-#LEADERBOARD>.pw.segments>.pw.segment:nth-child(6),
-#LEADERBOARD>.pw.segments>.pw.segment:nth-child(7) {
-    min-width: 15%;
-    max-width: 15%;
-    padding: 0px;
-}
-
 .type_card {
     min-width: 50% !important;
     padding: 0px !important;
@@ -547,10 +520,6 @@ img[src*="E.png"]::before,
 
 .equipment>.pw.segments>.pw.segment>.pw.segments {
     margin: 0.25em;
-}
-
-#LEADERBOARD>.pw.segments {
-    padding: .75rem 0px;
 }
 
 #DIV-INVENTORY>.pw.sticked.segments {
@@ -1023,57 +992,26 @@ div[id^="INVENTORY-"] > .pw.message .pw.inline.blue.label,
         width: calc(100% - 2em);
     }
 
-    #LEADERBOARD>.pw.segments>.pw.segment .pw.image {
-        display: none;
-    }
-
-    #LEADERBOARD>.pw.segments>.pw.segment.avatar {
-        justify-content: center !important;
-    }
-}
-
-#LEADERBOARD>#leader-1 {
-    background-color: rgb(171 241 255 / 25%);
 }
 
 .pw.platinum {
     color: var(--platinum);
 }
 
-#LEADERBOARD>#leader-2 {
-    background-color: rgb(255 211 42 / 25%);
-}
-
 .pw.gold {
     color: var(--gold);
-}
-
-#LEADERBOARD>#leader-3 {
-    background-color: rgb(204 192 192 / 25%);
 }
 
 .pw.silver {
     color: var(--silver);
 }
 
-#LEADERBOARD>#leader-4 {
-    background-color: rgb(255 135 66 / 25%);
-}
-
 .pw.copper {
     color: var(--copper);
 }
 
-#LEADERBOARD>#leader-5 {
-    background-color: rgb(77 77 77 / 25%);
-}
-
 .pw.coal {
     color: var(--coal);
-}
-
-#LEADERBOARD>div[id^=leader-] {
-    text-shadow: rgb(0 0 0) 0px 0px 2.5px;
 }
 
 .pw.label.level-number {

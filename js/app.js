@@ -8,13 +8,11 @@ window.APP = {
     Ranking: 0,
     PowerMult: 1,
     LifeMult: 1,
-    lastCloudSave: 0,
     NewArmorID: 0,
     CoreLife: 100,
     CoreBaseLife: 100,
     TotalWeaponsUpgrades: 0,
     TotalArmorsUpgrades: 0,
-    LEADERBOARD_POSITION: 0,
     MaxLevel: 35,
     MaxScore: 35,
     TotalMissions: 0,
@@ -25,12 +23,6 @@ window.APP = {
     ToAdd: ["", ""],
     Email: "none",
     GOT_REWARDS: 0,
-    LastId: 0,
-    LeaderFilter: 0,
-    LEADERBOARD: {
-        PAGE: 0,
-        RANGES: [1, 10]
-    },
     isCovered: false,
     LastCover: 0,
     NextHeal: 5,
@@ -70,9 +62,7 @@ $(document).ready(function () {
     setInterval(UpdateEngine, 1000);
     Game.xp[1] = FUNCTIONS.MAIN.CalcEXP(Game.Level);
     FUNCTIONS.MISSIONS.END_MISSION();
-    APP.LeaderFilter = 0;
     UpdateGame();
-    FUNCTIONS.CLOUD.TOP("10");
     $('.pw.checkbox').each(function () {
         if ($(this).attr("data-id") < 5 || $(this).attr("data-id") == 11 || $(this).attr("data-id") == 12) {
             let TOGGLE = Game.config[$(this).attr("data-id")] == 1 ? "checked" : "unchecked";
@@ -86,7 +76,6 @@ $(document).ready(function () {
     $("#avatar").attr("src", `images/avatars/avatar (${Game.Avatar}).png`);
     $("#avatar2").attr("src", `images/avatars/avatar (${Game.Avatar}).png`);
     FUNCTIONS.INVENTORY.GenInventory();
-    FUNCTIONS.CLOUD.DELETE_LOCAL_DATABASE();
     FUNCTIONS.MAIN.CLOSE_MENUS();
     FUNCTIONS.EVENTS.DYNAMICS();
     UpdateUI();
@@ -109,13 +98,6 @@ export const UpdateEngine = function () {
     if (Game.isInFight != true && APP.CoreLife == null || Game.Enemy[5] == null || Game.Enemy[5] == 0) {
         Game.isInFight = false;
         UpdateGame();
-    }
-    if (APP.LoggedIn === 1 && APP.Email !== "none") {
-        if (APP.lastCloudSave < 180) {
-            APP.lastCloudSave++;
-        } else {
-            FUNCTIONS.CLOUD.SEND_STATS();
-        }
     }
     Game.LastEscape ? ($("#NextRetreat").html(language[APP.LANG].MISC.Retreat.split("[COUNT]").join(FUNCTIONS.MAIN.toHHMMSS(Game.LastEscape -= 1)))) : ($("#NextRetreat").html(""));
     APP.LastCover ? ($("#NextCover").html(language[APP.LANG].MISC.Cover.split("[COUNT]").join(FUNCTIONS.MAIN.toHHMMSS(APP.LastCover -= 1)))) : ($("#NextCover").html(""), APP.LastCover = 0);
@@ -164,9 +146,7 @@ export const UpdateEngine = function () {
         LOG("(5) LEVEL", "RE-CALCULATE LEVEL + EXP", "rgb(0 0 0 / 65%); background-color: rgb(224 225 226);");
     }
     if (Game.Emp > 50) Game.Emp = 50;
-    //let ONLINEICON = "<i title='Offline' class='pw red far fa-circle'></i>";
-    //location.href.match(/(goldenlys.github.io).*/) && (Game.username !== null && Game.username !== "Default") && (APP.LoggedIn === 1 && APP.Email !== "none") && (ONLINEICON = "<i title='Online' class='pw alpha fas fa-circle'></i>");
-    $("#PlayerID").html(`<div class='pw alpha'>${FUNCTIONS.CLOUD.GET_TROPHY_ICON()} ${Game.username} <span class='pw inline label level-number'>${LEVEL}</span></div>`);
+    $("#PlayerID").html(`<div class='pw alpha'>${Game.username} <span class='pw inline label level-number'>${LEVEL}</span></div>`);
     $("#PlayerSprite").html(`<img class='pw small image' src='images/avatars/avatar (${Game.Avatar}).png'>`);
     Game.Armors[2][0] = Game.Level >= 10;
     Game.Armors[3][0] = Game.Level >= 20;
@@ -325,21 +305,13 @@ export const UpdateUI = function () {
         else UPGRADE_TEXT[UPGRADE] = `<i class='fal fa-dna'></i>${FUNCTIONS.DIMENSION.GET_DIMENSIONAL_SHARDS_PRICE(UPGRADE)}`;
         $(`#${UPGRADES_IDs[UPGRADE]}`).html(`<span class='${CAN_AFFORD_UPGRADE[UPGRADE]}'>${UPGRADE_TEXT[UPGRADE]}</span>`);
     }
-    $("#TOPNEXT").html(`${APP.LEADERBOARD.PAGE + 1} <i class="fa-solid fa-square-arrow-down"></i>`);
-    $("#TOPPREVIOUS").html(`<i class="fa-solid fa-square-arrow-up"></i> ${APP.LEADERBOARD.PAGE - 1}`);
-    const isNextPageEnabled = APP.LEADERBOARD.RANGES[1] + 1 <= APP.LastId;
-    $("#TOPNEXT").attr('class', `pw grey button ${isNextPageEnabled ? (APP.LEADERBOARD.PAGE == 1 ? "rounded" : "") : "disabled"}`);
-    $("#TOPPREVIOUS").attr('class', `pw grey button ${APP.LEADERBOARD.PAGE == 1 ? "disabled" : (isNextPageEnabled == 1 ? "" : "rounded")}`);
     $("#LowScore").html((Game.Level - 5) * 10 >= APP.Ranking ? "Your current armor is outdated! Upgrade it now for better performance." : (Game.Level - 2) * 10 >= APP.Ranking ? "Enemies are growing stronger. Upgrade your equipment to keep up." : "");
     SET_CURRENT_TASK();
     $("#REWARDS_CURRENT_CONFIG").html(language[APP.LANG].REWARDS[Game.config[2]]);
     if ($('#DIV-COMBAT').is(":visible")) $("#DIV-REWARDS").hide();
-    if (APP.LoggedIn == 1) $("#CloudTimer").html("<i title='Online' class='pw alpha fas fa-circle'></i> Last cloud sync " + FUNCTIONS.MAIN.toHHMMSS(APP.lastCloudSave) + " ago, as <span class='pw alpha'>" + Game.username + "</span>.");
-    else $("#CloudTimer").html("<i title='Offline' class='pw red far fa-circle'></i> Cloud sync disabled.");
-    if (APP.LEADERBOARD_POSITION > 0) $('#IS_PLAYER_IN_LEADERBOARD').html(APP.LEADERBOARD_POSITION <= 10 ? `You are now among the top players! Your current position is #${APP.LEADERBOARD_POSITION}.` : `You have made it to the leaderboard! Your current position is #${APP.LEADERBOARD_POSITION}.`);
     $("#LABEL_INVENTORY").html("<i class='fas fa-sack'></i> " + Game.inventory.length + "/" + Game.MaxInv);
     $("#LABEL_CASH").html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Cash, 1));
-    $("#MISSIONS_COMPLETED_COUNT").html("Missions completed (" + _.countBy(Game.MissionsCompleted, x => x === 1).true + "/" + APP.TotalMissions + ")");
+    $("#MISSIONS_COMPLETED_COUNT").html("Missions completed (" + Game.MissionsCompleted.reduce((acc, val) => acc + (val === 1 ? 1 : 0), 0) + "/" + APP.TotalMissions + ")");
     $("#DUNGEONS_COMPLETED_COUNT").html("Dungeons (" + FUNCTIONS.MISSIONS.COUNT_DUNGEONS("completed") + "/" + FUNCTIONS.MISSIONS.COUNT_DUNGEONS("total") + ")");
     if (Game.Level >= GLOBALS.LOCATIONS[Game.Location][2] && APP.ScoreModeEnabled == 0 && !Game.MissionStarted[0]) $("#MaxPOSLVL").html(`${language[APP.LANG].MISC.MaxLevelForArea}`);
     if (FUNCTIONS.MISSIONS.IS_NEXT_MISSION_AVAILABLE()) $("#IS_MISSION_AVAILABLE").html(`${language[APP.LANG].MISC.AvailableMission}`);
@@ -378,7 +350,6 @@ export const UPDATE_STATS = function () {
     $("#Classstat").html(Game.class);
     $("#Scorestat").html("<span class='pw alpha'><i class='fad fa-dice-d20'></i>" + FUNCTIONS.MAIN.FORMAT_NUMBER(APP.Ranking, 0) + "</span>/" + (APP.MaxScore * 10));
     $("#Difficultystat").html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.DIMENSION_MULTIPLIERS[3], 3));
-    $("#Rankstat").html(APP.LEADERBOARD_POSITION + "/" + APP.LastId);
     $("#Ratiostat").html(FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Wins / DEATHS, 4));
     $("#Versionstat").html("v" + GLOBALS.VERSION);
     $("#fortressstat").html(Game.DungeonsCleared);

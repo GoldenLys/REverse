@@ -21,8 +21,7 @@ New Features | Detail
   
 Changes | Detail
 ------------- | -------------
-✅ | Leaderboard revamp to highlight top 5 players and show your position if you are ranked 
-✅ | Removed the online icon next to the player's name to replace it with a trophy (top 5) or medal if ranked in the leaderboard
+✅ | Removed the leaderboard 
 ✅ | Re-balanced the enemies difficulty during missions
 ✅ | Capped max relic to 3 and life/damage relics to 1 
 ✅ | New experience per level formula (less grind between missions while retaining a difficulty, might need some adjustments)

@@ -43,18 +43,6 @@ export function DYNAMICS() {
         CheckCode();
     });
 
-    $("#TOP10").on("click", function () {
-        FUNCTIONS.CLOUD.TOP("10");
-    });
-
-    $("#TOPNEXT").on("click", function () {
-        FUNCTIONS.CLOUD.TOP("NEXT");
-    });
-
-    $("#TOPPREVIOUS").on("click", function () {
-        FUNCTIONS.CLOUD.TOP("PREVIOUS");
-    });
-
     $("#AVATAR_NEXT").on("click", function () {
         FUNCTIONS.MAIN.CHANGE_AVATAR(1);
     });
@@ -90,24 +78,6 @@ export function DYNAMICS() {
         $("#warrior").attr("class", "pw message");
         $("#paladin").attr("class", "pw message");
         $("#ninja").attr("class", "pw message selected");
-    });
-
-    $("#WB-BTN").on("click", function () {
-        FUNCTIONS.MAIN.CLOSE_MENUS();
-        $("#DIV-COMBAT").show();
-        $(".BUTTONS_ACTIONS").show();
-        $("#LOGIN-NOTICE").attr("class", "popup");
-        $("#wb-title").html("");
-        $("#wb-text").html("");
-        APP.Email = "DoNotLogin";
-        FUNCTIONS.APP.UpdateGame();
-    });
-
-    $("#LOGIN-BTN").on("click", function () {
-        $("#LOGIN-NOTICE").attr("class", "popup");
-        $("#wb-title").html("");
-        $("#wb-text").html("");
-        FUNCTIONS.CLOUD.login();
     });
 
     $("#UPGRADE_0").on("click", function () {
@@ -205,7 +175,6 @@ export function DYNAMICS() {
         let CONFIG = $(this).attr("data-check") === "checked" ? 0 : 1;
         Game.config[$(this).attr("data-id")] = CONFIG;
         $(this).attr("data-check", TOGGLE);
-        if ($(this).attr("data-id") == 4) FUNCTIONS.CLOUD.READ_DATABASE();
         if (_.inRange($(this).attr("data-id"), 5, 11)) {
             Game.AutoRemove[$(this).attr("data-id") - 5] = CONFIG;
             FUNCTIONS.APP.UpdateUI();
@@ -247,7 +216,6 @@ export function CheckCode(debug) {
     if (code != null) {
         if (code === GLOBALS.CODES[1]) {
             $("#codereturn").html("Code Accepted, name change.");
-            FUNCTIONS.CLOUD.RESET_USERNAME(Game.username);
         } else if (code === GLOBALS.CODES[2]) {
             $("#codereturn").html("Code Accepted, raising all Armor slots by 1.");
             for (var UPC = 0; UPC < 4; UPC++) {
@@ -272,9 +240,7 @@ export function CheckCode(debug) {
                 Game.Dimension--;
             } else invalidCode(3);
         } else if (code === GLOBALS.CODES[6]) {
-            $("#codereturn").html("Code Accepted, cloud save done.");
-            FUNCTIONS.CLOUD.SEND_DATA_TO_CLOUD();
-            APP.lastCloudSave = 0;
+            $("#codereturn").html("Code Accepted, but nothing happened.");
         } else if (code === GLOBALS.CODES[7]) {
             $("#codereturn").html("Code Accepted, Finished the story.");
             Game.Level = APP.MaxLevel;

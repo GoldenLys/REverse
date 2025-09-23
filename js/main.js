@@ -112,13 +112,12 @@ export const OPEN_MENU = function (MENU, STATUS) {
         $("#DIV-COMBAT").show();
         $(".BUTTONS_ACTIONS").show();
     }
-    FUNCTIONS.CLOUD.TOP("10");
     FUNCTIONS.APP.UPDATE_STATS();
     FUNCTIONS.APP.UpdateGame();
 };
 
 export const CLOSE_MENUS = function () {
-    let MENUS = ["INVENTORY", "PRESTIGE", "STATS", "LEADERBOARD", "SETTINGS", "CREDITS", "STORY"];
+    let MENUS = ["INVENTORY", "PRESTIGE", "STATS", "SETTINGS", "CREDITS", "STORY"];
     $('.link-container.active').each(function () {
         $(this).attr("class", "link-container");
     });
@@ -452,7 +451,6 @@ export const SELECT_LANGUAGE = function () {
     $("#inventory").html('<i class="fas fa-sack icon"></i> ' + language[APP.LANG].MENUS.Inventory);
     $("#prestige").html('<i class="far fa-portal-enter icon"></i> ' + language[APP.LANG].MENUS.Dimension);
     $("#statistics").html('<i class="fas fa-clipboard list icon"></i> ' + language[APP.LANG].MENUS.Statistics);
-    $("#leaderboard").html('<i class="fas fa-trophy icon"></i> ' + language[APP.LANG].MENUS.Leaderboard);
     $("#settings").html('<i class="fas fa-cogs icon"></i> ' + language[APP.LANG].MENUS.Settings);
     $("#credits").html('<i class="fas fa-popcorn icon"></i> ' + language[APP.LANG].MENUS.Credits);
     $("#missions").html('<i class="far fa-dot-circle icon"></i> ' + language[APP.LANG].MENUS.Story);
