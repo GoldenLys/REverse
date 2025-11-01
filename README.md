@@ -44,7 +44,7 @@ Progress  | Detail
 0%   | create buyable / upgradeable guild ranks by doing various quests
 
 #### v3.8 | Loot n' Craft update
-   Loot items, equipement and objects and craft new equipment
+   Loot materials from mobs and craft new equipment
 
 Progress  | Detail
 ------------- | -------------

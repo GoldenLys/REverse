@@ -33,7 +33,7 @@ export const GenInventory = function () {
         if (Game.inventory[ITEM] != undefined) {
             var UPS = Game.inventory[ITEM].ups > 0 ? "<div class='pw inline orange label'><i class='pw orange fad fa-gem'></i> " + Game.inventory[ITEM].ups + "</div>" : "";
             if (Game.inventory[ITEM].type == "ARMOR") {
-                AVERAGE = AVERAGES.ARMOR < Game.inventory[ITEM].life ? "pw green" : "pw red";
+                AVERAGE = GET_EXACT_ARMOR_VALUE(Game.inventory[ITEM].type2) < Game.inventory[ITEM].life ? "pw green" : "pw red";
                 I.LEVEL = INVENTORY.LEVEL_TYPE[APP.ScoreModeEnabled];
                 I.DESC = UPS + "<div class='pw inline red label'><i class='pw red fas fa-heart'></i> <span class='" + AVERAGE + "'>" + Game.inventory[ITEM].life + "</span></div>";
                 COUNTERS[1]++;
@@ -170,13 +170,13 @@ export const newItem = function (OBJECT, LEVEL, CLASS) {
             Legendary: [7, 9900]
         },
         RELIC_MULTIPLIERS: [
-            _.random(0.001, 0.01, true),//0.1% - 1%
-            _.random(0.01, 0.015, true),  //1%   - 1.5%
-            _.random(0.015, 0.025, true),   //1.5% - 2.5%
+            _.random(0.001, 0.01, true),   //0.1% - 1%
+            _.random(0.01, 0.015, true),   //1%   - 1.5%
+            _.random(0.015, 0.025, true),  //1.5% - 2.5%
             _.random(0.025, 0.030, true),  //2.5% - 3%
-            _.random(0.04, 0.05, true),   //4%   - 5%
-            _.random(0.05, 0.10, true),   //5%   - 10%
-            _.random(0.1, 0.15, true)     //10%  - 15%
+            _.random(0.04, 0.05, true),    //4%   - 5%
+            _.random(0.05, 0.10, true),    //5%   - 10%
+            _.random(0.1, 0.15, true)      //10%  - 15%
         ],
         RELIC_SCORE_MUTLIPLIERS: [_.random(1, 5), _.random(6, 10), _.random(11, 15), _.random(16, 20), _.random(21, 25), _.random(26, 50), _.random(51, 100)],
         GEMS_MULTIPLIERS: {
@@ -855,6 +855,17 @@ export function GET_AVERAGE_EQUIPMENT_ARMOR() {
         }
     }
     return FUNCTIONS.MAIN.FORMAT_NUMBER(AVERAGE / divisor, 0);
+};
+
+export function GET_EXACT_ARMOR_VALUE(ARMOR) {
+        let ARMORS = {
+        "Helmet": 0,
+        "Chestplate": 1,
+        "Shield": 2,
+        "Boots": 3
+        };
+
+    return FUNCTIONS.MAIN.FORMAT_NUMBER(Game.Armors[ARMORS[ARMOR]][3], 0);
 };
 
 export const CHECK_RELICS_LIMIT = function (relicType) {
